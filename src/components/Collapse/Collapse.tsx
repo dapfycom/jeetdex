@@ -1,8 +1,8 @@
 // this component is used to create a collapse component
 // recive the childrens who are the ones that will be collapsed
 
-import { ReactNode } from "react";
-import { useCollapse } from "react-collapsed";
+import { ReactNode } from 'react';
+import { useCollapse } from 'react-collapsed';
 
 interface IProps {
   children: ReactNode;
@@ -10,8 +10,8 @@ interface IProps {
 }
 
 const Collapse = ({ children, isOpen }: IProps) => {
-  const { getCollapseProps, getToggleProps } = useCollapse({
-    isExpanded: isOpen,
+  const { getCollapseProps } = useCollapse({
+    isExpanded: isOpen
   });
 
   return (

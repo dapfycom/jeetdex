@@ -10,17 +10,5 @@ export const routes: RouteWithTitleType[] = [
     path: RouteNamesEnum.home,
     title: 'Home',
     component: null
-  },
-  {
-    path: RouteNamesEnum.dashboard,
-    title: 'Dashboard',
-    component: null
-  },
-  {
-    path: RouteNamesEnum.disclaimer,
-    title: 'Disclaimer',
-    component: null
   }
 ];
-
-
