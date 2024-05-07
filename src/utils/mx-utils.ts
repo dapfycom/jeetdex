@@ -148,3 +148,25 @@ export const setElrondBalance = (
     return '0';
   }
 };
+
+export const formatTokenI = (tokenIdentifier: string): string => {
+  if (!tokenIdentifier) {
+    return '';
+  }
+
+  return tokenIdentifier.split('-')[0];
+};
+
+// slipapge is % number like 1% or 5%
+export const calculateSlipageAmount = (
+  slipapge: number,
+  aproxAmount: string | number | BigNumber
+): BigNumber => {
+  const amountWithSlipage = new BigNumber(aproxAmount)
+    .multipliedBy(slipapge)
+    .dividedBy(100);
+
+  const finalAmount = new BigNumber(aproxAmount).minus(amountWithSlipage);
+
+  return finalAmount;
+};

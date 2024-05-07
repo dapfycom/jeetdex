@@ -1,10 +1,13 @@
 import { Layout } from '@/components/Layout';
 import { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter as FontSans } from 'next/font/google';
 import type { ReactNode } from 'react';
 import '../styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans'
+});
 
 export const metadata: Metadata = {
   title: 'Template dApp Next.js',
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang='en' className={inter.className}>
+    <html lang='en' className={fontSans.variable}>
       <body>
         <Layout>{children}</Layout>
       </body>

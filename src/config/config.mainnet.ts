@@ -35,5 +35,6 @@ export const scAddress = {
 
 export const tokensID = {
   egld: 'EGLD',
-  wegld: 'WEGLD-bd4d79'
+  wegld: 'WEGLD-bd4d79',
+  jeet: 'JEET-dda037'
 };
