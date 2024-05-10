@@ -6,7 +6,7 @@ import mvxLogo from '../../../../public/assets/img/logo.png';
 export const Header = () => {
   return (
     <header className='flex flex-row align-center justify-between pl-6 pr-6 pt-6'>
-      <MxLink to={''} className='flex items-center justify-between gap-3'>
+      <MxLink to={'/'} className='flex items-center justify-between gap-3'>
         <Image src={mvxLogo} alt='logo' className='w-16 h-16 rounded-full' />
 
         <span className='text-green-800 font-bold text-2xl'>JEETDEX</span>

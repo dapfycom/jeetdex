@@ -1,4 +1,4 @@
-import { egldStaticData } from '@/localConstants/egldData';
+import { egldStaticData } from '@/localConstants/tokensStaticsData';
 import { fetchElrondEconomics } from '@/services/rest/elrond/network';
 import { fetchTokenById } from '@/services/rest/elrond/tokens';
 import { IElrondToken } from '@/types/scTypes';

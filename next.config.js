@@ -1,5 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pump.mypinata.cloud',
+        port: '',
+        pathname: '**'
+      }
+    ]
+  },
   distDir: 'build',
   transpilePackages: ['@multiversx/sdk-dapp'],
   webpack: (config) => {

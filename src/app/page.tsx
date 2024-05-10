@@ -1,5 +1,5 @@
-import Swap from '@/views/SwapAggregator/Swap';
+import HomeView from '@/views/Home/HomeView';
 
 export default function Home() {
-  return <Swap />;
+  return <HomeView />;
 }
