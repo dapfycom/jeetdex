@@ -1,14 +1,7 @@
 'use client';
 
-import { z } from 'zod';
-
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.'
-  })
-});
 
 import { Button } from '@/components/ui/button';
 import { tokensID } from '@/config';
@@ -31,7 +24,9 @@ export default function CreatePoolForm() {
     setFirstToken(token);
   };
 
-  const handleGeneratePoolAddress = () => {};
+  const handleGeneratePoolAddress = () => {
+    console.log(firstToken);
+  };
 
   if (ownedTokens.length === 0) {
     return null;
