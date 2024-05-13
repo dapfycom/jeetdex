@@ -8,6 +8,8 @@ export const Layout = ({
 }: PropsWithChildren<{
   withMxProvider?: boolean;
 }>) => {
+  console.log('Layout');
+
   return (
     <MainProvider providers={withMxProvider ? ['dapp', 'redux'] : ['redux']}>
       <div className='flex min-h-screen flex-col '>
