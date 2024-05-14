@@ -7,7 +7,7 @@ const Buy = () => {
   return (
     <>
       <div className='flex justify-between w-full gap-2 my-3'>
-        <button className='text-xs py-1 px-2 rounded bg-primary text-gray-400 hover:bg-gray-800 hover:text-gray-300'>
+        <button className='text-xs py-1 px-2 rounded bg-[#213040] text-gray-200 hover:bg-gray-800 hover:text-gray-300'>
           switch to trumpcat
         </button>
         <SetSlippageButton />
@@ -32,16 +32,16 @@ const Buy = () => {
           </div>
         </div>
         <div className='flex mt-2 bg-[#2e303a] p-1 rounded-lg'>
-          <button className='text-xs py-1 -ml-1 px-2 rounded bg-primary text-gray-400 hover:bg-gray-800 hover:text-gray-300'>
+          <button className='text-xs py-1 -ml-1 px-2 rounded bg-[#213040] text-gray-200 hover:bg-gray-800 hover:text-gray-300'>
             reset
           </button>
-          <button className='text-xs py-1 px-2 ml-1 rounded bg-primary text-gray-400 hover:bg-gray-800 hover:text-gray-300'>
+          <button className='text-xs py-1 px-2 ml-1 rounded bg-[#213040] text-gray-200 hover:bg-gray-800 hover:text-gray-300'>
             1000 JEET
           </button>
-          <button className='text-xs py-1 px-2 ml-1 rounded bg-primary text-gray-400 hover:bg-gray-800 hover:text-gray-300'>
+          <button className='text-xs py-1 px-2 ml-1 rounded bg-[#213040] text-gray-200 hover:bg-gray-800 hover:text-gray-300'>
             5000 JEET
           </button>
-          <button className='text-xs py-1 px-2 ml-1 rounded bg-primary text-gray-400 hover:bg-gray-800 hover:text-gray-300'>
+          <button className='text-xs py-1 px-2 ml-1 rounded bg-[#213040] text-gray-200 hover:bg-gray-800 hover:text-gray-300'>
             10000 JEET
           </button>
         </div>

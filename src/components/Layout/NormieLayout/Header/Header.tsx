@@ -1,10 +1,10 @@
+import Login from '@/components/Login/Login';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import Link from 'next/link';
-import Login from '../Login/Login';
 
 export const Header = () => {
   return (
@@ -33,7 +33,7 @@ export const Header = () => {
         </div>
       </div>
 
-      <nav className='h-full w-full text-sm sm:relative  sm:flex sm:w-auto sm:flex-row sm:justify-end sm:bg-transparent items-center'>
+      <nav className='h-full w-full text-sm sm:relative  sm:flex sm:w-auto sm:flex-row sm:justify-end sm:bg-transparent flex items-center'>
         <SiteMode />
 
         <div className='flex items-center gap-2'>
