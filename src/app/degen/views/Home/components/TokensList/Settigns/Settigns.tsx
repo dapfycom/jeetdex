@@ -10,7 +10,7 @@ const Settings = () => {
   return (
     <div className='flex gap-6 mt-10 flex-col sm:flex-row'>
       <Select defaultValue='bump'>
-        <SelectTrigger className='w-[180px] bg-primary hover:opacity-90'>
+        <SelectTrigger className='w-[180px] bg-primary hover:opacity-90 text-primary-foreground'>
           <SelectValue placeholder='sort: bump order' />
         </SelectTrigger>
         <SelectContent>
@@ -25,7 +25,7 @@ const Settings = () => {
       </Select>
 
       <Select defaultValue='desc'>
-        <SelectTrigger className='w-[180px] bg-primary hover:opacity-90'>
+        <SelectTrigger className='w-[180px] bg-primary hover:opacity-90 text-primary-foreground'>
           <SelectValue placeholder='order' />
         </SelectTrigger>
         <SelectContent>

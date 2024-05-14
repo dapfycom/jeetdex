@@ -25,7 +25,8 @@
       --ring: 14 82% 52%;
       --radius: 0.5rem;
 
-      --custom:#28373F
+      --custom:#22F7DD;
+      --customBackground:#18212D
     }
   
     .dark {
@@ -40,7 +41,7 @@
       --border: 14 5% 14%;
       --input: 14 5% 14%;
       --primary: 117.74 64.03% 17.35%;
-      --primary-foreground: 0 0% 100%;
+      --primary-foreground: 14 0% 0%;
       --secondary: 14 8% 13%;
       --secondary-foreground: 14 8% 73%;
       --accent: 14 8% 13%;

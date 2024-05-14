@@ -30,7 +30,7 @@ const SubmitButton = () => {
     <>
       <Button
         onClick={handleSwap}
-        className='w-full   text-white gap-3'
+        className='w-full gap-3'
         disabled={(!aggregatorData || !InsufficientBalance) && isLoggedIn}
       >
         {buttonText}
