@@ -14,8 +14,7 @@ const Heading = () => {
       </h1>
 
       <h2 className='text-center text-gray-400 text-xl my-2'>
-        Jeetdex makes it super easy to launch a coin that is instantly tradeable
-        in one click
+        Jeetdex makes it super easy to launch a coin in one click
       </h2>
 
       <Image
