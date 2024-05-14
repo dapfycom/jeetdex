@@ -23,7 +23,7 @@ export const Header = () => {
       <nav className='h-full w-full text-sm sm:relative  sm:flex sm:w-auto sm:flex-row sm:justify-end sm:bg-transparent'>
         <SiteMode />
 
-        <div className='flex justify-end container mx-auto items-center gap-2'>
+        <div className='flex items-center gap-2'>
           <Login />
         </div>
       </nav>

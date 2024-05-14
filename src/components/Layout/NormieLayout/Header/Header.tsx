@@ -3,12 +3,13 @@ import SiteMode from '@/components/SiteMode/SiteMode';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
+import Link from 'next/link';
 import Login from '../Login/Login';
 
 export const Header = () => {
   return (
     <header className='flex flex-row items-center  justify-between pl-6 pr-6 pt-6'>
-      <div className='flex gap-5'>
+      <div className='flex gap-5 items-center'>
         <MxLink to={'/'} className='flex items-center justify-between gap-3'>
           <Image
             src={'/assets/img/logo.png'}
@@ -21,21 +22,21 @@ export const Header = () => {
           <span className='text-green-800 font-bold text-2xl'>JEETDEX</span>
         </MxLink>
 
-        <div>
-          <MxLink to='/create'>
+        <div className='text-gray-400 ml-7'>
+          <Link href='/create' className='hover:text-gray-100'>
             <span className='flex items-center'>
               <FontAwesomeIcon icon={faCoins} className='mr-3 w-5 h-5' />
 
               <span className='whitespace-nowrap'>List token</span>
             </span>
-          </MxLink>
+          </Link>
         </div>
       </div>
 
-      <nav className='h-full w-full text-sm sm:relative  sm:flex sm:w-auto sm:flex-row sm:justify-end sm:bg-transparent'>
+      <nav className='h-full w-full text-sm sm:relative  sm:flex sm:w-auto sm:flex-row sm:justify-end sm:bg-transparent items-center'>
         <SiteMode />
 
-        <div className='flex justify-end container mx-auto items-center gap-2'>
+        <div className='flex items-center gap-2'>
           <Login />
         </div>
       </nav>

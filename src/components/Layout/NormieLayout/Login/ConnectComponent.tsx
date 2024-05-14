@@ -21,11 +21,7 @@ const ConnectComponent = () => {
     nativeAuth: true // optional
   };
   return (
-    <ExtensionLoginButton
-      className='bg-red-500'
-      buttonClassName='bg-red-500'
-      {...commonProps}
-    >
+    <ExtensionLoginButton className='!bg-primary !border-0' {...commonProps}>
       {desktopLoginComponent}
     </ExtensionLoginButton>
   );
