@@ -10,7 +10,8 @@ const SetLpForm = () => {
 
   const lpName =
     formatTokenI(tokens.token1) + formatTokenI(tokens.token2) + 'LP';
-  const lpTicker = formatTokenI(tokens.token1) + formatTokenI(tokens.token2);
+  const lpTicker =
+    formatTokenI(tokens.token1).slice(0, 5) + formatTokenI(tokens.token2);
 
   return (
     <div className='bg-zinc-900 rounded-xl px-8 py-12 w-full text-left'>

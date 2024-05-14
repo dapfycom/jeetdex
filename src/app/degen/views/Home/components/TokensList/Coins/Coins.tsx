@@ -1,6 +1,6 @@
 import CoinItem from './CoinItem';
 
-const coinsData = [
+export const coinsData = [
   {
     imageUrl:
       'https://pump.mypinata.cloud/ipfs/QmNM5KxaFcvv1cFaZQCK1iHS8LBZ7YNq8XJcfCBTCVXA69?img-width=128&img-dpr=2&img-onerror=redirect',

@@ -1,6 +1,8 @@
 import trandingImg from '@/assets/images/trending.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import CoinItem from '../TokensList/Coins/CoinItem';
+import { coinsData } from '../TokensList/Coins/Coins';
 const Heading = () => {
   return (
     <div>
@@ -22,6 +24,9 @@ const Heading = () => {
         alt='trending now'
         className='mx-auto mt-5 max-w-[200px]'
       />
+      <div className='w-full max-w-[400px] mx-auto mt-4'>
+        <CoinItem {...coinsData[0]} />
+      </div>
     </div>
   );
 };
