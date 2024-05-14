@@ -1,4 +1,3 @@
-import { Layout } from '@/components/Layout';
 import { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import type { ReactNode } from 'react';
@@ -25,9 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' className={fontSans.variable}>
-      <body className='dark'>
-        <Layout>{children}</Layout>
-      </body>
+      <body className='dark'>{children}</body>
     </html>
   );
 }

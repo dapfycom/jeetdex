@@ -1,18 +1,18 @@
 import { useAppSelector } from '@/hooks';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import { useAuthentication } from '@/hooks';
 import { formatAddress } from '@/utils/mx-utils';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { LogOut } from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '../ui/dropdown-menu';
 
 const DisconnectComponent = () => {
   const address = useAppSelector(selectUserAddress);

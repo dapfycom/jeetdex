@@ -3,11 +3,7 @@ import { PropsWithChildren } from 'react';
 import MxDappProvider from './DappProvider';
 import ReduxProvider from './ReduxProvider';
 
-const MainProvider = ({
-  children
-}: PropsWithChildren<{
-  providers: string[] | 'all';
-}>) => {
+const MainProvider = ({ children }: PropsWithChildren) => {
   return (
     <MxDappProvider>
       <ReduxProvider>{children}</ReduxProvider>
