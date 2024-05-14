@@ -180,13 +180,20 @@ export interface IElrondStats {
   roundsPerEpoch: number;
 }
 
-export interface IElrondToken {
-  type: ElrondType;
+export interface ICoreToken {
   identifier: string;
   name: string;
   ticker: string;
-  owner?: string;
   decimals: number;
+  assets: {
+    pngUrl?: string;
+    svgUrl: string;
+  };
+}
+
+export interface IElrondToken extends ICoreToken {
+  type: ElrondType;
+  owner?: string;
   isPaused?: boolean;
   assets: {
     website?: string;
@@ -221,13 +228,9 @@ export interface IElrondToken {
   supply: string | number;
   circulatingSupply: string | number;
 }
-export interface IElrondAccountToken {
+export interface IElrondAccountToken extends ICoreToken {
   type?: ElrondType;
-  identifier: string;
-  name: string;
-  ticker: string;
   owner?: string;
-  decimals: number;
   isPaused?: boolean;
   assets: {
     website?: string;

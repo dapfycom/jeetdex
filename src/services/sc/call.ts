@@ -29,7 +29,6 @@ export class SmartContractInteraction {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(smartContractAddress: string, abiFile?: any) {
     const scAddress = new Address(smartContractAddress);
-    console.log({ abi: abiFile });
     this.contract = new SmartContract({
       address: scAddress,
       abi: abiFile && AbiRegistry.create(abiFile)

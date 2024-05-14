@@ -3,7 +3,7 @@ import {
   PageHeaderDescription,
   PageHeaderHeading
 } from '@/components/PageHeader/PageHeader';
-import CreatePoolForm from './components/CreatePoolForm';
+import CreatePoolsContainer from './CreatePoolsContainer';
 
 const CreatePoolView = () => {
   return (
@@ -17,7 +17,7 @@ const CreatePoolView = () => {
           </PageHeaderDescription>
         </div>
         <div className='flex flex-col items-center text-center mt-5'>
-          <CreatePoolForm />
+          <CreatePoolsContainer />
         </div>
       </Container>
     </div>

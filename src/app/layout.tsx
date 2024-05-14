@@ -10,9 +10,9 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: 'Template dApp Next.js',
+  title: 'Jeetdex',
   description:
-    'A basic implementation of MultiversX dApp providing the basics for MultiversX authentication and TX signing.',
+    'Best memecoin dex on the Multiversx blockchain. Trade your favorite memecoins with ease.',
   viewport: {
     width: 'device-width',
     initialScale: 1

@@ -1,3 +1,4 @@
+import createPoolsReducer from '@/app/normie/views/CreatePoolView/utils/slice';
 import swapReducer from '@/app/normie/views/SwapAggregator/lib/swap-slice';
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import dappReducer from './dapp/dapp-slice';
@@ -5,7 +6,8 @@ export function makeStore() {
   return configureStore({
     reducer: {
       dapp: dappReducer,
-      swap: swapReducer
+      swap: swapReducer,
+      createPools: createPoolsReducer
     }
   });
 }

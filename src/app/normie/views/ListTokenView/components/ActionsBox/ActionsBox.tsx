@@ -13,7 +13,7 @@ const ActionsBox = ({ icon, description, title, path }: ActionsBoxProps) => {
   return (
     <Link href={path}>
       <div className=' justify-center items-center rounded-xl border border-cyan-50/20 min-h-[200px] w-full flex flex-col hover:bg-gray-700/40'>
-        <FontAwesomeIcon icon={icon} className='w-[50px]' />
+        <FontAwesomeIcon icon={icon} className='w-[50px] h-[50px]' />
 
         <div className='text-center mt-3'>
           <p className='text-lg text-gray-500'>{title}</p>

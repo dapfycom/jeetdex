@@ -13,6 +13,8 @@ import { SmartContractConfigTypes, smartContractsConfig } from './index';
 import { provider } from './provider';
 
 export const fetchScSimpleData = async <T>(scInfo: string, args?: any[]) => {
+  console.log('fetchScSimpleData', scInfo, args);
+
   const scInfoArr = scInfo.split(':');
   const scWsp = scInfoArr[0] as SmartContractConfigTypes;
   const funcName = scInfoArr[1];

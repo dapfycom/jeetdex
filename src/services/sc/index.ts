@@ -1,3 +1,4 @@
+import routerAbi from '@/assets/abis/router.abi.json';
 import { scAddress } from '@/config';
 import { Address } from '@multiversx/sdk-core/out';
 import { SmartContractInteraction } from './call';
@@ -17,6 +18,12 @@ export const smartContractsConfig = {
     simpleAddress: scAddress.wrapEGLDShard2,
     address: new Address(scAddress.wrapEGLDShard2),
     abi: null
+  },
+
+  mainRouter: {
+    simpleAddress: scAddress.mainRouter,
+    address: new Address(scAddress.mainRouter),
+    abi: routerAbi
   }
 };
 
@@ -33,5 +40,8 @@ export const interactions: {
   ),
   wrapEGLDShard2: new SmartContractInteraction(
     smartContractsConfig.wrapEGLDShard2.simpleAddress
+  ),
+  mainRouter: new SmartContractInteraction(
+    smartContractsConfig.mainRouter.simpleAddress
   )
 };

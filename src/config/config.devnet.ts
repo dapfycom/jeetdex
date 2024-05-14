@@ -31,7 +31,8 @@ export const scAddress = {
   wrapEGLDShard1:
     'erd1qqqqqqqqqqqqqpgqfj3z3k4vlq7dc2928rxez0uhhlq46s6p4mtqerlxhc',
   wrapEGLDShard2:
-    'erd1qqqqqqqqqqqqqpgqfj3z3k4vlq7dc2928rxez0uhhlq46s6p4mtqerlxhc'
+    'erd1qqqqqqqqqqqqqpgqfj3z3k4vlq7dc2928rxez0uhhlq46s6p4mtqerlxhc',
+  mainRouter: 'erd1qqqqqqqqqqqqqpgqvquukl6q57th8jc3jxq34clsl8f8f0d2d8ssl70xxt'
 };
 
 export const tokensID = {
