@@ -22,24 +22,40 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check if there is any supported locale in the pathname
-  const pathnameIsMissingSiteMode = siteModes.every(
-    (mode) => !pathname.startsWith(`/${mode}/`) && pathname !== `/${mode}`
-  );
-
-  // Redirect if there is no locale
-  if (pathnameIsMissingSiteMode) {
-    const cookie = request.cookies.get('site-mode');
-    const mode = cookie?.value || 'degen';
-
-    // e.g. incoming request is /products
-    // The new URL is now /en-US/products
-    return NextResponse.redirect(
-      new URL(
-        `/${mode}${pathname.startsWith('/') ? '' : '/'}${pathname}${search}`,
-        request.url
-      )
+  if (process.env.DEGEN_MODE !== 'true') {
+    const pathnameIsMissingSiteMode =
+      !pathname.startsWith(`/normie/`) && pathname !== `/normie`;
+    // Redirect if there is no locale
+    if (pathnameIsMissingSiteMode) {
+      // e.g. incoming request is /products
+      // The new URL is now /en-US/products
+      return NextResponse.redirect(
+        new URL(
+          `/normie${pathname.startsWith('/') ? '' : '/'}${pathname}${search}`,
+          request.url
+        )
+      );
+    }
+  } else {
+    // Check if there is any supported locale in the pathname
+    const pathnameIsMissingSiteMode = siteModes.every(
+      (mode) => !pathname.startsWith(`/${mode}/`) && pathname !== `/${mode}`
     );
+
+    // Redirect if there is no locale
+    if (pathnameIsMissingSiteMode) {
+      const cookie = request.cookies.get('site-mode');
+      const mode = cookie?.value || 'degen';
+
+      // e.g. incoming request is /products
+      // The new URL is now /en-US/products
+      return NextResponse.redirect(
+        new URL(
+          `/${mode}${pathname.startsWith('/') ? '' : '/'}${pathname}${search}`,
+          request.url
+        )
+      );
+    }
   }
 }
 

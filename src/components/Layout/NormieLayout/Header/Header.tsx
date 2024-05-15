@@ -68,7 +68,7 @@ export const Header = () => {
       </div>
 
       <nav className='h-full w-full text-sm sm:relative  sm:flex sm:w-auto sm:flex-row sm:justify-end sm:bg-transparent flex items-center'>
-        <SiteMode />
+        {process.env.DEGEN_MODE === 'true' && <SiteMode />}
 
         <div className='flex items-center gap-2'>
           <Login />
