@@ -26,25 +26,16 @@ export const Header = () => {
             </a>
 
             <a
-              href='https://twitter.com/jeet_dex'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:font-bold'
-            >
-              [support]
-            </a>
-          </div>
-
-          <div className='flex gap-2 items-center'>
-            <a
-              href='https://twitter.com/jeet_dex'
+              href='https://t.me/jeetdex'
               target='_blank'
               rel='noopener noreferrer'
               className='hover:font-bold'
             >
               [telegram]
             </a>
+          </div>
 
+          <div className='flex gap-2 items-center'>
             <a
               href='https://twitter.com/jeet_dex'
               target='_blank'
