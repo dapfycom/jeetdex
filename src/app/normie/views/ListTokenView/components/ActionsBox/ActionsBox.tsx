@@ -31,7 +31,7 @@ const ActionsBox = ({
         )}
         <FontAwesomeIcon
           icon={icon}
-          className='w-[40px] h-[40px] sm:w-[50px] sm:h-[50px]'
+          className='w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] text-primary'
         />
 
         <div className='text-center mt-3'>

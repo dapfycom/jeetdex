@@ -17,6 +17,7 @@ const SubmitButton = () => {
     button = (
       <Button
         className='w-full mt-10'
+        variant='destructive'
         onClick={(e) => {
           e.preventDefault();
           dispatch(setActiveStep('set-lp'));

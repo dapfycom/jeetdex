@@ -1,5 +1,7 @@
-const page = () => {
-  return <div>page</div>;
+import EnableSwapView from '../../views/ListTokenView/EnableSwapView/EnableSwapView';
+
+const EnableSwapPage = () => {
+  return <EnableSwapView />;
 };
 
-export default page;
+export default EnableSwapPage;

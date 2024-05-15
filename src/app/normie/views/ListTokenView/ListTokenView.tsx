@@ -13,7 +13,7 @@ const ListTokenView = ({
 }) => {
   return (
     <Container className='mt-8'>
-      <div className='w-full max-w-[800px]'>
+      <div className='w-full max-w-[800px] mx-auto'>
         <h1 className='text-lg sm:text-3xl mb-4'>List token</h1>
 
         <div className='grid grid-cols-2 gap-6 w-full'>

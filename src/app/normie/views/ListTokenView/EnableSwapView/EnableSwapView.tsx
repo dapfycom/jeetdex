@@ -1,25 +1,22 @@
 import Container from '@/components/Container/Container';
 import { PageHeaderHeading } from '@/components/PageHeader/PageHeader';
+import EnableSwapForm from './EnableSwapForm';
 
-import dynamic from 'next/dynamic';
-
-const LockLpForm = dynamic(() => import('./components/LockLpForm'), {
-  ssr: false
-});
-
-const LockPlView = () => {
+const EnableSwapView = () => {
   return (
     <div>
       <Container>
         <div className='flex flex-col items-center text-center mt-5 mb-6'>
-          <PageHeaderHeading className='mb-5'>Lock Liquidity</PageHeaderHeading>
+          <PageHeaderHeading className='mb-5'>Enable Trade</PageHeaderHeading>
         </div>
         <div className='flex flex-col items-center text-center mt-5'>
-          <LockLpForm />
+          <div className='bg-zinc-900 rounded-xl px-8 py-12 w-full text-left'>
+            <EnableSwapForm />
+          </div>
         </div>
       </Container>
     </div>
   );
 };
 
-export default LockPlView;
+export default EnableSwapView;

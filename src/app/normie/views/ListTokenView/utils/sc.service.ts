@@ -1,5 +1,7 @@
 import { interactions } from '@/services/sc';
+import { SmartContractInteraction } from '@/services/sc/call';
 import { Address, AddressValue, BytesValue } from '@multiversx/sdk-core/out';
+import { pairContractAbi } from './constants';
 
 export const newPoolTx = async (
   first_token_id: string,
@@ -34,6 +36,43 @@ export const createLp = async (
 export const setRoles = async (poolAddress: string) => {
   return interactions.mainRouter.scCall({
     functionName: 'setLocalRoles',
+    arg: [new AddressValue(Address.fromBech32(poolAddress))],
+    gasL: 100_000_000
+  });
+};
+
+export const addInitialLiquidity = async (
+  poolAddress: string,
+  token1: { identifier: string; value: number; decimals: number },
+  token2: { identifier: string; value: number; decimals: number }
+) => {
+  const interactions = new SmartContractInteraction(
+    poolAddress,
+    pairContractAbi
+  );
+
+  interactions.MultiESDTNFTTransfer({
+    functionName: 'addInitialLiquidity',
+    tokens: [
+      {
+        collection: token1.identifier,
+        nonce: 0,
+        value: token1.value,
+        decimals: token1.decimals
+      },
+      {
+        collection: token2.identifier,
+        nonce: 0,
+        value: token2.value,
+        decimals: token2.decimals
+      }
+    ]
+  });
+};
+
+export const enableTrade = async (poolAddress: string) => {
+  return interactions.mainRouter.scCall({
+    functionName: 'enablePair',
     arg: [new AddressValue(Address.fromBech32(poolAddress))],
     gasL: 100_000_000
   });

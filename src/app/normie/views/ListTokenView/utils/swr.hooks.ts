@@ -1,4 +1,3 @@
-import pairContractAbi from '@/assets/abis/pair-full.abi.json';
 import { useAppSelector } from '@/hooks';
 import {
   fetchScSimpleData,
@@ -6,13 +5,14 @@ import {
 } from '@/services/sc/query';
 import { Address, TokenIdentifierValue } from '@multiversx/sdk-core/out';
 import useSWR from 'swr';
+import { pairContractAbi } from './constants';
 import { selectToken1, selectToken2 } from './slice';
 
 export const useGetAllowedPoolTokens = () => {
   const { data, error, isValidating, isLoading, mutate } = useSWR<
     {
       identifier: string;
-      decimals: number;
+      minimumToLock: number;
     }[]
   >('mainRouter:getAllowedTokensForPairs', async (key: string) => {
     const data: any = await fetchScSimpleData(key);
@@ -34,9 +34,13 @@ export const useGetAllowedPoolTokens = () => {
   };
 };
 
-export const useGetPoolPair = () => {
-  const token1 = useAppSelector(selectToken1);
-  const token2 = useAppSelector(selectToken2);
+export const useGetPoolPair = (token1Arg?: string, token2Arg?: string) => {
+  const token1Redux = useAppSelector(selectToken1);
+  const token2Redux = useAppSelector(selectToken2);
+
+  const token1 = token1Arg || token1Redux;
+  const token2 = token2Arg || token2Redux;
+
   const { data, error, isValidating, isLoading, mutate } = useSWR<string>(
     token1.length !== 0 && token2.length !== 0
       ? `mainRouter:getPair:${token1}:${token2}`
