@@ -13,13 +13,28 @@ import { SmartContractConfigTypes, smartContractsConfig } from './index';
 import { provider } from './provider';
 
 export const fetchScSimpleData = async <T>(scInfo: string, args?: any[]) => {
-  console.log('fetchScSimpleData', scInfo, args);
-
   const scInfoArr = scInfo.split(':');
   const scWsp = scInfoArr[0] as SmartContractConfigTypes;
   const funcName = scInfoArr[1];
 
   const res: any = await scQuery(scWsp, funcName, args);
+
+  const { firstValue } = res;
+  const data: T = firstValue?.valueOf();
+
+  return data;
+};
+
+export const fetchScSimpleDataWithContract = async <T>(
+  scInfo: string,
+  abi,
+  args?: any[]
+) => {
+  const scInfoArr = scInfo.split(':');
+  const scAddress = scInfoArr[0] as string;
+  const funcName = scInfoArr[1];
+
+  const res: any = await scQueryWithContract(scAddress, abi, funcName, args);
 
   const { firstValue } = res;
   const data: T = firstValue?.valueOf();
@@ -34,10 +49,6 @@ export const scQuery = async (
 ) => {
   try {
     const { address, abi } = smartContractsConfig[workspace];
-    console.log({
-      address,
-      abi
-    });
 
     if (!abi) {
       return;
@@ -136,4 +147,36 @@ export const scQueryByFieldsDefinitions = async (
   const parsed = serializer.stringToValues(response, fieldDefinitions);
 
   return parsed;
+};
+
+export const scQueryWithContract = async (
+  scAddress: string,
+  abi: any,
+  funcName = '',
+  args: any[] = []
+) => {
+  try {
+    if (!abi) {
+      return;
+    }
+    const abiRegistry = await AbiRegistry.create(abi);
+    const contract = new SmartContract({
+      address: Address.fromBech32(scAddress),
+      abi: abiRegistry
+    });
+
+    const interaction = contract.methods[funcName](args);
+    const query = interaction.check().buildQuery();
+    const queryResponse = await provider.queryContract(query);
+
+    const data = new ResultsParser().parseQueryResponse(
+      queryResponse,
+      interaction.getEndpoint()
+    );
+
+    return data;
+  } catch (error) {
+    console.log(`query error for ${funcName}  : `, error);
+    throw error;
+  }
 };

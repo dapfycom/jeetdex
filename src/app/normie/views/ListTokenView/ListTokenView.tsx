@@ -1,3 +1,4 @@
+import Container from '@/components/Container/Container';
 import {
   faLock,
   faRotate,
@@ -5,32 +6,41 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ActionsBox from './components/ActionsBox/ActionsBox';
 
-const ListTokenView = () => {
+const ListTokenView = ({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   return (
-    <div className='w-full max-w-[800px]'>
-      <h1 className='text-3xl mb-4'>List token</h1>
+    <Container className='mt-8'>
+      <div className='w-full max-w-[800px]'>
+        <h1 className='text-lg sm:text-3xl mb-4'>List token</h1>
 
-      <div className='grid grid-cols-2 gap-6 w-full'>
-        <ActionsBox
-          icon={faWaterLadder}
-          title='Create Pool'
-          description='Create a pools using the tokens you minted'
-          path='/create/create-pool'
-        />
-        <ActionsBox
-          icon={faRotate}
-          title='Enable Tarde'
-          description='Enable trade for your pools'
-          path='/create/enable-swap'
-        />
-        <ActionsBox
-          icon={faLock}
-          title='Lock LP'
-          description='Lock liquidity pool token'
-          path='/create/lock-lp'
-        />
+        <div className='grid grid-cols-2 gap-6 w-full'>
+          <ActionsBox
+            icon={faWaterLadder}
+            title='Create Pool'
+            description='Create a pools using the tokens you minted'
+            path='/create/create-pool'
+            completed={searchParams['create-pool'] === 'true'}
+          />
+          <ActionsBox
+            icon={faLock}
+            title='Lock LP'
+            description='Lock liquidity pool token'
+            path='/create/lock-lp'
+            completed={searchParams['lock-lp'] === 'true'}
+          />
+          <ActionsBox
+            icon={faRotate}
+            title='Enable Tarde'
+            description='Enable trade for your pools'
+            path='/create/enable-swap'
+            completed={searchParams['enable-swap'] === 'true'}
+          />
+        </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

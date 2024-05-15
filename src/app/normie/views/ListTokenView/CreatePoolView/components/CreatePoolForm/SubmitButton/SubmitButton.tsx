@@ -1,13 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { useAppDispatch } from '@/hooks';
-import { setActiveStep } from '../../../utils/slice';
-import { useGetPoolPair } from '../../../utils/swr.hooks';
+import { setActiveStep } from '../../../../utils/slice';
+import { useGetPoolPair } from '../../../../utils/swr.hooks';
 
 const SubmitButton = () => {
   const dispatch = useAppDispatch();
-  const { exists, tokens } = useGetPoolPair();
-
-  console.log(tokens);
+  const { exists } = useGetPoolPair();
 
   let button = (
     <Button type='submit' className='w-full mt-10'>

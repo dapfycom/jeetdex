@@ -1,5 +1,7 @@
-const page = () => {
-  return <div>page</div>;
+import LockPlView from '../../views/ListTokenView/LockPlView/LockPlView';
+
+const LockPlPage = () => {
+  return <LockPlView />;
 };
 
-export default page;
+export default LockPlPage;

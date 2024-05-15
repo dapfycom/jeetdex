@@ -23,8 +23,8 @@ const DisconnectComponent = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <div className='flex items-center gap-3 px-3 py-2 rounded-md border'>
-          <div>
+        <div className='relative flex items-center gap-3 px-3 py-2 rounded-md border'>
+          <div className='hidden sm:block'>
             ({' '}
             {formatBalance({
               balance: balance,
@@ -32,8 +32,18 @@ const DisconnectComponent = () => {
             })}{' '}
             EGLD )
           </div>
-          <Logo className='w-6 h-6 rounded-full' />
-          <div>{account?.username || formatAddress(address, 6, 4)}</div>
+          <Logo className='w-6 h-6 rounded-full hidden sm:block' />
+          <div>
+            <div>{account?.username || formatAddress(address, 6, 4)}</div>
+            <div className='block sm:hidden text-xs'>
+              ({' '}
+              {formatBalance({
+                balance: balance,
+                decimals: 18
+              })}{' '}
+              EGLD )
+            </div>
+          </div>
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='min-w-[200px]'>

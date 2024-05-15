@@ -1,17 +1,15 @@
-import { Button } from '@/components/ui/button';
-import { formatAddress, formatTokenI } from '@/utils/mx-utils';
-import { createLp } from '../../utils/sc.service';
-import { useGetPoolPair } from '../../utils/swr.hooks';
+import { formatAddress } from '@/utils/mx-utils';
+import { useGenerateLPStrings } from '../../../utils/hooks';
+import { useGetPoolPair } from '../../../utils/swr.hooks';
+import FormNav from '../FormNav/FormNav';
+import SubmitButton from './SubmitButton/SubmitButton';
 
 const SetLpForm = () => {
-  const { pair, tokens } = useGetPoolPair();
+  const { pair } = useGetPoolPair();
 
   const poolAddress = formatAddress(pair);
 
-  const lpName =
-    formatTokenI(tokens.token1) + formatTokenI(tokens.token2) + 'LP';
-  const lpTicker =
-    formatTokenI(tokens.token1).slice(0, 5) + formatTokenI(tokens.token2);
+  const { lpName, lpTicker } = useGenerateLPStrings();
 
   return (
     <div className='bg-zinc-900 rounded-xl px-8 py-12 w-full text-left'>
@@ -29,15 +27,10 @@ const SetLpForm = () => {
       </div>
 
       <div>
-        <Button
-          className='w-full mt-10 p-3 rounded-md'
-          onClick={() => {
-            createLp(pair, lpName, lpTicker);
-          }}
-        >
-          Create LP Token
-        </Button>
+        <SubmitButton />
       </div>
+
+      <FormNav currentStep='set-lp' />
     </div>
   );
 };

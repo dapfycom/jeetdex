@@ -7,7 +7,7 @@ export const NormieLayout = ({ children }: PropsWithChildren) => {
     <MainLayout>
       <div className='flex min-h-screen flex-col '>
         <Header />
-        <main className='flex flex-grow items-stretch justify-center p-6'>
+        <main className='flex flex-grow items-stretch justify-center pb-10'>
           {children}
         </main>
       </div>

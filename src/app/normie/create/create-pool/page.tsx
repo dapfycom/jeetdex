@@ -1,4 +1,4 @@
-import CreatePoolView from '../../views/CreatePoolView/CreatePoolView';
+import CreatePoolView from '../../views/ListTokenView/CreatePoolView/CreatePoolView';
 
 const CreatePoolPage = () => {
   return <CreatePoolView />;

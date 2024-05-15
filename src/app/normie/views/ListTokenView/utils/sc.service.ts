@@ -30,3 +30,11 @@ export const createLp = async (
     gasL: 150_000_000
   });
 };
+
+export const setRoles = async (poolAddress: string) => {
+  return interactions.mainRouter.scCall({
+    functionName: 'setLocalRoles',
+    arg: [new AddressValue(Address.fromBech32(poolAddress))],
+    gasL: 100_000_000
+  });
+};

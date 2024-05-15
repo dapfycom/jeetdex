@@ -9,7 +9,7 @@ const CreatePoolView = () => {
   return (
     <div>
       <Container>
-        <div className='flex flex-col items-center text-center mt-5 mb-10'>
+        <div className='flex flex-col items-center text-center mt-5 mb-6'>
           <PageHeaderHeading className='mb-5'>Create Pool</PageHeaderHeading>
 
           <PageHeaderDescription>

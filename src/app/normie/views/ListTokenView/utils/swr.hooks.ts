@@ -1,5 +1,9 @@
+import pairContractAbi from '@/assets/abis/pair-full.abi.json';
 import { useAppSelector } from '@/hooks';
-import { fetchScSimpleData } from '@/services/sc/query';
+import {
+  fetchScSimpleData,
+  fetchScSimpleDataWithContract
+} from '@/services/sc/query';
 import { Address, TokenIdentifierValue } from '@multiversx/sdk-core/out';
 import useSWR from 'swr';
 import { selectToken1, selectToken2 } from './slice';
@@ -16,7 +20,7 @@ export const useGetAllowedPoolTokens = () => {
     return data.map((token) => {
       return {
         identifier: token[0],
-        minimunToLock: token[1].toNumber()
+        minimumToLock: token[1].toNumber()
       };
     });
   });
@@ -59,5 +63,29 @@ export const useGetPoolPair = () => {
     isValidating,
     mutate,
     exists: finalData !== Address.Zero().bech32()
+  };
+};
+
+export const useGetLpIdentifier = (pairAddress: string) => {
+  const { data, error, isValidating, isLoading, mutate } = useSWR<string>(
+    pairAddress !== Address.Zero().bech32()
+      ? `${pairAddress}:getLpTokenIdentifier`
+      : null,
+    async (key: string) => {
+      const data: any = await fetchScSimpleDataWithContract(
+        key,
+        pairContractAbi
+      );
+
+      return data;
+    }
+  );
+
+  return {
+    lpIdentifier: data || '',
+    isLoading,
+    error,
+    isValidating,
+    mutate
   };
 };

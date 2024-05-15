@@ -12,14 +12,18 @@ import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { ICoreToken } from '@/types/scTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { newPoolTx } from '../../utils/sc.service';
-import { useGetAllowedPoolTokens, useGetPoolPair } from '../../utils/swr.hooks';
+import { newPoolTx } from '../../../utils/sc.service';
+import {
+  useGetAllowedPoolTokens,
+  useGetPoolPair
+} from '../../../utils/swr.hooks';
 import PoolItemContainer, { ITokenPool } from './PoolItem/PoolItemContainer';
 
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
-import { setToke1, setToken2 } from '../../utils/slice';
+import { setActiveStep, setToke1, setToken2 } from '../../../utils/slice';
+import FormNav from '../FormNav/FormNav';
 import SubmitButton from './SubmitButton/SubmitButton';
 const convertToPoolItemToken = (
   tokens: (ICoreToken & {
@@ -65,6 +69,7 @@ export default function CreatePoolForm() {
   const onSuccess = () => {
     mutate();
     setSessionId(null);
+    dispatch(setActiveStep('set-lp'));
   };
 
   useTrackTransactionStatus({
@@ -126,6 +131,8 @@ export default function CreatePoolForm() {
             />
           </div>
           <SubmitButton />
+
+          <FormNav currentStep='create-pool' />
         </div>
       </form>
     </Form>
