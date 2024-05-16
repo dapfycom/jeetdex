@@ -1,20 +1,23 @@
 import Container from '@/components/Container/Container';
-import {
-  PageHeaderDescription,
-  PageHeaderHeading
-} from '@/components/PageHeader/PageHeader';
+import Link from 'next/link';
 import SwapCard from './commons/SwapCard';
 const Swap = () => {
   return (
     <Container>
       <div className='flex flex-col items-center text-center mt-5 mb-10'>
-        <PageHeaderHeading className='mb-5'>
-          <span className={'gradienteTitle'}>JEETDEX</span>
-        </PageHeaderHeading>
+        <div className='flex gap-5 text-xl'>
+          <Link href='/' className='hover:font-bold'>
+            <span className='whitespace-nowrap'>[swap]</span>
+          </Link>
 
-        <PageHeaderDescription>
-          Best meme token dex on MultiversX
-        </PageHeaderDescription>
+          <Link href='/create' className='hover:font-bold'>
+            <span className='whitespace-nowrap'>[list token]</span>
+          </Link>
+
+          <Link href='/dust' className='hover:font-bold'>
+            <span className='whitespace-nowrap'>[dust]</span>
+          </Link>
+        </div>
       </div>
       <div className='flex flex-col items-center text-center mt-5'>
         <SwapCard />

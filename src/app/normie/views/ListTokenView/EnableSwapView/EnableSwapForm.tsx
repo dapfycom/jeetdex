@@ -1,10 +1,12 @@
 'use client';
 import { Form } from '@/components/ui/form';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useTrackTransactionStatus } from '@/hooks';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import SelectToken from '../components/SelectToken';
@@ -38,9 +40,26 @@ const EnableSwapForm = () => {
     allowedPoolTokens.map((token) => token.identifier) || []
   );
   const ownedTokens = userTokens.filter((token) => token.owner === address);
+  const router = useRouter();
 
-  const onSubmit = () => {
-    enableTrade(pair);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  const onSuccess = () => {
+    setSessionId(null);
+    router.push('/create?create-pool=true&lock-lp=true&enable-swap=true');
+  };
+
+  useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess
+  });
+
+  const onSubmit = async () => {
+    const res = await enableTrade(pair);
+
+    if (res) {
+      setSessionId(res.sessionId);
+    }
   };
 
   return (

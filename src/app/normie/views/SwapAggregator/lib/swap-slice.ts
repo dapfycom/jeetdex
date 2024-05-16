@@ -21,7 +21,7 @@ const initialState: SwapState = {
   fromField: {
     value: '',
     valueDecimals: '',
-    selectedToken: tokensID.egld
+    selectedToken: tokensID.firstTokenSwap
   },
   toField: {
     value: '',

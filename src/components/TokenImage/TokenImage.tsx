@@ -1,7 +1,9 @@
-import { LpTokenImageV2 } from "@/components/LpTokenImage/LpTokenImage";
-import useGetElrondToken from "@/hooks/useGetElrondToken";
-import { Loader2 } from "lucide-react";
-import Image from "next/image";
+import { LpTokenImageV2 } from '@/components/LpTokenImage/LpTokenImage';
+import useGetElrondToken from '@/hooks/useGetElrondToken';
+import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 interface IProps {
   tokenI?: string;
@@ -9,14 +11,14 @@ interface IProps {
   size: number;
   alt?: string;
 }
-const TokenImage = ({ tokenI, src, alt = "", size }: IProps) => {
+const TokenImage = ({ tokenI, src, alt = '', size }: IProps) => {
   const { elrondToken, isLoading } = useGetElrondToken(
     src ? null : (tokenI as string)
   );
 
   if (src) {
     return (
-      <div className="flex">
+      <div className='flex'>
         <Image src={src} width={size} height={size} alt={alt} />
       </div>
     );
@@ -24,9 +26,9 @@ const TokenImage = ({ tokenI, src, alt = "", size }: IProps) => {
 
   if (!elrondToken || !elrondToken.assets?.svgUrl) {
     return (
-      <div className="flex">
+      <div className='flex'>
         <Image
-          src="/images/token-placehodler.png"
+          src='/images/token-placehodler.png'
           width={size || 40}
           height={size * 1.2 || 48}
           alt={alt}
@@ -36,12 +38,12 @@ const TokenImage = ({ tokenI, src, alt = "", size }: IProps) => {
   }
 
   return (
-    <div className="flex">
+    <div className='flex'>
       {isLoading ? (
-        <Loader2 className="animate-spin" />
+        <Loader2 className='animate-spin' />
       ) : (
-        <div className="flex items-center">
-          {elrondToken.name.slice(-2).toLocaleLowerCase() === "lp" ? (
+        <div className='flex items-center'>
+          {elrondToken.name.slice(-2).toLocaleLowerCase() === 'lp' ? (
             <LpTokenImageV2 lpToken={elrondToken} size={size} />
           ) : (
             <div className={`w-[${size}] h-[${size}] rounded-full`}>
@@ -61,13 +63,20 @@ const TokenImage = ({ tokenI, src, alt = "", size }: IProps) => {
 
 export default TokenImage;
 
-export const TokenImageSRC = ({ src, alt = "", size }: IProps) => {
+export const TokenImageSRC = ({ src, alt = '', size }: IProps) => {
   return (
-    <Image
-      src={src || "/images/token-placehodler.png"}
-      alt={alt}
-      width={size}
-      height={size}
-    />
+    <>
+      {src ? (
+        <Image src={src} alt={alt} width={size} height={size} />
+      ) : (
+        <FontAwesomeIcon
+          icon={faCircleQuestion}
+          style={{
+            width: size,
+            height: size
+          }}
+        />
+      )}
+    </>
   );
 };

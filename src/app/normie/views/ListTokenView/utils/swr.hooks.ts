@@ -1,11 +1,11 @@
 import { useAppSelector } from '@/hooks';
+import { pairContractAbi } from '@/localConstants/globals';
 import {
   fetchScSimpleData,
   fetchScSimpleDataWithContract
 } from '@/services/sc/query';
 import { Address, TokenIdentifierValue } from '@multiversx/sdk-core/out';
 import useSWR from 'swr';
-import { pairContractAbi } from './constants';
 import { selectToken1, selectToken2 } from './slice';
 
 export const useGetAllowedPoolTokens = () => {

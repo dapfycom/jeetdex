@@ -1,4 +1,3 @@
-import { useGetSwapbleAggregatorTokens } from '@/app/normie/views/SwapAggregator/lib/hooks';
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { Button } from '@/components/ui/button';
 import {
@@ -15,29 +14,23 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '@/components/ui/popover';
-import { tokensID } from '@/config';
 import useDisclosure from '@/hooks/useDisclosure';
 import useGetAccountToken from '@/hooks/useGetAccountToken';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
-import {
-  formatBalance,
-  formatBalanceDollar,
-  formatNumber,
-  formatTokenI,
-  setElrondBalance
-} from '@/utils/mx-utils';
+import { formatBalance, formatNumber, formatTokenI } from '@/utils/mx-utils';
 import { ChevronDownIcon, Loader, Loader2Icon } from 'lucide-react';
 // const SelectTokenModal = lazy(() => import("../SelectTokenModal"));
 
 interface IProps {
   selectedTokenI: string;
   value: string;
+  tokensIdentifiers: string[];
   onChange: (val: string, token?: IElrondToken) => void;
   onChangeToken: (t: IElrondToken) => void;
   isLoadingInput?: boolean;
-  disabeledTokenSelection?: boolean;
+
   onMax?: (t: IElrondAccountToken) => void;
   clear?: () => void;
 }
@@ -45,9 +38,9 @@ interface IProps {
 const InputBox = ({
   selectedTokenI,
   value,
+  tokensIdentifiers,
   onChange,
   onChangeToken,
-  disabeledTokenSelection,
   onMax,
   clear
 }: IProps) => {
@@ -55,14 +48,8 @@ const InputBox = ({
   const { accountToken } = useGetAccountToken(selectedTokenI);
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  // select token
-  const { ashTokens } = useGetSwapbleAggregatorTokens();
-  const tokensToSwap = [
-    tokensID.egld,
-    ...ashTokens.map((t) => t.id).filter((t) => t !== tokensID.jeet)
-  ];
   const { tokens, isLoading: loadingTokens } =
-    useGetMultipleElrondTokens(tokensToSwap);
+    useGetMultipleElrondTokens(tokensIdentifiers);
 
   const readOnly = !Boolean(onMax);
 
@@ -83,24 +70,13 @@ const InputBox = ({
             onOpenChange={(open) => (open ? onOpen() : onClose())}
           >
             <PopoverTrigger asChild>
-              <Button
-                variant='outline'
-                className={`ml-auto gap-2 w-fit ${
-                  disabeledTokenSelection ? 'justify-center' : ''
-                }`}
-              >
+              <Button variant='outline' className={`ml-auto gap-2 w-fit `}>
                 {isLoading ? (
                   <div className='flex px-2'>
                     <Loader2Icon className='animate-spin w-4 h-4' />
                   </div>
                 ) : (
-                  <div
-                    className={`flex items-center gap-2 ${
-                      disabeledTokenSelection
-                        ? 'min-w-[70px] justify-center gap-3'
-                        : ''
-                    }`}
-                  >
+                  <div className={`flex items-center gap-2`}>
                     <div className='w-[23px]'>
                       <TokenImageSRC
                         src={elrondToken?.assets?.svgUrl}
@@ -111,73 +87,58 @@ const InputBox = ({
                     <p>{formatTokenI(elrondToken?.ticker)}</p>
                   </div>
                 )}
-                {!disabeledTokenSelection && (
-                  <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
-                )}
+
+                <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
               </Button>
             </PopoverTrigger>
-            {!disabeledTokenSelection && (
-              <PopoverContent className='p-0' align='end'>
-                <Command>
-                  <CommandInput placeholder='Select new role token' />
-                  <CommandList>
-                    <CommandEmpty>
-                      {' '}
-                      {loadingTokens ? (
-                        <div className='flex justify-center w-full'>
-                          <Loader className='animate-spin' />
-                        </div>
-                      ) : (
-                        'No tokens found.'
-                      )}{' '}
-                    </CommandEmpty>
-                    {loadingTokens ? null : (
-                      <CommandGroup>
-                        {tokens.map((t) => {
-                          return (
-                            <CommandItem key={t.identifier}>
-                              <div
-                                className='w-full h-full gap-3 cursor-pointer flex  items-start px-4 py-2'
-                                onClick={() => {
-                                  onClose();
-                                  console.log('close modal');
 
-                                  onChangeToken(t);
-                                }}
-                              >
-                                <TokenImageSRC
-                                  size={20}
-                                  src={t?.assets?.svgUrl}
-                                  alt={t?.ticker}
-                                />
+            <PopoverContent className='p-0' align='end'>
+              <Command>
+                <CommandInput placeholder='Select new role token' />
+                <CommandList>
+                  <CommandEmpty>
+                    {' '}
+                    {loadingTokens ? (
+                      <div className='flex justify-center w-full'>
+                        <Loader className='animate-spin' />
+                      </div>
+                    ) : (
+                      'No tokens found.'
+                    )}{' '}
+                  </CommandEmpty>
+                  {loadingTokens ? null : (
+                    <CommandGroup>
+                      {tokens.map((t) => {
+                        return (
+                          <CommandItem key={t.identifier}>
+                            <div
+                              className='w-full h-full gap-3 cursor-pointer flex  items-start px-4 py-2'
+                              onClick={() => {
+                                onClose();
+                                onChangeToken(t);
+                              }}
+                            >
+                              <TokenImageSRC
+                                size={20}
+                                src={t?.assets?.svgUrl}
+                                alt={t?.ticker}
+                              />
 
-                                <p>{formatTokenI(t?.ticker)}</p>
-                              </div>
-                            </CommandItem>
-                          );
-                        })}
-                      </CommandGroup>
-                    )}
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            )}
+                              <p>{formatTokenI(t?.ticker)}</p>
+                            </div>
+                          </CommandItem>
+                        );
+                      })}
+                    </CommandGroup>
+                  )}
+                </CommandList>
+              </Command>
+            </PopoverContent>
           </Popover>
         </div>
 
         {accountToken && (
-          <div className='flex justify-between mt-3 text-muted-foreground'>
-            <div className='px-[12px] -translate-y-3 text-sm'>
-              ≈ $
-              {formatBalanceDollar(
-                {
-                  balance: setElrondBalance(value, elrondToken?.decimals),
-                  decimals: elrondToken?.decimals
-                },
-                elrondToken?.price
-              )}
-            </div>
-
+          <div className='flex justify-end mt-3 text-muted-foreground'>
             <div className='flex flex-col gap-1 sm:gap-3 items-center'>
               {!readOnly && (
                 <div className='flex gap-1 '>

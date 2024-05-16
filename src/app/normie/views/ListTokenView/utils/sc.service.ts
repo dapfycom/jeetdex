@@ -1,7 +1,7 @@
+import { pairContractAbi } from '@/localConstants/globals';
 import { interactions } from '@/services/sc';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { Address, AddressValue, BytesValue } from '@multiversx/sdk-core/out';
-import { pairContractAbi } from './constants';
 
 export const newPoolTx = async (
   first_token_id: string,
@@ -51,7 +51,7 @@ export const addInitialLiquidity = async (
     pairContractAbi
   );
 
-  interactions.MultiESDTNFTTransfer({
+  return interactions.MultiESDTNFTTransfer({
     functionName: 'addInitialLiquidity',
     tokens: [
       {

@@ -32,13 +32,11 @@ export const formatBalance = (
   if (token) {
     const strBalance = token.balance;
     const formatedBalance = getRealBalance(strBalance, token.decimals);
-    console.log(formatedBalance);
 
     const finalBinance = formatPrecision(
       formatedBalance as number,
       customPrecision
     );
-    console.log(finalBinance);
 
     if (retrunNumber) {
       return finalBinance;

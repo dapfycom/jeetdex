@@ -23,21 +23,27 @@ import { SwapIcon } from '@/components/ui/icons';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
+import BigNumber from 'bignumber.js';
 import { changeField } from '../../lib/functions';
+import { useGetSwapbleTokens, useGetTokenRatio } from '../../lib/hooks';
 import InputBox from './commons/InputBox';
 import SubmitButton from './commons/SubmitButton';
-import SwapInfo from './commons/SwapInfo/SwapInfo';
 
 const SwapCard = () => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
   const loadingAggregatorData = false;
   const dispatch = useAppDispatch();
-  const handleChangeFromField = () => {
-    changeField();
+  const handleChangeFromField = (value: string, token?: IElrondToken) => {
+    changeField(
+      value,
+      onChageFromFieldValue,
+      onChageFromFieldValueDecimals,
+      token
+    );
   };
-  const handleChangeToField = () => {
-    changeField();
+  const handleChangeToField = (value: string, token?: IElrondToken) => {
+    changeField(value, onChangeToField, onChangeToFieldValueDecimals, token);
   };
   const swapFileds = () => {
     dispatch(onSwapFields());
@@ -45,7 +51,7 @@ const SwapCard = () => {
 
   const handleChangeFromToken = (token: IElrondToken) => {
     dispatch(changeFromFieldToken(token.identifier));
-    handleChangeFromField();
+    handleChangeFromField(fromField.value, token);
   };
   const handleChangeToToken = (token: IElrondToken) => {
     dispatch(changeToFieldToken(token.identifier));
@@ -56,16 +62,38 @@ const SwapCard = () => {
     dispatch(onChageFromFieldValueDecimals(accountToken.balance));
   };
   const handleClear = () => {
-    dispatch(onChageFromFieldValue('0'));
-    dispatch(onChageFromFieldValueDecimals('0'));
-    dispatch(onChangeToFieldValueDecimals('0'));
-    dispatch(onChangeToField('0'));
+    dispatch(onChageFromFieldValue(''));
+    dispatch(onChageFromFieldValueDecimals(''));
+    dispatch(onChangeToFieldValueDecimals(''));
+    dispatch(onChangeToField(''));
   };
+
+  const { tokensPairs } = useGetSwapbleTokens();
+
+  const secondTokensForFirstToken = tokensPairs
+    .filter((t) => t.firstToken === fromField.selectedToken)
+    .map((t) => t.secondToken);
+
+  const pairSelected = tokensPairs.find(
+    (t) =>
+      t.firstToken === fromField.selectedToken &&
+      t.secondToken === toField.selectedToken
+  );
+  console.log(pairSelected);
+
+  const { returnAmount } = useGetTokenRatio(
+    pairSelected,
+    fromField.selectedToken,
+    new BigNumber(fromField.valueDecimals),
+    'first'
+  );
+
+  console.log(returnAmount);
 
   return (
     <Card className='text-left'>
       <CardHeader>
-        <CardTitle>Swap</CardTitle>
+        <CardTitle className='flex justify-end'>Slippage: 5%</CardTitle>
       </CardHeader>
       <CardContent className='space-y-3'>
         <InputBox
@@ -76,7 +104,9 @@ const SwapCard = () => {
           isLoadingInput={loadingAggregatorData}
           onMax={handleMax}
           clear={handleClear}
+          tokensIdentifiers={tokensPairs.map((t) => t.firstToken)}
         />
+
         <div className='flex justify-center'>
           <div className='w-10 h-10'>
             <Button size={'icon'} variant={'ghost'} onClick={swapFileds}>
@@ -91,8 +121,10 @@ const SwapCard = () => {
           onChange={handleChangeToField}
           onChangeToken={handleChangeToToken}
           isLoadingInput={loadingAggregatorData}
+          tokensIdentifiers={Array.from(
+            new Set([...secondTokensForFirstToken])
+          )}
         />
-        <SwapInfo />
       </CardContent>
       <CardFooter>
         <SubmitButton />

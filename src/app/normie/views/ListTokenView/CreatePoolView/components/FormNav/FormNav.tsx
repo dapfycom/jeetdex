@@ -1,6 +1,6 @@
 'use client';
 import { useAppDispatch } from '@/hooks';
-import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { setActiveStep, stepsType } from '../../../utils/slice';
 
@@ -13,14 +13,14 @@ const NavOrder: stepsType[] = ['create-pool', 'set-lp', 'set-roles'];
 const FormNav = ({ currentStep }: FormNavProps) => {
   const dispatch = useAppDispatch();
 
-  const handleNext = () => {
-    let nextStep = currentStep;
-    const currentIndex = NavOrder.indexOf(currentStep);
-    if (currentIndex < NavOrder.length - 1) {
-      nextStep = NavOrder[currentIndex + 1];
-    }
-    dispatch(setActiveStep(nextStep));
-  };
+  // const handleNext = () => {
+  //   let nextStep = currentStep;
+  //   const currentIndex = NavOrder.indexOf(currentStep);
+  //   if (currentIndex < NavOrder.length - 1) {
+  //     nextStep = NavOrder[currentIndex + 1];
+  //   }
+  //   dispatch(setActiveStep(nextStep));
+  // };
 
   const handleBack = () => {
     let nextStep = currentStep;
@@ -43,7 +43,7 @@ const FormNav = ({ currentStep }: FormNavProps) => {
         <FontAwesomeIcon icon={faArrowLeft} className='w-4 h-4' /> Back
       </div>
 
-      <div
+      {/* <div
         onClick={handleNext}
         className={
           'flex items-center gap-2 cursor-pointer hover:font-bold ' +
@@ -53,7 +53,7 @@ const FormNav = ({ currentStep }: FormNavProps) => {
         }
       >
         Next <FontAwesomeIcon icon={faArrowRight} className='w-4 h-4' />
-      </div>
+      </div> */}
     </div>
   );
 };

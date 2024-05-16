@@ -2,7 +2,6 @@ import Login from '@/components/Login/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';
-import Link from 'next/link';
 
 export const Header = () => {
   return (
@@ -42,9 +41,6 @@ export const Header = () => {
             >
               <span className='whitespace-nowrap'>[how it works]</span>
             </a>
-            <Link href='/create' className='hover:font-bold'>
-              <span className='whitespace-nowrap'>[List token]</span>
-            </Link>
           </div>
           <div className='flex gap-2 items-center'></div>
         </div>
