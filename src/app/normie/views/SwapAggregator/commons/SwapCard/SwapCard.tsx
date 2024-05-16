@@ -16,6 +16,7 @@ import {
   onChangeToFieldValueDecimals,
   onSwapFields,
   selectFromField,
+  selectNormalDirection,
   selectToField
 } from '@/app/normie/views/SwapAggregator/lib/swap-slice';
 import { Button } from '@/components/ui/button';
@@ -32,6 +33,7 @@ import SubmitButton from './commons/SubmitButton';
 const SwapCard = () => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
+  const normalDirection = useAppSelector(selectNormalDirection);
   const loadingAggregatorData = false;
   const dispatch = useAppDispatch();
   const handleChangeFromField = (value: string, token?: IElrondToken) => {
@@ -71,24 +73,28 @@ const SwapCard = () => {
   const { tokensPairs } = useGetSwapbleTokens();
 
   const secondTokensForFirstToken = tokensPairs
-    .filter((t) => t.firstToken === fromField.selectedToken)
-    .map((t) => t.secondToken);
+    .filter((t) =>
+      normalDirection
+        ? t.firstToken === fromField.selectedToken
+        : t.secondToken === fromField.selectedToken
+    )
+    .map((t) => (normalDirection ? t.secondToken : t.firstToken));
 
-  const pairSelected = tokensPairs.find(
-    (t) =>
-      t.firstToken === fromField.selectedToken &&
-      t.secondToken === toField.selectedToken
+  const pairSelected = tokensPairs.find((t) =>
+    normalDirection
+      ? t.firstToken === fromField.selectedToken &&
+        t.secondToken === toField.selectedToken
+      : t.secondToken === fromField.selectedToken &&
+        t.firstToken === toField.selectedToken
   );
   console.log(pairSelected);
 
-  const { returnAmount } = useGetTokenRatio(
+  useGetTokenRatio(
     pairSelected,
     fromField.selectedToken,
     new BigNumber(fromField.valueDecimals),
     'first'
   );
-
-  console.log(returnAmount);
 
   return (
     <Card className='text-left'>
@@ -104,7 +110,9 @@ const SwapCard = () => {
           isLoadingInput={loadingAggregatorData}
           onMax={handleMax}
           clear={handleClear}
-          tokensIdentifiers={tokensPairs.map((t) => t.firstToken)}
+          tokensIdentifiers={tokensPairs.map((t) =>
+            normalDirection ? t.firstToken : t.secondToken
+          )}
         />
 
         <div className='flex justify-center'>
@@ -127,7 +135,7 @@ const SwapCard = () => {
         />
       </CardContent>
       <CardFooter>
-        <SubmitButton />
+        <SubmitButton poolAddres={pairSelected?.address} />
       </CardFooter>
     </Card>
   );

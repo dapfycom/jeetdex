@@ -72,6 +72,11 @@ export const useGetTokenRatio = (
   bigUIntValue: BigNumber,
   type: 'first' | 'second'
 ) => {
+  console.log('pair', pair);
+  console.log('tokenIdentifier', tokenIdentifier);
+  console.log('bigUIntValue', bigUIntValue.toString());
+  console.log('type', type);
+
   const dispatch = useAppDispatch();
   let swrKey = null;
   const tokenOutDetails = useGetElrondToken(
@@ -88,8 +93,12 @@ export const useGetTokenRatio = (
   } else {
     swrKey =
       type === 'first'
-        ? `${pair.address}:getAmountOut:${bigUIntValue.toString()}`
-        : `${pair.address}:getAmountIn${bigUIntValue.toString()}`;
+        ? `${pair.address}:getAmountOut:${bigUIntValue.toString()}:${
+            pair.firstToken
+          }`
+        : `${pair.address}:getAmountIn${bigUIntValue.toString()}:${
+            pair.firstToken
+          }`;
   }
   const { data } = useSWR(swrKey, async (key) => {
     console.log(key);

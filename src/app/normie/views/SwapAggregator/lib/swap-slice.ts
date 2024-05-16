@@ -13,6 +13,7 @@ export interface SwapState {
     selectedToken: string;
     valueDecimals: string;
   };
+  normalDirection: boolean;
   rate: number;
   slipage: number;
 }
@@ -28,6 +29,7 @@ const initialState: SwapState = {
     selectedToken: tokensID.jeet,
     valueDecimals: ''
   },
+  normalDirection: true,
   rate: 0,
   slipage: 5
 };
@@ -66,6 +68,8 @@ export const swapAggregator = createSlice({
       state.fromField.valueDecimals = to.valueDecimals;
 
       state.toField.selectedToken = from.selectedToken;
+
+      state.normalDirection = !state.normalDirection;
     },
 
     onChangeSlippage: (state, action: PayloadAction<number>) => {
@@ -83,6 +87,8 @@ export const selectFromFieldSelectedToken = (state: AppState) =>
 export const selectToFieldValue = (state: AppState) => state.swap.toField.value;
 export const selectToFieldSelectedToken = (state: AppState) =>
   state.swap.toField.selectedToken;
+export const selectNormalDirection = (state: AppState) =>
+  state.swap.normalDirection;
 
 export const selectFromField = (state: AppState) => state.swap.fromField;
 export const selectToField = (state: AppState) => state.swap.toField;
