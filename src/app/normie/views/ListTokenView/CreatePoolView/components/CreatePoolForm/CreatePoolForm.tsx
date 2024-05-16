@@ -114,7 +114,7 @@ export default function CreatePoolForm() {
           <h2 className='text-gray-300 text-xl'>Generate Pool Address</h2>
 
           <p className='text-gray-400 text-sm mb-10'>
-            You must be the creator of the tokens and also brand them.
+            You must be the creator of the tokens.
           </p>
 
           <div className='w-full flex flex-col gap-4'>

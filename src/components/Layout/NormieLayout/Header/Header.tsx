@@ -32,16 +32,6 @@ export const Header = () => {
             </a>
           </div>
 
-          <div className='flex gap-2 items-center'>
-            <a
-              href='https://twitter.com/jeet_dex'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:font-bold'
-            >
-              <span className='whitespace-nowrap'>[how it works]</span>
-            </a>
-          </div>
           <div className='flex gap-2 items-center'></div>
         </div>
       </div>
