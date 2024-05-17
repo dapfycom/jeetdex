@@ -2,7 +2,7 @@ import {
   onChangeSlippage,
   selectFromFieldValue,
   selectSlippage
-} from '@/app/normie/views/SwapAggregator/lib/swap-slice';
+} from '@/app/normie/views/SwapView/lib/swap-slice';
 import Divider from '@/components/Divider/Divider';
 import { Input } from '@/components/ui/input';
 import { tokensID } from '@/config';

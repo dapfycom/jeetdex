@@ -8,13 +8,14 @@ export const submitSwap = async (
   sendToken: string,
   sendValue: string,
   receiveToken: string,
-  receiveValue: string
+  receiveValue: string,
+  slippage: number
 ) => {
   const interactions = new SmartContractInteraction(
     poolAddress,
     pairContractAbi
   );
-  console.log(receiveValue);
+  console.log({ slippage });
 
   return interactions.ESDTTransfer({
     functionName: 'swapIn',
@@ -26,7 +27,7 @@ export const submitSwap = async (
     arg: [
       new TokenIdentifierValue(receiveToken),
       new BigUIntValue(
-        new BigNumber(receiveValue).multipliedBy(0.95).toFixed(0)
+        new BigNumber(receiveValue).multipliedBy(1 - slippage / 100).toFixed(0)
       )
     ]
   });

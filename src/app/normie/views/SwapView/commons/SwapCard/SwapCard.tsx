@@ -12,15 +12,18 @@ import {
   changeToFieldToken,
   onChageFromFieldValue,
   onChageFromFieldValueDecimals,
+  onChangeSlippage,
   onChangeToField,
   onChangeToFieldValueDecimals,
   onSwapFields,
   selectFromField,
   selectNormalDirection,
+  selectSlippage,
   selectToField
-} from '@/app/normie/views/SwapAggregator/lib/swap-slice';
+} from '@/app/normie/views/SwapView/lib/swap-slice';
 import { Button } from '@/components/ui/button';
 import { SwapIcon } from '@/components/ui/icons';
+import { Input } from '@/components/ui/input';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
@@ -33,6 +36,7 @@ import SubmitButton from './commons/SubmitButton';
 const SwapCard = () => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
+  const slippage = useAppSelector(selectSlippage);
   const normalDirection = useAppSelector(selectNormalDirection);
   const loadingAggregatorData = false;
   const dispatch = useAppDispatch();
@@ -70,6 +74,10 @@ const SwapCard = () => {
     dispatch(onChangeToField(''));
   };
 
+  const handleChangeSlippage = (value: string) => {
+    dispatch(onChangeSlippage(Number(value)));
+  };
+
   const { tokensPairs } = useGetSwapbleTokens();
 
   const secondTokensForFirstToken = tokensPairs
@@ -87,7 +95,6 @@ const SwapCard = () => {
       : t.secondToken === fromField.selectedToken &&
         t.firstToken === toField.selectedToken
   );
-  console.log(pairSelected);
 
   useGetTokenRatio(
     pairSelected,
@@ -99,7 +106,17 @@ const SwapCard = () => {
   return (
     <Card className='text-left'>
       <CardHeader>
-        <CardTitle className='flex justify-end'>Slippage: 5%</CardTitle>
+        <CardTitle className='flex justify-end items-center gap-2'>
+          Slippage:{' '}
+          <span className='flex items-center gap-2'>
+            <Input
+              className='w-[40px]'
+              value={slippage}
+              onChange={(e) => handleChangeSlippage(e.target.value)}
+            />
+            %
+          </span>
+        </CardTitle>
       </CardHeader>
       <CardContent className='space-y-3'>
         <InputBox

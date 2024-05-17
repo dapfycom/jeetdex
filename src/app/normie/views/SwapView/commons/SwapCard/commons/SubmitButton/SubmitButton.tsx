@@ -1,7 +1,8 @@
 import {
   selectFromField,
+  selectSlippage,
   selectToField
-} from '@/app/normie/views/SwapAggregator/lib/swap-slice';
+} from '@/app/normie/views/SwapView/lib/swap-slice';
 import { Button } from '@/components/ui/button';
 import useGetAccountToken from '@/hooks/useGetAccountToken';
 import { useAppSelector } from '@/hooks/useRedux';
@@ -17,6 +18,7 @@ const SubmitButton = ({ poolAddres }: IProps) => {
   const { isLoggedIn } = useGetLoginInfo();
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
+  const slippage = useAppSelector(selectSlippage);
 
   const { accountToken } = useGetAccountToken(fromField.selectedToken);
 
@@ -26,7 +28,8 @@ const SubmitButton = ({ poolAddres }: IProps) => {
       fromField.selectedToken,
       fromField.valueDecimals,
       toField.selectedToken,
-      toField.valueDecimals
+      toField.valueDecimals,
+      slippage
     );
   };
   const InsufficientBalance = new BigNumber(
