@@ -1,7 +1,10 @@
 import Container from '@/components/Container/Container';
 import Link from 'next/link';
-import SwapCard from './commons/SwapCard';
-const Swap = () => {
+import Heading from './component/Heading/Heading';
+import Options from './component/Options/Options';
+import PoolsList from './component/PoolsList/PoolsList';
+
+const PoolsView = () => {
   return (
     <Container>
       <div className='flex flex-col items-center text-center mt-5 mb-10'>
@@ -32,11 +35,13 @@ const Swap = () => {
           </Link>
         </div>
       </div>
-      <div className='flex flex-col items-center text-center mt-5'>
-        <SwapCard />
+      <div className='flex flex-col items-center  mt-5 text-left'>
+        <Heading />
+        <Options />
+        <PoolsList />
       </div>
     </Container>
   );
 };
 
-export default Swap;
+export default PoolsView;
