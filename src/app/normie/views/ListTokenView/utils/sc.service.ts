@@ -1,17 +1,55 @@
 import { pairContractAbi } from '@/localConstants/globals';
 import { interactions } from '@/services/sc';
 import { SmartContractInteraction } from '@/services/sc/call';
-import { Address, AddressValue, BytesValue } from '@multiversx/sdk-core/out';
+import {
+  Address,
+  AddressValue,
+  BytesValue,
+  Field,
+  FieldDefinition,
+  OptionType,
+  OptionalValue,
+  Struct,
+  StructType,
+  U64Type,
+  U64Value
+} from '@multiversx/sdk-core/out';
 
 export const newPoolTx = async (
   first_token_id: string,
-  second_token_id: string
+  second_token_id: string,
+  buyFee?: {
+    value?: string;
+    timestamp?: number;
+  },
+  sellFee?: {
+    value?: string;
+    timestamp?: number;
+  }
 ) => {
+  const pairFeeType = new StructType('PairFee', [
+    new FieldDefinition('fee', '', new U64Type()),
+    new FieldDefinition('finish_timestamp', '', new U64Type())
+  ]);
   return interactions.mainRouter.scCall({
     functionName: 'newPair',
     arg: [
       BytesValue.fromUTF8(first_token_id),
-      BytesValue.fromUTF8(second_token_id)
+      BytesValue.fromUTF8(second_token_id),
+      new OptionalValue(
+        new OptionType(pairFeeType),
+        new Struct(pairFeeType, [
+          new Field(new U64Value(Number(buyFee.value) * 100), 'fee'),
+          new Field(new U64Value(buyFee.timestamp), 'finish_timestamp')
+        ])
+      ),
+      new OptionalValue(
+        new OptionType(pairFeeType),
+        new Struct(pairFeeType, [
+          new Field(new U64Value(Number(sellFee.value) * 100), 'fee'),
+          new Field(new U64Value(sellFee.timestamp), 'finish_timestamp')
+        ])
+      )
     ]
   });
 };

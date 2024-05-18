@@ -19,11 +19,14 @@ import {
 } from '../../../utils/swr.hooks';
 import PoolItemContainer, { ITokenPool } from './PoolItem/PoolItemContainer';
 
+import Divider from '@/components/Divider/Divider';
+import { Input } from '@/components/ui/input';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { setActiveStep, setToke1, setToken2 } from '../../../utils/slice';
 import FormNav from '../FormNav/FormNav';
+import DagePicker from './DatePicker/DagePicker';
 import SubmitButton from './SubmitButton/SubmitButton';
 const convertToPoolItemToken = (
   tokens: (ICoreToken & {
@@ -42,7 +45,15 @@ const convertToPoolItemToken = (
 
 export const formSchema = z.object({
   firstToken: z.string(),
-  secondToken: z.string()
+  secondToken: z.string(),
+  buyFee: z.object({
+    value: z.string(),
+    timestamp: z.number()
+  }),
+  sellFee: z.object({
+    value: z.string(),
+    timestamp: z.number()
+  })
 });
 
 export default function CreatePoolForm() {
@@ -59,7 +70,15 @@ export default function CreatePoolForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstToken: '',
-      secondToken: ''
+      secondToken: '',
+      buyFee: {
+        timestamp: 0,
+        value: '0'
+      },
+      sellFee: {
+        timestamp: 0,
+        value: '0'
+      }
     }
   });
 
@@ -85,7 +104,9 @@ export default function CreatePoolForm() {
     if (firstToken.length > 0 && secondToken.length > 0) {
       const res: SendTransactionReturnType = await newPoolTx(
         firstToken,
-        secondToken
+        secondToken,
+        data.buyFee,
+        data.sellFee
       );
       setSessionId(res.sessionId);
     }
@@ -106,6 +127,8 @@ export default function CreatePoolForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [form.watch('firstToken'), form.watch('secondToken')]
   );
+
+  console.log(form.formState.errors);
 
   return (
     <Form {...form}>
@@ -129,6 +152,24 @@ export default function CreatePoolForm() {
               tokenType='secondToken'
               isLoading={isLoading || loadingAllowedTokenDetails}
             />
+
+            <Divider />
+
+            <div>Optional</div>
+            <div className='flex-col flex gap-3 text-left'>
+              <div>Buy Fee</div>
+              <Input placeholder='Buy fee' {...form.register('buyFee.value')} />
+              <DagePicker field='buyFee' label='Buy Fee finish' />
+            </div>
+
+            <div className='flex-col flex gap-3 text-left'>
+              <div>Sell Fee</div>
+              <Input
+                placeholder='Sell fee'
+                {...form.register('sellFee.value')}
+              />
+              <DagePicker field='sellFee' label='Sell Fee finish' />
+            </div>
           </div>
           <SubmitButton />
 

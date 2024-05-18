@@ -105,8 +105,7 @@ const LockLpForm = () => {
       >
         <div className='bg-zinc-900 rounded-xl px-8 py-12'>
           <p className='text-gray-400 text-sm mb-10'>
-            Select the tokens of your pool. Then lock a LP position from your
-            pool for 180 days.
+            Select the tokens of your pool.
           </p>
 
           <div className='w-full flex flex-col gap-4 text-left'>
