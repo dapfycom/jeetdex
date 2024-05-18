@@ -1,6 +1,6 @@
 import Container from '@/components/Container/Container';
 import Link from 'next/link';
-import SwapCard from './commons/SwapCard';
+import SwapCardContainer from './commons/SwapCard/SwapCardContainer';
 const Swap = () => {
   return (
     <Container>
@@ -33,7 +33,7 @@ const Swap = () => {
         </div>
       </div>
       <div className='flex flex-col items-center text-center mt-5'>
-        <SwapCard />
+        <SwapCardContainer />
       </div>
     </Container>
   );
