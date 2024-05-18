@@ -63,6 +63,8 @@ const SwapCardContainer = () => {
   };
 
   const handleChangeSlippage = (value: string) => {
+    console.log('handleChangeSlippage', value);
+
     dispatch(onChangeSlippage(Number(value)));
   };
 
