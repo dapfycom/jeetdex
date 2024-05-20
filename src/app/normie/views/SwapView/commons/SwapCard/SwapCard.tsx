@@ -78,7 +78,7 @@ const SwapCard = ({
             )}
           />
 
-          <div className='flex justify-center translate-y-[-10px] mb-[-20px]'>
+          <div className='flex justify-center my-6'>
             <div className=''>
               <Button
                 size={'icon'}

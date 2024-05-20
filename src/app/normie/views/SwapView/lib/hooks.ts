@@ -72,11 +72,6 @@ export const useGetTokenRatio = (
   bigUIntValue: BigNumber,
   type: 'first' | 'second'
 ) => {
-  console.log('pair', pair);
-  console.log('tokenIdentifier', tokenIdentifier);
-  console.log('bigUIntValue', bigUIntValue.toString());
-  console.log('type', type);
-
   const dispatch = useAppDispatch();
   let swrKey = null;
   const tokenOutDetails = useGetElrondToken(

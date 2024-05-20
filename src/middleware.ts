@@ -14,7 +14,8 @@ export function middleware(request: NextRequest) {
       '/feed.xml',
       '/robots.txt',
       '/favicon.ico',
-      '/assets'
+      '/assets',
+      '/static'
 
       // Your other files in `public`
     ])
