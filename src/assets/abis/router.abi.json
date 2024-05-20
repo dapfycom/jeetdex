@@ -115,8 +115,23 @@
             "outputs": []
         },
         {
+            "name": "setNewPairFee",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "new_value",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
             "name": "newPair",
             "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
             "inputs": [
                 {
                     "name": "first_token_id",
@@ -158,23 +173,18 @@
                     "type": "TokenIdentifier"
                 },
                 {
-                    "name": "total_buy_fee_percent_requested",
-                    "type": "u64"
+                    "name": "opt_buy_fee_percents",
+                    "type": "optional<PairFee>",
+                    "multi_arg": true
                 },
                 {
-                    "name": "buy_fee_finish_timestamp",
-                    "type": "u64"
-                },
-                {
-                    "name": "total_sell_fee_percent_requested",
-                    "type": "u64"
-                },
-                {
-                    "name": "sell_fee_finish_timestamp",
-                    "type": "u64"
+                    "name": "opt_sell_fee_percents",
+                    "type": "optional<PairFee>",
+                    "multi_arg": true
                 }
             ],
-            "outputs": []
+            "outputs": [],
+            "allow_multiple_var_args": true
         },
         {
             "name": "issueLpToken",
@@ -272,6 +282,16 @@
             ]
         },
         {
+            "name": "getNewPairFee",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
             "name": "setTemporaryOwnerPeriod",
             "onlyOwner": true,
             "mutability": "mutable",
@@ -360,6 +380,17 @@
             ]
         },
         {
+            "name": "getAllPairContractData",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<PairContractData>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
             "name": "getPair",
             "mutability": "readonly",
             "inputs": [
@@ -419,6 +450,59 @@
     "esdtAttributes": [],
     "hasCallback": true,
     "types": {
+        "PairContractData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "sc_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "first_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "second_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "first_token_reserve",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "second_token_reserve",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "owner_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "buy_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "sell_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "buy_fee_finish_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "sell_fee_finish_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "lp_token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "lp_token_supply",
+                    "type": "BigUint"
+                }
+            ]
+        },
         "PairContractMetadata": {
             "type": "struct",
             "fields": [

@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ZodTypeAny, z } from 'zod';
 import SelectToken from '../../components/SelectToken';
-import { addInitialLiquidity } from '../../utils/sc.service';
+import { addInitialLiquidity } from '../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
   useGetLpIdentifier,

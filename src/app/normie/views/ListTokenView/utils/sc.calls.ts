@@ -1,6 +1,6 @@
 import { pairContractAbi } from '@/localConstants/globals';
-import { interactions } from '@/services/sc';
 import { SmartContractInteraction } from '@/services/sc/call';
+import { interactions } from '@/services/sc/interactions';
 import {
   Address,
   AddressValue,
@@ -15,7 +15,9 @@ import {
   U64Value
 } from '@multiversx/sdk-core/out';
 
+// Calls
 export const newPoolTx = async (
+  fee: string,
   first_token_id: string,
   second_token_id: string,
   buyFee?: {
@@ -31,7 +33,7 @@ export const newPoolTx = async (
     new FieldDefinition('fee', '', new U64Type()),
     new FieldDefinition('finish_timestamp', '', new U64Type())
   ]);
-  return interactions.mainRouter.scCall({
+  return interactions.mainRouter.EGLDPayment({
     functionName: 'newPair',
     arg: [
       BytesValue.fromUTF8(first_token_id),
@@ -50,7 +52,8 @@ export const newPoolTx = async (
           new Field(new U64Value(sellFee.timestamp), 'finish_timestamp')
         ])
       )
-    ]
+    ],
+    realValue: fee
   });
 };
 

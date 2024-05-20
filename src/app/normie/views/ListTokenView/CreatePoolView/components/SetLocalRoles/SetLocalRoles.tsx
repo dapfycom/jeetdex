@@ -3,7 +3,7 @@ import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { setRoles } from '../../../utils/sc.service';
+import { setRoles } from '../../../utils/sc.calls';
 import { useGetPoolPair } from '../../../utils/swr.hooks';
 import FormNav from '../FormNav/FormNav';
 

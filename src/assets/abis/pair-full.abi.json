@@ -280,6 +280,16 @@
             ]
         },
         {
+            "name": "getPairData",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "PairData"
+                }
+            ]
+        },
+        {
             "name": "addAdmin",
             "mutability": "mutable",
             "inputs": [
@@ -752,6 +762,55 @@
                 },
                 {
                     "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "PairData": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "first_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "second_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "first_token_reserve",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "second_token_reserve",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "owner_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "buy_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "sell_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "buy_fee_finish_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "sell_fee_finish_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "lp_token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "lp_token_supply",
                     "type": "BigUint"
                 }
             ]

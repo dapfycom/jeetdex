@@ -9,7 +9,7 @@ import {
   TypeExpressionParser,
   TypeMapper
 } from '@multiversx/sdk-core/out';
-import { SmartContractConfigTypes, smartContractsConfig } from './index';
+import { SmartContractConfigTypes, smartContractsConfig } from '.';
 import { provider } from './provider';
 
 export const fetchScSimpleData = async <T>(scInfo: string, args?: any[]) => {
@@ -44,11 +44,15 @@ export const fetchScSimpleDataWithContract = async <T>(
 
 export const scQuery = async (
   workspace: SmartContractConfigTypes,
-  funcName = '',
+  funcName: string,
   args: any[] = []
 ) => {
   try {
     const { address, abi } = smartContractsConfig[workspace];
+    console.log({
+      address,
+      abi
+    });
 
     if (!abi) {
       return;

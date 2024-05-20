@@ -10,7 +10,9 @@ import CreatePoolForm from './components/CreatePoolForm/CreatePoolForm';
 import SetLocalRoles from './components/SetLocalRoles/SetLocalRoles';
 import SetLpForm from './components/SetLpForm/SetLpForm';
 
-const CreatePoolsContainer = () => {
+const CreatePoolsContainer = ({ newPairFee }) => {
+  console.log({ newPairFee });
+
   const activeStep = useAppSelector(selectActiveCreatePoolStep);
   const dispatch = useAppDispatch();
   return (
@@ -21,7 +23,7 @@ const CreatePoolsContainer = () => {
       onValueChange={(step) => dispatch(setActiveStep(step as stepsType))}
     >
       <TabsContent value='create-pool'>
-        <CreatePoolForm />
+        <CreatePoolForm newPairFee={newPairFee} />
       </TabsContent>
       <TabsContent value='set-lp'>
         <SetLpForm />

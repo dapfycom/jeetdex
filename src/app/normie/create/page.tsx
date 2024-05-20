@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import ListTokenView from '../views/ListTokenView/ListTokenView';
 
 const ListTokenPage = ({
@@ -5,7 +6,11 @@ const ListTokenPage = ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  return <ListTokenView searchParams={searchParams} />;
+  return (
+    <Suspense fallback='kaka'>
+      <ListTokenView searchParams={searchParams} />
+    </Suspense>
+  );
 };
 
 export default ListTokenPage;

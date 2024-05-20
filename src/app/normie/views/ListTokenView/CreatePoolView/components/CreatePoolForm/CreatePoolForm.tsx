@@ -12,7 +12,7 @@ import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { ICoreToken } from '@/types/scTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { newPoolTx } from '../../../utils/sc.service';
+import { newPoolTx } from '../../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
   useGetPoolPair
@@ -56,7 +56,11 @@ export const formSchema = z.object({
   })
 });
 
-export default function CreatePoolForm() {
+interface ICreatePoolFormProps {
+  newPairFee: string;
+}
+
+export default function CreatePoolForm({ newPairFee }: ICreatePoolFormProps) {
   const { userTokens, isLoading: loadingUserTokens } = useGetUserTokens();
   const address = useAppSelector(selectUserAddress);
   const { allowedPoolTokens, isLoading } = useGetAllowedPoolTokens();
@@ -103,6 +107,7 @@ export default function CreatePoolForm() {
 
     if (firstToken.length > 0 && secondToken.length > 0) {
       const res: SendTransactionReturnType = await newPoolTx(
+        newPairFee,
         firstToken,
         secondToken,
         data.buyFee,

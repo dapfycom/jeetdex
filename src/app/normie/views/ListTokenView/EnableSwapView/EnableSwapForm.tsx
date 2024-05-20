@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import SelectToken from '../components/SelectToken';
-import { enableTrade } from '../utils/sc.service';
+import { enableTrade } from '../utils/sc.calls';
 import { useGetAllowedPoolTokens, useGetPoolPair } from '../utils/swr.hooks';
 import SubmitButton from './SubmitButton';
 

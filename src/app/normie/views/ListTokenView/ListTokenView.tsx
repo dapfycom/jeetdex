@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ActionsBox from './components/ActionsBox/ActionsBox';
 
-const ListTokenView = ({
+const ListTokenView = async ({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined };

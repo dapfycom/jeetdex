@@ -3,7 +3,7 @@ import { useAppDispatch, useTrackTransactionStatus } from '@/hooks';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useState } from 'react';
 import { useGenerateLPStrings } from '../../../../utils/hooks';
-import { createLp } from '../../../../utils/sc.service';
+import { createLp } from '../../../../utils/sc.calls';
 import { setActiveStep } from '../../../../utils/slice';
 import {
   useGetLpIdentifier,
