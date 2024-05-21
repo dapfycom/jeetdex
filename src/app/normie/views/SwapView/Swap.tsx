@@ -1,3 +1,4 @@
+import ChartCard from '@/components/ChartCard/ChartCard';
 import Container from '@/components/Container/Container';
 import Link from 'next/link';
 import SwapCardContainer from './commons/SwapCard/SwapCardContainer';
@@ -33,7 +34,12 @@ const Swap = () => {
         </div>
       </div>
       <div className='flex flex-col items-center text-center mt-5'>
-        <SwapCardContainer />
+        <div className='grid  grid-cols-1 md:grid-cols-[65%_35%] w-full gap-4'>
+          <div className='h-full mt-[40px] rounded-2xl overflow-hidden md:block hidden'>
+            <ChartCard />
+          </div>
+          <SwapCardContainer />
+        </div>
       </div>
     </Container>
   );

@@ -1,8 +1,9 @@
 import Container from '@/components/Container/Container';
+import { Tabs } from '@/components/ui/tabs';
 import Link from 'next/link';
 import Heading from './component/Heading/Heading';
 import Options from './component/Options/Options';
-import PoolsList from './component/PoolsList/PoolsList';
+import PoolsContent from './component/PoolsContent/PoolsContent';
 
 const PoolsView = () => {
   return (
@@ -37,8 +38,10 @@ const PoolsView = () => {
       </div>
       <div className='flex flex-col items-center  mt-5 text-left'>
         <Heading />
-        <Options />
-        <PoolsList />
+        <Tabs defaultValue='account' className='w-full'>
+          <Options />
+          <PoolsContent />
+        </Tabs>
       </div>
     </Container>
   );

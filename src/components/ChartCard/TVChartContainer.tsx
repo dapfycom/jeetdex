@@ -1,10 +1,11 @@
+'use client';
 import { useEffect, useRef } from 'react';
 import {
   ChartingLibraryWidgetOptions,
   LanguageCode,
   ResolutionString,
   widget
-} from '../../../../../../../public/static/charting_library';
+} from '../../../public/static/charting_library';
 
 export const TVChartContainer = (
   props: Partial<ChartingLibraryWidgetOptions>

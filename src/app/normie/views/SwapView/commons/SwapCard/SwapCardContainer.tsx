@@ -19,7 +19,6 @@ import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { changeField } from '../../lib/functions';
 import { useGetSwapbleTokens, useGetTokenRatio } from '../../lib/hooks';
-import ChartCard from '../ChartCard/ChartCard';
 import SwapCard from './SwapCard';
 
 const SwapCardContainer = () => {
@@ -94,29 +93,24 @@ const SwapCardContainer = () => {
     'first'
   );
   return (
-    <div className='grid grid-cols-[70%_30%] w-full gap-4'>
-      <div className='h-full mt-[40px] rounded-2xl overflow-hidden'>
-        <ChartCard />
-      </div>
-      <SwapCard
-        fromField={fromField}
-        handleChangeFromField={handleChangeFromField}
-        handleChangeFromToken={handleChangeFromToken}
-        handleChangeSlippage={handleChangeSlippage}
-        handleChangeToField={handleChangeToField}
-        handleChangeToToken={handleChangeToToken}
-        handleClear={handleClear}
-        handleMax={handleMax}
-        isLoading={loadingAggregatorData}
-        normalDirection={normalDirection}
-        pairSelected={pairSelected}
-        secondTokensForFirstToken={secondTokensForFirstToken}
-        slippage={slippage}
-        swapFileds={swapFileds}
-        toField={toField}
-        tokensPairs={tokensPairs}
-      />
-    </div>
+    <SwapCard
+      fromField={fromField}
+      handleChangeFromField={handleChangeFromField}
+      handleChangeFromToken={handleChangeFromToken}
+      handleChangeSlippage={handleChangeSlippage}
+      handleChangeToField={handleChangeToField}
+      handleChangeToToken={handleChangeToToken}
+      handleClear={handleClear}
+      handleMax={handleMax}
+      isLoading={loadingAggregatorData}
+      normalDirection={normalDirection}
+      pairSelected={pairSelected}
+      secondTokensForFirstToken={secondTokensForFirstToken}
+      slippage={slippage}
+      swapFileds={swapFileds}
+      toField={toField}
+      tokensPairs={tokensPairs}
+    />
   );
 };
 

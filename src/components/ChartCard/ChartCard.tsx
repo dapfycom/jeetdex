@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import {
   ChartingLibraryWidgetOptions,
   ResolutionString
-} from '../../../../../../../public/static/charting_library/charting_library';
+} from '../../../public/static/charting_library/charting_library';
 
 const defaultWidgetProps: Partial<ChartingLibraryWidgetOptions> = {
   symbol: 'AAPL',

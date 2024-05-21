@@ -29,9 +29,9 @@ interface IProps {
   selectedTokenI: string;
   value: string;
   tokensIdentifiers: string[];
+  isLoadingInput?: boolean;
   onChange: (val: string, token?: IElrondToken) => void;
   onChangeToken: (t: IElrondToken) => void;
-  isLoadingInput?: boolean;
 
   onMax?: (t: IElrondAccountToken) => void;
   clear?: () => void;
@@ -59,19 +59,21 @@ const InputBox = ({
     <>
       <div className='flex flex-col w-full pt-3   rounded-2xl bg-[#0b102280] max-w-[500px] border-[#A259FF] focus-within:border focus-within:shadow-[0px_0px_12px_6px_#A259FF33]'>
         <div className='flex flex-col'>
-          <div className='flex justify-between items-start px-8 pb-3 gap-2'>
-            <h5 className='text-sm'>From</h5>
+          <div className='flex justify-between items-start px-4 md:px-8 pb-3 gap-2'>
+            <h5 className='text-xs lg:text-sm '>From</h5>
 
             <div className='flex items-center gap-2'>
               <div className='flex items-center gap-1'>
-                <FontAwesomeIcon icon={faWallet} />
+                <FontAwesomeIcon icon={faWallet} className='w-3 h-3' />
 
-                <span className='h-[20px]'>{formatBalance(accountToken)}</span>
+                <span className='h-[16px] lg:h-[20px] text-xs lg:text-md'>
+                  {formatBalance(accountToken)}
+                </span>
               </div>
 
               <div className='flex gap-2'>
                 <Button
-                  className='px-[6px] h-[20px] text-gray-700 text-[12px]'
+                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
                   onClick={() =>
                     onMax && onMax(accountToken as IElrondAccountToken)
                   }
@@ -79,7 +81,7 @@ const InputBox = ({
                   Max
                 </Button>
                 <Button
-                  className='px-[6px] h-[20px] text-gray-700 text-[12px]'
+                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
                   onChange={clear}
                 >
                   Clear
@@ -87,7 +89,7 @@ const InputBox = ({
               </div>
             </div>
           </div>
-          <div className=' flex justify-between w-full bg-[#0b1022] rounded-2xl py-3 px-5'>
+          <div className=' flex justify-between w-full bg-[#0b1022] rounded-2xl py-3 px-3 lg:px-5'>
             <Popover
               open={isOpen}
               onOpenChange={(open) => (open ? onOpen() : onClose())}
@@ -95,7 +97,7 @@ const InputBox = ({
               <PopoverTrigger asChild>
                 <Button
                   variant='outline'
-                  className={`ml-auto gap-2 w-fit !h-[56px] rounded-2xl bg-[#1C243E] `}
+                  className={`ml-auto gap-2 w-fit !h-[40px] lg:!h-[56px] rounded-2xl bg-[#1C243E] `}
                 >
                   {isLoading ? (
                     <div className='flex px-2'>
@@ -110,7 +112,7 @@ const InputBox = ({
                           size={23}
                         />
                       </div>
-                      <p className='text-[24px]'>
+                      <p className='text-md lg:text-[20px]'>
                         {formatTokenI(elrondToken?.ticker)}
                       </p>
                     </div>
@@ -165,7 +167,7 @@ const InputBox = ({
             </Popover>
             <Input
               type='text'
-              className='border-none text-end text-[28px] focus-visible:border-none focus-visible:ring-0 focus-visible:ring-offset-0'
+              className='border-none text-end text-[20px] lg:text-[22px] focus-visible:border-none focus-visible:ring-0 focus-visible:ring-offset-0'
               placeholder='0.0'
               onChange={(e) => onChange(e.target.value, elrondToken)}
               value={readOnly ? (formatNumber(value || '0') as string) : value}

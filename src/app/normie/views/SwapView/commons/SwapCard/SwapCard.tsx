@@ -56,14 +56,14 @@ const SwapCard = ({
   swapFileds
 }: IProps) => {
   return (
-    <div className='w-full  max-w-[500px]'>
+    <div className='w-full  max-w-[500px] mx-auto'>
       <div className='w-full flex justify-end mb-3'>
         <SliipageModal
           slippage={slippage}
           handleChangeSlippage={handleChangeSlippage}
         />
       </div>
-      <Card className='pt-6 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)] '>
+      <Card className='lg:p-3 p-0  pt-6 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)]'>
         <CardContent>
           <InputBox
             selectedTokenI={fromField.selectedToken}
