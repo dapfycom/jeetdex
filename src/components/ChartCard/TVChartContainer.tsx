@@ -1,4 +1,5 @@
 'use client';
+import { customDatafeed } from '@/customDatafeed';
 import { useEffect, useRef } from 'react';
 import {
   ChartingLibraryWidgetOptions,
@@ -16,15 +17,7 @@ export const TVChartContainer = (
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
       symbol: props.symbol,
-      // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new (window as any).Datafeeds.UDFCompatibleDatafeed(
-        'https://demo_feed.tradingview.com',
-        undefined,
-        {
-          maxResponseLength: 1000,
-          expectedOrder: 'latestFirst'
-        }
-      ),
+      datafeed: customDatafeed,
       interval: props.interval as ResolutionString,
       container: chartContainerRef.current,
       library_path: props.library_path,

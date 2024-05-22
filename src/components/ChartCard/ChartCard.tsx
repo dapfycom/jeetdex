@@ -8,7 +8,7 @@ import {
 } from '../../../public/static/charting_library/charting_library';
 
 const defaultWidgetProps: Partial<ChartingLibraryWidgetOptions> = {
-  symbol: 'AAPL',
+  symbol: 'Bitfinex:TRX/EUR',
   interval: '1D' as ResolutionString,
   library_path: '/static/charting_library/',
   locale: 'en',
@@ -26,16 +26,14 @@ const TVChartContainer = dynamic(
   { ssr: false }
 );
 
-export default function Home() {
+export default function ChartCard() {
   const [isScriptReady, setIsScriptReady] = useState(false);
-  console.log(isScriptReady);
   useEffect(() => {
     const script = document.createElement('script');
     script.src = '/static/datafeeds/udf/dist/bundle.js';
     script.async = true;
 
     script.onload = () => {
-      console.log('Is ready');
       setIsScriptReady(true);
     };
 
@@ -45,11 +43,10 @@ export default function Home() {
 
     document.body.appendChild(script);
 
-    // Cleanup function to remove the script if the component unmounts
     return () => {
       document.body.removeChild(script);
     };
-  }, []); // Empty dependency array means this effect runs once on mount and clean up on unmount
+  }, []);
 
   return <>{isScriptReady && <TVChartContainer {...defaultWidgetProps} />}</>;
 }
