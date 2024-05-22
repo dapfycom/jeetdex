@@ -68,9 +68,6 @@ socket.onclose = () => {
   console.log('WebSocket connection closed');
 };
 
-// Use it to keep a record of the most recent bar on the chart
-const lastBarsCache = new Map();
-
 export const customDatafeed = {
   onReady: (callback) => {
     setTimeout(() => callback(configurationData));

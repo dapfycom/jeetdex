@@ -38,7 +38,7 @@ const PoolsView = () => {
       </div>
       <div className='flex flex-col items-center  mt-5 text-left'>
         <Heading />
-        <Tabs defaultValue='account' className='w-full'>
+        <Tabs defaultValue='table' className='w-full'>
           <Options />
           <PoolsContent />
         </Tabs>

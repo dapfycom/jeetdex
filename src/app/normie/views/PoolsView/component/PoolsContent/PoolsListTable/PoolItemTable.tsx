@@ -15,13 +15,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
 import ChartCard from '@/components/ChartCard/ChartCard';
+import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger
 } from '@/components/ui/tooltip';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const PoolItem = () => {
@@ -42,26 +42,11 @@ const PoolItem = () => {
 
       <TableCell className='font-medium py-4'>
         <div className='flex'>
-          <div className='flex'>
-            <div className='w-[26px] h-[26px] rounded-full bg-gradient-to-r from-[rgba(171,_196,_255,_0.20)] from-30% to-[rgba(171,_196,_255,_0.00)]  flex justify-center items-center backdrop-blur-sm'>
-              <Image
-                src={jeetStaticData.assets.svgUrl}
-                alt='Token1'
-                className='w-[18px] h-[18px] rounded-full'
-                width={32}
-                height={32}
-              />
-            </div>
-            <div className='w-[26px] h-[26px] rounded-full bg-card flex justify-center items-center backdrop-blur-sm -translate-x-1'>
-              <Image
-                src={jeetStaticData.assets.svgUrl}
-                alt='Token1'
-                className='w-[18px] h-[18px] rounded-full'
-                width={32}
-                height={32}
-              />
-            </div>
-          </div>
+          <PoolCoins
+            src1={jeetStaticData.assets.svgUrl}
+            src2={jeetStaticData.assets.svgUrl}
+          />
+
           <div>
             <div className='whitespace-nowrap'>JEET-EGLD</div>
             <Badge className='rounded-full px-1 py-0 text-xs bg-card text-gray-300/80'>
@@ -78,10 +63,10 @@ const PoolItem = () => {
           <DialogTrigger asChild>
             <TooltipProvider>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <Button
                     variant='outline'
-                    className='border-primary text-primary py-4 hover:bg-[#3ff2ff13]'
+                    className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
                     size='sm'
                     onClick={togglePoolChart}
                   >
@@ -106,7 +91,7 @@ const PoolItem = () => {
             <TooltipTrigger>
               <Button
                 variant='outline'
-                className='border-primary text-primary py-4 hover:bg-[#3ff2ff13]'
+                className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
                 size='sm'
                 asChild
               >

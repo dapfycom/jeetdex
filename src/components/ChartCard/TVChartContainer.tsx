@@ -1,5 +1,4 @@
 'use client';
-import { customDatafeed } from '@/customDatafeed';
 import { useEffect, useRef } from 'react';
 import {
   ChartingLibraryWidgetOptions,
@@ -7,6 +6,7 @@ import {
   ResolutionString,
   widget
 } from '../../../public/static/charting_library';
+import { customDatafeed } from './customDatafeed';
 
 export const TVChartContainer = (
   props: Partial<ChartingLibraryWidgetOptions>
@@ -17,7 +17,7 @@ export const TVChartContainer = (
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
       symbol: props.symbol,
-      datafeed: customDatafeed,
+      datafeed: customDatafeed as any,
       interval: props.interval as ResolutionString,
       container: chartContainerRef.current,
       library_path: props.library_path,

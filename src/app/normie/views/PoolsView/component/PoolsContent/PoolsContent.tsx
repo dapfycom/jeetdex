@@ -1,13 +1,16 @@
 import { TabsContent } from '@/components/ui/tabs';
+import PoolListCards from './PoolListCards/PoolListCards';
 import PoolsList from './PoolsListTable/PoolsListTable';
 
 const PoolsContent = () => {
   return (
     <div className='w-full mt-5'>
-      <TabsContent value='account'>
+      <TabsContent value='table'>
         <PoolsList />
       </TabsContent>
-      <TabsContent value='password'>Change your password here.</TabsContent>
+      <TabsContent value='cards'>
+        <PoolListCards />
+      </TabsContent>
     </div>
   );
 };

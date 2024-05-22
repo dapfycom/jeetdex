@@ -9,13 +9,13 @@ const LayoutTabs = () => {
         Layout
         <TabsList className='bg-card rounded-full px-4 gap-4'>
           <TabsTrigger
-            value='account'
+            value='table'
             className='text-gray-500 data-[state=active]:bg-transparent data-[state=active]:text-white'
           >
             <FontAwesomeIcon icon={faList} className='w-4 h-4' />
           </TabsTrigger>
           <TabsTrigger
-            value='password'
+            value='cards'
             className='text-gray-500 data-[state=active]:bg-transparent data-[state=active]:text-white'
           >
             {' '}
