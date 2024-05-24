@@ -17,7 +17,6 @@ const CreatePoolsContainer = ({ newPairFee }) => {
   const dispatch = useAppDispatch();
   return (
     <Tabs
-      defaultValue='create-pool'
       className='w-full max-w-[400px]'
       value={activeStep}
       onValueChange={(step) => dispatch(setActiveStep(step as stepsType))}

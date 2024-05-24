@@ -19,8 +19,11 @@ import {
 } from '../../../utils/swr.hooks';
 import PoolItemContainer, { ITokenPool } from './PoolItem/PoolItemContainer';
 
+import Collapse from '@/components/Collapse/Collapse';
 import Divider from '@/components/Divider/Divider';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import useDisclosure from '@/hooks/useDisclosure';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
@@ -133,15 +136,16 @@ export default function CreatePoolForm({ newPairFee }: ICreatePoolFormProps) {
     [form.watch('firstToken'), form.watch('secondToken')]
   );
 
-  console.log(form.formState.errors);
-
+  const { isOpen, onToggle } = useDisclosure();
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-        <div className='bg-zinc-900 rounded-xl px-8 py-12'>
-          <h2 className='text-gray-300 text-xl'>Generate Pool Address</h2>
+        <div className='rounded-xl bg-zinc-900 px-4 py-5'>
+          <h2 className='text-gray-300 text-xl text-left '>
+            Generate Pool Address
+          </h2>
 
-          <p className='text-gray-400 text-sm mb-10'>
+          <p className='text-gray-400 text-sm mb-10 text-left'>
             You must be the creator of the tokens.
           </p>
 
@@ -160,21 +164,35 @@ export default function CreatePoolForm({ newPairFee }: ICreatePoolFormProps) {
 
             <Divider />
 
-            <div>Optional</div>
-            <div className='flex-col flex gap-3 text-left'>
-              <div>Buy Fee</div>
-              <Input placeholder='Buy fee' {...form.register('buyFee.value')} />
-              <DagePicker field='buyFee' label='Buy Fee finish' />
-            </div>
+            <Button
+              variant='ghost'
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onToggle();
+              }}
+            >
+              {isOpen ? 'Less info' : 'More info'}{' '}
+            </Button>
+            <Collapse isOpen={isOpen}>
+              <div className='flex-col flex gap-3 text-left'>
+                <div>Buy Fee</div>
+                <Input
+                  placeholder='Buy fee'
+                  {...form.register('buyFee.value')}
+                />
+                <DagePicker field='buyFee' label='Buy Fee finish' />
+              </div>
 
-            <div className='flex-col flex gap-3 text-left'>
-              <div>Sell Fee</div>
-              <Input
-                placeholder='Sell fee'
-                {...form.register('sellFee.value')}
-              />
-              <DagePicker field='sellFee' label='Sell Fee finish' />
-            </div>
+              <div className='flex-col flex gap-3 text-left'>
+                <div>Sell Fee</div>
+                <Input
+                  placeholder='Sell fee'
+                  {...form.register('sellFee.value')}
+                />
+                <DagePicker field='sellFee' label='Sell Fee finish' />
+              </div>
+            </Collapse>
           </div>
           <SubmitButton />
 

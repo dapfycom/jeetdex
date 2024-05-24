@@ -25,12 +25,12 @@ const DisconnectComponent = () => {
       <DropdownMenuTrigger>
         <div className='relative flex items-center gap-3 px-3 py-2 rounded-md border'>
           <div className='hidden sm:block'>
-            ({' '}
+            (
             {formatBalance({
               balance: balance,
               decimals: 18
             })}{' '}
-            EGLD )
+            EGLD)
           </div>
           <Logo className='w-6 h-6 rounded-full hidden sm:block' />
           <div>

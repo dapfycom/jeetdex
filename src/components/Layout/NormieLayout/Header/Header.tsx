@@ -2,34 +2,33 @@ import Login from '@/components/Login/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';
+import Link from 'next/link';
 
 export const Header = () => {
   return (
-    <header className='flex flex-col sm:flex-row  items-center  justify-between pl-6 pr-6 pt-6'>
+    <header className='flex flex-col sm:flex-row  items-start  justify-between pl-4 pr-4 pt-4'>
       <div className='flex gap-4 items-center'>
         <MxLink to={'/'} className='flex items-center justify-between gap-3'>
           <Logo className='rounded-full w-12 h-12' />
         </MxLink>
 
-        <div className='text-sm sm:text-md'>
+        <div className='text-sm sm:text-lg'>
           <div className='flex gap-2 items-center'>
-            <a
-              href='https://twitter.com/jeet_dex'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:font-bold'
-            >
-              [twitter]
-            </a>
+            <Link href='/' className='hover:font-bold'>
+              <span className='whitespace-nowrap'>swap</span>
+            </Link>
 
-            <a
-              href='https://t.me/jeetdex'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:font-bold'
-            >
-              [telegram]
-            </a>
+            <Link href='/pools' className='hover:font-bold'>
+              <span className='whitespace-nowrap'>pool</span>
+            </Link>
+
+            <Link href='/dust' className='hover:font-bold'>
+              <span className='whitespace-nowrap'>dust</span>
+            </Link>
+
+            <Link href='#' className='hover:font-bold'>
+              <span className='whitespace-nowrap'>more</span>
+            </Link>
           </div>
 
           <div className='flex gap-2 items-center'></div>

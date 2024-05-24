@@ -2,7 +2,6 @@
 import { useAppDispatch } from '@/hooks';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/navigation';
 import { setActiveStep, stepsType } from '../../../utils/slice';
 
 interface FormNavProps {
@@ -13,7 +12,6 @@ const NavOrder: stepsType[] = ['create-pool', 'set-lp', 'set-roles'];
 
 const FormNav = ({ currentStep }: FormNavProps) => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   // const handleNext = () => {
   //   let nextStep = currentStep;
@@ -29,23 +27,23 @@ const FormNav = ({ currentStep }: FormNavProps) => {
     const currentIndex = NavOrder.indexOf(currentStep);
     if (currentIndex > 0) {
       nextStep = NavOrder[currentIndex - 1];
-    } else {
-      router.push('/create');
     }
     dispatch(setActiveStep(nextStep));
   };
 
   return (
     <div className='mt-8 flex justify-between'>
-      <div
-        onClick={handleBack}
-        className={
-          'flex items-center gap-2 cursor-pointer hover:font-bold ' +
-          (currentStep === NavOrder[0] ? 'opacity-70 cursor-not-allowed' : '')
-        }
-      >
-        <FontAwesomeIcon icon={faArrowLeft} className='w-4 h-4' /> Back
-      </div>
+      {currentStep !== NavOrder[0] && (
+        <div
+          onClick={handleBack}
+          className={
+            'flex items-center gap-2 cursor-pointer hover:font-bold ' +
+            (currentStep === NavOrder[0] ? 'opacity-70 cursor-not-allowed' : '')
+          }
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className='w-4 h-4' /> Back
+        </div>
+      )}
 
       {/* <div
         onClick={handleNext}

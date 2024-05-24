@@ -1,11 +1,12 @@
 'use client';
 import Collapse from '@/components/Collapse/Collapse';
+import CreatePoolModal from '@/components/CreatePoolModal/CreatePoolModal';
 import { Button } from '@/components/ui/button';
+import { DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import useDisclosure from '@/hooks/useDisclosure';
 import { faSearch, faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
 import LayoutTabs from './LayoutTabs';
 
 const Options = () => {
@@ -37,13 +38,16 @@ const Options = () => {
             </div>
 
             <div>
-              <Button
-                variant='outline'
-                className='border-primary text-primary hover:bg-[#3ff2ff13]'
-                asChild
-              >
-                <Link href={'/create'}>Create</Link>
-              </Button>
+              <CreatePoolModal>
+                <DialogTrigger asChild>
+                  <Button
+                    variant='outline'
+                    className='border-primary text-primary hover:bg-[#3ff2ff13]'
+                  >
+                    Create
+                  </Button>
+                </DialogTrigger>
+              </CreatePoolModal>
             </div>
           </div>
         </div>

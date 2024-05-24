@@ -14,7 +14,7 @@ const SetLocalRoles = () => {
   const router = useRouter();
   const onSuccess = () => {
     setSessionId(null);
-    router.push('/create?create-pool=true');
+    router.push('/pools');
     revalidatePoolsPairs();
   };
 
@@ -33,9 +33,9 @@ const SetLocalRoles = () => {
 
   return (
     <div className='bg-zinc-900 rounded-xl px-8 py-12 w-full text-left'>
-      <h2 className='text-gray-300 text-xl text-center'>Set locale roles</h2>
+      <h2 className='text-gray-300 text-xl '>Set locale roles</h2>
 
-      <p className='text-gray-400 text-sm mb-10 text-center'>
+      <p className='text-gray-400 text-sm mb-10 '>
         Set the locale roles for the new pool.
       </p>
 
