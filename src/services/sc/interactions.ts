@@ -16,5 +16,9 @@ export const interactions: {
   mainRouter: new SmartContractInteraction(
     smartContractsConfig.mainRouter.simpleAddress,
     smartContractsConfig.mainRouter.abi
+  ),
+  dust: new SmartContractInteraction(
+    smartContractsConfig.dust.simpleAddress,
+    smartContractsConfig.dust.abi
   )
 };

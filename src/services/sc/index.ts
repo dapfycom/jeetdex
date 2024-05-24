@@ -1,3 +1,4 @@
+import dustAbi from '@/assets/abis/dust_sc.abi.json';
 import routerAbi from '@/assets/abis/router.abi.json';
 import { scAddress } from '@/config';
 import { Address } from '@multiversx/sdk-core/out';
@@ -23,6 +24,11 @@ export const smartContractsConfig = {
     simpleAddress: scAddress.mainRouter,
     address: new Address(scAddress.mainRouter),
     abi: routerAbi
+  },
+  dust: {
+    simpleAddress: scAddress.dust,
+    address: new Address(scAddress.dust),
+    abi: dustAbi
   }
 };
 
