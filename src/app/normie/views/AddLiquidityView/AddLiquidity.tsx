@@ -2,12 +2,13 @@ import Container from '@/components/Container/Container';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import { IPoolPair } from '../PoolsView/utils/types';
 import AddLiquidityCard from './components/AddLiquidityCard/AddLiquidityCard';
 
 interface IProps {
-  lpToken: string;
+  pool: IPoolPair;
 }
-const AddLiquidity = ({ lpToken }: IProps) => {
+const AddLiquidity = ({ pool }: IProps) => {
   return (
     <Container className='mt-8'>
       <div className='w-full max-w-[800px] mx-auto'>
@@ -24,7 +25,7 @@ const AddLiquidity = ({ lpToken }: IProps) => {
             Add liquidity to earn fees and rewards.
           </h2>
         </div>
-        <AddLiquidityCard lpToken={lpToken} />
+        <AddLiquidityCard pool={pool} />
       </div>
     </Container>
   );

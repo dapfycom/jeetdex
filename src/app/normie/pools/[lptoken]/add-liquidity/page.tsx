@@ -10,6 +10,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function Page({ params }: { params: { lptoken: string } }) {
-  return <AddLiquidity lpToken={params.lptoken} />;
+async function Page({ params }: { params: { lptoken: string } }) {
+  const pools = await fetchPoolsData();
+  const pool = pools.find((pool) => pool.lpTokenIdentifier === params.lptoken);
+
+  return <AddLiquidity pool={pool} />;
 }
+
+export default Page;

@@ -99,7 +99,8 @@ const InputBox = ({
               <PopoverTrigger asChild>
                 <Button
                   variant='outline'
-                  className={`ml-auto gap-2 w-fit !h-[40px] lg:!h-[56px] rounded-2xl bg-[#1C243E] `}
+                  className={`ml-auto gap-2 w-fit !h-[40px] lg:!h-[56px] rounded-2xl bg-[#1C243E] disabled:opacity-100`}
+                  disabled={tokensIdentifiers.length === 0 || isLoading}
                 >
                   {isLoading ? (
                     <div className='flex px-2'>
@@ -119,8 +120,9 @@ const InputBox = ({
                       </p>
                     </div>
                   )}
-
-                  <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
+                  {tokensIdentifiers.length !== 0 && (
+                    <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
+                  )}
                 </Button>
               </PopoverTrigger>
 
@@ -177,38 +179,6 @@ const InputBox = ({
             />
           </div>
         </div>
-        {/* 
-        {accountToken && (
-          <div className='flex justify-end mt-3 text-muted-foreground'>
-            <div className='flex flex-col gap-1 sm:gap-3 items-center'>
-              {!readOnly && (
-                <div className='flex gap-1 '>
-                  {value !== '' && value !== '0' && value !== null && (
-                    <Button
-                      size={'sm'}
-                      className='text-xs text-red-500'
-                      variant={'outline'}
-                      onClick={clear}
-                    >
-                      ABORT
-                    </Button>
-                  )}
-                  <Button
-                    size={'sm'}
-                    className='text-xs'
-                    variant={'outline'}
-                    onClick={() =>
-                      onMax && onMax(accountToken as IElrondAccountToken)
-                    }
-                  >
-                    MAX
-                  </Button>
-                </div>
-              )}
-              <p className='text-sm'>Balance: {formatBalance(accountToken)}</p>
-            </div>
-          </div>
-        )} */}
       </div>
     </>
   );

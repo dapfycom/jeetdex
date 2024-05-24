@@ -1,14 +1,15 @@
 'use client';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IPoolPair } from '../../../PoolsView/utils/types';
 import InputBox from '../../../SwapView/commons/SwapCard/commons/InputBox';
 
 export interface AddLiquidityCardProps {
-  lpToken: string;
+  pool: IPoolPair;
 }
 
-const AddLiquidityCard = ({ lpToken }: AddLiquidityCardProps) => {
-  console.log(lpToken);
+const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
+  console.log(pool);
 
   return (
     <div className='bg-card px-5 rounded-3xl py-6'>
@@ -26,7 +27,7 @@ const AddLiquidityCard = ({ lpToken }: AddLiquidityCardProps) => {
           <InputBox
             onChange={() => {}}
             onChangeToken={() => {}}
-            selectedTokenI=''
+            selectedTokenI={pool.firstTokenId}
             tokensIdentifiers={[]}
             value=''
             label=''
@@ -39,7 +40,7 @@ const AddLiquidityCard = ({ lpToken }: AddLiquidityCardProps) => {
           <InputBox
             onChange={() => {}}
             onChangeToken={() => {}}
-            selectedTokenI=''
+            selectedTokenI={pool.secondTokenId}
             tokensIdentifiers={[]}
             label=''
             value=''
