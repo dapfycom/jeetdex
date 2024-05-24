@@ -35,7 +35,7 @@ interface IProps {
   onChange: (val: string, token?: IElrondToken) => void;
   onChangeToken: (t: IElrondToken) => void;
 
-  onMax?: (t: IElrondAccountToken) => void;
+  handlePercentAmount?: (t: IElrondAccountToken, percent: number) => void;
   clear?: () => void;
 }
 
@@ -47,7 +47,7 @@ const InputBox = ({
   dollarValue,
   onChange,
   onChangeToken,
-  onMax,
+  handlePercentAmount: onMax,
   clear
 }: IProps) => {
   const { elrondToken, isLoading } = useGetElrondToken(selectedTokenI);
@@ -71,7 +71,7 @@ const InputBox = ({
                 <Button
                   className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
                   onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken)
+                    onMax && onMax(accountToken as IElrondAccountToken, 25)
                   }
                 >
                   25%
@@ -79,7 +79,7 @@ const InputBox = ({
                 <Button
                   className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
                   onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken)
+                    onMax && onMax(accountToken as IElrondAccountToken, 50)
                   }
                 >
                   50%
@@ -87,7 +87,7 @@ const InputBox = ({
                 <Button
                   className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
                   onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken)
+                    onMax && onMax(accountToken as IElrondAccountToken, 75)
                   }
                 >
                   75%
@@ -95,7 +95,7 @@ const InputBox = ({
                 <Button
                   className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
                   onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken)
+                    onMax && onMax(accountToken as IElrondAccountToken, 100)
                   }
                 >
                   100%
@@ -103,7 +103,7 @@ const InputBox = ({
                 <Button
                   className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
                   variant='destructive'
-                  onChange={clear}
+                  onClick={clear}
                 >
                   Clear
                 </Button>

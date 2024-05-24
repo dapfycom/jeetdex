@@ -42,7 +42,7 @@ const SwapCardContainer = () => {
   const handleChangeToField = (value: string, token?: IElrondToken) => {
     changeField(value, onChangeToField, onChangeToFieldValueDecimals, token);
   };
-  const swapFileds = () => {
+  const swapFields = () => {
     dispatch(onSwapFields());
   };
 
@@ -53,12 +53,22 @@ const SwapCardContainer = () => {
   const handleChangeToToken = (token: IElrondToken) => {
     dispatch(changeToFieldToken(token.identifier));
   };
-  const handleMax = (accountToken: IElrondAccountToken) => {
-    const userAmount = formatBalance(accountToken, true) as number;
+  const handlePercentAmount = (
+    accountToken: IElrondAccountToken,
+    percent: number
+  ) => {
+    const newAccount = { ...accountToken };
+    newAccount.balance = new BigNumber(accountToken.balance)
+      .multipliedBy(percent)
+      .dividedBy(100)
+      .toFixed();
+    const userAmount = formatBalance(newAccount, true) as number;
     dispatch(onChageFromFieldValue(userAmount.toString()));
-    dispatch(onChageFromFieldValueDecimals(accountToken.balance));
+    dispatch(onChageFromFieldValueDecimals(newAccount.balance));
   };
   const handleClear = () => {
+    console.log('clear');
+
     dispatch(onChageFromFieldValue(''));
     dispatch(onChageFromFieldValueDecimals(''));
     dispatch(onChangeToFieldValueDecimals(''));
@@ -88,6 +98,7 @@ const SwapCardContainer = () => {
       : t.secondToken === fromField.selectedToken &&
         t.firstToken === toField.selectedToken
   );
+  console.log(fromField.valueDecimals);
 
   useGetTokenRatio(
     pairSelected,
@@ -104,13 +115,13 @@ const SwapCardContainer = () => {
       handleChangeToField={handleChangeToField}
       handleChangeToToken={handleChangeToToken}
       handleClear={handleClear}
-      handleMax={handleMax}
+      handlePercentAmount={handlePercentAmount}
       isLoading={loadingAggregatorData}
       normalDirection={normalDirection}
       pairSelected={pairSelected}
       secondTokensForFirstToken={secondTokensForFirstToken}
       slippage={slippage}
-      swapFileds={swapFileds}
+      swapFields={swapFields}
       toField={toField}
       tokensPairs={tokensPairs}
       toFieldElrondToken={elrondToken}

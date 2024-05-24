@@ -29,7 +29,7 @@ interface IProps {
   handleChangeFromField: (value: string) => void;
   handleChangeFromToken: (value: IElrondToken) => void;
   isLoading: boolean;
-  handleMax: (val: IElrondAccountToken) => void;
+  handlePercentAmount: (val: IElrondAccountToken, percent: number) => void;
   handleClear: () => void;
   tokensPairs: { firstToken: string; secondToken: string; address: string }[];
   normalDirection: boolean;
@@ -37,7 +37,7 @@ interface IProps {
   handleChangeToToken: (value: IElrondToken) => void;
   secondTokensForFirstToken: any[];
   pairSelected: { firstToken: string; secondToken: string; address: string };
-  swapFileds: () => void;
+  swapFields: () => void;
   toFieldElrondToken: IElrondToken;
 }
 
@@ -49,7 +49,7 @@ const SwapCard = ({
   toField,
   handleChangeFromToken,
   handleClear,
-  handleMax,
+  handlePercentAmount: handleMax,
   isLoading,
   normalDirection,
   tokensPairs,
@@ -57,7 +57,7 @@ const SwapCard = ({
   handleChangeToToken,
   pairSelected,
   secondTokensForFirstToken,
-  swapFileds,
+  swapFields: swapFileds,
   toFieldElrondToken
 }: IProps) => {
   return (
@@ -76,7 +76,7 @@ const SwapCard = ({
             onChange={handleChangeFromField}
             onChangeToken={handleChangeFromToken}
             isLoadingInput={isLoading}
-            onMax={handleMax}
+            handlePercentAmount={handleMax}
             clear={handleClear}
             tokensIdentifiers={tokensPairs.map((t) =>
               normalDirection ? t.firstToken : t.secondToken
