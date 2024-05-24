@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 import { Button } from '@/components/ui/button';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
+import { formatBalanceDollar } from '@/utils/mx-utils';
 import {
   faArrowDown,
   faArrowDownUpAcrossLine
@@ -18,10 +19,12 @@ interface IProps {
   fromField: {
     value: string;
     selectedToken: string;
+    valueDecimals: string;
   };
   toField: {
     value: string;
     selectedToken: string;
+    valueDecimals: string;
   };
   handleChangeFromField: (value: string) => void;
   handleChangeFromToken: (value: IElrondToken) => void;
@@ -35,6 +38,7 @@ interface IProps {
   secondTokensForFirstToken: any[];
   pairSelected: { firstToken: string; secondToken: string; address: string };
   swapFileds: () => void;
+  toFieldElrondToken: IElrondToken;
 }
 
 const SwapCard = ({
@@ -53,7 +57,8 @@ const SwapCard = ({
   handleChangeToToken,
   pairSelected,
   secondTokensForFirstToken,
-  swapFileds
+  swapFileds,
+  toFieldElrondToken
 }: IProps) => {
   return (
     <div className='w-full  max-w-[500px] mx-auto'>
@@ -77,6 +82,17 @@ const SwapCard = ({
               normalDirection ? t.firstToken : t.secondToken
             )}
             label='From'
+            dollarValue={
+              toFieldElrondToken
+                ? (formatBalanceDollar(
+                    {
+                      balance: toField.valueDecimals,
+                      decimals: toFieldElrondToken.decimals
+                    },
+                    toFieldElrondToken.price
+                  ) as string)
+                : '0'
+            }
           />
 
           <div className='flex justify-center my-6'>

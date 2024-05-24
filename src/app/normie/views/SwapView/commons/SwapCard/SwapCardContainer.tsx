@@ -13,6 +13,7 @@ import {
   selectSlippage,
   selectToField
 } from '@/app/normie/views/SwapView/lib/swap-slice';
+import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
@@ -27,6 +28,8 @@ const SwapCardContainer = () => {
   const slippage = useAppSelector(selectSlippage);
   const normalDirection = useAppSelector(selectNormalDirection);
   const loadingAggregatorData = false;
+  const { elrondToken } = useGetElrondToken(toField.selectedToken);
+
   const dispatch = useAppDispatch();
   const handleChangeFromField = (value: string, token?: IElrondToken) => {
     changeField(
@@ -110,6 +113,7 @@ const SwapCardContainer = () => {
       swapFileds={swapFileds}
       toField={toField}
       tokensPairs={tokensPairs}
+      toFieldElrondToken={elrondToken}
     />
   );
 };

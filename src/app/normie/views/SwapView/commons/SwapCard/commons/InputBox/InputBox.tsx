@@ -31,6 +31,7 @@ interface IProps {
   tokensIdentifiers: string[];
   isLoadingInput?: boolean;
   label: string;
+  dollarValue?: string;
   onChange: (val: string, token?: IElrondToken) => void;
   onChangeToken: (t: IElrondToken) => void;
 
@@ -43,6 +44,7 @@ const InputBox = ({
   value,
   tokensIdentifiers,
   label,
+  dollarValue,
   onChange,
   onChangeToken,
   onMax,
@@ -65,14 +67,6 @@ const InputBox = ({
             <h5 className='text-xs lg:text-sm '>{label}</h5>
 
             <div className='flex items-center gap-2'>
-              <div className='flex items-center gap-1'>
-                <FontAwesomeIcon icon={faWallet} className='w-3 h-3' />
-
-                <span className='h-[16px] lg:h-[20px] text-xs lg:text-md'>
-                  {formatBalance(accountToken)}
-                </span>
-              </div>
-
               <div className='flex gap-2'>
                 <Button
                   className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
@@ -80,10 +74,35 @@ const InputBox = ({
                     onMax && onMax(accountToken as IElrondAccountToken)
                   }
                 >
-                  Max
+                  25%
                 </Button>
                 <Button
                   className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
+                  onClick={() =>
+                    onMax && onMax(accountToken as IElrondAccountToken)
+                  }
+                >
+                  50%
+                </Button>
+                <Button
+                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
+                  onClick={() =>
+                    onMax && onMax(accountToken as IElrondAccountToken)
+                  }
+                >
+                  75%
+                </Button>
+                <Button
+                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
+                  onClick={() =>
+                    onMax && onMax(accountToken as IElrondAccountToken)
+                  }
+                >
+                  100%
+                </Button>
+                <Button
+                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
+                  variant='destructive'
                   onChange={clear}
                 >
                   Clear
@@ -91,93 +110,113 @@ const InputBox = ({
               </div>
             </div>
           </div>
-          <div className=' flex justify-between w-full bg-[#0b1022] rounded-2xl py-3 px-3 lg:px-5'>
-            <Popover
-              open={isOpen}
-              onOpenChange={(open) => (open ? onOpen() : onClose())}
-            >
-              <PopoverTrigger asChild>
-                <Button
-                  variant='outline'
-                  className={`ml-auto gap-2 w-fit !h-[40px] lg:!h-[56px] rounded-2xl bg-[#1C243E] disabled:opacity-100`}
-                  disabled={tokensIdentifiers.length === 0 || isLoading}
-                >
-                  {isLoading ? (
-                    <div className='flex px-2'>
-                      <Loader2Icon className='animate-spin w-4 h-4' />
-                    </div>
-                  ) : (
-                    <div className={`flex items-center gap-2`}>
-                      <div className='w-[23px]'>
-                        <TokenImageSRC
-                          src={elrondToken?.assets?.svgUrl}
-                          alt={elrondToken?.ticker}
-                          size={23}
-                        />
+          <div className='w-full bg-[#0b1022] rounded-2xl py-3 px-3 lg:px-5'>
+            <div className=' flex justify-between w-full '>
+              <Popover
+                open={isOpen}
+                onOpenChange={(open) => (open ? onOpen() : onClose())}
+              >
+                <PopoverTrigger asChild>
+                  <Button
+                    variant='outline'
+                    className={`ml-auto gap-2 w-fit !h-[40px] lg:!h-[56px] rounded-2xl bg-[#1C243E] disabled:opacity-100`}
+                    disabled={tokensIdentifiers.length === 0 || isLoading}
+                  >
+                    {isLoading ? (
+                      <div className='flex px-2'>
+                        <Loader2Icon className='animate-spin w-4 h-4' />
                       </div>
-                      <p className='text-md lg:text-[20px]'>
-                        {formatTokenI(elrondToken?.ticker)}
-                      </p>
-                    </div>
-                  )}
-                  {tokensIdentifiers.length !== 0 && (
-                    <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
-                  )}
-                </Button>
-              </PopoverTrigger>
-
-              <PopoverContent className='p-0' align='end'>
-                <Command>
-                  <CommandInput placeholder='Select new role token' />
-                  <CommandList>
-                    <CommandEmpty>
-                      {' '}
-                      {loadingTokens ? (
-                        <div className='flex justify-center w-full'>
-                          <Loader className='animate-spin' />
+                    ) : (
+                      <div className={`flex items-center gap-2`}>
+                        <div className='w-[23px]'>
+                          <TokenImageSRC
+                            src={elrondToken?.assets?.svgUrl}
+                            alt={elrondToken?.ticker}
+                            size={23}
+                          />
                         </div>
-                      ) : (
-                        'No tokens found.'
-                      )}{' '}
-                    </CommandEmpty>
-                    {loadingTokens ? null : (
-                      <CommandGroup>
-                        {tokens.map((t) => {
-                          return (
-                            <CommandItem key={t.identifier}>
-                              <div
-                                className='w-full h-full gap-3 cursor-pointer flex  items-start px-4 py-2'
-                                onClick={() => {
-                                  onClose();
-                                  onChangeToken(t);
-                                }}
-                              >
-                                <TokenImageSRC
-                                  size={20}
-                                  src={t?.assets?.svgUrl}
-                                  alt={t?.ticker}
-                                />
-
-                                <p>{formatTokenI(t?.ticker)}</p>
-                              </div>
-                            </CommandItem>
-                          );
-                        })}
-                      </CommandGroup>
+                        <p className='text-md lg:text-[20px]'>
+                          {formatTokenI(elrondToken?.ticker)}
+                        </p>
+                      </div>
                     )}
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
-            <Input
-              type='text'
-              className='border-none text-end text-[20px] lg:text-[22px] focus-visible:border-none focus-visible:ring-0 focus-visible:ring-offset-0'
-              placeholder='0.0'
-              onChange={(e) => onChange(e.target.value, elrondToken)}
-              value={readOnly ? (formatNumber(value || '0') as string) : value}
-              readOnly={readOnly}
-            />
+                    {tokensIdentifiers.length !== 0 && (
+                      <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
+                    )}
+                  </Button>
+                </PopoverTrigger>
+
+                <PopoverContent className='p-0' align='end'>
+                  <Command>
+                    <CommandInput placeholder='Select new role token' />
+                    <CommandList>
+                      <CommandEmpty>
+                        {' '}
+                        {loadingTokens ? (
+                          <div className='flex justify-center w-full'>
+                            <Loader className='animate-spin' />
+                          </div>
+                        ) : (
+                          'No tokens found.'
+                        )}{' '}
+                      </CommandEmpty>
+                      {loadingTokens ? null : (
+                        <CommandGroup>
+                          {tokens.map((t) => {
+                            return (
+                              <CommandItem key={t.identifier}>
+                                <div
+                                  className='w-full h-full gap-3 cursor-pointer flex  items-start px-4 py-2'
+                                  onClick={() => {
+                                    onClose();
+                                    onChangeToken(t);
+                                  }}
+                                >
+                                  <TokenImageSRC
+                                    size={20}
+                                    src={t?.assets?.svgUrl}
+                                    alt={t?.ticker}
+                                  />
+
+                                  <p>{formatTokenI(t?.ticker)}</p>
+                                </div>
+                              </CommandItem>
+                            );
+                          })}
+                        </CommandGroup>
+                      )}
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <div className='w-full relative'>
+                <Input
+                  type='text'
+                  className='border-none text-end text-[20px] lg:text-[22px] focus-visible:border-none focus-visible:ring-0 focus-visible:ring-offset-0'
+                  placeholder='0.0'
+                  onChange={(e) => onChange(e.target.value, elrondToken)}
+                  value={
+                    readOnly ? (formatNumber(value || '0') as string) : value
+                  }
+                  readOnly={readOnly}
+                />
+                {dollarValue != null ? (
+                  <div className='absolute bottom-[-10px] right-0  px-3 text-muted-foreground text-2xl'>
+                    $ {dollarValue}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+            <div className='flex items-center gap-1 mt-3'>
+              <FontAwesomeIcon icon={faWallet} className='w-3 h-3' />
+
+              <span className='h-[16px] lg:h-[18px] text-xs lg:text-md'>
+                {formatBalance(accountToken)}
+              </span>
+            </div>
           </div>
+
+          <div></div>
         </div>
       </div>
     </>
