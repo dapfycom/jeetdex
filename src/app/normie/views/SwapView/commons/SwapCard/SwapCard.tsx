@@ -9,7 +9,7 @@ import {
   faArrowDownUpAcrossLine
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SliipageModal from './commons/ChangeSlippageModal/SliipageModal';
+import SlippageModal from './commons/ChangeSlippageModal/SliipageModal';
 import InputBox from './commons/InputBox';
 import SubmitButton from './commons/SubmitButton';
 
@@ -63,7 +63,7 @@ const SwapCard = ({
   return (
     <div className='w-full  max-w-[500px] mx-auto'>
       <div className='w-full flex justify-end mb-3'>
-        <SliipageModal
+        <SlippageModal
           slippage={slippage}
           handleChangeSlippage={handleChangeSlippage}
         />

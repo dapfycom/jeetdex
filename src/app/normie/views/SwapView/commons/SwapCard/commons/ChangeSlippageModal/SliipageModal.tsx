@@ -7,23 +7,24 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import useDisclosure from '@/hooks/useDisclosure';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
 
-export default function SliipageModal({
+export default function SlippageModal({
   slippage,
   handleChangeSlippage
 }: {
   slippage: number;
   handleChangeSlippage: (val: string) => void;
 }) {
+  const [newSlippage, setNewSlippage] = useState(slippage.toString());
+  const { onToggle, isOpen } = useDisclosure();
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={onToggle}>
       <DialogTrigger asChild>
-        <Button
-          className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'
-          // onChange={clear}
-        >
+        <Button className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'>
           <FontAwesomeIcon
             icon={faSliders}
             className='w-[12px] h-[12px] mr-3'
@@ -41,21 +42,21 @@ export default function SliipageModal({
           <div className='flex gap-2'>
             <Button
               className='px-[12px] h-[26.8px] text-gray-700  rounded-full'
-              onClick={() => handleChangeSlippage('1')}
+              onClick={() => setNewSlippage('1')}
             >
               1 %
             </Button>
 
             <Button
               className='px-[12px] h-[26.8px] text-gray-700  rounded-full'
-              onClick={() => handleChangeSlippage('3')}
+              onClick={() => setNewSlippage('3')}
             >
               3 %
             </Button>
 
             <Button
               className='px-[12px] h-[26.8px] text-gray-700  rounded-full'
-              onClick={() => handleChangeSlippage('5')}
+              onClick={() => setNewSlippage('5')}
             >
               5 %
             </Button>
@@ -65,12 +66,21 @@ export default function SliipageModal({
             <span>Custom</span>
             <Input
               className='rounded-full bg-[#0b1022] w-[70px]'
-              onChange={(e) => handleChangeSlippage(e.target.value)}
-              value={slippage}
+              onChange={(e) => setNewSlippage(e.target.value)}
+              value={newSlippage}
             />
             <span>%</span>
           </div>
         </div>
+
+        <Button
+          onClick={() => {
+            handleChangeSlippage(newSlippage);
+            onToggle();
+          }}
+        >
+          Save
+        </Button>
       </DialogContent>
     </Dialog>
   );
