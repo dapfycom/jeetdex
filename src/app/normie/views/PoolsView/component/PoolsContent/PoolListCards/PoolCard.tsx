@@ -1,21 +1,41 @@
+'use client';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import { Button } from '@/components/ui/button';
+import useDisclosure from '@/hooks/useDisclosure';
 import { jeetStaticData } from '@/localConstants/tokensStaticsData';
+import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { faChartColumn, faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import Link from 'next/link';
+import { IPoolPair } from '../../../utils/types';
+const PoolChartModal = dynamic(
+  () => import('@/components/PoolChartModal/PoolChartModal')
+);
 
-const PoolCard = () => {
+interface IProps {
+  pool: IPoolPair;
+}
+
+const PoolCard = ({ pool }: IProps) => {
+  const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
+
   return (
     <div className='bg-[#1C243E] rounded-3xl py-6 px-4 w-full'>
       <div className='flex flex-col items-center w-full mb-4'>
         <PoolCoins
-          src1={jeetStaticData.assets.svgUrl}
-          src2={jeetStaticData.assets.svgUrl}
+          src1={pool?.firstToken?.assets?.svgUrl}
+          src2={pool?.secondToken?.assets?.svgUrl}
+          size={26}
           className='w-[50px] h-[50px]'
         />
 
-        <h3 className='mt-1 text-xl'>SOL - USDC</h3>
+        <h3 className='mt-1 text-xl'>
+          {' '}
+          {formatTokenI(pool.firstToken.ticker)} -
+          {formatTokenI(pool.secondToken.ticker)}
+        </h3>
       </div>
 
       <div className='bg-[rgba(171,_196,_255,_0.07)] rounded-lg text-primary text-center py-2'>
@@ -31,12 +51,28 @@ const PoolCard = () => {
         </div>
 
         <div className='flex w-full justify-between'>
-          <p className='text-muted-foreground'>Volume 24H</p>
-          <p className=''>$18,255,126.72</p>
+          <p className='text-muted-foreground'>
+            {formatTokenI(pool.firstToken.ticker)} Reserve
+          </p>
+          <p className=''>
+            {' '}
+            {formatBalance({
+              balance: pool.firstTokenReserve,
+              decimals: pool.firstToken.decimals
+            })}{' '}
+          </p>
         </div>
         <div className='flex w-full justify-between'>
-          <p className='text-muted-foreground'>Fees 24H</p>
-          <p className=''>$9,127.56</p>
+          <p className='text-muted-foreground'>
+            {' '}
+            {formatTokenI(pool.secondToken.ticker)} Reserve
+          </p>
+          <p className=''>
+            {formatBalance({
+              balance: pool.secondTokenReserve,
+              decimals: pool.secondToken.decimals
+            })}
+          </p>
         </div>
 
         <div className='flex w-full justify-between'>
@@ -62,18 +98,31 @@ const PoolCard = () => {
         <Button
           variant='ghost'
           className='hover:bg-[#27837e4d] hover:text-primary'
+          onClick={togglePoolChart}
         >
           View Chart <FontAwesomeIcon icon={faChartColumn} className='ml-2' />
         </Button>
+
+        {poolChart && (
+          <PoolChartModal isOpen={poolChart} toggleOpen={togglePoolChart} />
+        )}
+
         <Button
           variant='ghost'
           className='hover:bg-[#27837e4d] hover:text-primary'
+          asChild
         >
-          Swap <FontAwesomeIcon icon={faExchange} className='ml-2' />
+          <Link href={'/'}>
+            Swap <FontAwesomeIcon icon={faExchange} className='ml-2' />
+          </Link>
         </Button>
       </div>
 
-      <Button className='w-full mt-3'>Deposit</Button>
+      <Button className='w-full mt-3'>
+        <Link href={`/pools/${pool.lpTokenIdentifier}/add-liquidity`}>
+          Deposit
+        </Link>
+      </Button>
     </div>
   );
 };

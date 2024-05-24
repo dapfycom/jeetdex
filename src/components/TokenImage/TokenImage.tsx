@@ -10,6 +10,7 @@ interface IProps {
   src?: string;
   size: number;
   alt?: string;
+  className?: string;
 }
 const TokenImage = ({ tokenI, src, alt = '', size }: IProps) => {
   const { elrondToken, isLoading } = useGetElrondToken(
@@ -63,11 +64,17 @@ const TokenImage = ({ tokenI, src, alt = '', size }: IProps) => {
 
 export default TokenImage;
 
-export const TokenImageSRC = ({ src, alt = '', size }: IProps) => {
+export const TokenImageSRC = ({ src, alt = '', size, className }: IProps) => {
   return (
     <>
       {src ? (
-        <Image src={src} alt={alt} width={size} height={size} />
+        <Image
+          src={src}
+          alt={alt}
+          width={size}
+          height={size}
+          className={className}
+        />
       ) : (
         <FontAwesomeIcon
           icon={faCircleQuestion}

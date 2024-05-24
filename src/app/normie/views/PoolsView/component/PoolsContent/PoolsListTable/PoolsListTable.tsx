@@ -5,9 +5,14 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
+import { IPoolPair } from '../../../utils/types';
 import PoolItem from './PoolItemTable';
 
-const PoolsList = () => {
+interface IProps {
+  pools: IPoolPair[];
+}
+
+const PoolsList = ({ pools }: IProps) => {
   return (
     <Table>
       <TableHeader className=''>
@@ -18,10 +23,10 @@ const PoolsList = () => {
             Pool
           </TableHead>
           <TableHead className='text-right bg-[#1015299d] py-5 '>
-            Liquidity
+            First Token Reserve
           </TableHead>
           <TableHead className='text-right bg-[#1015299d] py-5 '>
-            Volume 24H
+            Second Token Reserve
           </TableHead>
           <TableHead className='text-right bg-[#1015299d] py-5 '>
             Fees 24H
@@ -31,16 +36,9 @@ const PoolsList = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <PoolItem />
-        <PoolItem />
-
-        <PoolItem />
-        <PoolItem />
-        <PoolItem />
-
-        <PoolItem />
-        <PoolItem />
-        <PoolItem />
+        {pools.map((pool) => (
+          <PoolItem key={pool.address} pool={pool} />
+        ))}
       </TableBody>
     </Table>
   );

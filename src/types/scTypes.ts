@@ -353,3 +353,8 @@ export interface ITransacation {
     miniBlockHash: string;
   }[];
 }
+
+export interface ISCResponseQueryType {
+  name: string;
+  typeParameters: any[];
+}

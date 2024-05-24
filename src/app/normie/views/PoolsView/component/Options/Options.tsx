@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import useDisclosure from '@/hooks/useDisclosure';
 import { faSearch, faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
 import LayoutTabs from './LayoutTabs';
 
 const Options = () => {
@@ -39,8 +40,9 @@ const Options = () => {
               <Button
                 variant='outline'
                 className='border-primary text-primary hover:bg-[#3ff2ff13]'
+                asChild
               >
-                Create
+                <Link href={'/create'}>Create</Link>
               </Button>
             </div>
           </div>

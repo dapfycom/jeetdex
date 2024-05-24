@@ -1,15 +1,20 @@
 import { TabsContent } from '@/components/ui/tabs';
+import { fetchPoolsData } from '../../utils/services.server';
 import PoolListCards from './PoolListCards/PoolListCards';
 import PoolsList from './PoolsListTable/PoolsListTable';
 
-const PoolsContent = () => {
+const PoolsContent = async () => {
+  const pools = await fetchPoolsData();
+
+  console.log(pools);
+
   return (
     <div className='w-full mt-5'>
       <TabsContent value='table'>
-        <PoolsList />
+        <PoolsList pools={pools} />
       </TabsContent>
       <TabsContent value='cards'>
-        <PoolListCards />
+        <PoolListCards pools={pools} />
       </TabsContent>
     </div>
   );

@@ -1,13 +1,14 @@
 import { cn } from '@/lib/utils';
-import Image from 'next/image';
+import { TokenImageSRC } from '../TokenImage/TokenImage';
 
 interface IProps {
-  src1: string;
-  src2: string;
+  src1?: string;
+  src2?: string;
+  size: number;
   className?: string;
 }
 
-const PoolCoins = ({ className, src1, src2 }: IProps) => {
+const PoolCoins = ({ className, src1, src2, size }: IProps) => {
   return (
     <div className='flex'>
       <div
@@ -16,12 +17,11 @@ const PoolCoins = ({ className, src1, src2 }: IProps) => {
           className
         )}
       >
-        <Image
+        <TokenImageSRC
+          size={size}
           src={src1}
-          alt='Token1'
+          alt='Token 1'
           className='w-[70%] h-[70%] rounded-full'
-          width={32}
-          height={32}
         />
       </div>
       <div
@@ -30,12 +30,11 @@ const PoolCoins = ({ className, src1, src2 }: IProps) => {
           className
         )}
       >
-        <Image
+        <TokenImageSRC
+          size={size}
           src={src2}
-          alt='Token1'
+          alt='Token 2'
           className='w-[70%] h-[70%] rounded-full'
-          width={32}
-          height={32}
         />
       </div>
     </div>
