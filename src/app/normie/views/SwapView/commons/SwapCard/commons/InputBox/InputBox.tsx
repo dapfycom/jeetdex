@@ -30,6 +30,7 @@ interface IProps {
   value: string;
   tokensIdentifiers: string[];
   isLoadingInput?: boolean;
+  label: string;
   onChange: (val: string, token?: IElrondToken) => void;
   onChangeToken: (t: IElrondToken) => void;
 
@@ -41,6 +42,7 @@ const InputBox = ({
   selectedTokenI,
   value,
   tokensIdentifiers,
+  label,
   onChange,
   onChangeToken,
   onMax,
@@ -60,7 +62,7 @@ const InputBox = ({
       <div className='flex flex-col w-full pt-3   rounded-2xl bg-[#0b102280] max-w-[500px] border-[#A259FF] focus-within:border focus-within:shadow-[0px_0px_12px_6px_#A259FF33]'>
         <div className='flex flex-col'>
           <div className='flex justify-between items-start px-4 md:px-8 pb-3 gap-2'>
-            <h5 className='text-xs lg:text-sm '>From</h5>
+            <h5 className='text-xs lg:text-sm '>{label}</h5>
 
             <div className='flex items-center gap-2'>
               <div className='flex items-center gap-1'>

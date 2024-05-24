@@ -76,6 +76,7 @@ const SwapCard = ({
             tokensIdentifiers={tokensPairs.map((t) =>
               normalDirection ? t.firstToken : t.secondToken
             )}
+            label='From'
           />
 
           <div className='flex justify-center my-6'>
@@ -111,6 +112,7 @@ const SwapCard = ({
             tokensIdentifiers={Array.from(
               new Set([...secondTokensForFirstToken])
             )}
+            label='To'
           />
         </CardContent>
         <CardFooter>

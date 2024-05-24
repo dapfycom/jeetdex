@@ -1,5 +1,5 @@
 import { TabsContent } from '@/components/ui/tabs';
-import { fetchPoolsData } from '../../utils/services.server';
+import { fetchPoolsData } from '../../../../../../services/others/pools.server';
 import PoolListCards from './PoolListCards/PoolListCards';
 import PoolsList from './PoolsListTable/PoolsListTable';
 

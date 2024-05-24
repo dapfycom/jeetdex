@@ -22,11 +22,14 @@ import {
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { formatTokenI } from '@/utils/mx-utils';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import ConvertButton from './ConvertButton/ConvertButton';
 import ConvertInfo from './ConvertInfo/ConvertInfo';
 import SelectAllTokens from './SelectAllTokens/SelectAllTokens';
-import SelectTokens from './SelectTokens/SelectTokens';
+const SelectTokens = dynamic(() => import('./SelectTokens/SelectTokens'), {
+  ssr: false
+});
 const MoonDustXCard = () => {
   const dispatch = useAppDispatch();
   const selectedToToken = useAppSelector(selectToTokenDust);

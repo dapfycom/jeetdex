@@ -1,3 +1,5 @@
+import { Address } from '@multiversx/sdk-core/out';
+import BigNumber from 'bignumber.js';
 import { ISCResponseQueryType } from './scTypes';
 
 // getAllPairContractMetadata
@@ -24,18 +26,18 @@ export interface IAllPairsContractMetadata {
 
 // getAllPairContractData
 export interface ISCPairContractData {
-  items: {
-    fields: {
-      name: string;
-      value: {
-        type: { name: string; typeParameters: any[] };
-        value: any;
-      };
-    }[];
-    fieldByName: object;
-    type: ISCResponseQueryType;
-  }[];
-  type: ISCResponseQueryType;
+  sc_address: Address;
+  first_token_id: string;
+  second_token_id: string;
+  first_token_reserve: BigNumber;
+  second_token_reserve: BigNumber;
+  owner_fee_percent: BigNumber;
+  buy_fee_percent: BigNumber;
+  sell_fee_percent: BigNumber;
+  buy_fee_finish_timestamp: BigNumber;
+  sell_fee_finish_timestamp: BigNumber;
+  lp_token_identifier: string;
+  lp_token_supply: BigNumber;
 }
 
 export interface IPairContractData {

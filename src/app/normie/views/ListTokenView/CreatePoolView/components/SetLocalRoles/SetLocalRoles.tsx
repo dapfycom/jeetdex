@@ -1,3 +1,4 @@
+import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
 import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
@@ -14,6 +15,7 @@ const SetLocalRoles = () => {
   const onSuccess = () => {
     setSessionId(null);
     router.push('/create?create-pool=true');
+    revalidatePoolsPairs();
   };
 
   useTrackTransactionStatus({

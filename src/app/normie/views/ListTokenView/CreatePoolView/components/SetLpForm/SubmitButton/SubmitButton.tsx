@@ -1,3 +1,4 @@
+import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
 import { useAppDispatch, useTrackTransactionStatus } from '@/hooks';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
@@ -23,6 +24,7 @@ const SubmitButton = () => {
     mutate();
     setSessionId(null);
     dispatch(setActiveStep('set-roles'));
+    revalidatePoolsPairs();
   };
 
   useTrackTransactionStatus({
