@@ -16,15 +16,15 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-2xl rounded-xl hover:bg-[#1c243e83]',
+            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83]',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['normie']
-            ) && 'bg-[#1c243e83]'
+            ) && 'font-bold text-white'
           )}
           asChild
         >
-          <Link href='/' className='hover:font-bold'>
+          <Link href='/'>
             <span className='whitespace-nowrap'>Swap</span>
           </Link>
         </Button>
@@ -32,15 +32,15 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-2xl rounded-xl hover:bg-[#1c243e83]',
+            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83]',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['pools']
-            ) && 'bg-[#1c243e83]'
+            ) && 'font-bold text-white'
           )}
           asChild
         >
-          <Link href='/pools' className='hover:font-bold'>
+          <Link href='/pools'>
             <span className='whitespace-nowrap'>Pool</span>
           </Link>
         </Button>
@@ -48,15 +48,15 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-2xl rounded-xl hover:bg-[#1c243e83]',
+            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83]',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['dust']
-            ) && 'bg-[#1c243e83]'
+            ) && 'font-bold text-white'
           )}
           asChild
         >
-          <Link href='/dust' className='hover:font-bold'>
+          <Link href='/dust'>
             <span className='whitespace-nowrap'>Dust</span>
           </Link>
         </Button>
@@ -64,15 +64,15 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-2xl rounded-xl hover:bg-[#1c243e83]',
+            ' text-gray-400 text-lg rounded-xl hover:bg-[#1c243e83]',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['/']
-            ) && 'bg-[#1c243e83]'
+            ) && 'font-bold text-white'
           )}
           asChild
         >
-          <Link href='#' className='hover:font-bold'>
+          <Link href='#'>
             <span className='whitespace-nowrap'>More</span>
           </Link>
         </Button>
