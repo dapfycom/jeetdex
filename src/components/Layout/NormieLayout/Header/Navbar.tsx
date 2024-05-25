@@ -12,15 +12,15 @@ const Navbar = () => {
 
   return (
     <div className='text-sm sm:text-lg'>
-      <div className='flex gap-4 items-center '>
+      <div className='flex gap-2 items-center '>
         <Button
           variant='ghost'
           className={cn(
-            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83]',
+            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['normie']
-            ) && 'font-bold text-white'
+            ) && ' text-white'
           )}
           asChild
         >
@@ -32,11 +32,11 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83]',
+            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['pools']
-            ) && 'font-bold text-white'
+            ) && ' text-white'
           )}
           asChild
         >
@@ -48,11 +48,11 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83]',
+            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['dust']
-            ) && 'font-bold text-white'
+            ) && ' text-white'
           )}
           asChild
         >
@@ -64,11 +64,11 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            ' text-gray-400 text-lg rounded-xl hover:bg-[#1c243e83]',
+            ' text-gray-400 text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['/']
-            ) && 'font-bold text-white'
+            ) && ' text-white'
           )}
           asChild
         >
