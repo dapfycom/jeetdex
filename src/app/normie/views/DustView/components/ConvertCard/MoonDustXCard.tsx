@@ -37,7 +37,7 @@ const MoonDustXCard = () => {
   const { tokens } = useGetMultipleElrondTokens(toTokensToConvert);
 
   return (
-    <Card className='text-left w-full max-w-[500px]'>
+    <Card className='text-left w-full max-w-[700px]'>
       <CardHeader>
         <div className='flex justify-between  items-center flex-col md:flex-row'>
           <CardTitle className='mb-3'>Convert dust into:</CardTitle>
