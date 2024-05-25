@@ -22,8 +22,8 @@ const DisconnectComponent = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <div className='relative flex items-center gap-3 px-3 py-2 rounded-md border'>
+      <DropdownMenuTrigger asChild>
+        <div className='relative flex items-center gap-3 px-2 py-1 rounded-md border border-gray-300  top-[-10px] right-[-10px] hover:bg-[#9e9e9e33] cursor-pointer'>
           <div className='hidden sm:block'>
             (
             {formatBalance({
