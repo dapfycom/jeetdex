@@ -29,6 +29,11 @@ export const smartContractsConfig = {
     simpleAddress: scAddress.dust,
     address: new Address(scAddress.dust),
     abi: dustAbi
+  },
+  metachain: {
+    simpleAddress: scAddress.metachain,
+    address: new Address(scAddress.metachain),
+    abi: null
   }
 };
 

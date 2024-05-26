@@ -6,6 +6,7 @@ import {
 } from '@/services/sc/query';
 import { Address, TokenIdentifierValue } from '@multiversx/sdk-core/out';
 import useSWR from 'swr';
+import { fetchNewPairFee } from './sc.queries';
 import { selectToken1, selectToken2 } from './slice';
 
 export const useGetAllowedPoolTokens = () => {
@@ -87,6 +88,21 @@ export const useGetLpIdentifier = (pairAddress: string) => {
 
   return {
     lpIdentifier: data || '',
+    isLoading,
+    error,
+    isValidating,
+    mutate
+  };
+};
+
+export const useGetNewPairFee = () => {
+  const { data, error, isValidating, isLoading, mutate } = useSWR<string>(
+    'mainRouter:getNewPairFee',
+    fetchNewPairFee
+  );
+
+  return {
+    newPairFee: data || '0',
     isLoading,
     error,
     isValidating,

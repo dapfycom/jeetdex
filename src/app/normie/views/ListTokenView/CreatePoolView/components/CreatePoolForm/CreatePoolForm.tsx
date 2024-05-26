@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { newPoolTx } from '../../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
+  useGetNewPairFee,
   useGetPoolPair
 } from '../../../utils/swr.hooks';
 import PoolItemContainer, { ITokenPool } from './PoolItem/PoolItemContainer';
@@ -23,6 +24,7 @@ import Collapse from '@/components/Collapse/Collapse';
 import Divider from '@/components/Divider/Divider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Skeleton } from '@/components/ui/skeleton';
 import useDisclosure from '@/hooks/useDisclosure';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useEffect, useState } from 'react';
@@ -59,11 +61,11 @@ export const formSchema = z.object({
   })
 });
 
-interface ICreatePoolFormProps {
-  newPairFee: string;
-}
+interface ICreatePoolFormProps {}
 
-export default function CreatePoolForm({ newPairFee }: ICreatePoolFormProps) {
+export default function CreatePoolForm({}: ICreatePoolFormProps) {
+  const { newPairFee, isLoading: loadingFee } = useGetNewPairFee();
+
   const { userTokens, isLoading: loadingUserTokens } = useGetUserTokens();
   const address = useAppSelector(selectUserAddress);
   const { allowedPoolTokens, isLoading } = useGetAllowedPoolTokens();
@@ -137,6 +139,8 @@ export default function CreatePoolForm({ newPairFee }: ICreatePoolFormProps) {
   );
 
   const { isOpen, onToggle } = useDisclosure();
+
+  const loading = loadingUserTokens || loadingAllowedTokenDetails || loadingFee;
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
@@ -148,55 +152,66 @@ export default function CreatePoolForm({ newPairFee }: ICreatePoolFormProps) {
           <p className='text-gray-400 text-sm mb-10 text-left'>
             You must be the creator of the tokens.
           </p>
-
-          <div className='w-full flex flex-col gap-4'>
-            <PoolItemContainer
-              tokensList={convertToPoolItemToken(ownedTokens)}
-              isLoading={loadingUserTokens}
-              tokenType='firstToken'
-            />
-
-            <PoolItemContainer
-              tokensList={convertToPoolItemToken(tokens)}
-              tokenType='secondToken'
-              isLoading={isLoading || loadingAllowedTokenDetails}
-            />
-
-            <Divider />
-
-            <Button
-              variant='ghost'
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onToggle();
-              }}
-            >
-              {isOpen ? 'Less info' : 'More info'}{' '}
-            </Button>
-            <Collapse isOpen={isOpen}>
-              <div className='flex-col flex gap-3 text-left'>
-                <div>Buy Fee</div>
-                <Input
-                  placeholder='Buy fee'
-                  {...form.register('buyFee.value')}
-                />
-                <DagePicker field='buyFee' label='Buy Fee finish' />
+          {loading ? (
+            <div className='flex  flex-col gap-4'>
+              <Skeleton className='h-9 w-full bg-zinc-600' />
+              <Skeleton className='h-9 w-full bg-zinc-600' />
+              <div className='mt-8'>
+                <Skeleton className='h-9 w-full bg-primary opacity-70' />
               </div>
-
-              <div className='flex-col flex gap-3 text-left'>
-                <div>Sell Fee</div>
-                <Input
-                  placeholder='Sell fee'
-                  {...form.register('sellFee.value')}
+            </div>
+          ) : (
+            <>
+              <div className='w-full flex flex-col gap-4'>
+                <PoolItemContainer
+                  tokensList={convertToPoolItemToken(ownedTokens)}
+                  isLoading={loadingUserTokens}
+                  tokenType='firstToken'
                 />
-                <DagePicker field='sellFee' label='Sell Fee finish' />
-              </div>
-            </Collapse>
-          </div>
-          <SubmitButton />
 
-          <FormNav currentStep='create-pool' />
+                <PoolItemContainer
+                  tokensList={convertToPoolItemToken(tokens)}
+                  tokenType='secondToken'
+                  isLoading={isLoading || loadingAllowedTokenDetails}
+                />
+
+                <Divider />
+
+                <Button
+                  variant='ghost'
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onToggle();
+                  }}
+                >
+                  {isOpen ? 'Less info' : 'More info'}{' '}
+                </Button>
+                <Collapse isOpen={isOpen}>
+                  <div className='flex-col flex gap-3 text-left'>
+                    <div>Buy Fee</div>
+                    <Input
+                      placeholder='Buy fee'
+                      {...form.register('buyFee.value')}
+                    />
+                    <DagePicker field='buyFee' label='Buy Fee finish' />
+                  </div>
+
+                  <div className='flex-col flex gap-3 text-left'>
+                    <div>Sell Fee</div>
+                    <Input
+                      placeholder='Sell fee'
+                      {...form.register('sellFee.value')}
+                    />
+                    <DagePicker field='sellFee' label='Sell Fee finish' />
+                  </div>
+                </Collapse>
+              </div>
+              <SubmitButton />
+
+              <FormNav currentStep='create-pool' />
+            </>
+          )}
         </div>
       </form>
     </Form>

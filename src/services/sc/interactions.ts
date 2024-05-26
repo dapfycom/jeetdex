@@ -20,5 +20,8 @@ export const interactions: {
   dust: new SmartContractInteraction(
     smartContractsConfig.dust.simpleAddress,
     smartContractsConfig.dust.abi
+  ),
+  metachain: new SmartContractInteraction(
+    smartContractsConfig.metachain.simpleAddress
   )
 };

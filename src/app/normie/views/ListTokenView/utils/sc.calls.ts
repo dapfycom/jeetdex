@@ -33,18 +33,23 @@ export const newPoolTx = async (
     new FieldDefinition('fee', '', new U64Type()),
     new FieldDefinition('finish_timestamp', '', new U64Type())
   ]);
-  return interactions.mainRouter.EGLDPayment({
-    functionName: 'newPair',
-    arg: [
-      BytesValue.fromUTF8(first_token_id),
-      BytesValue.fromUTF8(second_token_id),
+
+  const feeArg = [];
+
+  if (buyFee?.value && buyFee?.timestamp) {
+    feeArg.push(
       new OptionalValue(
         new OptionType(pairFeeType),
         new Struct(pairFeeType, [
           new Field(new U64Value(Number(buyFee.value) * 100), 'fee'),
           new Field(new U64Value(buyFee.timestamp), 'finish_timestamp')
         ])
-      ),
+      )
+    );
+  }
+
+  if (sellFee?.value && sellFee.timestamp) {
+    feeArg.push(
       new OptionalValue(
         new OptionType(pairFeeType),
         new Struct(pairFeeType, [
@@ -52,6 +57,17 @@ export const newPoolTx = async (
           new Field(new U64Value(sellFee.timestamp), 'finish_timestamp')
         ])
       )
+    );
+  }
+
+  console.log(feeArg);
+
+  return interactions.mainRouter.EGLDPayment({
+    functionName: 'newPair',
+    arg: [
+      BytesValue.fromUTF8(first_token_id),
+      BytesValue.fromUTF8(second_token_id),
+      ...feeArg
     ],
     realValue: fee
   });

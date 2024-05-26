@@ -71,3 +71,6 @@
 }
 
 
+body{
+  pointer-events: initial !important;
+}
