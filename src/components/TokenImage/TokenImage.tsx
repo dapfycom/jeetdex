@@ -65,6 +65,8 @@ const TokenImage = ({ tokenI, src, alt = '', size }: IProps) => {
 export default TokenImage;
 
 export const TokenImageSRC = ({ src, alt = '', size, className }: IProps) => {
+  console.log(src);
+
   return (
     <>
       {src ? (

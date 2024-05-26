@@ -28,7 +28,7 @@ const SelectTokens = () => {
   const elements = elementsByRow(width);
 
   return (
-    <Card className='text-left'>
+    <Card className='text-left bg-[#0b102280]'>
       <CardContent className='space-y-2 pt-7 px-4 md:px-6'>
         {isLoading ? (
           <div className='flex items-center justify-center w-full min-h-[400px]'>

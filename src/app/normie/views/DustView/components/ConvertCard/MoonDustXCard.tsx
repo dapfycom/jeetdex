@@ -37,7 +37,7 @@ const MoonDustXCard = () => {
   const { tokens } = useGetMultipleElrondTokens(toTokensToConvert);
 
   return (
-    <Card className='text-left w-full max-w-[700px]'>
+    <Card className='text-left w-full max-w-[650px] bg-[#1C243E]'>
       <CardHeader>
         <div className='flex justify-between  items-center flex-col md:flex-row'>
           <CardTitle className='mb-3'>Convert dust into:</CardTitle>
@@ -46,7 +46,7 @@ const MoonDustXCard = () => {
               value={selectedToToken}
               onValueChange={(value) => dispatch(selectToToken(value))}
             >
-              <SelectTrigger className='w-[180px]'>
+              <SelectTrigger className='w-[180px] bg-[#0b102280]'>
                 <SelectValue placeholder='Select a fruit' />
               </SelectTrigger>
               <SelectContent>

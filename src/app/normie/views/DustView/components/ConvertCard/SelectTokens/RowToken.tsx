@@ -2,8 +2,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { IElrondAccountToken } from '@/types/scTypes';
 
+import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { formatBalanceDollar, formatTokenI } from '@/utils/mx-utils';
-import Image from 'next/image';
 import { HTMLProps } from 'react';
 import { maxAllowedTokensCount } from '../../../lib/contants';
 import { selectConvertInfo, selectOutputToken } from '../../../lib/dust-slice';
@@ -30,9 +30,11 @@ const RowToken = ({ token, checked, ...rest }: IProps) => {
   const disbleTokenSelection =
     selectedTokens.length >= maxAllowedTokensCount &&
     !Boolean(selectedTokens.find((t) => t.identifier === token.identifier));
+  console.log(token?.assets?.svgUrl);
+
   return (
     <div
-      className='items-top flex flex-col space-x-2 items-center gap-2 cursor-pointer border p-3 justify-center'
+      className='items-top flex flex-col space-x-2 items-center gap-3 cursor-pointer border p-3 justify-start'
       {...rest}
     >
       <Checkbox
@@ -48,17 +50,15 @@ const RowToken = ({ token, checked, ...rest }: IProps) => {
         >
           <div className='flex flex-col gap-1'>
             <div className='flex gap-3 items-center w-full'>
-              {token?.assets && (
-                <div className='rounded-full w-[28px] md:w-[28px] h-[28px] md:h-[28px]'>
-                  <Image
-                    alt=''
-                    src={token.assets.svgUrl}
-                    width={28}
-                    height={28}
-                  />
-                </div>
-              )}
-              <p>{formatTokenI(token.identifier)}</p>
+              <div className='rounded-full w-[28px] md:w-[28px] h-[28px] md:h-[28px]'>
+                <TokenImageSRC
+                  alt={token.ticker}
+                  src={token?.assets?.svgUrl}
+                  size={28}
+                />
+              </div>
+
+              <p className='text-center'>{formatTokenI(token.identifier)}</p>
             </div>
 
             <div className='whitespace-nowrap flex justify-center text-muted-foreground text-sm'>

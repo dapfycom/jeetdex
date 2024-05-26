@@ -26,7 +26,7 @@ const ConvertInfo = () => {
     data?.amountOut || 0
   ).toString();
   return (
-    <Card>
+    <Card className='bg-[#0b102280]'>
       <CardContent className='mt-4 pb-4'>
         {isLoading ? (
           <div>Loading...</div>

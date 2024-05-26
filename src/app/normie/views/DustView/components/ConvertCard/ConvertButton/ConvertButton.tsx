@@ -36,7 +36,7 @@ const ConvertButton = () => {
   return (
     <>
       <Button
-        className='w-full  text-white gap-3'
+        className='w-full gap-3'
         onClick={handleSubmit}
         disabled={!data?.amountOut}
       >
