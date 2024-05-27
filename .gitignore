@@ -48,3 +48,7 @@ yalc.lock
 cypress/reports/
 cypress/screenshots/
 cypress/videos/
+dev.db
+dev.db-shm
+dev.db-wal
+.env

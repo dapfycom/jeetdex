@@ -2,6 +2,7 @@ import Login from '@/components/Login/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';
+import Link from 'next/link';
 import Navbar from './Navbar';
 
 export const Header = () => {
@@ -18,8 +19,12 @@ export const Header = () => {
       <nav className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex items-center'>
         {process.env.DEGEN_MODE === 'true' && <SiteMode />}
 
-        <div className='flex items-center gap-2'>
+        <div className='relative'>
           <Login />
+
+          <div className='absolute bottom-[-20px] right-0 flex gap-2 hover:font-bold'>
+            <Link href={'/profile'}>[View profile]</Link>
+          </div>
         </div>
       </nav>
     </header>
