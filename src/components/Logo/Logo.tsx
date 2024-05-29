@@ -1,13 +1,16 @@
-import logo from '@/assets/images/logo.jpg';
+import logo from '@/assets/images/logo.png';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 const Logo = ({ className = '' }) => {
   return (
-    <Image
-      src={logo}
-      alt='Jeedex logo'
-      className={cn('w-10 h-10', className)}
-    />
+    <div>
+      <Image
+        src={logo}
+        alt='Jeedex logo'
+        className={cn('w-14 h-14', className)}
+        quality={1}
+      />
+    </div>
   );
 };
 

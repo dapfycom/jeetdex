@@ -22,10 +22,7 @@ const nextConfig = {
     return config;
   },
   experimental: {
-    serverActions: true,
-    logging: {
-      fullUrl: true
-    }
+    serverActions: true
   }
 };
 

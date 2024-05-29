@@ -14,8 +14,9 @@ const ConnectComponent = () => {
   const commonProps: OnProviderLoginType = {
     callbackRoute: pathname,
 
-    nativeAuth: true // optional
+    nativeAuth: true // optional,
   };
+
   return (
     <ExtensionLoginButton
       className='!bg-transparent !border-0 hover:font-bold'
