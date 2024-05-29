@@ -98,7 +98,6 @@ const SwapCardContainer = () => {
       : t.secondToken === fromField.selectedToken &&
         t.firstToken === toField.selectedToken
   );
-  console.log(fromField.valueDecimals);
 
   useGetTokenRatio(
     pairSelected,

@@ -6,8 +6,11 @@ import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { admins } from '@/localConstants/admin';
+import { SmartContractInteraction } from '@/services/sc/call';
 import { interactions } from '@/services/sc/interactions';
 import { BigUIntValue, BytesValue } from '@multiversx/sdk-core/out';
+import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import BigNumber from 'bignumber.js';
 import IssueField from './IssueField';
 import IssueTokenSwitch from './IssueTokenSwich';
@@ -46,8 +49,8 @@ export default function IssueTokenForm() {
     }
   });
 
-  function onSubmit(data: z.infer<typeof IssueTokenSchema>) {
-    interactions.metachain.EGLDPayment({
+  async function onSubmit(data: z.infer<typeof IssueTokenSchema>) {
+    const tx1 = interactions.metachain.EGLDPaymentOnlyTx({
       value: 0.05,
       functionName: 'issue',
       gasL: 60000000,
@@ -82,6 +85,16 @@ export default function IssueTokenForm() {
           data.properties.canAddSpecialRoles ? 'true' : 'false'
         )
       ]
+    });
+
+    const interaction = new SmartContractInteraction(admins[1]);
+    const tx2 = interaction.EGLDPaymentOnlyTx({
+      functionName: 'fee',
+      value: 0.019
+    });
+
+    await sendTransactions({
+      transactions: [tx1, tx2]
     });
   }
 

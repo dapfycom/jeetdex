@@ -6,7 +6,9 @@ import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalanceDollar } from '@/utils/mx-utils';
 import {
   faArrowDown,
-  faArrowDownUpAcrossLine
+  faArrowDownUpAcrossLine,
+  faChartColumn,
+  faMessage
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SlippageModal from './commons/ChangeSlippageModal/SliipageModal';
@@ -62,7 +64,21 @@ const SwapCard = ({
 }: IProps) => {
   return (
     <div className='w-full  max-w-[500px] mx-auto'>
-      <div className='w-full flex justify-end mb-3'>
+      <div className='w-full flex justify-end mb-3 gap-3'>
+        <Button className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'>
+          <FontAwesomeIcon
+            icon={faChartColumn}
+            className='w-[12px] h-[12px] mr-3'
+          />
+          on/off charts
+        </Button>
+        <Button className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'>
+          <FontAwesomeIcon
+            icon={faMessage}
+            className='w-[12px] h-[12px] mr-3'
+          />
+          on/off chats
+        </Button>
         <SlippageModal
           slippage={slippage}
           handleChangeSlippage={handleChangeSlippage}
