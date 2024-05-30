@@ -19,7 +19,7 @@ const ConnectComponent = () => {
 
   return (
     <ExtensionLoginButton
-      className='!bg-transparent !border-0 hover:font-bold'
+      className='!bg-transparent !border-0 hover:font-bold !p-0 !m-0'
       {...commonProps}
     >
       {desktopLoginComponent}
