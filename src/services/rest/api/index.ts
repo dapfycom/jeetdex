@@ -1,6 +1,6 @@
 import axios from 'axios';
 const BASE_URL =
-  (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000') + '/api';
+  (process.env.NEXT_PUBLIC_FRONTED_URL || 'http://localhost:3000') + '/api';
 
 export const serverAxiosJeetdex = axios.create({
   baseURL: BASE_URL
