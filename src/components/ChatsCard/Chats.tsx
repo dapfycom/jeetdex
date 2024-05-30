@@ -83,6 +83,8 @@ const Chats = ({ poolPair, show = true }: IProps) => {
                             img: message.sender.img,
                             username: message.sender.username
                           }}
+                          messageId={message.id}
+                          poolPair={poolPair}
                         />
 
                         <Divider />

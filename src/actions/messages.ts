@@ -10,12 +10,7 @@ export const sendPoolMessage = async (message: string, pool: string) => {
   console.log(session);
 
   if (!session) {
-    return Response.json(
-      {
-        error: 'You must be logged in to view this page.'
-      },
-      { status: 403 }
-    );
+    throw new Error('User not authenticated');
   }
   console.log(session);
 
@@ -43,10 +38,56 @@ export const sendPoolMessage = async (message: string, pool: string) => {
 
     console.log(data);
 
-    return Response.json({ data: data });
+    return data;
   } catch (error) {
-    console.log(error);
+    throw new Error(`Failed to create the message: ` + error.message);
+  }
+};
 
-    return Response.json({ error: error.message }, { status: 500 });
+export const likeMessage = async (messageId: number, userIdToLike: string) => {
+  console.log('likeMessage');
+
+  const session = await getSession();
+
+  if (!session) {
+    throw new Error('User not authenticated');
+  }
+
+  // Check if the user has already liked the message
+  const messageLiked = await prisma.likes.findFirst({
+    where: {
+      messageId: messageId,
+      likedBy: {
+        address: session.address
+      }
+    }
+  });
+
+  if (messageLiked) {
+    throw new Error('You have already liked this message');
+  }
+
+  try {
+    await prisma.likes.create({
+      data: {
+        message: {
+          connect: {
+            id: messageId
+          }
+        },
+        likedBy: {
+          connect: {
+            address: session.address
+          }
+        },
+        userLikes: {
+          connect: {
+            id: userIdToLike
+          }
+        }
+      }
+    });
+  } catch (error) {
+    throw new Error(`Failed to like the message: ` + error.message);
   }
 };

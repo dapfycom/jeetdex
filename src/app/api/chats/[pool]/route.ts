@@ -1,22 +1,10 @@
 import prisma from '@/db';
-import { getSession } from '@/utils/server-utils/sessions';
 
 export async function GET(
   request: Request,
   { params }: { params: { pool: string } }
 ) {
   console.log('params', params);
-
-  const session = await getSession();
-  if (!session) {
-    return Response.json(
-      {
-        error: 'You must be logged in to view this page.'
-      },
-      { status: 403 }
-    );
-  }
-  console.log(session);
 
   const pool = params.pool;
 

@@ -36,7 +36,7 @@ model Likes {
   createdAt DateTime @default(now())
 
   message   Messages @relation("message-likes", fields: [messageId], references: [id])
-  messageId String
+  messageId Int
 }
 
 model Follows {
@@ -56,7 +56,7 @@ model Chats {
 }
 
 model Messages {
-  id        String   @id @default(cuid())
+  id        Int      @id @default(autoincrement())
   content   String
   type      String   @default("text")
   createdAt DateTime @default(now())

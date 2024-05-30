@@ -8,11 +8,14 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { toast } from '@/components/ui/use-toast';
 import useDisclosure from '@/hooks/useDisclosure';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowUpIcon, PlusIcon } from 'lucide-react';
+import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 import { mutate } from 'swr';
 import { z } from 'zod';
 
@@ -35,11 +38,38 @@ const SendMessagePopup = ({ pool }: { pool: string }) => {
     // ✅ This will be type-safe and validated.
     console.log(values);
 
-    await sendPoolMessage(values.message, pool);
+    try {
+      await sendPoolMessage(values.message, pool);
+      toast({
+        description: (
+          <div>
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className='mr-2 text-green-500'
+            />
+            Message sent!
+          </div>
+        )
+      });
+      mutate(['/chats/', pool]);
+    } catch (error) {
+      console.log(error.message);
 
-    mutate(['/chats/', pool]);
-
-    toast('Message sent!');
+      toast({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        title: (
+          <div>
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className='mr-2 text-red-500'
+            />
+            Error sending message!
+          </div>
+        ) as ReactNode,
+        description: <div className='ml-5'>{error.message}</div>
+      });
+    }
 
     onClose();
   }

@@ -9,7 +9,7 @@ const Following = () => {
   if (profileInfo.following.length === 0) {
     return (
       <div className='flex justify-center my-5 text-muted-foreground'>
-        Your not currently following any user
+        Your are not following anyone yet.
       </div>
     );
   }

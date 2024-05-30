@@ -21,7 +21,7 @@ export const useGetChat = (pool: string) => {
               updatedAt: Date;
             };
           } & {
-            id: string;
+            id: number;
             content: string;
             type: string;
             createdAt: Date;
