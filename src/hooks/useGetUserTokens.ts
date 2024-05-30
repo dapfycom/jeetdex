@@ -37,7 +37,7 @@ const useGetUserTokens = (
           name: 'EGLD',
           decimals: 18,
           assets: {
-            svgUrl: '/images/egld.svg'
+            svgUrl: '/assets/img/egld.svg'
           },
           balance: acc.account?.balance,
           price: price

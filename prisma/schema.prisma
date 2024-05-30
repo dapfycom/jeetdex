@@ -18,7 +18,7 @@ model Users {
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   likesReceived Likes[]   @relation("likesReceived")
   likesGiven    Likes[]   @relation("likesGiven")
-  followers     Follows[] @relation("follower")
+  followed      Follows[] @relation("followed")
   following     Follows[] @relation("following")
 }
 
@@ -37,8 +37,8 @@ model Likes {
 
 model Follows {
   id         String @id @default(cuid())
-  follower   Users  @relation("follower", fields: [followerId], references: [id])
-  followerId String
+  followed   Users  @relation("followed", fields: [followedId], references: [id])
+  followedId String
 
   following   Users  @relation("following", fields: [followingId], references: [id])
   followingId String

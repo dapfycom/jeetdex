@@ -1,6 +1,11 @@
+import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
 import { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import type { ReactNode } from 'react';
+import { extractRouterConfig } from 'uploadthing/server';
+
+import { ourFileRouter } from '@/app/api/uploadthing/core';
+import { Toaster } from '@/components/ui/toaster';
 import '../styles/globals.css';
 
 const fontSans = FontSans({
@@ -24,7 +29,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' className={fontSans.variable}>
-      <body className="dark bg-[url('/assets/img/bg.png')] ">{children}</body>
+      <body className="dark bg-[url('/assets/img/bg.png')] ">
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+        <Toaster />
+        {children}
+      </body>
     </html>
   );
 }

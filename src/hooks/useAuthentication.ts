@@ -1,3 +1,4 @@
+import { logoutFromSession } from '@/actions/user';
 import { admins } from '@/localConstants/admin';
 import {
   openLogin,
@@ -19,6 +20,7 @@ export const useAuthentication = () => {
     dispatch(openLogin(true));
   };
   const handleDisconnect = () => {
+    logoutFromSession();
     logout('/');
   };
 

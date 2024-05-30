@@ -12,10 +12,16 @@ const libsql = createClient({
 const adapter = new PrismaLibSQL(libsql);
 
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient({ adapter });
+  prisma =
+    process.env.USE_LOCAL_DB === 'true'
+      ? new PrismaClient()
+      : new PrismaClient({ adapter });
 } else {
   if (!global.prisma) {
-    global.prisma = new PrismaClient({ adapter });
+    global.prisma =
+      process.env.USE_LOCAL_DB === 'true'
+        ? new PrismaClient()
+        : new PrismaClient({ adapter });
   }
   prisma = global.prisma;
 }
