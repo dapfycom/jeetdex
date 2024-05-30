@@ -23,7 +23,7 @@ export default function Chats() {
       <div className=' flex flex-col  w-full lg:p-3 p-0  pt-6 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)]'>
         <div className='flex-1 w-full flex flex-col gap-4 px-4 py-8'>
           <div className='flex items-start gap-3'>
-            <Avatar className='border w-5 h-5'>
+            <Avatar className='border w-6 h-6'>
               <AvatarImage alt='User 1' src='/assets/img/logo-jeeter.png' />
               <AvatarFallback>U1</AvatarFallback>
             </Avatar>
@@ -53,7 +53,7 @@ export default function Chats() {
             </div>
           </div>
           <div className='flex items-start gap-3'>
-            <Avatar className='border w-5 h-5'>
+            <Avatar className='border w-6 h-6'>
               <AvatarImage alt='User 2' src='/assets/img/logo-jeeter.png' />
               <AvatarFallback>U2</AvatarFallback>
             </Avatar>
@@ -83,7 +83,7 @@ export default function Chats() {
             </div>
           </div>
           <div className='flex items-start gap-3'>
-            <Avatar className='border w-5 h-5'>
+            <Avatar className='border w-6 h-6'>
               <AvatarImage alt='User 1' src='/assets/img/logo-jeeter.png' />
               <AvatarFallback>U1</AvatarFallback>
             </Avatar>
@@ -113,7 +113,7 @@ export default function Chats() {
             </div>
           </div>
           <div className='flex items-start gap-3'>
-            <Avatar className='border w-5 h-5'>
+            <Avatar className='border w-6 h-6'>
               <AvatarImage alt='User 3' src='/assets/img/logo-jeeter.png' />
               <AvatarFallback>U3</AvatarFallback>
             </Avatar>
@@ -221,7 +221,7 @@ function HeartIcon(props) {
       strokeLinecap='round'
       strokeLinejoin='round'
     >
-      <path d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z' />
+      <path d='M19 14c1.49-1.46 3-3.21 3-6.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z' />
     </svg>
   );
 }
