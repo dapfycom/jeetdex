@@ -70,22 +70,16 @@ const SwapCard = ({
         <Button
           className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'
           onClick={swapCxt.OnToggleCharts}
+          size='icon'
         >
-          <FontAwesomeIcon
-            icon={faChartColumn}
-            className='w-[12px] h-[12px] mr-3'
-          />
-          on/off charts
+          <FontAwesomeIcon icon={faChartColumn} className='w-[12px] h-[12px]' />
         </Button>
         <Button
           className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'
           onClick={swapCxt.onToggleChats}
+          size='icon'
         >
-          <FontAwesomeIcon
-            icon={faMessage}
-            className='w-[12px] h-[12px] mr-3'
-          />
-          on/off chats
+          <FontAwesomeIcon icon={faMessage} className='w-[12px] h-[12px]' />
         </Button>
         <SlippageModal
           slippage={slippage}

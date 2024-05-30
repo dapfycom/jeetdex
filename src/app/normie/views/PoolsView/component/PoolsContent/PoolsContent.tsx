@@ -6,8 +6,6 @@ import PoolsList from './PoolsListTable/PoolsListTable';
 const PoolsContent = async () => {
   const pools = await fetchPoolsData();
 
-  console.log(pools);
-
   return (
     <div className='w-full mt-5'>
       <TabsContent value='table'>

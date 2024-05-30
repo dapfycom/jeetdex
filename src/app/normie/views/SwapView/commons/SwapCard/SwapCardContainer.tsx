@@ -126,6 +126,7 @@ const SwapCardContainer = () => {
     new BigNumber(fromField.valueDecimals),
     'first'
   );
+
   return (
     <SwapCard
       fromField={fromField}

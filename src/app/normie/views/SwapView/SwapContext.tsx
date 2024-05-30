@@ -1,15 +1,26 @@
 'use client';
 import useDisclosure from '@/hooks/useDisclosure';
 import React, { PropsWithChildren } from 'react';
+import { IPoolPair } from '../PoolsView/utils/types';
 
-const SwapCtx = React.createContext({
+const SwapCtx = React.createContext<{
+  isOPenChats: boolean;
+  onToggleChats: () => void;
+  isOpenCharts: boolean;
+  OnToggleCharts: () => void;
+  poolsInfo: IPoolPair[];
+}>({
   isOPenChats: true,
   onToggleChats: () => {},
   isOpenCharts: true,
-  OnToggleCharts: () => {}
+  OnToggleCharts: () => {},
+  poolsInfo: []
 });
 
-const SwapContext = ({ children }: PropsWithChildren) => {
+const SwapContext = ({
+  children,
+  poolsInfo
+}: PropsWithChildren<{ poolsInfo: IPoolPair[] }>) => {
   const { isOpen: isOPenChats, onToggle: onToggleChats } = useDisclosure(true);
   const { isOpen: isOpenCharts, onToggle } = useDisclosure(true);
 
@@ -25,7 +36,8 @@ const SwapContext = ({ children }: PropsWithChildren) => {
         isOPenChats,
         onToggleChats,
         isOpenCharts,
-        OnToggleCharts
+        OnToggleCharts,
+        poolsInfo
       }}
     >
       {children}
