@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' className={fontSans.variable}>
-      <body className="dark bg-[url('/assets/img/bg.png')] ">
+      <body className="dark bg-[url('/assets/img/bg.jpg')] ">
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <Toaster />
         {children}

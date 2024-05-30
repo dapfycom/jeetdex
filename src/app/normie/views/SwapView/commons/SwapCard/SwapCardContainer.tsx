@@ -15,9 +15,11 @@ import {
 } from '@/app/normie/views/SwapView/lib/swap-slice';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
+import { useEffect } from 'react';
 import { changeField } from '../../lib/functions';
 import { useGetSwapbleTokens, useGetTokenRatio } from '../../lib/hooks';
 import SwapCard from './SwapCard';
@@ -29,6 +31,12 @@ const SwapCardContainer = () => {
   const normalDirection = useAppSelector(selectNormalDirection);
   const loadingAggregatorData = false;
   const { elrondToken } = useGetElrondToken(toField.selectedToken);
+  const { currentParams, updateParams } = useUpdateUrlParams([
+    'firstToken',
+    'secondToken'
+  ]);
+
+  const [firstToken, secondToken] = currentParams;
 
   const dispatch = useAppDispatch();
   const handleChangeFromField = (value: string, token?: IElrondToken) => {
@@ -49,9 +57,12 @@ const SwapCardContainer = () => {
   const handleChangeFromToken = (token: IElrondToken) => {
     dispatch(changeFromFieldToken(token.identifier));
     handleChangeFromField(fromField.value, token);
+
+    updateParams('firstToken', token.identifier);
   };
   const handleChangeToToken = (token: IElrondToken) => {
     dispatch(changeToFieldToken(token.identifier));
+    updateParams('secondToken', token.identifier);
   };
   const handlePercentAmount = (
     accountToken: IElrondAccountToken,
@@ -98,6 +109,16 @@ const SwapCardContainer = () => {
       : t.secondToken === fromField.selectedToken &&
         t.firstToken === toField.selectedToken
   );
+
+  useEffect(() => {
+    if (firstToken) {
+      dispatch(changeFromFieldToken(firstToken));
+    }
+
+    if (secondToken) {
+      dispatch(changeToFieldToken(secondToken));
+    }
+  }, [dispatch, firstToken, secondToken]);
 
   useGetTokenRatio(
     pairSelected,
