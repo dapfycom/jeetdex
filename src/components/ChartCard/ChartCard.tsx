@@ -2,6 +2,7 @@
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
+import { useSwapContext } from '@/app/normie/views/SwapView/SwapContext';
 import {
   ChartingLibraryWidgetOptions,
   ResolutionString
@@ -28,6 +29,7 @@ const TVChartContainer = dynamic(
 
 export default function ChartCard() {
   const [isScriptReady, setIsScriptReady] = useState(false);
+  const swapCtx = useSwapContext();
   useEffect(() => {
     const script = document.createElement('script');
     script.src = '/static/datafeeds/udf/dist/bundle.js';
@@ -48,5 +50,13 @@ export default function ChartCard() {
     };
   }, []);
 
-  return <>{isScriptReady && <TVChartContainer {...defaultWidgetProps} />}</>;
+  if (!swapCtx.isOpenCharts) {
+    return null;
+  }
+
+  return (
+    <div className='h-full mt-[40px] rounded-2xl overflow-hidden md:block hidden'>
+      {isScriptReady && <TVChartContainer {...defaultWidgetProps} />}
+    </div>
+  );
 }
