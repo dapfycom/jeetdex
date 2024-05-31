@@ -131,7 +131,7 @@ export default function IssueTokenForm() {
             />
           </div>
 
-          <Button type='submit' className='mt-3'>
+          <Button type='submit' className='!mt-6'>
             Create coin this second
           </Button>
         </form>
