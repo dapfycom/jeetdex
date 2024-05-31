@@ -19,6 +19,11 @@ const SwapContent = () => {
 
   console.log(toToken);
 
+  const poolPair = swapCtx.poolsInfo.find(
+    (p) =>
+      p.firstToken.identifier === fromToken &&
+      p.secondToken.identifier === toToken
+  );
   return (
     <div className='flex flex-col items-center text-center '>
       <div
@@ -27,7 +32,7 @@ const SwapContent = () => {
           !swapCtx.isOpenCharts && 'flex justify-center'
         )}
       >
-        <ChartCard />
+        <ChartCard poolPair={poolPair} />
         <SwapCardContainer />
       </div>
       <div
@@ -37,13 +42,7 @@ const SwapContent = () => {
         )}
       >
         <Chats
-          poolPair={
-            swapCtx.poolsInfo.find(
-              (p) =>
-                p.firstToken.identifier === fromToken &&
-                p.secondToken.identifier === toToken
-            )?.lpTokenIdentifier
-          }
+          poolPair={poolPair?.lpTokenIdentifier}
           show={swapCtx.isOPenChats}
         />
       </div>
