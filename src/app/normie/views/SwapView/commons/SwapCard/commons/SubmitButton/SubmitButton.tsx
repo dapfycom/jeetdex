@@ -48,7 +48,7 @@ const SubmitButton = ({ poolAddres }: IProps) => {
     <>
       <Button
         onClick={handleSwap}
-        className='w-full gap-3 mt-4'
+        className='w-full gap-3 mt-2'
         disabled={!poolAddres || (!InsufficientBalance && isLoggedIn)}
       >
         {buttonText}

@@ -86,7 +86,7 @@ const SwapCard = ({
           handleChangeSlippage={handleChangeSlippage}
         />
       </div>
-      <Card className='lg:p-3 p-0  pt-6 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)]'>
+      <Card className='p-0 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)]'>
         <CardContent>
           <InputBox
             selectedTokenI={fromField.selectedToken}
@@ -113,24 +113,24 @@ const SwapCard = ({
             }
           />
 
-          <div className='flex justify-center my-6'>
+          <div className='flex justify-center my-2'>
             <div className=''>
               <Button
                 size={'icon'}
                 variant={'ghost'}
                 onClick={swapFileds}
-                className='group w-10 h-10 rounded-full flex justify-center pxitems-center text-[#0B1022] hover:text-[#0B1022]  bg-[#8CA7E8] hover:shadow hover:bg-[#8CA7E8]'
+                className='group w-7 h-7 rounded-full flex justify-center pxitems-center text-[#0B1022] hover:text-[#0B1022]  bg-[#8CA7E8] hover:shadow hover:bg-[#8CA7E8]'
               >
                 <div className='group-hover:hidden '>
                   <FontAwesomeIcon
                     icon={faArrowDown}
-                    className='h-[18px] w-[18px] '
+                    className='h-[16px] w-[16px] '
                   />
                 </div>
                 <div className='group-hover:block hidden'>
                   <FontAwesomeIcon
                     icon={faArrowDownUpAcrossLine}
-                    className='h-[18px] w-[18px] '
+                    className='h-[16px] w-[16px] '
                   />
                 </div>
               </Button>

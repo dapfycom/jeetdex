@@ -61,7 +61,7 @@ const InputBox = ({
 
   return (
     <>
-      <div className='flex flex-col w-full pt-3   rounded-2xl bg-[#0b102280] max-w-[500px] border-[#A259FF] focus-within:border focus-within:shadow-[0px_0px_12px_6px_#A259FF33]'>
+      <div className='flex flex-col w-full pt-2   rounded-2xl bg-[#0b102280] max-w-[500px] border-[#A259FF] focus-within:border focus-within:shadow-[0px_0px_12px_6px_#A259FF33]'>
         <div className='flex flex-col'>
           <div className='flex justify-between items-start px-4 md:px-8 pb-3 gap-2'>
             <h5 className='text-xs lg:text-sm '>{label}</h5>
@@ -119,7 +119,7 @@ const InputBox = ({
                 <PopoverTrigger asChild>
                   <Button
                     variant='outline'
-                    className={`ml-auto gap-2 w-fit !h-[40px] lg:!h-[56px] rounded-2xl bg-[#1C243E] disabled:opacity-100`}
+                    className={`ml-auto gap-2 w-fit !h-[35px] lg:!h-[46px] rounded-2xl bg-[#1C243E] disabled:opacity-100`}
                     disabled={tokensIdentifiers.length === 0 || isLoading}
                   >
                     {isLoading ? (
@@ -201,7 +201,7 @@ const InputBox = ({
                   readOnly={readOnly}
                 />
                 {dollarValue != null ? (
-                  <div className='absolute bottom-[-10px] right-0  px-3 text-muted-foreground text-2xl'>
+                  <div className='absolute bottom-[-15px] right-0  px-3 text-muted-foreground '>
                     $ {dollarValue}
                   </div>
                 ) : null}
