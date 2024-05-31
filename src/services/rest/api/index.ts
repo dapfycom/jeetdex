@@ -10,6 +10,8 @@ const axiosJeetdex = axios.create({
 });
 
 export const fetchAxiosJeetdex = async <T>(req: string): Promise<T> => {
+  console.log(req);
+
   const res = await axiosJeetdex.get<T>(req);
   return res.data;
 };

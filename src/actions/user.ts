@@ -3,7 +3,7 @@
 import prisma from '@/db';
 import { getSession, removeSession } from '@/utils/server-utils/sessions';
 import { generateRandomString } from '@/utils/strings';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { createAlreadyProfiledCookie } from './cookies';
 
@@ -85,4 +85,5 @@ export const updateUserProfile = async ({
   console.log('Profile updated');
 
   revalidatePath('/profile');
+  revalidateTag('CoinsPairs');
 };

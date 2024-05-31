@@ -7,6 +7,7 @@ import { faCheckCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader } from 'lucide-react';
 import { useContext, useState } from 'react';
+import { mutate } from 'swr';
 import { ProfileCtx } from '../ProfileContext';
 const UserAvatar = () => {
   const user = useContext(ProfileCtx);
@@ -41,6 +42,8 @@ const UserAvatar = () => {
               </div>
             )
           });
+
+          mutate('/user');
         }}
         onUploadBegin={() => {
           setIsEditing(true);

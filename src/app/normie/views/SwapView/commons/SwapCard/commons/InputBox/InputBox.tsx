@@ -134,7 +134,7 @@ const InputBox = ({
                             alt={elrondToken?.ticker}
                             size={23}
                             className='w-[23px] h-[23px] rounded-full'
-                            identifier={elrondToken.identifier}
+                            identifier={elrondToken?.identifier}
                           />
                         </div>
                         <p className='text-md lg:text-[20px]'>

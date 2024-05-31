@@ -26,6 +26,7 @@ import { toast } from '@/components/ui/use-toast';
 import useDisclosure from '@/hooks/useDisclosure';
 import { faCheckCircle, faPencil } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { mutate } from 'swr';
 import { z } from 'zod';
 import { ProfileCtx } from '../ProfileContext';
 
@@ -77,6 +78,8 @@ const EditProfile = () => {
         </div>
       )
     });
+
+    mutate('/user');
   }
 
   return (
@@ -117,9 +120,9 @@ const EditProfile = () => {
                 name='bio'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Bio</FormLabel>
                     <FormControl>
-                      <Input placeholder='shadcn' {...field} />
+                      <Input placeholder='Say something funny' {...field} />
                     </FormControl>
 
                     <FormMessage />

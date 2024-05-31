@@ -1,10 +1,10 @@
-import { useAppSelector, useAuthentication } from '@/hooks';
+import { useAppSelector, useAuthentication, useGetUserInfo } from '@/hooks';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 
 import { formatAddress, formatBalance } from '@/utils/mx-utils';
 import { useGetAccount, useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import { LogOut } from 'lucide-react';
-import Logo from '../Logo/Logo';
+import Image from 'next/image';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +18,9 @@ const DisconnectComponent = () => {
 
   const { handleDisconnect } = useAuthentication();
   const { balance } = useGetAccount();
+  const { userInfo } = useGetUserInfo();
+
+  console.log(userInfo);
 
   return (
     <DropdownMenu>
@@ -31,7 +34,13 @@ const DisconnectComponent = () => {
             })}{' '}
             EGLD)
           </div>
-          <Logo className='w-6 h-6 rounded-full hidden sm:block' />
+          <Image
+            src={userInfo?.data.img || '/assets/img/logo-jeeter.png'}
+            alt='User'
+            width={24}
+            height={24}
+            className='w-6 h-6 rounded-full hidden sm:block'
+          />
           <div>
             <div>{account?.username || formatAddress(address, 6, 4)}</div>
             <div className='block sm:hidden text-xs'>
