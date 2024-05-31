@@ -55,6 +55,8 @@ const RowToken = ({ token, checked, ...rest }: IProps) => {
                   alt={token.ticker}
                   src={token?.assets?.svgUrl}
                   size={28}
+                  identifier={token.identifier}
+                  className='rounded-full w-[28px] h-[28px]'
                 />
               </div>
 

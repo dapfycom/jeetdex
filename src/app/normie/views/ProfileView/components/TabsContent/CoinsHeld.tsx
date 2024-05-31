@@ -36,7 +36,13 @@ const CoinsHeld = () => {
             <TableRow key={token.identifier}>
               <TableCell className='font-medium'>
                 <div className='flex items-center gap-3'>
-                  <TokenImageSRC size={35} src={token?.assets?.svgUrl} />
+                  <TokenImageSRC
+                    size={35}
+                    src={token?.assets?.svgUrl}
+                    alt={token.name}
+                    identifier={token.identifier}
+                    className='rounded-full w-[35px] h-[35px]'
+                  />
                   <div className='flex flex-col gap-1'>
                     <span className=''>
                       {token.ticker || formatTokenI(token.identifier)}
