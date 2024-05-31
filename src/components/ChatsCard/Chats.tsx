@@ -100,6 +100,7 @@ const Chats = ({ poolPair, show = true }: IProps) => {
                           }
                           highlight={highlight === message.id}
                           onHoverChatReply={onHoverChatReply}
+                          time={message.createdAt}
                         />
 
                         <Divider />

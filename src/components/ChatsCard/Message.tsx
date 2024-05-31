@@ -24,6 +24,7 @@ interface IMessage {
   messageReplyingId: number;
   highlight?: boolean;
   onHoverChatReply?: (messageId: number) => void;
+  time: Date;
 }
 const Message = ({
   likes,
@@ -33,6 +34,7 @@ const Message = ({
   poolPair,
   user,
   highlight,
+  time,
   onHoverChatReply
 }: IMessage) => {
   const handleLike = async () => {
@@ -65,6 +67,8 @@ const Message = ({
       });
     }
   };
+
+  const date = new Date(time);
   return (
     <div
       className={cn(
@@ -79,6 +83,10 @@ const Message = ({
       <div className='grid gap-1'>
         <div className='flex items-center gap-2'>
           <div className='text-sm text-lime-300/50'>{user.username}</div>
+
+          <div className='text-sm text-muted-foreground'>
+            {date.toLocaleString()}
+          </div>
           <Button
             className='h-4 hover:bg-transparent text-stone-400 hover:text-stone-900 text-sm'
             size='icon'
