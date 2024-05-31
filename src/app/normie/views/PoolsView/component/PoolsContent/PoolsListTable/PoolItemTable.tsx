@@ -53,6 +53,8 @@ const PoolItem = ({ pool }: IProps) => {
             size={18}
             src1={pool?.firstToken?.assets?.svgUrl}
             src2={pool?.secondToken?.assets?.svgUrl}
+            identifier1={pool.firstTokenId}
+            identifier2={pool.secondTokenId}
           />
 
           <div>

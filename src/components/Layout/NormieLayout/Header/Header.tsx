@@ -26,7 +26,9 @@ export const Header = () => {
           <Login />
 
           <div className='absolute bottom-[-20px] right-0 flex gap-2 hover:font-bold'>
-            <Link href={'/profile'}>[View profile]</Link>
+            <Link href={'/profile'} className='whitespace-nowrap'>
+              [View profile]
+            </Link>
           </div>
         </div>
       </div>

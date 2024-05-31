@@ -6,9 +6,18 @@ interface IProps {
   src2?: string;
   size: number;
   className?: string;
+  identifier1: string;
+  identifier2: string;
 }
 
-const PoolCoins = ({ className, src1, src2, size }: IProps) => {
+const PoolCoins = ({
+  className,
+  src1,
+  src2,
+  size,
+  identifier1,
+  identifier2
+}: IProps) => {
   return (
     <div className='flex'>
       <div
@@ -21,6 +30,7 @@ const PoolCoins = ({ className, src1, src2, size }: IProps) => {
           size={size}
           src={src1}
           alt='Token 1'
+          identifier={identifier1}
           className='w-[70%] h-[70%] rounded-full'
         />
       </div>
@@ -35,6 +45,7 @@ const PoolCoins = ({ className, src1, src2, size }: IProps) => {
           src={src2}
           alt='Token 2'
           className='w-[70%] h-[70%] rounded-full'
+          identifier={identifier2}
         />
       </div>
     </div>

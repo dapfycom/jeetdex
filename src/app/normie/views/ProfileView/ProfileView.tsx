@@ -35,6 +35,11 @@ const ProfileView = async () => {
         include: {
           followed: true
         }
+      },
+      messages: {
+        include: {
+          likes: true
+        }
       }
     }
   });

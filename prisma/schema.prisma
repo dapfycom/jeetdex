@@ -22,6 +22,8 @@ model Users {
   following     Follows[] @relation("following")
 
   messages Messages[] @relation("messages")
+
+  coins Coins[] @relation("coins")
 }
 
 model Likes {
@@ -81,4 +83,12 @@ model MessagesReplies {
 
   messageReplying   Messages @relation("meessage-replying", fields: [messageReplyingId], references: [id])
   messageReplyingId Int      @unique
+}
+
+model Coins {
+  id         String @id @default(cuid())
+  identifier String @unique
+  img        String @unique
+  owner      Users  @relation("coins", fields: [ownerId], references: [id])
+  ownerId    String
 }

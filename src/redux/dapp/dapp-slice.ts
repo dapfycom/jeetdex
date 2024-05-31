@@ -2,35 +2,40 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../store';
 
 export interface GeneralState {
-  isLoginModal: boolean;
   userAddress: string;
   shard: number;
+  globalData: {
+    coins: any[];
+  };
 }
 
 const initialState: GeneralState = {
-  isLoginModal: false,
   userAddress: '',
-  shard: 1
+  shard: 1,
+  globalData: {
+    coins: []
+  }
 };
 
 export const dapp = createSlice({
   name: 'dapp',
   initialState,
   reducers: {
-    openLogin: (state, action: PayloadAction<boolean>) => {
-      state.isLoginModal = action.payload;
-    },
     setUserAddress: (state, action: PayloadAction<string>) => {
       state.userAddress = action.payload;
     },
     setShard: (state, action: PayloadAction<number>) => {
       state.shard = action.payload;
+    },
+    setGlobalData: (state, action: PayloadAction<{ coins: any[] }>) => {
+      state.globalData = action.payload;
     }
   }
 });
 
-export const selectIsLoginModal = (state: AppState) => state.dapp.isLoginModal;
 export const selectUserAddress = (state: AppState) => state.dapp.userAddress;
+export const selectShard = (state: AppState) => state.dapp.shard;
+export const selectGlobalData = (state: AppState) => state.dapp.globalData;
 
-export const { openLogin, setUserAddress, setShard } = dapp.actions;
+export const { setGlobalData, setUserAddress, setShard } = dapp.actions;
 export default dapp.reducer;

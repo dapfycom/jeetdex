@@ -1,5 +1,4 @@
 'use client';
-import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import {
   Table,
   TableBody,
@@ -18,6 +17,7 @@ import {
   formatTokenI
 } from '@/utils/mx-utils';
 import { useSelector } from 'react-redux';
+import UpdateCoinImg from '../UpdateCoinImg';
 const CoinsCreated = () => {
   const address = useSelector(selectUserAddress);
 
@@ -30,18 +30,20 @@ const CoinsCreated = () => {
       <TableCaption>A list of your tokens in wallet.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className='w-[100px]'>Token</TableHead>
+          <TableHead className='text-left'>Token</TableHead>
           <TableHead className='text-center'>Price</TableHead>
           <TableHead className='text-right'>Value</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {tokensHeld.map((token) => {
+          console.log(token);
+
           return (
             <TableRow key={token.identifier}>
               <TableCell className='font-medium'>
                 <div className='flex items-center gap-3'>
-                  <TokenImageSRC size={35} src={token?.assets?.svgUrl} />
+                  <UpdateCoinImg token={token} />
                   <div className='flex flex-col gap-1'>
                     <span className=''>
                       {token.ticker || formatTokenI(token.identifier)}

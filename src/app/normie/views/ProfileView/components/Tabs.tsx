@@ -5,7 +5,7 @@ import CoinsHeld from './TabsContent/CoinsHeld';
 import Followers from './TabsContent/Followers';
 import Following from './TabsContent/Following';
 import Notifications from './TabsContent/Notifications';
-import Replies from './TabsContent/TabsContent';
+import Replies from './TabsContent/Replies';
 
 const tabs = [
   {

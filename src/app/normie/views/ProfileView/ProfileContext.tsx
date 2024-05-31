@@ -24,6 +24,21 @@ type ContextType = {
   _count: {
     likesReceived: number;
   };
+  messages: {
+    id: number;
+    content: string;
+    type: string;
+    createdAt: Date;
+    chatId: string;
+    senderId: string;
+    likes: {
+      id: string;
+      likedById: string;
+      userId: string;
+      createdAt: Date;
+      messageId: number;
+    }[];
+  }[];
 } & user;
 
 export const ProfileCtx = createContext<ContextType>(null);

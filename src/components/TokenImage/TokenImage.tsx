@@ -1,5 +1,8 @@
+'use client';
 import { LpTokenImageV2 } from '@/components/LpTokenImage/LpTokenImage';
+import { useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
+import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader2 } from 'lucide-react';
@@ -64,14 +67,35 @@ const TokenImage = ({ tokenI, src, alt = '', size }: IProps) => {
 
 export default TokenImage;
 
-export const TokenImageSRC = ({ src, alt = '', size, className }: IProps) => {
+interface TokenImageSRCProps {
+  identifier: string;
+  src: string;
+  alt: string;
+  size: number;
+  className?: string;
+}
+
+export const TokenImageSRC = ({
+  identifier,
+  src,
+  alt,
+  size,
+  className
+}: TokenImageSRCProps) => {
+  console.log(identifier);
+
   console.log(src);
+  const globalData = useAppSelector(selectGlobalData);
+
+  console.log(globalData);
+
+  const coin = globalData.coins.find((c) => c.identifier === identifier);
 
   return (
     <>
-      {src ? (
+      {coin?.img || src ? (
         <Image
-          src={src}
+          src={coin ? coin.img : src}
           alt={alt}
           width={size}
           height={size}

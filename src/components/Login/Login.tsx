@@ -8,7 +8,8 @@ import { useAppDispatch } from '@/hooks';
 import { setShard, setUserAddress } from '@/redux/dapp/dapp-slice';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import { Skeleton } from '../ui/skeleton';
 
 const ConnectComponent = dynamic(() => import('./ConnectComponent'), {
   ssr: false
@@ -38,7 +39,17 @@ const Login = () => {
     }
   }, [tokenLogin?.nativeAuthToken]);
 
-  return <>{isLoggedIn ? <DisconnectComponent /> : <ConnectComponent />}</>;
+  return (
+    <>
+      {isLoggedIn ? (
+        <DisconnectComponent />
+      ) : (
+        <Suspense fallback={<Skeleton className='w-[230px] h-[24px]' />}>
+          <ConnectComponent />
+        </Suspense>
+      )}
+    </>
+  );
 };
 
 export default Login;

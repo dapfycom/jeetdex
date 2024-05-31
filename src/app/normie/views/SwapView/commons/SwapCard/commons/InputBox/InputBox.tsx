@@ -133,6 +133,8 @@ const InputBox = ({
                             src={elrondToken?.assets?.svgUrl}
                             alt={elrondToken?.ticker}
                             size={23}
+                            className='w-[23px] h-[23px] rounded-full'
+                            identifier={elrondToken.identifier}
                           />
                         </div>
                         <p className='text-md lg:text-[20px]'>
@@ -176,6 +178,8 @@ const InputBox = ({
                                     size={20}
                                     src={t?.assets?.svgUrl}
                                     alt={t?.ticker}
+                                    identifier={t.identifier}
+                                    className='w-[20px] h-[20px] rounded-full'
                                   />
 
                                   <p>{formatTokenI(t?.ticker)}</p>

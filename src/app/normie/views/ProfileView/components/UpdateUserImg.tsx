@@ -20,7 +20,7 @@ const UserAvatar = () => {
     <div className='flex items-center space-x-4 mb-4'>
       <UploadButton
         className='bg-transparent w-fit ut-button:bg-transparent ut-label:w-fit'
-        endpoint='imageUploader'
+        endpoint='userAvatar'
         appearance={{
           button: 'bg-transparent w-fit'
         }}

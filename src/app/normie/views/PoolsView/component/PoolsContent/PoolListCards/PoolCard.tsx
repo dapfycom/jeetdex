@@ -29,6 +29,8 @@ const PoolCard = ({ pool }: IProps) => {
           src2={pool?.secondToken?.assets?.svgUrl}
           size={26}
           className='w-[50px] h-[50px]'
+          identifier1={pool.firstTokenId}
+          identifier2={pool.secondTokenId}
         />
 
         <h3 className='mt-1 text-xl'>
