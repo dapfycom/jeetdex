@@ -20,6 +20,12 @@ export const useGetChat = (pool: string) => {
               createdAt: Date;
               updatedAt: Date;
             };
+            messageReplying: {
+              id: number;
+              createdAt: Date;
+              messageRepleidId: number;
+              messageReplyingId: number;
+            };
           } & {
             id: number;
             content: string;

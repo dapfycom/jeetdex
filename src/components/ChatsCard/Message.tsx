@@ -1,11 +1,15 @@
 import { likeMessage } from '@/actions/messages';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HeartIcon, MessageCircleIcon } from 'lucide-react';
+import Link from 'next/link';
 import { mutate } from 'swr';
+import { DialogTrigger } from '../ui/dialog';
 import { toast } from '../ui/use-toast';
+import SendMessagePopup from './SendMessagePopup';
 
 interface IMessage {
   user: {
@@ -17,8 +21,20 @@ interface IMessage {
   messageId: number;
   likes: number;
   poolPair: string;
+  messageReplyingId: number;
+  highlight?: boolean;
+  onHoverChatReply?: (messageId: number) => void;
 }
-const Message = ({ likes, message, messageId, poolPair, user }: IMessage) => {
+const Message = ({
+  likes,
+  message,
+  messageId,
+  messageReplyingId,
+  poolPair,
+  user,
+  highlight,
+  onHoverChatReply
+}: IMessage) => {
   const handleLike = async () => {
     try {
       await likeMessage(messageId, user.id);
@@ -50,13 +66,19 @@ const Message = ({ likes, message, messageId, poolPair, user }: IMessage) => {
     }
   };
   return (
-    <div className='flex items-start gap-3'>
+    <div
+      className={cn(
+        'flex items-start gap-3 rounded-xl p-2',
+        highlight && 'bg-blue-900/50 '
+      )}
+      id={`message-${messageId}`}
+    >
       <Avatar className='border w-6 h-6'>
         <AvatarImage alt={user.username} src={user.img} />
       </Avatar>
       <div className='grid gap-1'>
         <div className='flex items-center gap-2'>
-          <div className='text-sm text-primary'>{user.username}</div>
+          <div className='text-sm text-lime-300/50'>{user.username}</div>
           <Button
             className='h-4 hover:bg-transparent text-stone-400 hover:text-stone-900 text-sm'
             size='icon'
@@ -67,17 +89,36 @@ const Message = ({ likes, message, messageId, poolPair, user }: IMessage) => {
             <span>{likes}</span>
             <span className='sr-only'>Like</span>
           </Button>
-          <Button
-            className='w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900'
-            size='icon'
-            variant='ghost'
-          >
-            #{messageId}
-            <MessageCircleIcon className='w-4 h-4' />
-            <span className='sr-only'>Reply</span>
-          </Button>
+
+          <SendMessagePopup pool={poolPair} repliedMessage={messageId}>
+            <DialogTrigger asChild>
+              <Button
+                className='w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900'
+                size='icon'
+                variant='ghost'
+              >
+                #{messageId}
+                <MessageCircleIcon className='w-4 h-4' />
+                <span className='sr-only'>Reply</span>
+              </Button>
+            </DialogTrigger>
+          </SendMessagePopup>
         </div>
-        <div className='prose prose-sm prose-stone'>
+        <div className='prose prose-sm prose-stone flex gap-2'>
+          {messageReplyingId && (
+            <Link
+              href={`#message-${messageReplyingId}`}
+              onMouseEnter={() =>
+                onHoverChatReply && onHoverChatReply(messageReplyingId)
+              }
+              onMouseLeave={() => onHoverChatReply && onHoverChatReply(0)}
+            >
+              <p className='text-primary font-bold text-lg'>
+                {' '}
+                #{messageReplyingId}
+              </p>
+            </Link>
+          )}
           <p>{message}</p>
         </div>
       </div>

@@ -91,3 +91,49 @@ export const likeMessage = async (messageId: number, userIdToLike: string) => {
     throw new Error(`Failed to like the message: ` + error.message);
   }
 };
+
+export const replyMessage = async (
+  message: string,
+  pool: string,
+  messageReplied: number
+) => {
+  console.log('replyMessage');
+
+  const session = await getSession();
+  if (!session) {
+    throw new Error('User not authenticated');
+  }
+
+  try {
+    const data = await prisma.messagesReplies.create({
+      data: {
+        messageReplied: {
+          connect: {
+            id: messageReplied
+          }
+        },
+        messageReplying: {
+          create: {
+            content: message,
+            chat: {
+              connect: {
+                pool: pool
+              }
+            },
+            sender: {
+              connect: {
+                address: session.address
+              }
+            }
+          }
+        }
+      }
+    });
+
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    throw new Error(`Failed to reply to the message: ` + error.message);
+  }
+};

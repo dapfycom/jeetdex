@@ -1,11 +1,10 @@
-import { sendPoolMessage } from '@/actions/messages';
+import { replyMessage, sendPoolMessage } from '@/actions/messages';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogTitle,
-  DialogTrigger
+  DialogTitle
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
@@ -13,8 +12,8 @@ import useDisclosure from '@/hooks/useDisclosure';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowUpIcon, PlusIcon } from 'lucide-react';
-import { ReactNode } from 'react';
+import { ArrowUpIcon } from 'lucide-react';
+import { PropsWithChildren, ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { mutate } from 'swr';
 import { z } from 'zod';
@@ -23,7 +22,11 @@ const SendMessageSchema = z.object({
   message: z.string()
 });
 
-const SendMessagePopup = ({ pool }: { pool: string }) => {
+const SendMessagePopup = ({
+  pool,
+  children,
+  repliedMessage
+}: PropsWithChildren<{ pool: string; repliedMessage?: number | null }>) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
   const form = useForm({
     resolver: zodResolver(SendMessageSchema),
@@ -39,7 +42,11 @@ const SendMessagePopup = ({ pool }: { pool: string }) => {
     console.log(values);
 
     try {
-      await sendPoolMessage(values.message, pool);
+      if (repliedMessage) {
+        await replyMessage(values.message, pool, repliedMessage);
+      } else {
+        await sendPoolMessage(values.message, pool);
+      }
       toast({
         description: (
           <div>
@@ -75,16 +82,7 @@ const SendMessagePopup = ({ pool }: { pool: string }) => {
   }
   return (
     <Dialog open={isOpen} onOpenChange={onToggle}>
-      <DialogTrigger asChild>
-        <Button
-          className='absolute top-3 right-3 w-8 h-8'
-          size='icon'
-          type='button'
-        >
-          <PlusIcon className='w-4 h-4' />
-          <span className='sr-only'>Open Message Input</span>
-        </Button>
-      </DialogTrigger>
+      {children}
       <DialogContent className='p-4 sm:max-w-md'>
         <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
           <div className='flex flex-col gap-4'>
@@ -94,6 +92,13 @@ const SendMessagePopup = ({ pool }: { pool: string }) => {
                 Type your message in the input below and click send.
               </DialogDescription>
             </div>
+            {repliedMessage && (
+              <div className='flex items-center gap-2'>
+                <div className='text-sm text-primary'>
+                  Replying to message #{repliedMessage}
+                </div>
+              </div>
+            )}
             <div className='relative'>
               <Textarea
                 className='min-h-[96px] rounded-2xl resize-none p-4 border border-gray-200 shadow-sm pr-16 dark:border-gray-800'

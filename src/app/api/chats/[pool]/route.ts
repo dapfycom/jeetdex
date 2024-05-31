@@ -21,7 +21,9 @@ export async function GET(
                 likes: true
               }
             },
-            sender: true
+            sender: true,
+            messageReplied: true,
+            messageReplying: true
           }
         }
       }

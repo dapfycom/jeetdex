@@ -66,4 +66,19 @@ model Messages {
   senderId  String
 
   likes Likes[] @relation("message-likes")
+
+  messageReplied MessagesReplies[] @relation("meessage-replied")
+
+  messageReplying MessagesReplies? @relation("meessage-replying")
+}
+
+model MessagesReplies {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  messageReplied   Messages @relation("meessage-replied", fields: [messageRepleidId], references: [id])
+  messageRepleidId Int
+
+  messageReplying   Messages @relation("meessage-replying", fields: [messageReplyingId], references: [id])
+  messageReplyingId Int      @unique
 }

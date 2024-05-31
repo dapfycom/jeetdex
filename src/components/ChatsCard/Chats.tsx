@@ -1,7 +1,10 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { Fragment } from 'react';
+import { PlusIcon } from 'lucide-react';
+import { Fragment, useState } from 'react';
 import Divider from '../Divider/Divider';
+import { Button } from '../ui/button';
+import { DialogTrigger } from '../ui/dialog';
 import { Skeleton } from '../ui/skeleton';
 import Message from './Message';
 import SendMessagePopup from './SendMessagePopup';
@@ -18,6 +21,13 @@ const Chats = ({ poolPair, show = true }: IProps) => {
   const { chat, isLoading } = useGetChat(poolPair);
   console.log(chat);
 
+  const [highlight, setHighlight] = useState<number>();
+
+  const onHoverChatReply = (replyedId: number) => {
+    console.log(replyedId);
+
+    setHighlight(replyedId);
+  };
   return (
     <div className={cn('relative w-full', !show && 'hidden')}>
       <div className=' flex flex-col  w-full lg:p-3 p-0  pt-6 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)]'>
@@ -26,7 +36,7 @@ const Chats = ({ poolPair, show = true }: IProps) => {
             We couldn&apos;t find a chat for this pool
           </div>
         ) : (
-          <div className='flex-1 w-full flex flex-col gap-4 px-4 py-8'>
+          <div className='flex-1 w-full flex flex-col gap-2 px-4 py-8'>
             {isLoading ? (
               <>
                 <div className='flex w-full gap-3'>
@@ -85,6 +95,11 @@ const Chats = ({ poolPair, show = true }: IProps) => {
                           }}
                           messageId={message.id}
                           poolPair={poolPair}
+                          messageReplyingId={
+                            message?.messageReplying?.messageRepleidId
+                          }
+                          highlight={highlight === message.id}
+                          onHoverChatReply={onHoverChatReply}
                         />
 
                         <Divider />
@@ -98,7 +113,20 @@ const Chats = ({ poolPair, show = true }: IProps) => {
         )}
       </div>
 
-      {poolPair && <SendMessagePopup pool={poolPair} />}
+      {poolPair && (
+        <SendMessagePopup pool={poolPair}>
+          <DialogTrigger asChild>
+            <Button
+              className='absolute top-3 right-3 w-8 h-8'
+              size='icon'
+              type='button'
+            >
+              <PlusIcon className='w-4 h-4' />
+              <span className='sr-only'>Open Message Input</span>
+            </Button>
+          </DialogTrigger>
+        </SendMessagePopup>
+      )}
     </div>
   );
 };
