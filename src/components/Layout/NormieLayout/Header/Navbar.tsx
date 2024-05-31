@@ -16,7 +16,7 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
+            'text-gray-400 text-md lg:text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['normie']
@@ -32,7 +32,7 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
+            'text-gray-400 text-md lg:text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['pools']
@@ -48,7 +48,7 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            'text-gray-400  text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
+            'text-gray-400 text-md lg:text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['dust']
@@ -64,7 +64,7 @@ const Navbar = () => {
         <Button
           variant='ghost'
           className={cn(
-            ' text-gray-400 text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
+            ' text-gray-400text-md lg:text-lg rounded-xl hover:bg-[#1c243e83] hover:text-white',
             isPathOrSubpath(
               pathname.split('/')[pathname.split('/').length - 1],
               ['/']
