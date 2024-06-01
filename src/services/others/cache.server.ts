@@ -114,11 +114,6 @@ export const fetchUsersData = unstable_cache(
     try {
       const users = await prisma.users.findMany({
         include: {
-          _count: {
-            select: {
-              likesReceived: true
-            }
-          },
           followed: {
             include: {
               following: true
@@ -128,12 +123,26 @@ export const fetchUsersData = unstable_cache(
             include: {
               followed: true
             }
+          },
+          likesReceived: {
+            select: {
+              id: true
+            }
           }
         }
       });
-      console.log(users);
 
-      return users;
+      const usersWithCountLikes = users.map((u) => {
+        return {
+          ...u,
+          _count: {
+            likesReceived: u.likesReceived.length
+          }
+        };
+      });
+      console.log(usersWithCountLikes);
+
+      return usersWithCountLikes;
     } catch (error) {
       console.log(error);
     }
