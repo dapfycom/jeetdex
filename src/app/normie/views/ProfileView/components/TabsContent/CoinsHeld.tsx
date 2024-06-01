@@ -9,7 +9,9 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
+import { useAppSelector } from '@/hooks';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
+import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import {
   formatBalance,
   formatBalanceDollar,
@@ -18,7 +20,16 @@ import {
 } from '@/utils/mx-utils';
 
 const CoinsHeld = () => {
+  const globalData = useAppSelector(selectGlobalData);
   const { userTokens } = useGetUserTokens();
+
+  // order tokens, put first the ones in globalData
+  const mapTokens = globalData.pools.map((p) => p.firstTokenId);
+  userTokens.sort((a, b) => {
+    if (mapTokens.includes(a.identifier)) return -1;
+    if (mapTokens.includes(b.identifier)) return 1;
+    return 0;
+  });
 
   return (
     <Table>
