@@ -5,9 +5,12 @@ export const dynamicParams = false; // true | false,
 export async function generateStaticParams() {
   const pools = await fetchPoolsData();
 
-  return pools.map((pool) => ({
+  const poolPageGenerator = pools.map((pool) => ({
     lptoken: pool.lpTokenIdentifier
   }));
+  console.log(poolPageGenerator);
+
+  return poolPageGenerator;
 }
 
 async function Page({ params }: { params: { lptoken: string } }) {

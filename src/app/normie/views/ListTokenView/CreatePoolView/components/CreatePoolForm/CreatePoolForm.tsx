@@ -108,8 +108,6 @@ export default function CreatePoolForm({}: ICreatePoolFormProps) {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     const { firstToken, secondToken } = data;
 
-    console.log(data);
-
     if (firstToken.length > 0 && secondToken.length > 0) {
       const res: SendTransactionReturnType = await newPoolTx(
         newPairFee,
@@ -124,9 +122,6 @@ export default function CreatePoolForm({}: ICreatePoolFormProps) {
 
   useEffect(
     () => {
-      console.log(form.watch('firstToken'));
-      console.log(form.watch('secondToken'));
-
       if (form.watch('firstToken')) {
         dispatch(setToke1(form.watch('firstToken')));
       }

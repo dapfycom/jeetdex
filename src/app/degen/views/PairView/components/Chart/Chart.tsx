@@ -73,8 +73,6 @@ function generateData(
 }
 const Chart = () => {
   useEffect(() => {
-    console.log('useeffect');
-
     const chartOptions = {
       layout: {
         textColor: 'gray',

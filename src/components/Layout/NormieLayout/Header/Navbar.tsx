@@ -7,8 +7,6 @@ import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const pathname = usePathname();
-  console.log(pathname);
-  console.log(pathname.split('/')[pathname.split('/').length - 1]);
 
   return (
     <div className='text-sm sm:text-lg'>

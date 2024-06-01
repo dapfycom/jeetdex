@@ -30,7 +30,6 @@ const RowToken = ({ token, checked, ...rest }: IProps) => {
   const disbleTokenSelection =
     selectedTokens.length >= maxAllowedTokensCount &&
     !Boolean(selectedTokens.find((t) => t.identifier === token.identifier));
-  console.log(token?.assets?.svgUrl);
 
   return (
     <div

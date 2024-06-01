@@ -1,6 +1,5 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { network } from '@/config';
-import { fetchUsersData } from '@/services/others/cache.server';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
@@ -8,11 +7,7 @@ import ProfileContext from './ProfileContext';
 import FollowButton from './components/FollowButton';
 import ProfileTabs from './components/Tabs';
 
-const PublicProfileView = async ({ id }: { id: string }) => {
-  const users = await fetchUsersData();
-  const user = users.find((user) => user.id === id);
-
-  console.log(user);
+const PublicProfileView = async ({ user }: { user: any }) => {
 
   if (!user) {
     return null;

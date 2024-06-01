@@ -3,16 +3,11 @@ import prisma from '@/db';
 import { getSession } from '@/utils/server-utils/sessions';
 
 export const sendPoolMessage = async (message: string, pool: string) => {
-  console.log('sendPoolMessage');
-
   const session = await getSession();
-
-  console.log(session);
 
   if (!session) {
     throw new Error('User not authenticated');
   }
-  console.log(session);
 
   try {
     const data = await prisma.messages.create({
@@ -36,8 +31,6 @@ export const sendPoolMessage = async (message: string, pool: string) => {
       }
     });
 
-    console.log(data);
-
     return data;
   } catch (error) {
     throw new Error(`Failed to create the message: ` + error.message);
@@ -45,8 +38,6 @@ export const sendPoolMessage = async (message: string, pool: string) => {
 };
 
 export const likeMessage = async (messageId: number, userIdToLike: string) => {
-  console.log('likeMessage');
-
   const session = await getSession();
 
   if (!session) {
@@ -97,8 +88,6 @@ export const replyMessage = async (
   pool: string,
   messageReplied: number
 ) => {
-  console.log('replyMessage');
-
   const session = await getSession();
   if (!session) {
     throw new Error('User not authenticated');
@@ -129,8 +118,6 @@ export const replyMessage = async (
         }
       }
     });
-
-    console.log(data);
 
     return data;
   } catch (error) {

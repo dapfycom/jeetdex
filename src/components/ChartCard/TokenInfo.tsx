@@ -11,7 +11,6 @@ interface IProps {
 }
 const TokenInfo = ({ poolPair }: IProps) => {
   const globalData = useAppSelector(selectGlobalData);
-  console.log(globalData);
 
   const token = globalData.coins.find(
     (t) => t.identifier === poolPair?.firstToken?.identifier

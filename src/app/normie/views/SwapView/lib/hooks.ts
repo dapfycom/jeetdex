@@ -96,14 +96,10 @@ export const useGetTokenRatio = (
           }`;
   }
   const { data } = useSWR(swrKey, async (key) => {
-    console.log(key);
-
     const data = await fetchScSimpleDataWithContract(key, pairContractAbi, [
       new TokenIdentifierValue(tokenIdentifier),
       new BigUIntValue(bigUIntValue)
     ]);
-
-    console.log(data);
 
     return data;
   });
@@ -115,8 +111,6 @@ export const useGetTokenRatio = (
         tokenOutDetails.elrondToken.decimals,
         true
       ).toString();
-
-      console.log(displayValue);
 
       dispatch(onChangeToField(displayValue));
       dispatch(onChangeToFieldValueDecimals(data.toString()));

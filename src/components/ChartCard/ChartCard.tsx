@@ -1,9 +1,7 @@
 'use client';
 import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import { useSwapContext } from '@/app/normie/views/SwapView/SwapContext';
-import { useAppSelector } from '@/hooks';
 import { cn } from '@/lib/utils';
-import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import Iframe from 'react-iframe';
 import TokenInfo from './TokenInfo';
 interface IProps {
@@ -11,9 +9,6 @@ interface IProps {
 }
 export default function ChartCard({ poolPair }: IProps) {
   const swapCtx = useSwapContext();
-  console.log(poolPair);
-  const global = useAppSelector(selectGlobalData);
-  console.log(global);
 
   return (
     <div

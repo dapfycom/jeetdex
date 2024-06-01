@@ -15,7 +15,6 @@ export const submitSwap = async (
     poolAddress,
     pairContractAbi
   );
-  console.log({ slippage });
 
   return interactions.ESDTTransfer({
     functionName: 'swapIn',

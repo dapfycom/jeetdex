@@ -5,13 +5,21 @@ export const dynamicParams = false; // true | false,
 export async function generateStaticParams() {
   const users = await fetchUsersData();
 
-  return users.map((u) => ({
-    u: u.id
+  const generatedIdForUserPages = users.map((u) => ({
+    id: u.id
   }));
+
+  console.log(generatedIdForUserPages);
+
+  return generatedIdForUserPages;
 }
 
 async function Page({ params }: { params: { id: string } }) {
-  return <PublicProfileView id={params.id} />;
+  const users = await fetchUsersData();
+
+  const user = users.find((user) => user.id === params.id);
+
+  return <PublicProfileView user={user} />;
 }
 
 export default Page;

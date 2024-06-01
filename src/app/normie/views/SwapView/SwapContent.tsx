@@ -23,10 +23,6 @@ const SwapContent = () => {
       p.firstToken.identifier === fromToken &&
       p.secondToken.identifier === toToken
   );
-  console.log(fromToken);
-  console.log(toToken);
-
-  console.log(poolPair);
 
   return (
     <div className='flex flex-col items-center text-center '>

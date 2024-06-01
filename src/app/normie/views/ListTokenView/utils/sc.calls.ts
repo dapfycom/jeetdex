@@ -60,8 +60,6 @@ export const newPoolTx = async (
     );
   }
 
-  console.log(feeArg);
-
   return interactions.mainRouter.EGLDPayment({
     functionName: 'newPair',
     arg: [

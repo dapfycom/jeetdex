@@ -16,16 +16,11 @@ interface IProps {
 }
 
 const Chats = ({ poolPair, show = true }: IProps) => {
-  console.log(poolPair);
-
   const { chat, isLoading } = useGetChat(poolPair);
-  console.log(chat);
 
   const [highlight, setHighlight] = useState<number>();
 
   const onHoverChatReply = (replyedId: number) => {
-    console.log(replyedId);
-
     setHighlight(replyedId);
   };
   return (

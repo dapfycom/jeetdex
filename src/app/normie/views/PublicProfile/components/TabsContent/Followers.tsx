@@ -5,7 +5,6 @@ import { ProfileCtx } from '../../ProfileContext';
 
 const Followers = () => {
   const profileInfo = useContext(ProfileCtx);
-  console.log(profileInfo);
 
   if (profileInfo.followed.length === 0) {
     return (

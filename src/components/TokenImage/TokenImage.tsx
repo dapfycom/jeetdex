@@ -82,12 +82,7 @@ export const TokenImageSRC = ({
   size,
   className
 }: TokenImageSRCProps) => {
-  console.log(identifier);
-
-  console.log(src);
   const globalData = useAppSelector(selectGlobalData);
-
-  console.log(globalData);
 
   const coin = globalData.coins.find((c) => c.identifier === identifier);
 

@@ -22,8 +22,6 @@ const SwapContext = ({
   const { isOpen: isOpenCharts, onToggle } = useDisclosure(true);
 
   const OnToggleCharts = () => {
-    console.log('onToggleCharts');
-
     onToggle();
   };
 

@@ -16,7 +16,6 @@ export const createProfile = async ({
 }) => {
   const session = await getSession();
   const alreadyProfileCookie = cookies().get('already-profiled');
-  console.log('createProfile', session, alreadyProfileCookie);
 
   if (!session || address !== session.address) {
     return;
@@ -29,8 +28,6 @@ export const createProfile = async ({
   const nickname = herotag || generateRandomString(6);
 
   const img = '/assets/img/logo-jeeter.png';
-
-  console.log('Creating profile for', address, nickname, img);
 
   try {
     await prisma.users.create({
@@ -60,10 +57,7 @@ export const updateUserProfile = async ({
   bio?: string;
   img?: string;
 }) => {
-  console.log('updateUserProfile', username, bio, img);
-
   const session = await getSession();
-  console.log(session);
 
   if (!session) {
     return {
@@ -82,15 +76,12 @@ export const updateUserProfile = async ({
     }
   });
 
-  console.log('Profile updated');
-
   revalidatePath('/profile');
   revalidateTag('CoinsPairs');
 };
 
 export const followUser = async (followedId: string) => {
   const session = await getSession();
-  console.log(session);
 
   if (!session) {
     return {
@@ -130,8 +121,6 @@ export const followUser = async (followedId: string) => {
       followingId: user.id
     }
   });
-
-  console.log('User followed');
 
   revalidateTag('users');
 };

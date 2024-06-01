@@ -46,8 +46,6 @@ const EditProfile = () => {
   });
 
   useEffect(() => {
-    console.log(profileContext);
-
     if (profileContext) {
       form.setValue('username', profileContext.username);
       form.setValue('bio', profileContext.bio);

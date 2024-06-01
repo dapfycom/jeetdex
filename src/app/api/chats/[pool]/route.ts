@@ -4,8 +4,6 @@ export async function GET(
   request: Request,
   { params }: { params: { pool: string } }
 ) {
-  console.log('params', params);
-
   const pool = params.pool;
 
   try {
@@ -28,7 +26,6 @@ export async function GET(
         }
       }
     });
-    console.log(chat);
     return Response.json({ data: chat });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

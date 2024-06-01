@@ -16,10 +16,9 @@ const UpdateCoinImg = ({ token }) => {
       appearance={{
         button: 'bg-transparent w-fit'
       }}
-      onClientUploadComplete={(res) => {
+      onClientUploadComplete={() => {
         setIsEditing(false);
         // Do something with the response
-        console.log('Files: ', res);
 
         toast({
           description: (

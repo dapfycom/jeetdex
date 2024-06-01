@@ -11,11 +11,9 @@ import { mutate } from 'swr';
 import { ProfileCtx } from '../ProfileContext';
 const UserAvatar = () => {
   const user = useContext(ProfileCtx);
-  console.log(user);
 
   const [currentImgUrl, setCurrentImgUrl] = useState(user.img);
   const [isEditing, setIsEditing] = useState(false);
-  console.log(currentImgUrl);
 
   return (
     <div className='flex items-center space-x-4 mb-4'>

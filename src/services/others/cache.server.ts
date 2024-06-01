@@ -13,8 +13,6 @@ export const fetchPoolsData = unstable_cache(
       'getAllPairContractData'
     );
 
-    console.log(firstValue.valueOf());
-
     const pools = adaptAllPairsContractData(firstValue.valueOf());
     const newPools: IPoolPair[] = [
       ...pools.filter((pool) => pool.lpTokenIdentifier !== '')
@@ -48,25 +46,17 @@ export const fetchPoolsData = unstable_cache(
         pool.secondTokenReserve
       ).dividedBy(10 ** pool.secondToken.decimals);
 
-      console.log(secondTokenReserve.toString());
-
       const firstTokenReserve = new BigNumber(pool.firstTokenReserve).dividedBy(
         10 ** pool.firstToken.decimals
       );
-
-      console.log(firstTokenReserve.toString());
 
       const price = secondTokenReserve
         .dividedBy(firstTokenReserve)
         .multipliedBy(secondToken.price)
         .toNumber();
 
-      console.log(price);
-
       pool.firstTokenJeetdexPrice = price;
     });
-
-    console.log(newPools);
 
     return newPools;
   },
@@ -140,7 +130,6 @@ export const fetchUsersData = unstable_cache(
           }
         };
       });
-      console.log(usersWithCountLikes);
 
       return usersWithCountLikes;
     } catch (error) {

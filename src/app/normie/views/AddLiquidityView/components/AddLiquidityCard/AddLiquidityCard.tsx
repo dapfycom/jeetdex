@@ -9,8 +9,6 @@ export interface AddLiquidityCardProps {
 }
 
 const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
-  console.log(pool);
-
   return (
     <div className='bg-card px-5 rounded-3xl py-6'>
       <div className='text-center'>

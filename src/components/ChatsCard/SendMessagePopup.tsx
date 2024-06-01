@@ -39,7 +39,6 @@ const SendMessagePopup = ({
   async function onSubmit(values: z.infer<typeof SendMessageSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
 
     try {
       if (repliedMessage) {

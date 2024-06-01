@@ -78,8 +78,6 @@ const SwapCardContainer = () => {
     dispatch(onChageFromFieldValueDecimals(newAccount.balance));
   };
   const handleClear = () => {
-    console.log('clear');
-
     dispatch(onChageFromFieldValue(''));
     dispatch(onChageFromFieldValueDecimals(''));
     dispatch(onChangeToFieldValueDecimals(''));
@@ -87,8 +85,6 @@ const SwapCardContainer = () => {
   };
 
   const handleChangeSlippage = (value: string) => {
-    console.log('handleChangeSlippage', value);
-
     dispatch(onChangeSlippage(Number(value)));
   };
 

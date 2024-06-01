@@ -14,7 +14,6 @@ const EditProfile = dynamic(() => import('./components/EditProfile'), {
 
 const ProfileView = async () => {
   const session = await getSession();
-  console.log(session);
 
   const user = await prisma.users.findUnique({
     where: {
@@ -43,7 +42,6 @@ const ProfileView = async () => {
       }
     }
   });
-  console.log(user);
 
   if (!user) {
     return null;
