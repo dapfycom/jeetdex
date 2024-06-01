@@ -3,6 +3,8 @@ import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import { useAppSelector } from '@/hooks';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { formatBalanceDollar, formatTokenI } from '@/utils/mx-utils';
+import Link from 'next/link';
+import { Avatar, AvatarImage } from '../ui/avatar';
 
 interface IProps {
   poolPair?: IPoolPair;
@@ -20,7 +22,7 @@ const TokenInfo = ({ poolPair }: IProps) => {
   console.log(token);
 
   return (
-    <div className='w-full flex mb-3 gap-3 h-[26.8px] justify-between  items-end'>
+    <div className='w-full flex mb-3 gap-3 h-[26.8px] justify-between  items-end text-md'>
       {poolPair && (
         <>
           <span>{formatTokenI(poolPair.firstToken.name)}</span>
@@ -46,11 +48,24 @@ const TokenInfo = ({ poolPair }: IProps) => {
               poolPair.firstTokenJeetdexPrice
             )}
           </span>
-          <span>
-            {token?.owner?.username
-              ? `created by: @${token.owner.username}`
-              : null}
-          </span>
+          {token?.owner?.username ? (
+            <span className='flex items-center'>
+              <span>created by:</span>
+              <Link
+                href={`/profile/${token.owner.id}`}
+                className='flex items-center'
+              >
+                <Avatar className='h-4 w-4 mr-1'>
+                  <AvatarImage
+                    alt='Profile picture'
+                    src={token.owner.img}
+                    className='w-4 h-4'
+                  />
+                </Avatar>
+                <span>{`@${token.owner.username}`}</span>
+              </Link>
+            </span>
+          ) : null}
         </>
       )}
     </div>
