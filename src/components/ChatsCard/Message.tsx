@@ -92,13 +92,16 @@ const Message = ({
       )}
       id={`message-${messageId}`}
     >
-      <Avatar className='border w-6 h-6'>
-        <AvatarImage alt={user.username} src={user.img} />
-      </Avatar>
+      <Link href={`/profile/${user.id}`}>
+        <Avatar className='border w-6 h-6'>
+          <AvatarImage alt={user.username} src={user.img} />
+        </Avatar>
+      </Link>
       <div className='grid gap-1'>
         <div className='flex items-center gap-2'>
-          <div className='text-sm text-lime-300/50'>{user.username}</div>
-
+          <Link href={`/profile/${user.id}`}>
+            <div className='text-sm text-lime-300/50'>{user.username}</div>
+          </Link>
           <div className='text-sm text-muted-foreground'>
             {date.toLocaleString()}
           </div>

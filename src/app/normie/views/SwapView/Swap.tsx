@@ -1,7 +1,7 @@
 import Container from '@/components/Container/Container';
 import CreatePool from '@/components/CreatePoolModal/CreatePoolModal';
 import { DialogTrigger } from '@/components/ui/dialog';
-import { fetchPoolsData } from '@/services/others/pools.server';
+import { fetchPoolsData } from '@/services/others/cache.server';
 import SwapContent from './SwapContent';
 import SwapContext from './SwapContext';
 const Swap = async () => {

@@ -87,3 +87,51 @@ export const updateUserProfile = async ({
   revalidatePath('/profile');
   revalidateTag('CoinsPairs');
 };
+
+export const followUser = async (followedId: string) => {
+  const session = await getSession();
+  console.log(session);
+
+  if (!session) {
+    return {
+      error: 'No session found'
+    };
+  }
+  const user = await prisma.users.findUnique({
+    where: {
+      address: session.address
+    },
+    include: {
+      following: true
+    }
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  // Check if is the same user
+  if (user.id === followedId) {
+    throw new Error('You cannot follow yourself');
+  }
+
+  // Check if user is already following
+  const isFollowing = user.following.some(
+    (follow) => follow.followedId === followedId
+  );
+
+  if (isFollowing) {
+    throw new Error('You are already following this user');
+  }
+
+  await prisma.follows.create({
+    data: {
+      followedId: followedId,
+      followingId: user.id
+    }
+  });
+
+  console.log('User followed');
+
+  revalidateTag('users');
+};

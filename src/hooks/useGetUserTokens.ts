@@ -9,9 +9,11 @@ import useSwr from 'swr';
 const useGetUserTokens = (
   indentifier?: string,
   onlyEsdt?: boolean,
-  size: number = 200
+  size: number = 200,
+  userAddress?: string
 ) => {
-  const address = useSelector(selectUserAddress);
+  const addr = useSelector(selectUserAddress);
+  const address = userAddress || addr;
   const {
     data: userTokens,
     isLoading,

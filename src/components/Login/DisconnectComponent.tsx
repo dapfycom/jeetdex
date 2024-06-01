@@ -35,7 +35,7 @@ const DisconnectComponent = () => {
             EGLD)
           </div>
           <Image
-            src={userInfo?.data.img || '/assets/img/logo-jeeter.png'}
+            src={userInfo?.data?.img || '/assets/img/logo-jeeter.png'}
             alt='User'
             width={24}
             height={24}

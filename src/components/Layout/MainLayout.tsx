@@ -1,6 +1,5 @@
 import MainProvider from '@/providers';
-import { fetchCoinsData } from '@/services/others/global.server';
-import { fetchPoolsData } from '@/services/others/pools.server';
+import { fetchCoinsData, fetchPoolsData } from '@/services/others/cache.server';
 import { PropsWithChildren } from 'react';
 
 export const MainLayout = async ({
