@@ -111,36 +111,32 @@ export const fetchCoinsData = unstable_cache(
 
 export const fetchUsersData = unstable_cache(
   async () => {
-    const users = await prisma.users.findMany({
-      select: {
-        _count: {
-          select: {
-            likesReceived: true
+    try {
+      const users = await prisma.users.findMany({
+        include: {
+          _count: {
+            select: {
+              likesReceived: true
+            }
+          },
+          followed: {
+            include: {
+              following: true
+            }
+          },
+          following: {
+            include: {
+              followed: true
+            }
           }
-        },
-        bio: true,
-        id: true,
-        username: true,
-        img: true,
-        followed: {
-          include: {
-            followed: true,
-            following: true
-          }
-        },
-        following: {
-          include: {
-            followed: true,
+        }
+      });
+      console.log(users);
 
-            following: true
-          }
-        },
-        address: true
-      }
-    });
-    console.log(users);
-
-    return users;
+      return users;
+    } catch (error) {
+      console.log(error);
+    }
   },
   ['users'],
   {
