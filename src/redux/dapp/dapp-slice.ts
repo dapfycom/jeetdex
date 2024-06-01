@@ -1,3 +1,4 @@
+import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppState } from '../store';
 
@@ -6,6 +7,7 @@ export interface GeneralState {
   shard: number;
   globalData: {
     coins: any[];
+    pools: IPoolPair[];
   };
 }
 
@@ -13,7 +15,8 @@ const initialState: GeneralState = {
   userAddress: '',
   shard: 1,
   globalData: {
-    coins: []
+    coins: [],
+    pools: []
   }
 };
 
@@ -27,7 +30,10 @@ export const dapp = createSlice({
     setShard: (state, action: PayloadAction<number>) => {
       state.shard = action.payload;
     },
-    setGlobalData: (state, action: PayloadAction<{ coins: any[] }>) => {
+    setGlobalData: (
+      state,
+      action: PayloadAction<{ coins: any[]; pools: IPoolPair[] }>
+    ) => {
       state.globalData = action.payload;
     }
   }

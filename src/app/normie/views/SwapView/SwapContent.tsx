@@ -3,6 +3,7 @@ import ChartCard from '@/components/ChartCard/ChartCard';
 import Chats from '@/components/ChatsCard/Chats';
 import { useAppSelector } from '@/hooks';
 import { cn } from '@/lib/utils';
+import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { useSwapContext } from './SwapContext';
 import SwapCardContainer from './commons/SwapCard/SwapCardContainer';
 import {
@@ -13,17 +14,20 @@ const SwapContent = () => {
   const swapCtx = useSwapContext();
   const fromToken = useAppSelector(selectFromFieldSelectedToken);
   const toToken = useAppSelector(selectToFieldSelectedToken);
+  const global = useAppSelector(selectGlobalData);
 
-  console.log(swapCtx.poolsInfo);
-  console.log(fromToken);
+  const poolsInfo = global.pools;
 
-  console.log(toToken);
-
-  const poolPair = swapCtx.poolsInfo.find(
+  const poolPair = poolsInfo.find(
     (p) =>
       p.firstToken.identifier === fromToken &&
       p.secondToken.identifier === toToken
   );
+  console.log(fromToken);
+  console.log(toToken);
+
+  console.log(poolPair);
+
   return (
     <div className='flex flex-col items-center text-center '>
       <div

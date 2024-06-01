@@ -2,17 +2,20 @@
 import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import { useAppSelector } from '@/hooks';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
-import { formatBalance, formatTokenI } from '@/utils/mx-utils';
+import { formatBalanceDollar, formatTokenI } from '@/utils/mx-utils';
 
 interface IProps {
   poolPair?: IPoolPair;
 }
 const TokenInfo = ({ poolPair }: IProps) => {
   const globalData = useAppSelector(selectGlobalData);
+  console.log(globalData);
 
   const token = globalData.coins.find(
     (t) => t.identifier === poolPair?.firstToken?.identifier
   );
+
+  console.log(poolPair);
 
   console.log(token);
 
@@ -21,17 +24,32 @@ const TokenInfo = ({ poolPair }: IProps) => {
       {poolPair && (
         <>
           <span>{formatTokenI(poolPair.firstToken.name)}</span>
-          <span>{formatTokenI(poolPair.firstToken.identifier)}</span>
+          <span>ticker: ${formatTokenI(poolPair.firstToken.identifier)}</span>
           <span>
-            {formatBalance({
-              balance: poolPair.firstTokenReserve,
-              decimals: poolPair.firstToken.decimals
-            })}
+            liquidity: $
+            {formatBalanceDollar(
+              {
+                balance: poolPair.firstTokenReserve,
+                decimals: poolPair.firstToken.decimals
+              },
+              poolPair.firstTokenJeetdexPrice
+            )}
           </span>
 
-          <span>150,313,215,122</span>
           <span>
-            {token?.owner?.username ? `@${token.owner.username}` : null}
+            market cap: $
+            {formatBalanceDollar(
+              {
+                balance: poolPair.firstToken.supply,
+                decimals: poolPair.firstToken.decimals
+              },
+              poolPair.firstTokenJeetdexPrice
+            )}
+          </span>
+          <span>
+            {token?.owner?.username
+              ? `created by: @${token.owner.username}`
+              : null}
           </span>
         </>
       )}

@@ -8,18 +8,15 @@ const SwapCtx = React.createContext<{
   onToggleChats: () => void;
   isOpenCharts: boolean;
   OnToggleCharts: () => void;
-  poolsInfo: IPoolPair[];
 }>({
   isOPenChats: true,
   onToggleChats: () => {},
   isOpenCharts: true,
-  OnToggleCharts: () => {},
-  poolsInfo: []
+  OnToggleCharts: () => {}
 });
 
 const SwapContext = ({
-  children,
-  poolsInfo
+  children
 }: PropsWithChildren<{ poolsInfo: IPoolPair[] }>) => {
   const { isOpen: isOPenChats, onToggle: onToggleChats } = useDisclosure(true);
   const { isOpen: isOpenCharts, onToggle } = useDisclosure(true);
@@ -36,8 +33,7 @@ const SwapContext = ({
         isOPenChats,
         onToggleChats,
         isOpenCharts,
-        OnToggleCharts,
-        poolsInfo
+        OnToggleCharts
       }}
     >
       {children}

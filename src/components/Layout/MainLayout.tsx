@@ -1,5 +1,6 @@
 import MainProvider from '@/providers';
 import { fetchCoinsData } from '@/services/others/global.server';
+import { fetchPoolsData } from '@/services/others/pools.server';
 import { PropsWithChildren } from 'react';
 
 export const MainLayout = async ({
@@ -8,5 +9,7 @@ export const MainLayout = async ({
   withMxProvider?: boolean;
 }>) => {
   const coins = await fetchCoinsData();
-  return <MainProvider data={{ coins }}>{children}</MainProvider>;
+  const pools = await fetchPoolsData();
+
+  return <MainProvider data={{ coins, pools }}>{children}</MainProvider>;
 };

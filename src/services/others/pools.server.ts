@@ -1,6 +1,7 @@
 import { adaptAllPairsContractData } from '@/adapters/routerAdapter';
 import { getFromAllTokens } from '@/services/rest/elrond/tokens';
 import { scQuery } from '@/services/sc/query';
+import BigNumber from 'bignumber.js';
 import { unstable_cache } from 'next/cache';
 import { IPoolPair } from '../../app/normie/views/PoolsView/utils/types';
 
@@ -41,6 +42,27 @@ export const fetchPoolsData = unstable_cache(
 
       pool.firstToken = firstToken;
       pool.secondToken = secondToken;
+
+      const secondTokenReserve = new BigNumber(
+        pool.secondTokenReserve
+      ).dividedBy(10 ** pool.secondToken.decimals);
+
+      console.log(secondTokenReserve.toString());
+
+      const firstTokenReserve = new BigNumber(pool.firstTokenReserve).dividedBy(
+        10 ** pool.firstToken.decimals
+      );
+
+      console.log(firstTokenReserve.toString());
+
+      const price = secondTokenReserve
+        .dividedBy(firstTokenReserve)
+        .multipliedBy(secondToken.price)
+        .toNumber();
+
+      console.log(price);
+
+      pool.firstTokenJeetdexPrice = price;
     });
 
     console.log(newPools);
