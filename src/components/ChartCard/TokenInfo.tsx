@@ -17,10 +17,6 @@ const TokenInfo = ({ poolPair }: IProps) => {
     (t) => t.identifier === poolPair?.firstToken?.identifier
   );
 
-  console.log(poolPair);
-
-  console.log(token);
-
   return (
     <div className='w-full flex mb-3 gap-3 h-[26.8px] justify-between  items-end text-md'>
       {poolPair && (
