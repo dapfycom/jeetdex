@@ -8,17 +8,18 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalanceDollar } from '@/utils/mx-utils';
+import { successToast } from '@/utils/toast';
 import {
   faArrowDown,
   faArrowDownUpAcrossLine,
   faChartColumn,
+  faIdCardClip,
   faMessage,
-  faSave,
+  faShare,
   faStar
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -121,19 +122,31 @@ const SwapCard = ({
                   Like
                 </div>
               </DropdownMenuItem>
-              <DropdownMenuItem className='cursor-pointer'>
+              <DropdownMenuItem
+                className='cursor-pointer'
+                onClick={() => {
+                  // copy url
+                  navigator.clipboard.writeText(window.location.href);
+                  successToast('Link copied to clipboard');
+                }}
+              >
                 <div className='w-full flex gap-2 items-center'>
                   <FontAwesomeIcon
-                    icon={faSave}
+                    icon={faShare}
                     className='w-[12px] h-[12px]'
                   />
-                  Save
+                  Share
                 </div>
               </DropdownMenuItem>
 
               <DropdownMenuItem className='text-red-600'>
-                Delete
-                <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                <div className='w-full flex gap-2 items-center'>
+                  <FontAwesomeIcon
+                    icon={faIdCardClip}
+                    className='w-[12px] h-[12px]'
+                  />
+                  Report
+                </div>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
