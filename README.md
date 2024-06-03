@@ -48,3 +48,5 @@ yarn start
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+
+turso db shell turso-prisma-db < ./prisma/migrations/20230922132717_init/migration.sql

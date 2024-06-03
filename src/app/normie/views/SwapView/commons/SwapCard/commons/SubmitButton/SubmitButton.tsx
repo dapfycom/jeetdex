@@ -1,12 +1,12 @@
 import {
   selectFromField,
-  selectSlippage,
   selectToField
 } from '@/app/normie/views/SwapView/lib/swap-slice';
 import { Button } from '@/components/ui/button';
 import useGetAccountToken from '@/hooks/useGetAccountToken';
 import { useAppSelector } from '@/hooks/useRedux';
 
+import { useGetSlippage } from '@/hooks/useGetUserSettings';
 import { useGetLoginInfo } from '@multiversx/sdk-dapp/hooks/account/useGetLoginInfo';
 import BigNumber from 'bignumber.js';
 import { submitSwap } from '../../../../lib/calls';
@@ -18,7 +18,7 @@ const SubmitButton = ({ poolAddres }: IProps) => {
   const { isLoggedIn } = useGetLoginInfo();
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
-  const slippage = useAppSelector(selectSlippage);
+  const { slippage } = useGetSlippage();
 
   const { accountToken } = useGetAccountToken(fromField.selectedToken);
 

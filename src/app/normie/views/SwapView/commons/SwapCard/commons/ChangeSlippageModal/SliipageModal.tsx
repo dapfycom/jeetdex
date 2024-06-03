@@ -1,3 +1,4 @@
+import { updateSlippage } from '@/actions/preferences';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -8,28 +9,48 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import useDisclosure from '@/hooks/useDisclosure';
+import { useGetSlippage } from '@/hooks/useGetUserSettings';
+import { errorToast, successToast } from '@/utils/toast';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-export default function SlippageModal({
-  slippage,
-  handleChangeSlippage
-}: {
-  slippage: number;
-  handleChangeSlippage: (val: string) => void;
-}) {
-  const [newSlippage, setNewSlippage] = useState(slippage.toString());
+export default function SlippageModal() {
+  const [newSlippage, setNewSlippage] = useState<string>('5');
   const { onToggle, isOpen } = useDisclosure();
+  const { slippage, mutate, isLoading } = useGetSlippage();
+
+  useEffect(() => {
+    setNewSlippage(slippage.toString());
+  }, [slippage]);
+
+  const handleSaveSlippage = async () => {
+    try {
+      await updateSlippage(Number(newSlippage));
+      successToast('Slippage updated');
+      mutate();
+      onToggle();
+    } catch (error) {
+      errorToast(error.message);
+    }
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onToggle}>
       <DialogTrigger asChild>
-        <Button className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'>
+        <Button
+          className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'
+          disabled={isLoading}
+        >
           <FontAwesomeIcon
             icon={faSliders}
             className='w-[12px] h-[12px] mr-3'
           />
-          {slippage} %
+          {isLoading ? (
+            <Loader2 className='animate-spin w-3 h-3' />
+          ) : (
+            <>{slippage} %</>
+          )}
         </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px] rounded-2xl '>
@@ -73,14 +94,7 @@ export default function SlippageModal({
           </div>
         </div>
 
-        <Button
-          onClick={() => {
-            handleChangeSlippage(newSlippage);
-            onToggle();
-          }}
-        >
-          Save
-        </Button>
+        <Button onClick={handleSaveSlippage}>Save</Button>
       </DialogContent>
     </Dialog>
   );

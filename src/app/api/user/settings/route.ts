@@ -7,9 +7,15 @@ export async function GET() {
     return Response.json({ error: 'User not authenticated' }, { status: 401 });
   }
 
-  const data = await prisma.users.findUnique({
+  const user = await prisma.users.findUniqueOrThrow({
     where: {
       address: session.address
+    }
+  });
+
+  const data = await prisma.userSettings.findUnique({
+    where: {
+      userId: user.id
     }
   });
 
