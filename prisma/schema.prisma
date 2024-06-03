@@ -24,6 +24,8 @@ model Users {
   messages Messages[] @relation("messages")
 
   coins Coins[] @relation("coins")
+
+  settings UserSettings?
 }
 
 model Likes {
@@ -91,4 +93,23 @@ model Coins {
   img        String @unique
   owner      Users  @relation("coins", fields: [ownerId], references: [id])
   ownerId    String
+}
+
+model UserSettings {
+  id       String @id @default(cuid())
+  slippage Float
+
+  likedPools Pools[]
+
+  user   Users  @relation(fields: [userId], references: [id])
+  userId String @unique
+}
+
+model Pools {
+  id      String         @id @default(cuid())
+  likedBy UserSettings[]
+
+  lpIdentifier String @unique
+  token1       String
+  token2       String
 }
