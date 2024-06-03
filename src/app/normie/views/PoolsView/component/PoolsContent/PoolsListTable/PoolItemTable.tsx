@@ -21,6 +21,7 @@ import {
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { useLikePool } from '../../../utils/hooks';
 import { IPoolPair } from '../../../utils/types';
 
 const PoolChartModal = dynamic(
@@ -28,12 +29,13 @@ const PoolChartModal = dynamic(
 );
 
 interface IProps {
-  pool: IPoolPair;
+  pool: IPoolPair & { liked: boolean };
 }
 
 const PoolItem = ({ pool }: IProps) => {
-  const { isOpen: clickStar, onToggle: onToggleStar } = useDisclosure();
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
+  const { handleLikePool, isLiked } = useLikePool(pool);
+
   return (
     <TableRow className='even:bg-[#09091bb6] odd:bg-[#0908182d]'>
       <TableCell className='text-center py-4'>
@@ -41,9 +43,9 @@ const PoolItem = ({ pool }: IProps) => {
           icon={faStar}
           className={cn(
             'cursor-pointer',
-            clickStar ? 'text-primary' : 'text-gray-400/50'
+            isLiked ? 'text-primary' : 'text-gray-400/50'
           )}
-          onClick={onToggleStar}
+          onClick={handleLikePool}
         />
       </TableCell>
 

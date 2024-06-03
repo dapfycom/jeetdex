@@ -15,7 +15,7 @@ const PoolChartModal = dynamic(
 );
 
 interface IProps {
-  pool: IPoolPair;
+  pool: IPoolPair & { liked: boolean };
 }
 
 const PoolCard = ({ pool }: IProps) => {

@@ -1,3 +1,4 @@
+'use client';
 import {
   Table,
   TableBody,
@@ -5,6 +6,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
+import { useListPools } from '../../../utils/hooks';
 import { IPoolPair } from '../../../utils/types';
 import PoolItem from './PoolItemTable';
 
@@ -13,6 +15,7 @@ interface IProps {
 }
 
 const PoolsList = ({ pools }: IProps) => {
+  const orderedPools = useListPools(pools);
   return (
     <Table>
       <TableHeader className=''>
@@ -36,7 +39,7 @@ const PoolsList = ({ pools }: IProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {pools.map((pool) => (
+        {orderedPools.map((pool) => (
           <PoolItem key={pool.address} pool={pool} />
         ))}
       </TableBody>
