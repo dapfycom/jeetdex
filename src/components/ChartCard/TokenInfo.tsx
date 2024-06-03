@@ -17,13 +17,17 @@ const TokenInfo = ({ poolPair }: IProps) => {
   );
 
   return (
-    <div className='w-full flex mb-3 gap-3 h-[26.8px] justify-between  items-end text-md'>
+    <div className='w-full flex mb-3 gap-3 h-[26.8px] justify-between  items-end text-sm'>
       {poolPair && (
         <>
-          <span>{formatTokenI(poolPair.firstToken.name)}</span>
-          <span>ticker: ${formatTokenI(poolPair.firstToken.identifier)}</span>
-          <span>
-            liquidity: $
+          <span className='text-muted-foreground'>
+            {formatTokenI(poolPair.firstToken.name)}
+          </span>
+          <span className='text-muted-foreground'>
+            Ticker: ${formatTokenI(poolPair.firstToken.identifier)}
+          </span>
+          <span className='text-primary'>
+            Liquidity: $
             {formatBalanceDollar(
               {
                 balance: poolPair.firstTokenReserve,
@@ -33,8 +37,8 @@ const TokenInfo = ({ poolPair }: IProps) => {
             )}
           </span>
 
-          <span>
-            market cap: $
+          <span className='text-primary'>
+            Market cap: $
             {formatBalanceDollar(
               {
                 balance: poolPair.firstToken.supply,
@@ -45,7 +49,7 @@ const TokenInfo = ({ poolPair }: IProps) => {
           </span>
           {token?.owner?.username ? (
             <span className='flex items-center'>
-              <span>created by:</span>
+              <span className='text-primary mr-1'>created by:</span>
               <Link
                 href={`/profile/${token.owner.id}`}
                 className='flex items-center'
