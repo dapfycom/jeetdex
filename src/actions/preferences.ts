@@ -35,3 +35,19 @@ export const updateSlippage = async (slippage: number) => {
     }
   });
 };
+
+export const likePool = async (
+  poolIdentifier: string,
+  token1: string,
+  token2: string
+) => {
+  const session = await getSession();
+
+  if (!session) {
+    throw new Error('User not authenticated');
+  }
+
+  const { address } = session;
+
+  console.log(address, poolIdentifier, token1, token2);
+};
