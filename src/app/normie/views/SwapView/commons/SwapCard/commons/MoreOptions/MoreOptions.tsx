@@ -36,9 +36,6 @@ const MoreOptions = ({ token1, token2 }: IProps) => {
     (p) => p.firstTokenId === token1 && p.secondTokenId === token2
   );
 
-  console.log(currentPool);
-
-  console.log(likedPools);
   const thisPoolsIsLiked = !!likedPools.find(
     (p) => p.pool.lpIdentifier === currentPool.lpTokenIdentifier
   );

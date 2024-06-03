@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react';
 export default function SlippageModal() {
   const [newSlippage, setNewSlippage] = useState<string>('5');
   const { onToggle, isOpen } = useDisclosure();
+  const [isSaving, setIsSaving] = useState(false);
   const { slippage, mutate, isLoading } = useGetSlippage();
 
   useEffect(() => {
@@ -27,9 +28,12 @@ export default function SlippageModal() {
 
   const handleSaveSlippage = async () => {
     try {
+      setIsSaving(true);
       await updateSlippage(Number(newSlippage));
       successToast('Slippage updated');
       mutate();
+      setIsSaving(false);
+
       onToggle();
     } catch (error) {
       errorToast(error.message);
@@ -94,7 +98,9 @@ export default function SlippageModal() {
           </div>
         </div>
 
-        <Button onClick={handleSaveSlippage}>Save</Button>
+        <Button onClick={handleSaveSlippage}>
+          {isSaving ? <Loader2 className='animate-spin' /> : 'Save'}
+        </Button>
       </DialogContent>
     </Dialog>
   );
