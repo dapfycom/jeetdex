@@ -31,8 +31,6 @@ import InputBox from './commons/InputBox';
 import SubmitButton from './commons/SubmitButton';
 
 interface IProps {
-  slippage: number;
-  handleChangeSlippage: (value: string) => void;
   fromField: {
     value: string;
     selectedToken: string;
@@ -61,8 +59,7 @@ interface IProps {
 const SwapCard = ({
   fromField,
   handleChangeFromField,
-  handleChangeSlippage,
-  slippage,
+
   toField,
   handleChangeFromToken,
   handleClear,
@@ -96,10 +93,7 @@ const SwapCard = ({
         >
           <FontAwesomeIcon icon={faMessage} className='w-[12px] h-[12px]' />
         </Button>
-        <SlippageModal
-          slippage={slippage}
-          handleChangeSlippage={handleChangeSlippage}
-        />
+        <SlippageModal />
 
         <DropdownMenu open={open} onOpenChange={setOpen}>
           <DropdownMenuTrigger asChild>

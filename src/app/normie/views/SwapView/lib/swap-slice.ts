@@ -15,7 +15,6 @@ export interface SwapState {
   };
   normalDirection: boolean;
   rate: number;
-  slipage: number;
   poolPair: string;
 }
 
@@ -32,7 +31,6 @@ const initialState: SwapState = {
   },
   normalDirection: true,
   rate: 0,
-  slipage: 5,
   poolPair: ''
 };
 
@@ -74,10 +72,6 @@ export const swapAggregator = createSlice({
       state.normalDirection = !state.normalDirection;
     },
 
-    onChangeSlippage: (state, action: PayloadAction<number>) => {
-      state.slipage = action.payload;
-    },
-
     onChangePoolPair: (state, action: PayloadAction<string>) => {
       state.poolPair = action.payload;
     }
@@ -98,7 +92,6 @@ export const selectNormalDirection = (state: AppState) =>
 
 export const selectFromField = (state: AppState) => state.swap.fromField;
 export const selectToField = (state: AppState) => state.swap.toField;
-export const selectSlippage = (state: AppState) => state.swap.slipage;
 export const selectPoolPair = (state: AppState) => state.swap.poolPair;
 
 export const {
@@ -110,7 +103,6 @@ export const {
   setRate,
   onChangeToFieldValueDecimals,
   onSwapFields,
-  onChangeSlippage,
   onChangePoolPair
 } = swapAggregator.actions;
 export default swapAggregator.reducer;

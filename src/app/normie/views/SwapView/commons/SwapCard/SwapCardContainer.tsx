@@ -4,13 +4,11 @@ import {
   changeToFieldToken,
   onChageFromFieldValue,
   onChageFromFieldValueDecimals,
-  onChangeSlippage,
   onChangeToField,
   onChangeToFieldValueDecimals,
   onSwapFields,
   selectFromField,
   selectNormalDirection,
-  selectSlippage,
   selectToField
 } from '@/app/normie/views/SwapView/lib/swap-slice';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
@@ -27,7 +25,6 @@ import SwapCard from './SwapCard';
 const SwapCardContainer = () => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
-  const slippage = useAppSelector(selectSlippage);
   const normalDirection = useAppSelector(selectNormalDirection);
   const loadingAggregatorData = false;
   const { elrondToken } = useGetElrondToken(toField.selectedToken);
@@ -84,10 +81,6 @@ const SwapCardContainer = () => {
     dispatch(onChangeToField(''));
   };
 
-  const handleChangeSlippage = (value: string) => {
-    dispatch(onChangeSlippage(Number(value)));
-  };
-
   const { tokensPairs } = useGetSwapbleTokens();
 
   const secondTokensForFirstToken = tokensPairs
@@ -128,7 +121,6 @@ const SwapCardContainer = () => {
       fromField={fromField}
       handleChangeFromField={handleChangeFromField}
       handleChangeFromToken={handleChangeFromToken}
-      handleChangeSlippage={handleChangeSlippage}
       handleChangeToField={handleChangeToField}
       handleChangeToToken={handleChangeToToken}
       handleClear={handleClear}
@@ -137,7 +129,6 @@ const SwapCardContainer = () => {
       normalDirection={normalDirection}
       pairSelected={pairSelected}
       secondTokensForFirstToken={secondTokensForFirstToken}
-      slippage={slippage}
       swapFields={swapFields}
       toField={toField}
       tokensPairs={tokensPairs}
