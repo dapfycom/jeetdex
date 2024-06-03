@@ -56,6 +56,7 @@ export const fetchPoolsData = unstable_cache(
         .toNumber();
 
       pool.firstTokenJeetdexPrice = price;
+      pool.ratio = secondTokenReserve.dividedBy(firstTokenReserve).toString();
     });
 
     return newPools;

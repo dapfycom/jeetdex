@@ -11,7 +11,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
   Tooltip,
   TooltipContent,
@@ -119,16 +121,20 @@ const PoolItem = ({ pool }: IProps) => {
           </Tooltip>
         </TooltipProvider>
 
-        <Button
-          variant='outline'
-          className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500'
-          size='sm'
-          asChild
-        >
-          <Link href={`/pools/${pool.lpTokenIdentifier}/add-liquidity`}>
-            Deposit
-          </Link>
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild className='w-fit'>
+            <Button
+              variant='outline'
+              className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 w-[70px] '
+              size='sm'
+            >
+              Deposit
+            </Button>
+          </DialogTrigger>
+          <DialogContent className='max-w-2xl'>
+            <AddLiquidity pool={pool} />
+          </DialogContent>
+        </Dialog>
       </TableCell>
     </TableRow>
   );

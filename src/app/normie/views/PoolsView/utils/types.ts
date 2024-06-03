@@ -5,4 +5,5 @@ export interface IPoolPair extends IPairContractData {
   firstToken?: IElrondToken;
   secondToken?: IElrondToken;
   firstTokenJeetdexPrice?: number;
+  ratio?: string;
 }

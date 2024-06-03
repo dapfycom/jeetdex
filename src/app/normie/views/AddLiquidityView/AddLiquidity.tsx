@@ -10,7 +10,7 @@ interface IProps {
 }
 const AddLiquidity = ({ pool }: IProps) => {
   return (
-    <Container className='mt-8'>
+    <Container>
       <div className='w-full max-w-[800px] mx-auto'>
         <div className='mb-4'>
           <Link href={'/pools'}>
@@ -19,12 +19,7 @@ const AddLiquidity = ({ pool }: IProps) => {
             </div>
           </Link>
         </div>
-        <div className='ml-5 mb-6'>
-          <h1 className='text-2xl'>Create a position</h1>
-          <h2 className='text-muted-foreground text-sm'>
-            Add liquidity to earn fees and rewards.
-          </h2>
-        </div>
+
         <AddLiquidityCard pool={pool} />
       </div>
     </Container>
