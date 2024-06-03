@@ -37,7 +37,7 @@ const MoreOptions = ({ token1, token2 }: IProps) => {
   );
 
   const thisPoolsIsLiked = !!likedPools.find(
-    (p) => p.pool.lpIdentifier === currentPool.lpTokenIdentifier
+    (p) => p.pool.lpIdentifier === currentPool?.lpTokenIdentifier
   );
   const handleLikePool = async () => {
     if (currentPool) {
