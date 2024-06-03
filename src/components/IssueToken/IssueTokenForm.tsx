@@ -130,10 +130,11 @@ export default function IssueTokenForm() {
               name='properties.canAddSpecialRoles'
             />
           </div>
-
-          <Button type='submit' className='!mt-6'>
-            Create coin this second
-          </Button>
+          <div className='flex w-full justify-center'>
+            <Button type='submit' className='!mt-6 mx-auto'>
+              Create coin this second
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
