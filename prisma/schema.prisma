@@ -99,17 +99,27 @@ model UserSettings {
   id       String @id @default(cuid())
   slippage Float
 
-  likedPools Pools[]
-
   user   Users  @relation(fields: [userId], references: [id])
   userId String @unique
+
+  pools PoolsLikes[]
 }
 
 model Pools {
-  id      String         @id @default(cuid())
-  likedBy UserSettings[]
+  id String @id @default(cuid())
 
   lpIdentifier String @unique
   token1       String
   token2       String
+
+  usersLiked PoolsLikes[]
+}
+
+model PoolsLikes {
+  id String @id @default(cuid())
+
+  userSetting   UserSettings @relation(fields: [userSettingId], references: [id])
+  userSettingId String
+  pool          Pools        @relation(fields: [poolId], references: [id])
+  poolId        String
 }

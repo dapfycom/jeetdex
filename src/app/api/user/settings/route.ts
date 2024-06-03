@@ -12,12 +12,24 @@ export async function GET() {
       address: session.address
     }
   });
+  console.log(user);
+  try {
+    const data = await prisma.userSettings.findUnique({
+      where: {
+        userId: user.id
+      },
+      include: {
+        pools: {
+          include: {
+            pool: true
+          }
+        }
+      }
+    });
+    console.log(data);
 
-  const data = await prisma.userSettings.findUnique({
-    where: {
-      userId: user.id
-    }
-  });
-
-  return Response.json({ data });
+    return Response.json({ data });
+  } catch (error) {
+    console.log(error);
+  }
 }

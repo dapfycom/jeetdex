@@ -80,7 +80,10 @@ const SwapCard = ({
           <FontAwesomeIcon icon={faMessage} className='w-[12px] h-[12px]' />
         </Button>
         <SlippageModal />
-        <MoreOptions />
+        <MoreOptions
+          token1={pairSelected?.firstToken}
+          token2={pairSelected?.secondToken}
+        />
       </div>
       <Card className='p-0 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)]'>
         <CardContent>

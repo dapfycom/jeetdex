@@ -48,6 +48,57 @@ export const likePool = async (
   }
 
   const { address } = session;
+  const user = await prisma.users.findUniqueOrThrow({
+    where: {
+      address: address
+    }
+  });
+  console.log(poolIdentifier);
 
-  console.log(address, poolIdentifier, token1, token2);
+  const poolLike = await prisma.poolsLikes.findFirst({
+    where: {
+      pool: {
+        lpIdentifier: poolIdentifier
+      },
+      userSetting: {
+        userId: user.id
+      }
+    }
+  });
+
+  console.log(poolLike);
+
+  if (!poolLike) {
+    await prisma.poolsLikes.create({
+      data: {
+        pool: {
+          connectOrCreate: {
+            create: {
+              lpIdentifier: poolIdentifier,
+              token1,
+              token2
+            },
+            where: {
+              lpIdentifier: poolIdentifier
+            }
+          }
+        },
+        userSetting: {
+          connect: {
+            userId: user.id
+          }
+        }
+      }
+    });
+
+    return { message: `Pool ${poolIdentifier} liked` };
+  } else {
+    await prisma.poolsLikes.delete({
+      where: {
+        id: poolLike.id
+      }
+    });
+
+    return { message: `Pool ${poolIdentifier} unliked` };
+  }
 };

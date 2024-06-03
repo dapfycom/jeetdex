@@ -26,7 +26,6 @@ const SwapCardContainer = () => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
   const normalDirection = useAppSelector(selectNormalDirection);
-  const loadingAggregatorData = false;
   const { elrondToken } = useGetElrondToken(toField.selectedToken);
   const { currentParams, updateParams } = useUpdateUrlParams([
     'firstToken',
@@ -125,7 +124,7 @@ const SwapCardContainer = () => {
       handleChangeToToken={handleChangeToToken}
       handleClear={handleClear}
       handlePercentAmount={handlePercentAmount}
-      isLoading={loadingAggregatorData}
+      isLoading={false}
       normalDirection={normalDirection}
       pairSelected={pairSelected}
       secondTokensForFirstToken={secondTokensForFirstToken}

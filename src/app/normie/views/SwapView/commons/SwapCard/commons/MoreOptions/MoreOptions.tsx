@@ -1,5 +1,6 @@
 'use client';
 
+import { likePool } from '@/actions/preferences';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,7 +10,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { successToast } from '@/utils/toast';
+import { useAppSelector } from '@/hooks';
+import { useGetLikedPools } from '@/hooks/useGetUserSettings';
+import { cn } from '@/lib/utils';
+import { selectGlobalData } from '@/redux/dapp/dapp-slice';
+import { errorToast, successToast } from '@/utils/toast';
 import {
   faIdCardClip,
   faShare,
@@ -19,10 +24,39 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DotsHorizontalIcon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 
-const MoreOptions = () => {
+interface IProps {
+  token1: string;
+  token2: string;
+}
+const MoreOptions = ({ token1, token2 }: IProps) => {
   const [open, setOpen] = useState(false);
+  const pools = useAppSelector(selectGlobalData).pools;
+  const { likedPools, mutate } = useGetLikedPools();
+  const currentPool = pools.find(
+    (p) => p.firstTokenId === token1 && p.secondTokenId === token2
+  );
 
-  const handleLikePool = () => {};
+  console.log(currentPool);
+
+  console.log(likedPools);
+  const thisPoolsIsLiked = !!likedPools.find(
+    (p) => p.pool.lpIdentifier === currentPool.lpTokenIdentifier
+  );
+  const handleLikePool = async () => {
+    if (currentPool) {
+      try {
+        const res = await likePool(
+          currentPool.lpTokenIdentifier,
+          currentPool.firstTokenId,
+          currentPool.secondTokenId
+        );
+        mutate();
+        successToast(res.message);
+      } catch (error) {}
+    } else {
+      errorToast('We could not find this pool');
+    }
+  };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -39,8 +73,14 @@ const MoreOptions = () => {
         <DropdownMenuGroup>
           <DropdownMenuItem className='cursor-pointer' onClick={handleLikePool}>
             <div className='w-full flex gap-2 items-center'>
-              <FontAwesomeIcon icon={faStar} className='w-[12px] h-[12px]' />
-              Like
+              <FontAwesomeIcon
+                icon={faStar}
+                className={cn(
+                  'w-[12px] h-[12px]',
+                  thisPoolsIsLiked && 'text-primary'
+                )}
+              />
+              {thisPoolsIsLiked ? 'UnLike' : 'Like'}
             </div>
           </DropdownMenuItem>
           <DropdownMenuItem
