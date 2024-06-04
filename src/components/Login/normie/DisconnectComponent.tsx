@@ -20,12 +20,10 @@ const DisconnectComponent = () => {
   const { balance } = useGetAccount();
   const { userInfo } = useGetUserInfo();
 
-  console.log(userInfo);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className='relative flex items-center text-sm gap-1 px-1 py-0 rounded-sm border border-gray-300  top-[-10px] right-[-10px] cursor-pointer'>
+        <div className='relative flex items-center text-sm gap-1 px-1 py-0 rounded-sm border border-gray-300   cursor-pointer'>
           <div className='hidden sm:block'>
             (
             {formatBalance({
@@ -37,9 +35,9 @@ const DisconnectComponent = () => {
           <Image
             src={userInfo?.data?.img || '/assets/img/logo-jeeter.png'}
             alt='User'
-            width={24}
-            height={24}
-            className='w-6 h-6 rounded-full hidden sm:block'
+            width={20}
+            height={20}
+            className='w-4 h-4 rounded-full hidden sm:block'
           />
           <div>
             <div>{account?.username || formatAddress(address, 6, 4)}</div>

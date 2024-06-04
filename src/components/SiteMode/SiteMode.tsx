@@ -26,7 +26,7 @@ export default function SiteMode() {
 
   return (
     <Select value={mode} onValueChange={handleModeChange}>
-      <SelectTrigger className='w-[100px] bg-primary text-primary-foreground h-8'>
+      <SelectTrigger className='w-[100px] text-white border border-gray-300 h-[22px] mr-3'>
         <SelectValue placeholder='Site Modes' />
       </SelectTrigger>
       <SelectContent>

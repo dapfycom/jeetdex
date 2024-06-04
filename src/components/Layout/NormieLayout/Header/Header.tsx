@@ -7,7 +7,7 @@ import Navbar from './Navbar';
 
 export const Header = () => {
   return (
-    <header className='flex flex-col sm:flex-row items-center sm:items-start  justify-between pl-4 pr-4 pt-4 gap-3'>
+    <header className='relative flex flex-col sm:flex-row items-center sm:items-start  justify-between  gap-3 p-1'>
       <div className='flex gap-4 items-center'>
         <MxLink
           to={'/'}
@@ -25,7 +25,7 @@ export const Header = () => {
         <div className='relative'>
           <Login />
 
-          <div className='absolute bottom-[-15px] right-[-10px] flex gap-2 hover:font-bold'>
+          <div className='absolute bottom-[-25px]  right-[0px] flex gap-2 hover:font-bold'>
             <Link href={'/profile'} className='whitespace-nowrap'>
               [View profile]
             </Link>
