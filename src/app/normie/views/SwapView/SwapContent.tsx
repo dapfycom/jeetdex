@@ -8,20 +8,24 @@ import { useSwapContext } from './SwapContext';
 import SwapCardContainer from './commons/SwapCard/SwapCardContainer';
 import {
   selectFromFieldSelectedToken,
+  selectNormalDirection,
   selectToFieldSelectedToken
 } from './lib/swap-slice';
 const SwapContent = () => {
   const swapCtx = useSwapContext();
   const fromToken = useAppSelector(selectFromFieldSelectedToken);
   const toToken = useAppSelector(selectToFieldSelectedToken);
+  const direction = useAppSelector(selectNormalDirection);
   const global = useAppSelector(selectGlobalData);
 
   const poolsInfo = global.pools;
 
-  const poolPair = poolsInfo.find(
-    (p) =>
-      p.firstToken.identifier === fromToken &&
-      p.secondToken.identifier === toToken
+  const poolPair = poolsInfo.find((p) =>
+    direction
+      ? p.firstToken.identifier === fromToken &&
+        p.secondToken.identifier === toToken
+      : p.secondToken.identifier === fromToken &&
+        p.firstToken.identifier === toToken
   );
 
   return (
