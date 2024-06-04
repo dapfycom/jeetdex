@@ -1,6 +1,8 @@
 'use client';
 import ChartCard from '@/components/ChartCard/ChartCard';
 import Chats from '@/components/ChatsCard/Chats';
+import Trades from '@/components/Trades/Trades';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAppSelector } from '@/hooks';
 import { cn } from '@/lib/utils';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
@@ -11,6 +13,7 @@ import {
   selectNormalDirection,
   selectToFieldSelectedToken
 } from './lib/swap-slice';
+
 const SwapContent = () => {
   const swapCtx = useSwapContext();
   const fromToken = useAppSelector(selectFromFieldSelectedToken);
@@ -45,10 +48,25 @@ const SwapContent = () => {
           !swapCtx.isOpenCharts && 'flex justify-center'
         )}
       >
-        <Chats
-          poolPair={poolPair?.lpTokenIdentifier}
-          show={swapCtx.isOPenChats}
-        />
+        <Tabs
+          defaultValue='chats'
+          className={cn(
+            'w-full rounded-sm bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)] p-4',
+            !swapCtx.isOPenChats && 'hidden'
+          )}
+        >
+          <TabsList className='w-full justify-start flex bg-transparent'>
+            <TabsTrigger value='chats'>chats</TabsTrigger>
+            <TabsTrigger value='trades'>trades</TabsTrigger>
+          </TabsList>
+          <TabsContent value='chats'>
+            {' '}
+            <Chats poolPair={poolPair?.lpTokenIdentifier} />
+          </TabsContent>
+          <TabsContent value='trades'>
+            <Trades pool={poolPair} />
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );

@@ -92,21 +92,23 @@ const Message = ({
       )}
       id={`message-${messageId}`}
     >
-      <Link href={`/profile/${user.id}`}>
-        <Avatar className='border w-6 h-6'>
-          <AvatarImage alt={user.username} src={user.img} />
-        </Avatar>
-      </Link>
       <div className='grid gap-1'>
         <div className='flex items-center gap-2'>
           <Link href={`/profile/${user.id}`}>
-            <div className='text-sm text-lime-300/50'>{user.username}</div>
+            <Avatar className='border w-5 h-5'>
+              <AvatarImage alt={user.username} src={user.img} />
+            </Avatar>
           </Link>
-          <div className='text-sm text-muted-foreground'>
+          <Link href={`/profile/${user.id}`}>
+            <div className='rounded-sm text-xs bg-lime-400/70 text-black px-1 h-[16px] flex items-center'>
+              {user.username}
+            </div>
+          </Link>
+          <div className='text-xs text-muted-foreground'>
             {date.toLocaleString()}
           </div>
           <Button
-            className='h-4 hover:bg-transparent text-stone-400 hover:text-stone-900 text-sm'
+            className='h-4 hover:bg-transparent text-stone-400 hover:text-stone-900 text-xs'
             size='icon'
             variant='ghost'
             onClick={handleLike}
@@ -130,14 +132,14 @@ const Message = ({
               </DialogTrigger>
             </SendMessagePopup>
           ) : (
-            <div className='flex text-sm text-muted-foreground items-center gap-1'>
+            <div className='flex text-xs text-muted-foreground items-center gap-1'>
               {' '}
               #{messageId}
               <MessageCircleIcon className='w-4 h-4' />
             </div>
           )}
         </div>
-        <div className='prose prose-sm prose-stone flex gap-2'>
+        <div className='flex gap-2 text-gray-300'>
           {messageReplyingId && (
             <Link
               href={`#message-${messageReplyingId}`}

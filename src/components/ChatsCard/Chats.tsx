@@ -11,11 +11,10 @@ import SendMessagePopup from './SendMessagePopup';
 import { useGetChat } from './hooks';
 
 interface IProps {
-  show?: boolean;
   poolPair?: string;
 }
 
-const Chats = ({ poolPair, show = true }: IProps) => {
+const Chats = ({ poolPair }: IProps) => {
   const { chat, isLoading } = useGetChat(poolPair);
 
   const [highlight, setHighlight] = useState<number>();
@@ -24,14 +23,14 @@ const Chats = ({ poolPair, show = true }: IProps) => {
     setHighlight(replyedId);
   };
   return (
-    <div className={cn('relative w-full', !show && 'hidden')}>
-      <div className=' flex flex-col  w-full lg:p-3 p-0  pt-6 text-left rounded-3xl bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)]'>
+    <div className={cn('relative w-full')}>
+      <div className=' flex flex-col  w-full  p-0  text-left '>
         {!poolPair ? (
           <div className='py-8 text-center'>
             We couldn&apos;t find a chat for this pool
           </div>
         ) : (
-          <div className='flex-1 w-full flex flex-col gap-2 px-4 py-8'>
+          <div className='flex-1 w-full flex flex-col gap-2 py-8'>
             {isLoading ? (
               <>
                 <div className='flex w-full gap-3'>

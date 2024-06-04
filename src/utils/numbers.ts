@@ -36,3 +36,15 @@ export function calculatePercentage(total: number, value: number): number {
   }
   return (value / total) * 100;
 }
+
+export function hexToBigNumber(hexString: string): bigint {
+  // Remove any leading '0x' if present
+  if (hexString.startsWith('0x')) {
+    hexString = hexString.slice(2);
+  }
+
+  // Convert the hex string to a BigInt
+  const bigNumber = BigInt('0x' + hexString);
+
+  return bigNumber;
+}
