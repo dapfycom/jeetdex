@@ -70,7 +70,7 @@ const SubmitButton = ({ poolAddres }: IProps) => {
         className='w-full gap-3 mt-2'
         disabled={!poolAddres || (!InsufficientBalance && isLoggedIn)}
       >
-        {buttonText}
+        [ {buttonText} ]
       </Button>
     </>
   );

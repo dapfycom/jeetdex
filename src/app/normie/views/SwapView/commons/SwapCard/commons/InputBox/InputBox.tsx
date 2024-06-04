@@ -20,8 +20,6 @@ import useGetElrondToken from '@/hooks/useGetElrondToken';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance, formatNumber, formatTokenI } from '@/utils/mx-utils';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ChevronDownIcon, Loader, Loader2Icon } from 'lucide-react';
 // const SelectTokenModal = lazy(() => import("../SelectTokenModal"));
 
@@ -63,7 +61,7 @@ const InputBox = ({
 
   return (
     <>
-      <div className='flex flex-col w-full pt-2   rounded-2xl bg-[#0b102280] max-w-[500px] border-[#A259FF] focus-within:border focus-within:shadow-[0px_0px_12px_6px_#A259FF33]'>
+      <div className='flex flex-col w-full pt-2  rounded-sm bg-[#0b102280] max-w-[500px] border-[#A259FF] focus-within:border focus-within:shadow-[0px_0px_12px_6px_#A259FF33]'>
         <div className='flex flex-col'>
           <div className='flex justify-between items-start px-4 md:px-8 pb-3 gap-2'>
             <h5 className='text-xs lg:text-sm '>{label}</h5>
@@ -71,7 +69,8 @@ const InputBox = ({
             <div className='flex items-center gap-2'>
               <div className='flex gap-2'>
                 <Button
-                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
+                  variant='ghost'
+                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
                   onClick={() =>
                     onMax && onMax(accountToken as IElrondAccountToken, 25)
                   }
@@ -79,7 +78,8 @@ const InputBox = ({
                   25%
                 </Button>
                 <Button
-                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
+                  variant='ghost'
+                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
                   onClick={() =>
                     onMax && onMax(accountToken as IElrondAccountToken, 50)
                   }
@@ -87,7 +87,8 @@ const InputBox = ({
                   50%
                 </Button>
                 <Button
-                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
+                  variant='ghost'
+                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
                   onClick={() =>
                     onMax && onMax(accountToken as IElrondAccountToken, 75)
                   }
@@ -95,7 +96,8 @@ const InputBox = ({
                   75%
                 </Button>
                 <Button
-                  className='px-[3px] lg:px-[6px] h-[20px] text-gray-700 text-[10px] lg:text-[12px]'
+                  variant='ghost'
+                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
                   onClick={() =>
                     onMax && onMax(accountToken as IElrondAccountToken, 100)
                   }
@@ -112,7 +114,7 @@ const InputBox = ({
               </div>
             </div>
           </div>
-          <div className='w-full bg-[#0b1022] rounded-2xl py-3 px-3 lg:px-5'>
+          <div className='w-full  rounded-2xl py-3 px-3 lg:px-5'>
             <div className=' flex justify-between w-full '>
               <Popover
                 open={isOpen}
@@ -213,12 +215,8 @@ const InputBox = ({
                 ) : null}
               </div>
             </div>
-            <div className='flex items-center gap-1 mt-3'>
-              <FontAwesomeIcon icon={faWallet} className='w-3 h-3' />
-
-              <span className='h-[16px] lg:h-[18px] text-xs lg:text-md'>
-                {formatBalance(accountToken)}
-              </span>
+            <div className='flex items-center gap-1 mt-3 text-xs lg:text-md'>
+              [balance] <span className=''>{formatBalance(accountToken)}</span>
             </div>
           </div>
 
