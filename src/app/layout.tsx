@@ -1,11 +1,8 @@
-import { NextSSRPlugin } from '@uploadthing/react/next-ssr-plugin';
+import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { extractRouterConfig } from 'uploadthing/server';
-
-import { ourFileRouter } from '@/app/api/uploadthing/core';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster as Toaster2 } from 'react-hot-toast';
 import '../styles/globals.css';
 
 const fontSans = FontSans({
@@ -30,8 +27,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' className={fontSans.variable}>
       <body className="dark bg-[url('/assets/img/bg.jpg')] ">
-        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <Toaster />
+        <Toaster2 position='bottom-right' />
         {children}
       </body>
     </html>

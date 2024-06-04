@@ -4,7 +4,7 @@ import {
   // TransactionsTracker
   NotificationModal,
   SignTransactionsModals,
-  TransactionsToastList
+  TransactionsTracker
 } from '@/components';
 import {
   apiTimeout,
@@ -34,7 +34,7 @@ const MxDappProvider = ({ children }: PropsWithChildren) => {
           customComponents={{
             transactionTracker: {
               // uncomment this to use the custom transaction tracker
-              // component: TransactionsTracker,
+              component: TransactionsTracker,
               props: {
                 onSuccess: (sessionId: string) => {
                   console.log(`Session ${sessionId} successfully completed`);
@@ -49,7 +49,7 @@ const MxDappProvider = ({ children }: PropsWithChildren) => {
           }}
         >
           <AxiosInterceptorContext.Listener>
-            <TransactionsToastList />
+            {/* <TransactionsToastList /> */}
             <NotificationModal />
             <SignTransactionsModals />
             {children}
