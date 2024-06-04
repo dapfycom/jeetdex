@@ -6,7 +6,7 @@ import LayoutTabs from './LayoutTabs';
 
 const Options = ({ pools }) => {
   return (
-    <div className='flex  flex-col mt-10 bg-[#1C243E] py-8 px-5 rounded-sm w-full'>
+    <div className='flex  flex-col mt-2 bg-[#1C243E] py-8 px-5 rounded-sm w-full'>
       <div className='flex w-full gap-14 items-center'>
         <h5>
           Pools <span className='text-muted-foreground'> ({pools.length})</span>
