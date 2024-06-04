@@ -2,12 +2,13 @@
 import { Button } from '@/components/ui/button';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { IElrondAccountToken } from '@/types/scTypes';
-import { formatBalance } from '@/utils/mx-utils';
+import { formatBalance, getRealBalance } from '@/utils/mx-utils';
 import { BigUIntValue, TokenTransfer } from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IPoolPair } from '../../../PoolsView/utils/types';
 import InputBox from '../../../SwapView/commons/SwapCard/commons/InputBox';
+import { useGetEquivalent } from '../../lib/hooks';
 
 export interface AddLiquidityCardProps {
   pool: IPoolPair;
@@ -16,26 +17,45 @@ export interface AddLiquidityCardProps {
 const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
   const [firstTokenAmount, setFirstTokenAmount] = useState<string>('');
   const [secondTokenAmount, setSecondTokenAmount] = useState<string>('');
+  const [selectedToken, setSelectedToken] = useState<{
+    identifier: string;
+    decimals: number;
+  }>(pool.firstToken);
 
-  const handleOnChangeFirstAmount = (val: string) => {
+  const normalDirection = selectedToken.identifier !== pool.secondTokenId;
+
+  let amountForEquivalent = firstTokenAmount;
+  let elrondTokenForEquivalent = pool.firstToken;
+
+  if (!normalDirection) {
+    amountForEquivalent = secondTokenAmount;
+    elrondTokenForEquivalent = pool.secondToken;
+  }
+
+  const { data } = useGetEquivalent(
+    pool.address,
+    elrondTokenForEquivalent.identifier,
+    Number(amountForEquivalent),
+    elrondTokenForEquivalent.decimals
+  );
+  console.log(data);
+
+  const handleOnChangeFirstAmount = (
+    val: string,
+    token: { identifier: string; decimals: number }
+  ) => {
     console.log(val);
 
     setFirstTokenAmount(val);
-
-    if (val) {
-      setSecondTokenAmount(
-        new BigNumber(pool.ratio).multipliedBy(val).toString()
-      );
-    }
+    setSelectedToken(token);
   };
 
-  const handleOnChangeSecondAmount = (val: string) => {
+  const handleOnChangeSecondAmount = (
+    val: string,
+    token: { identifier: string; decimals: number }
+  ) => {
     setSecondTokenAmount(val);
-    if (val) {
-      setFirstTokenAmount(
-        new BigNumber(1).dividedBy(pool.ratio).multipliedBy(val).toString()
-      );
-    }
+    setSelectedToken(token);
   };
 
   const handlePercentFirstAmount = (
@@ -49,8 +69,25 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
       .toFixed();
     const userAmount = formatBalance(newAccount, true) as number;
 
-    handleOnChangeFirstAmount(userAmount.toString());
+    handleOnChangeFirstAmount(userAmount.toString(), accountToken);
   };
+
+  useEffect(() => {
+    if (normalDirection) {
+      setSecondTokenAmount(
+        getRealBalance(data, pool.secondToken.decimals, true).toString()
+      );
+    } else {
+      setFirstTokenAmount(
+        getRealBalance(data, pool.firstToken.decimals, true).toString()
+      );
+    }
+  }, [
+    data,
+    normalDirection,
+    pool.firstToken.decimals,
+    pool.secondToken.decimals
+  ]);
 
   const handleAddLiquidity = async () => {
     const int = new SmartContractInteraction(pool.address);

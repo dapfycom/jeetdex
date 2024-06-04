@@ -75,7 +75,57 @@
         {
             "name": "upgrade",
             "mutability": "mutable",
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "first_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "second_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "min_liq_second_token",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "router_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "router_owner_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "fees_collector",
+                    "type": "Address"
+                },
+                {
+                    "name": "total_buy_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "buy_fee_percent_finish_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "total_sell_fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "sell_fee_percent_finish_timestamp",
+                    "type": "u64"
+                },
+                {
+                    "name": "initial_liquidity_adder",
+                    "type": "Address"
+                },
+                {
+                    "name": "admins",
+                    "type": "variadic<Address>",
+                    "multi_arg": true
+                }
+            ],
             "outputs": []
         },
         {
@@ -566,6 +616,25 @@
                 },
                 {
                     "name": "amount_wanted",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getEquivalent",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "token_in",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "amount_in",
                     "type": "BigUint"
                 }
             ],
