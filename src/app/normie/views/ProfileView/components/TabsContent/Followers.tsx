@@ -21,10 +21,7 @@ const Followers = () => {
           <div key={follow.id}>
             <div className='flex items-center space-x-4 mb-4'>
               <Avatar>
-                <AvatarImage
-                  alt='Profile picture'
-                  src={'/assets/img/logo-jeeter.png'}
-                />
+                <AvatarImage alt='Profile picture' src={follow.following.img} />
               </Avatar>
               <div>
                 <div className='text-lg font-bold'>

@@ -2,6 +2,7 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { timeAgo } from '@/utils/date';
+import Link from 'next/link';
 import { useContext } from 'react';
 import { ProfileCtx } from '../../ProfileContext';
 
@@ -11,6 +12,7 @@ interface INotificationData {
   createdAt: Date;
   description: string;
   type: 'LIKE' | 'FOLLOW';
+  userId: string;
 }
 
 const Notifications = () => {
@@ -29,7 +31,8 @@ const Notifications = () => {
       img: l.likedBy.img,
       username: l.likedBy.username,
       type: 'LIKE',
-      createdAt: new Date(l.createdAt) // Store the original createdAt date
+      createdAt: new Date(l.createdAt), // Store the original createdAt date
+      userId: l.likedById
     };
 
     return data;
@@ -43,7 +46,8 @@ const Notifications = () => {
         type: 'FOLLOW',
         img: f.following.img,
         username: f.following.username,
-        createdAt: new Date(f.createdAt) // Store the original createdAt date
+        createdAt: new Date(f.createdAt), // Store the original createdAt date
+        userId: f.followedId
       };
 
       return data;
@@ -62,20 +66,14 @@ const Notifications = () => {
 
 export default Notifications;
 
-interface NotificationItemProps {
-  img: string;
-  username: string;
-  createdAt: Date;
-  description: string;
-  type: 'LIKE' | 'FOLLOW';
-}
 const NotificationItem = ({
   description,
   img,
   createdAt,
   type,
-  username
-}: NotificationItemProps) => {
+  username,
+  userId
+}: INotificationData) => {
   if (type === 'LIKE') {
     return (
       <div className='flex items-center gap-3'>
@@ -85,7 +83,9 @@ const NotificationItem = ({
         <div className='flex-1'>
           <div className='flex items-center justify-between'>
             <div className='flex gap-3 items-end'>
-              <p className='font-medium'>@{username}</p>
+              <Link href={`/profile/${userId}`}>
+                <p className=' text-primary'>@{username}</p>
+              </Link>
               <p className='text-sm text-gray-500 dark:text-gray-400'>
                 {timeAgo(new Date(createdAt))}
               </p>
@@ -108,7 +108,9 @@ const NotificationItem = ({
       <div className='flex-1'>
         <div className='flex items-center justify-between'>
           <div className='flex gap-3 items-end'>
-            <p className='font-medium'>@{username}</p>
+            <Link href={`/profile/${userId}`}>
+              <p className=' text-primary'>@{username}</p>
+            </Link>
             <p className='text-sm text-gray-500 dark:text-gray-400'>
               {timeAgo(new Date(createdAt))}
             </p>

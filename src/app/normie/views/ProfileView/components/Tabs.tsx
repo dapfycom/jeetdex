@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import EnableSwapForm from '../../ListTokenView/EnableSwapView/EnableSwapForm';
 import CoinsCreated from './TabsContent/CoinsCreated';
 import CoinsHeld from './TabsContent/CoinsHeld';
 import Followers from './TabsContent/Followers';
@@ -37,6 +38,11 @@ const tabs = [
     text: 'following',
     value: 'following',
     component: Following
+  },
+  {
+    text: 'enable swaps',
+    value: 'enable-swaps',
+    component: EnableSwapForm
   }
 ];
 

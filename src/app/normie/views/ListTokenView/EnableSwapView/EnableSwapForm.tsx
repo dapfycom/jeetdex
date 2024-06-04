@@ -66,7 +66,7 @@ const EnableSwapForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='w-full max-w-[400px]'
+        className='w-full max-w-[400px] mx-auto'
       >
         <div className='bg-zinc-900 rounded-xl px-8 py-12'>
           <p className='text-gray-400 text-sm mb-10'>

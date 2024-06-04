@@ -56,7 +56,7 @@ const ProfileView = async () => {
     <ProfileContext ctxValue={user}>
       <div
         key='1'
-        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl m-auto'
+        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-4xl w-full m-auto'
       >
         <UserAvatar />
         <EditProfile />
