@@ -6,8 +6,7 @@ const LayoutTabs = () => {
   return (
     <div>
       <div className='flex gap-3 items-center text-gray-400'>
-        Layout
-        <TabsList className='bg-card rounded-full px-4 gap-4'>
+        <TabsList className='bg-card rounded-sm px-4 gap-4'>
           <TabsTrigger
             value='table'
             className='text-gray-500 data-[state=active]:bg-transparent data-[state=active]:text-white'

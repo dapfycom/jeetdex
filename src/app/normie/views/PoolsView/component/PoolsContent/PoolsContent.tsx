@@ -1,11 +1,8 @@
 import { TabsContent } from '@/components/ui/tabs';
-import { fetchPoolsData } from '../../../../../../services/others/cache.server';
 import PoolListCards from './PoolListCards/PoolListCards';
 import PoolsList from './PoolsListTable/PoolsListTable';
 
-const PoolsContent = async () => {
-  const pools = await fetchPoolsData();
-
+const PoolsContent = async ({ pools }) => {
   return (
     <div className='w-full mt-5'>
       <TabsContent value='table'>

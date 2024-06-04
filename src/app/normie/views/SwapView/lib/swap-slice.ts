@@ -22,14 +22,14 @@ const initialState: SwapState = {
   fromField: {
     value: '',
     valueDecimals: '',
-    selectedToken: tokensID.firstTokenSwap
+    selectedToken: tokensID.wegld
   },
   toField: {
     value: '',
-    selectedToken: tokensID.jeet,
+    selectedToken: 'JEETDEX-fa1a41',
     valueDecimals: ''
   },
-  normalDirection: true,
+  normalDirection: false,
   rate: 0,
   poolPair: ''
 };

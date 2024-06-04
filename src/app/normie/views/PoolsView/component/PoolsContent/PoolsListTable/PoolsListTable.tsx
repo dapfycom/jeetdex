@@ -17,25 +17,17 @@ interface IProps {
 const PoolsList = ({ pools }: IProps) => {
   const orderedPools = useListPools(pools);
   return (
-    <Table>
+    <Table className='bg-[#1015299d] '>
       <TableHeader className=''>
-        <TableRow className=' rounded-2xl'>
-          <TableHead className='w-[70px] bg-[#1015299d] py-5 rounded-ss-2xl'></TableHead>
+        <TableRow className=' rounded-sm'>
+          <TableHead className='w-[70px] py-5 rounded-ss-sm'></TableHead>
 
-          <TableHead className='w-[100px]  bg-[#1015299d] py-5 '>
-            Pool
-          </TableHead>
-          <TableHead className='text-right bg-[#1015299d] py-5 '>
-            First Token Reserve
-          </TableHead>
-          <TableHead className='text-right bg-[#1015299d] py-5 '>
-            Second Token Reserve
-          </TableHead>
-          <TableHead className='text-right bg-[#1015299d] py-5 '>
-            Fees 24H
-          </TableHead>
+          <TableHead className='w-[100px]  ] py-5 '>Pool</TableHead>
+          <TableHead className='] py-5 '>First Token Reserve</TableHead>
+          <TableHead className='] py-5 '>Second Token Reserve</TableHead>
+          <TableHead className='] py-5 '>Fees 24H</TableHead>
 
-          <TableHead className='bg-[#1015299d] py-5 rounded-se-2xl'></TableHead>
+          <TableHead className='] py-5 rounded-se-sm'></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

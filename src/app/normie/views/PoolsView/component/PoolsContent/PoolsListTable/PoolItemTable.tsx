@@ -1,14 +1,9 @@
 'use client';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
-import {
-  faChartColumn,
-  faExchange,
-  faStar
-} from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
@@ -39,7 +34,7 @@ const PoolItem = ({ pool }: IProps) => {
   const { handleLikePool, isLiked } = useLikePool(pool);
 
   return (
-    <TableRow className='even:bg-[#09091bb6] odd:bg-[#0908182d]'>
+    <TableRow className='hover:bg-[#09091bb6] '>
       <TableCell className='text-center py-4'>
         <FontAwesomeIcon
           icon={faStar}
@@ -66,20 +61,17 @@ const PoolItem = ({ pool }: IProps) => {
               {formatTokenI(pool.firstToken.ticker)}-
               {formatTokenI(pool.secondToken.ticker)}
             </div>
-            <Badge className='rounded-full px-1 py-0 text-xs bg-card text-gray-300/80'>
-              0.01%
-            </Badge>
           </div>
         </div>
       </TableCell>
-      <TableCell className='text-right py-4'>
+      <TableCell className=' py-4'>
         {formatBalance({
           balance: pool.firstTokenReserve,
           decimals: pool.firstToken.decimals
         })}{' '}
         {formatTokenI(pool.firstToken.ticker)}
       </TableCell>
-      <TableCell className='text-right py-4'>
+      <TableCell className=' py-4'>
         {' '}
         {formatBalance({
           balance: pool.secondTokenReserve,
@@ -87,15 +79,15 @@ const PoolItem = ({ pool }: IProps) => {
         })}{' '}
         {formatTokenI(pool.secondToken.ticker)}
       </TableCell>
-      <TableCell className='text-right py-4'>$1</TableCell>
-      <TableCell className='text-right py-4 flex items-center w-full justify-end gap-3'>
+      <TableCell className=' py-4'>$1</TableCell>
+      <TableCell className=' py-4 flex items-center w-full justify-end gap-3'>
         <Button
-          variant='outline'
+          variant='ghost'
           className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
           size='sm'
           onClick={togglePoolChart}
         >
-          <FontAwesomeIcon icon={faChartColumn} />
+          chart
         </Button>
 
         {poolChart && (
@@ -105,14 +97,12 @@ const PoolItem = ({ pool }: IProps) => {
           <Tooltip>
             <TooltipTrigger>
               <Button
-                variant='outline'
+                variant='ghost'
                 className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
                 size='sm'
                 asChild
               >
-                <Link href={'/'}>
-                  <FontAwesomeIcon icon={faExchange} />
-                </Link>
+                <Link href={'/'}>swap</Link>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -124,11 +114,11 @@ const PoolItem = ({ pool }: IProps) => {
         <Dialog>
           <DialogTrigger asChild className='w-fit'>
             <Button
-              variant='outline'
+              variant='ghost'
               className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 w-[70px] '
               size='sm'
             >
-              Deposit
+              deposit
             </Button>
           </DialogTrigger>
           <DialogContent className='max-w-2xl'>

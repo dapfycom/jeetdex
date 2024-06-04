@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/button';
 import useDisclosure from '@/hooks/useDisclosure';
 import { jeetStaticData } from '@/localConstants/tokensStaticsData';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
-import { faChartColumn, faExchange } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -22,12 +20,12 @@ const PoolCard = ({ pool }: IProps) => {
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
 
   return (
-    <div className='bg-[#1C243E] rounded-3xl py-6 px-4 w-full'>
+    <div className='bg-[#1C243E] rounded-sm py-6 px-4 w-full'>
       <div className='flex flex-col items-center w-full mb-4'>
         <PoolCoins
           src1={pool?.firstToken?.assets?.svgUrl}
           src2={pool?.secondToken?.assets?.svgUrl}
-          size={26}
+          size={50}
           className='w-[50px] h-[50px]'
           identifier1={pool.firstTokenId}
           identifier2={pool.secondTokenId}
@@ -102,7 +100,7 @@ const PoolCard = ({ pool }: IProps) => {
           className='hover:bg-[#27837e4d] hover:text-primary'
           onClick={togglePoolChart}
         >
-          View Chart <FontAwesomeIcon icon={faChartColumn} className='ml-2' />
+          chart
         </Button>
 
         {poolChart && (
@@ -114,9 +112,7 @@ const PoolCard = ({ pool }: IProps) => {
           className='hover:bg-[#27837e4d] hover:text-primary'
           asChild
         >
-          <Link href={'/'}>
-            Swap <FontAwesomeIcon icon={faExchange} className='ml-2' />
-          </Link>
+          <Link href={'/'}>swap</Link>
         </Button>
       </div>
 

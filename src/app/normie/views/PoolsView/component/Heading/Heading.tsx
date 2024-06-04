@@ -1,16 +1,10 @@
-import { faChartLine, faLock } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import InfoBox from '../InfoBox/InfoBox';
-
 const Heading = () => {
   return (
-    <div className='rounded-2xl p-6 flex flex-col gap-5 w-full'>
-      <div className='flex w-full justify-between gap-8'>
-        <h1 className='text-4xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-green-500'>
-          Liquidity Pools
-        </h1>
+    <div className='rounded-2xl p-6 flex flex-col gap-5 w-full text-center'>
+      <div className='flex w-full justify-center '>
+        <h1 className='text-4xl font-semibold text-center'>Liquidity Pools</h1>
         <div className='flex gap-6'>
-          <InfoBox
+          {/* <InfoBox
             icon={
               <div className={`bottom-0 right-0 absolute rotate-45`}>
                 <FontAwesomeIcon
@@ -21,9 +15,9 @@ const Heading = () => {
             }
             title='TVL'
             value='$1,051,317,703.37'
-          />
+          /> */}
 
-          <InfoBox
+          {/* <InfoBox
             icon={
               <div className={`bottom-2 right-1 absolute rotate-45`}>
                 <FontAwesomeIcon
@@ -34,7 +28,7 @@ const Heading = () => {
             }
             title='24H Volume'
             value='$939,931,073'
-          />
+          /> */}
         </div>
       </div>
 

@@ -22,7 +22,7 @@ const PoolCoins = ({
     <div className='flex'>
       <div
         className={cn(
-          'w-[26px] h-[26px] rounded-full bg-gradient-to-r from-[rgba(171,_196,_255,_0.20)] from-30% to-[rgba(171,_196,_255,_0.00)]  flex justify-center items-center backdrop-blur-sm relative',
+          'w-[26px] h-[26px] rounded-full flex justify-center items-center relative',
           className
         )}
       >
@@ -31,12 +31,12 @@ const PoolCoins = ({
           src={src1}
           alt='Token 1'
           identifier={identifier1}
-          className='w-[70%] h-[70%] rounded-full'
+          className='w-full h-full rounded-full'
         />
       </div>
       <div
         className={cn(
-          'w-[26px] h-[26px] rounded-full bg-gradient-to-r from-[rgba(171,_196,_255,_0.20)] from-30% to-[rgba(171,_196,_255,_0.00)]  flex justify-center items-center backdrop-blur-sm -translate-x-2 relative z-10',
+          'w-[26px] h-[26px] rounded-full flex justify-center items-center -translate-x-2 relative z-10',
           className
         )}
       >
@@ -44,7 +44,7 @@ const PoolCoins = ({
           size={size}
           src={src2}
           alt='Token 2'
-          className='w-[70%] h-[70%] rounded-full'
+          className='w-full h-full rounded-full'
           identifier={identifier2}
         />
       </div>

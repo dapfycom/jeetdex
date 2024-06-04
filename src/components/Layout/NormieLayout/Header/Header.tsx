@@ -13,7 +13,7 @@ export const Header = () => {
           to={'/'}
           className=' items-center justify-between gap-3 hidden sm:flex'
         >
-          <Logo className='rounded-full w-12 h-12' />
+          <Logo className='rounded-full w-9 h-9' />
         </MxLink>
 
         <Navbar />
