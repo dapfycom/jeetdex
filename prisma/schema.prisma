@@ -50,6 +50,8 @@ model Follows {
 
   following   Users  @relation("following", fields: [followingId], references: [id])
   followingId String
+
+  createdAt DateTime @default(now())
 }
 
 model Chats {

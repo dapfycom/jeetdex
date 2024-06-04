@@ -15,11 +15,13 @@ type ContextType = {
     id: string;
     followedId: string;
     followingId: string;
+    createdAt: Date;
   } & { following: user })[];
   following: ({
     id: string;
     followedId: string;
     followingId: string;
+    createdAt: Date;
   } & { followed: user })[];
   _count: {
     likesReceived: number;
@@ -31,12 +33,17 @@ type ContextType = {
     createdAt: Date;
     chatId: string;
     senderId: string;
+    chat: {
+      id: string;
+      pool: string;
+    };
     likes: {
       id: string;
       likedById: string;
       userId: string;
       createdAt: Date;
       messageId: number;
+      likedBy: user;
     }[];
   }[];
 } & user;

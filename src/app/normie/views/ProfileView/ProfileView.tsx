@@ -37,7 +37,12 @@ const ProfileView = async () => {
       },
       messages: {
         include: {
-          likes: true
+          likes: {
+            include: {
+              likedBy: true
+            }
+          },
+          chat: true
         }
       }
     }
