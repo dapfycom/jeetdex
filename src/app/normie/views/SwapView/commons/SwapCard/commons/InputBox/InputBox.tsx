@@ -121,7 +121,7 @@ const InputBox = ({
                 <PopoverTrigger asChild>
                   <Button
                     variant='outline'
-                    className={`ml-auto gap-2 w-fit !h-[35px] lg:!h-[46px] rounded-2xl bg-[#1C243E] disabled:opacity-100`}
+                    className={`ml-auto gap-2 w-fit !h-[35px] rounded-xl bg-[#1C243E] disabled:opacity-100`}
                     disabled={tokensIdentifiers.length === 0 || isLoading}
                   >
                     {isLoading ? (
@@ -130,16 +130,16 @@ const InputBox = ({
                       </div>
                     ) : (
                       <div className={`flex items-center gap-2`}>
-                        <div className='w-[23px]'>
+                        <div className='w-[16px]'>
                           <TokenImageSRC
                             src={elrondToken?.assets?.svgUrl}
                             alt={elrondToken?.ticker}
-                            size={23}
-                            className='w-[23px] h-[23px] rounded-full'
+                            size={16}
+                            className='w-[16px] h-[16px] rounded-full'
                             identifier={elrondToken?.identifier}
                           />
                         </div>
-                        <p className='text-md lg:text-[20px]'>
+                        <p className='text-md'>
                           {formatTokenI(elrondToken?.ticker)}
                         </p>
                       </div>
