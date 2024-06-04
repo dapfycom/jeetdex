@@ -63,7 +63,7 @@ const InputBox = ({
     <>
       <div className='flex flex-col w-full pt-2  rounded-sm bg-[#0b102280] max-w-[500px] border-[#A259FF] focus-within:border focus-within:shadow-[0px_0px_12px_6px_#A259FF33]'>
         <div className='flex flex-col'>
-          <div className='flex justify-between items-start px-4 md:px-8 pb-3 gap-2'>
+          <div className='flex justify-between items-start px-2 md:px-4 pb-3 gap-2'>
             <h5 className='text-xs lg:text-sm '>{label}</h5>
 
             <div className='flex items-center gap-2'>
@@ -114,7 +114,7 @@ const InputBox = ({
               </div>
             </div>
           </div>
-          <div className='w-full  rounded-2xl py-3 px-3 lg:px-5'>
+          <div className='w-full  rounded-2xl py-3 px-2 lg:px-4'>
             <div className=' flex justify-between w-full '>
               <Popover
                 open={isOpen}
@@ -200,7 +200,7 @@ const InputBox = ({
               <div className='w-full relative'>
                 <Input
                   type='text'
-                  className='border-none text-end text-[20px] lg:text-[22px] focus-visible:border-none focus-visible:ring-0 focus-visible:ring-offset-0'
+                  className='border-none text-end px-0 text-[20px] lg:text-[22px] focus-visible:border-none focus-visible:ring-0 focus-visible:ring-offset-0'
                   placeholder='0.0'
                   onChange={(e) => onChange(e.target.value, elrondToken)}
                   value={
@@ -209,7 +209,7 @@ const InputBox = ({
                   readOnly={readOnly}
                 />
                 {dollarValue != null ? (
-                  <div className='absolute bottom-[-15px] right-0  px-3 text-muted-foreground '>
+                  <div className='absolute bottom-[-15px] right-0  text-muted-foreground '>
                     $ {dollarValue}
                   </div>
                 ) : null}
