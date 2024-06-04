@@ -9,12 +9,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -93,23 +87,14 @@ const PoolItem = ({ pool }: IProps) => {
         {poolChart && (
           <PoolChartModal isOpen={poolChart} toggleOpen={togglePoolChart} />
         )}
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                variant='ghost'
-                className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
-                size='sm'
-                asChild
-              >
-                <Link href={'/'}>swap</Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Swap</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Button
+          variant='ghost'
+          className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
+          size='sm'
+          asChild
+        >
+          <Link href={'/'}>swap</Link>
+        </Button>
 
         <Dialog>
           <DialogTrigger asChild className='w-fit'>

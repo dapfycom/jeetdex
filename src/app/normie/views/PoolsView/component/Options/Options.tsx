@@ -17,7 +17,7 @@ const Options = ({ pools }) => {
             <div className='flex gap-5'>
               <Input
                 placeholder='Search by name or symbol'
-                className='bg-card rounded-sm'
+                className='bg-card rounded-sm min-w-[450px]'
               />
               <LayoutTabs />
             </div>
