@@ -47,7 +47,7 @@ const Notifications = () => {
         img: f.following.img,
         username: f.following.username,
         createdAt: new Date(f.createdAt), // Store the original createdAt date
-        userId: f.followedId
+        userId: f.followingId
       };
 
       return data;

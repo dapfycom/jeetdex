@@ -5,6 +5,7 @@ import { UploadButton } from '@/utils/uploadthing';
 import { faCheckCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader } from 'lucide-react';
+import { revalidateTag } from 'next/cache';
 import { useState } from 'react';
 
 const UpdateCoinImg = ({ token }) => {
@@ -31,6 +32,8 @@ const UpdateCoinImg = ({ token }) => {
             </div>
           )
         });
+
+        revalidateTag('CoinsPairs');
       }}
       onUploadBegin={() => {
         setIsEditing(true);

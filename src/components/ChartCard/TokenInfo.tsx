@@ -3,8 +3,8 @@ import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import { useAppSelector } from '@/hooks';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { formatBalanceDollar, formatTokenI } from '@/utils/mx-utils';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Avatar, AvatarImage } from '../ui/avatar';
 
 interface IProps {
   poolPair?: IPoolPair;
@@ -15,6 +15,7 @@ const TokenInfo = ({ poolPair }: IProps) => {
   const token = globalData.coins.find(
     (t) => t.identifier === poolPair?.firstToken?.identifier
   );
+  console.log(token);
 
   return (
     <div className='w-full flex mb-3 gap-3 h-[26.8px] justify-between  items-end text-sm'>
@@ -56,14 +57,14 @@ const TokenInfo = ({ poolPair }: IProps) => {
                 href={`/profile/${token.owner.id}`}
                 className='flex items-center'
               >
-                <Avatar className='h-4 w-4 mr-1'>
-                  <AvatarImage
-                    alt='Profile picture'
-                    src={token.owner.img}
-                    className='w-4 h-4'
-                  />
-                </Avatar>
-                <span className='rounded-sm bg-lime-400 text-black px-1 h-[18px] flex items-center'>{`${token.owner.username}`}</span>
+                <Image
+                  src={token.owner.img}
+                  alt='Profile image'
+                  width={16}
+                  height={16}
+                  className='rounded-full h-4 w-4 mr-1'
+                />
+                <span className='rounded-sm text-xs bg-lime-400 text-black px-1 h-[18px] flex items-center'>{`${token.owner.username}`}</span>
               </Link>
             </span>
           ) : null}
