@@ -9,7 +9,7 @@ import { setShard, setUserAddress } from '@/redux/dapp/dapp-slice';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect } from 'react';
-import { Skeleton } from '../ui/skeleton';
+import { Skeleton } from '../../ui/skeleton';
 
 const ConnectComponent = dynamic(() => import('./ConnectComponent'), {
   ssr: false

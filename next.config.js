@@ -7,6 +7,12 @@ const nextConfig = {
         hostname: 'utfs.io',
         port: '',
         pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'pump.mypinata.cloud',
+        port: '',
+        pathname: '**'
       }
     ]
   },

@@ -10,7 +10,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '../ui/dropdown-menu';
+} from '../../ui/dropdown-menu';
 
 const DisconnectComponent = () => {
   const address = useAppSelector(selectUserAddress);

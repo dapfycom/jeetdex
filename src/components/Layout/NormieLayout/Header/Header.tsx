@@ -1,4 +1,4 @@
-import Login from '@/components/Login/Login';
+import Login from '@/components/Login/normie/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';

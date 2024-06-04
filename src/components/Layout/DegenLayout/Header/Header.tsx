@@ -1,7 +1,8 @@
-import Login from '@/components/Login/Login';
+import Login from '@/components/Login/degen/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';
+import Link from 'next/link';
 
 export const Header = () => {
   return (
@@ -50,6 +51,11 @@ export const Header = () => {
 
         <div className='flex items-center gap-2'>
           <Login />
+        </div>
+        <div className='absolute bottom-[5px] right-[-20px] flex gap-2 hover:font-bold'>
+          <Link href={'/profile'} className='whitespace-nowrap'>
+            [View profile]
+          </Link>
         </div>
       </nav>
     </header>
