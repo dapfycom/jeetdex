@@ -85,7 +85,7 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
   const alreadyEnabled = !!transactions.find((tx) => {
     const addressHex = decodeBase64(tx.data).split('@')[1];
     console.log(addressHex);
-    return Address.fromHex(addressHex).bech32() === pairForThisToken.address;
+    return Address.fromHex(addressHex).bech32() === pairForThisToken?.address;
   });
   const handleEnableSwap = async () => {
     await enableTrade(pairForThisToken.address);
@@ -123,7 +123,7 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
             )}
           </div>
         ) : (
-          <div>No pool found!</div>
+          <div>-</div>
         )}
       </TableCell>
     </TableRow>
