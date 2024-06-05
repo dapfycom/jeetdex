@@ -5,7 +5,7 @@ const Navbar = () => {
   // const pathname = usePathname();
 
   return (
-    <div className='text-sm '>
+    <div className='text-md '>
       <div>
         <div className='flex gap-2 items-center'>
           <Link href='/' className='hover:font-bold'>
