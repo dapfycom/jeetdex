@@ -2,8 +2,8 @@ import Login from '@/components/Login/normie/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';
-import Link from 'next/link';
 import Navbar from './Navbar';
+import ViewProfileButton from './ViewProfileButton';
 
 export const Header = () => {
   return (
@@ -25,11 +25,7 @@ export const Header = () => {
         <div className='relative'>
           <Login />
 
-          <div className='absolute bottom-[-25px]  right-[0px] flex gap-2 hover:font-bold'>
-            <Link href={'/profile'} className='whitespace-nowrap'>
-              [View profile]
-            </Link>
-          </div>
+          <ViewProfileButton />
         </div>
       </div>
     </header>

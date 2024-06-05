@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js';
+
 export function numberWithCommas(x: string | number, decimals = false) {
   const number = Number(x);
   if (number < 1) {
@@ -30,11 +32,14 @@ export const validatePercent = (value: string | number): boolean => {
   return true;
 };
 
-export function calculatePercentage(total: number, value: number): number {
-  if (total === 0) {
+export function calculatePercentage(
+  total: BigNumber,
+  value: BigNumber
+): BigNumber {
+  if (total.isZero()) {
     throw new Error('Total must not be zero to avoid division by zero.');
   }
-  return (value / total) * 100;
+  return value.dividedBy(total).multipliedBy(100);
 }
 
 export function hexToBigNumber(hexString: string): bigint {

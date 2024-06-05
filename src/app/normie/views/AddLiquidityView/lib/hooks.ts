@@ -18,7 +18,12 @@ export const useGetEquivalent = (
   console.log(tokenAmount);
   console.log(decimals);
 
-  const { data, error, isLoading, mutate } = useSWR(
+  const {
+    data: res,
+    error,
+    isLoading,
+    mutate
+  } = useSWR(
     `${contractAddress}:getEquivalent:${tokenI}:${tokenAmount}`,
     async () => {
       return scQueryWithContract(
@@ -38,7 +43,7 @@ export const useGetEquivalent = (
       );
     }
   );
-
+  const data = res?.firstValue?.valueOf();
   console.log(data);
 
   return {

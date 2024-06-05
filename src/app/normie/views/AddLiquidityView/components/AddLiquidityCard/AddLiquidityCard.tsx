@@ -2,8 +2,12 @@
 import { Button } from '@/components/ui/button';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { IElrondAccountToken } from '@/types/scTypes';
-import { formatBalance, getRealBalance } from '@/utils/mx-utils';
-import { BigUIntValue, TokenTransfer } from '@multiversx/sdk-core/out';
+import {
+  calculateSlipageAmount,
+  formatBalance,
+  getRealBalance
+} from '@/utils/mx-utils';
+import { BigUIntValue } from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { IPoolPair } from '../../../PoolsView/utils/types';
@@ -17,6 +21,11 @@ export interface AddLiquidityCardProps {
 const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
   const [firstTokenAmount, setFirstTokenAmount] = useState<string>('');
   const [secondTokenAmount, setSecondTokenAmount] = useState<string>('');
+
+  const [firstTokenAmountDecimals, setFirstTokenAmountDecimals] =
+    useState<string>('');
+  const [secondTokenAmountDecimals, setSecondTokenAmountDecimals] =
+    useState<string>('');
   const [selectedToken, setSelectedToken] = useState<{
     identifier: string;
     decimals: number;
@@ -26,6 +35,9 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
 
   let amountForEquivalent = firstTokenAmount;
   let elrondTokenForEquivalent = pool.firstToken;
+  console.log(firstTokenAmount);
+  console.log(firstTokenAmountDecimals);
+  console.log(secondTokenAmountDecimals);
 
   if (!normalDirection) {
     amountForEquivalent = secondTokenAmount;
@@ -77,10 +89,12 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
       setSecondTokenAmount(
         getRealBalance(data, pool.secondToken.decimals, true).toString()
       );
+      setSecondTokenAmountDecimals(data);
     } else {
       setFirstTokenAmount(
         getRealBalance(data, pool.firstToken.decimals, true).toString()
       );
+      setFirstTokenAmountDecimals(data);
     }
   }, [
     data,
@@ -90,6 +104,26 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
   ]);
 
   const handleAddLiquidity = async () => {
+    const firstAmount =
+      firstTokenAmountDecimals ||
+      new BigNumber(firstTokenAmount)
+        .multipliedBy(10 ** pool.firstToken.decimals)
+        .toFixed(0);
+
+    const secondAmount =
+      secondTokenAmountDecimals ||
+      new BigNumber(secondTokenAmount)
+        .multipliedBy(10 ** pool.secondToken.decimals)
+        .toFixed(0);
+
+    console.log(firstAmount);
+    console.log(secondAmount);
+
+    const firstAmountWithSlipage = calculateSlipageAmount(5, firstAmount);
+    const secondAmountWithSlipage = calculateSlipageAmount(5, secondAmount);
+    console.log(firstAmountWithSlipage.toFixed(0));
+    console.log(secondAmountWithSlipage.toFixed(0));
+
     const int = new SmartContractInteraction(pool.address);
     await int.MultiESDTNFTTransfer({
       functionName: 'addLiquidity',
@@ -97,33 +131,26 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
         {
           collection: pool.firstTokenId,
           nonce: 0,
-          value: firstTokenAmount,
-          decimals: pool.firstToken.decimals
+          value: firstAmount
         },
         {
           collection: pool.secondTokenId,
           nonce: 0,
-          value: secondTokenAmount,
-          decimals: pool.secondToken.decimals
+          value: secondAmount
         }
       ],
       arg: [
-        new BigUIntValue(
-          TokenTransfer.fungibleFromAmount(
-            pool.firstTokenId,
-            firstTokenAmount,
-            pool.firstToken.decimals
-          ).amount
-        ),
-        new BigUIntValue(
-          TokenTransfer.fungibleFromAmount(
-            pool.secondTokenId,
-            secondTokenAmount,
-            pool.secondToken.decimals
-          ).amount
-        )
+        new BigUIntValue(firstAmountWithSlipage.toFixed(0)),
+        new BigUIntValue(secondAmountWithSlipage.toFixed(0))
       ]
     });
+  };
+
+  const handleClear = () => {
+    setFirstTokenAmount('');
+    setFirstTokenAmountDecimals('');
+    setSecondTokenAmount('');
+    setSecondTokenAmountDecimals('');
   };
 
   return (
@@ -147,6 +174,7 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
             value={firstTokenAmount}
             label=''
             handlePercentAmount={handlePercentFirstAmount}
+            clear={handleClear}
           />
 
           <InputBox
@@ -157,6 +185,7 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
             label={''}
             value={secondTokenAmount}
             handlePercentAmount={handlePercentFirstAmount}
+            clear={handleClear}
           />
         </div>
       </div>

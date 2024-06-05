@@ -12,6 +12,7 @@ import { useGetLoginInfo } from '@multiversx/sdk-dapp/hooks/account/useGetLoginI
 import BigNumber from 'bignumber.js';
 import { useEffect, useRef, useState } from 'react';
 import { submitSwap } from '../../../../lib/calls';
+import { clearInputs } from '../../../../lib/functions';
 import useTxNotification from '../../../../useTxNotification';
 
 interface IProps {
@@ -47,6 +48,7 @@ const SubmitButton = ({ poolAddres }: IProps) => {
     if (!ref.current) {
       if (transactions && transactions[0]?.hash) {
         toastTxNotification(transactions[0]?.hash);
+        clearInputs();
         ref.current = true;
       }
     }

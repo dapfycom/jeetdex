@@ -18,7 +18,7 @@ import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { useEffect } from 'react';
-import { changeField } from '../../lib/functions';
+import { changeField, clearInputs } from '../../lib/functions';
 import { useGetSwapbleTokens, useGetTokenRatio } from '../../lib/hooks';
 import SwapCard from './SwapCard';
 
@@ -74,10 +74,7 @@ const SwapCardContainer = () => {
     dispatch(onChageFromFieldValueDecimals(newAccount.balance));
   };
   const handleClear = () => {
-    dispatch(onChageFromFieldValue(''));
-    dispatch(onChageFromFieldValueDecimals(''));
-    dispatch(onChangeToFieldValueDecimals(''));
-    dispatch(onChangeToField(''));
+    clearInputs();
   };
 
   const { tokensPairs } = useGetSwapbleTokens();
