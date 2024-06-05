@@ -36,13 +36,13 @@ const ToastComponent = ({ hash, t }: IProps) => {
   }, []);
 
   return (
-    <div className='relative p-4'>
+    <div className='relative p-4 text-sm'>
       {loading ? (
         <span className='flex items-center gap-3'>
           <span>
             <LoaderCircle className='animate-spin' />
           </span>
-          Processing transaction
+          processing transaction
         </span>
       ) : (
         <div className=''>
@@ -51,14 +51,19 @@ const ToastComponent = ({ hash, t }: IProps) => {
               <CheckCircle className=' text-green-500' />
             </span>
             <div>
-              Transaction submitted. Transaction Hash:{' '}
-              <a
-                href={network.explorerAddress + '/transactions/' + hash}
-                target='_blank'
-                className='text-primary'
-              >
-                {formatAddress(hash)}
-              </a>
+              transaction submitted.{' '}
+              {typeof hash === 'string' && (
+                <span>
+                  transaction hash:{' '}
+                  <a
+                    href={network.explorerAddress + '/transactions/' + hash}
+                    target='_blank'
+                    className='text-primary'
+                  >
+                    {formatAddress(hash)}
+                  </a>
+                </span>
+              )}
             </div>
           </span>
         </div>

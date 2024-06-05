@@ -6,7 +6,6 @@ import SwapContent from './SwapContent';
 import SwapContext from './SwapContext';
 const Swap = async () => {
   const pools = await fetchPoolsData();
-
   return (
     <SwapContext poolsInfo={pools}>
       <Container>
