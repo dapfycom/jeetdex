@@ -22,9 +22,13 @@ const Navbar = () => {
         </div>
 
         <div className='flex gap-2 items-center'>
-          <Link href='#' className='hover:font-bold'>
+          <a
+            href='https://insigh.to/b/jeetdex'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             [report bug]
-          </Link>
+          </a>
         </div>
       </div>
 

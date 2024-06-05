@@ -9,7 +9,7 @@ const useTxNotification = () => {
     console.log('handleToast');
 
     toast((t) => ToastComponent({ hash, t }), {
-      duration: 10000
+      duration: 1000000
     });
   };
   return {
@@ -51,10 +51,10 @@ const ToastComponent = ({ hash, t }: IProps) => {
               <CheckCircle className=' text-green-500' />
             </span>
             <div>
-              transaction submitted.{' '}
+              transaction submitted. <br />
               {typeof hash === 'string' && (
                 <span>
-                  transaction hash:{' '}
+                  view on explorer:{' '}
                   <a
                     href={network.explorerAddress + '/transactions/' + hash}
                     target='_blank'
