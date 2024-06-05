@@ -1,6 +1,8 @@
 'use client';
 
-import { PropsWithChildren, createContext } from 'react';
+import { useAuthentication } from '@/hooks';
+import { redirect } from 'next/navigation';
+import { PropsWithChildren, createContext, useEffect } from 'react';
 type user = {
   id: string;
   username: string;
@@ -32,6 +34,12 @@ const PublicProfileContext = ({
 }: PropsWithChildren<{
   ctxValue: ContextType;
 }>) => {
+  const { address } = useAuthentication();
+  useEffect(() => {
+    if (address === ctxValue.address) {
+      redirect('/profile');
+    }
+  }, [address, ctxValue.address]);
   return <ProfileCtx.Provider value={ctxValue}>{children}</ProfileCtx.Provider>;
 };
 
