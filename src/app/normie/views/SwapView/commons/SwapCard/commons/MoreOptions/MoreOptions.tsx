@@ -14,6 +14,7 @@ import { useAppSelector } from '@/hooks';
 import { useGetLikedPools } from '@/hooks/useGetUserSettings';
 import { cn } from '@/lib/utils';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
+import { generateRandomString } from '@/utils/strings';
 import { errorToast, successToast } from '@/utils/toast';
 import {
   faIdCardClip,
@@ -31,7 +32,7 @@ interface IProps {
 const MoreOptions = ({ token1, token2 }: IProps) => {
   const [open, setOpen] = useState(false);
   const pools = useAppSelector(selectGlobalData).pools;
-  const { likedPools, mutate } = useGetLikedPools();
+  const { likedPools, mutate, settings } = useGetLikedPools();
   const currentPool = pools.find(
     (p) => p.firstTokenId === token1 && p.secondTokenId === token2
   );
@@ -42,14 +43,55 @@ const MoreOptions = ({ token1, token2 }: IProps) => {
   const handleLikePool = async () => {
     if (currentPool) {
       try {
-        const res = await likePool(
-          currentPool.lpTokenIdentifier,
-          currentPool.firstTokenId,
-          currentPool.secondTokenId
+        const newLikedPool = {
+          id: generateRandomString(10),
+          userSettingId: generateRandomString(10),
+          poolId: generateRandomString(10),
+          pool: {
+            id: generateRandomString(10),
+            lpIdentifier: currentPool.lpTokenIdentifier,
+            token1: currentPool.firstTokenId,
+            token2: currentPool.secondTokenId
+          }
+        };
+        let data = {
+          ...settings,
+          pools: [...settings.pools, newLikedPool]
+        };
+        if (thisPoolsIsLiked) {
+          data = {
+            ...settings,
+            pools: [
+              ...settings.pools.filter(
+                (p) => p.pool.lpIdentifier !== currentPool.lpTokenIdentifier
+              )
+            ]
+          };
+        }
+
+        mutate(
+          async () => {
+            const res = await likePool(
+              currentPool.lpTokenIdentifier,
+              currentPool.firstTokenId,
+              currentPool.secondTokenId
+            );
+            successToast(res.message);
+
+            return {
+              data: data
+            };
+          },
+          {
+            optimisticData: { data: data },
+            rollbackOnError: true,
+            populateCache: true,
+            revalidate: false
+          }
         );
-        mutate();
-        successToast(res.message);
-      } catch (error) {}
+      } catch (error) {
+        errorToast(error.message);
+      }
     } else {
       errorToast('We could not find this pool');
     }

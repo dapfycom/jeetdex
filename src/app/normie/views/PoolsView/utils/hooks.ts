@@ -1,8 +1,7 @@
 import { likePool } from '@/actions/preferences';
-import useDisclosure from '@/hooks/useDisclosure';
 import { useGetLikedPools } from '@/hooks/useGetUserSettings';
+import { generateRandomString } from '@/utils/strings';
 import { errorToast } from '@/utils/toast';
-import { mutate } from 'swr';
 import { IPoolPair } from './types';
 
 export const useListPools = (
@@ -23,29 +22,62 @@ export const useListPools = (
 };
 
 export const useLikePool = (pool: IPoolPair & { liked: boolean }) => {
-  const {
-    isOpen: clickStar,
-    onToggle: onToggleStar,
-    setOpen
-  } = useDisclosure();
+  const { mutate, settings } = useGetLikedPools();
 
   const handleLikePool = async () => {
     try {
-      onToggleStar();
-      await likePool(
-        pool.lpTokenIdentifier,
-        pool.firstTokenId,
-        pool.secondTokenId
+      const newLikedPool = {
+        id: generateRandomString(10),
+        userSettingId: generateRandomString(10),
+        poolId: generateRandomString(10),
+        pool: {
+          id: generateRandomString(10),
+          lpIdentifier: pool.lpTokenIdentifier,
+          token1: pool.firstTokenId,
+          token2: pool.secondTokenId
+        }
+      };
+      let data = {
+        ...settings,
+        pools: [...settings.pools, newLikedPool]
+      };
+      if (pool.liked) {
+        data = {
+          ...settings,
+          pools: [
+            ...settings.pools.filter(
+              (p) => p.pool.lpIdentifier !== pool.lpTokenIdentifier
+            )
+          ]
+        };
+      }
+
+      mutate(
+        async () => {
+          await likePool(
+            pool.lpTokenIdentifier,
+            pool.firstTokenId,
+            pool.secondTokenId
+          );
+
+          return {
+            data: data
+          };
+        },
+        {
+          optimisticData: { data: data },
+          rollbackOnError: true,
+          populateCache: true,
+          revalidate: false
+        }
       );
-      mutate('/user/settings');
     } catch (error) {
       errorToast(error.message);
-      setOpen(pool.liked);
     }
   };
 
   return {
     handleLikePool,
-    isLiked: pool.liked || clickStar
+    isLiked: pool.liked
   };
 };
