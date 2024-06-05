@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
+import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import dynamic from 'next/dynamic';
@@ -30,14 +31,16 @@ const PoolItem = ({ pool }: IProps) => {
   return (
     <TableRow className='hover:bg-[#09091bb6] '>
       <TableCell className='text-center py-4'>
-        <FontAwesomeIcon
-          icon={faStar}
-          className={cn(
-            'cursor-pointer',
-            isLiked ? 'text-primary' : 'text-gray-400/50'
-          )}
-          onClick={handleLikePool}
-        />
+        <RequiredLoginWrapper>
+          <FontAwesomeIcon
+            icon={faStar}
+            className={cn(
+              'cursor-pointer',
+              isLiked ? 'text-primary' : 'text-gray-400/50'
+            )}
+            onClick={handleLikePool}
+          />
+        </RequiredLoginWrapper>
       </TableCell>
 
       <TableCell className='font-medium py-4'>
@@ -97,15 +100,17 @@ const PoolItem = ({ pool }: IProps) => {
         </Button>
 
         <Dialog>
-          <DialogTrigger asChild className='w-fit'>
-            <Button
-              variant='ghost'
-              className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 w-[70px] '
-              size='sm'
-            >
-              deposit
-            </Button>
-          </DialogTrigger>
+          <RequiredLoginWrapper>
+            <DialogTrigger asChild className='w-fit'>
+              <Button
+                variant='ghost'
+                className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 w-[70px] '
+                size='sm'
+              >
+                deposit
+              </Button>
+            </DialogTrigger>
+          </RequiredLoginWrapper>
           <DialogContent className='max-w-2xl'>
             <AddLiquidity pool={pool} />
           </DialogContent>

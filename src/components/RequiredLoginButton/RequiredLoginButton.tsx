@@ -10,6 +10,8 @@ const RequiredLoginButton = ({
     if (isLoggedIn && props.onClick) {
       props.onClick(e);
     } else {
+      e.stopPropagation();
+      e.preventDefault();
       handleConnect();
     }
   };

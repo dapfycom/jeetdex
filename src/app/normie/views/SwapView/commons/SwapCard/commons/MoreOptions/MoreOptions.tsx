@@ -1,6 +1,7 @@
 'use client';
 
 import { likePool } from '@/actions/preferences';
+import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -110,18 +111,23 @@ const MoreOptions = ({ token1, token2 }: IProps) => {
       <DropdownMenuContent align='end' className='w-[200px]'>
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuGroup>
-          <DropdownMenuItem className='cursor-pointer' onClick={handleLikePool}>
-            <div className='w-full flex gap-2 items-center'>
-              <FontAwesomeIcon
-                icon={faStar}
-                className={cn(
-                  'w-[12px] h-[12px]',
-                  thisPoolsIsLiked && 'text-primary'
-                )}
-              />
-              {thisPoolsIsLiked ? 'UnLike' : 'Like'}
-            </div>
-          </DropdownMenuItem>
+          <RequiredLoginWrapper>
+            <DropdownMenuItem
+              className='cursor-pointer'
+              onClick={handleLikePool}
+            >
+              <div className='w-full flex gap-2 items-center'>
+                <FontAwesomeIcon
+                  icon={faStar}
+                  className={cn(
+                    'w-[12px] h-[12px]',
+                    thisPoolsIsLiked && 'text-primary'
+                  )}
+                />
+                {thisPoolsIsLiked ? 'UnLike' : 'Like'}
+              </div>
+            </DropdownMenuItem>
+          </RequiredLoginWrapper>
           <DropdownMenuItem
             className='cursor-pointer'
             onClick={() => {
