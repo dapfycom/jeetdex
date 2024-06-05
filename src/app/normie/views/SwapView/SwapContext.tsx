@@ -19,7 +19,7 @@ const SwapContext = ({
   children
 }: PropsWithChildren<{ poolsInfo: IPoolPair[] }>) => {
   const { isOpen: isOPenChats, onToggle: onToggleChats } = useDisclosure(false);
-  const { isOpen: isOpenCharts, onToggle } = useDisclosure(false);
+  const { isOpen: isOpenCharts, onToggle } = useDisclosure(true);
 
   const OnToggleCharts = () => {
     onToggle();
