@@ -23,7 +23,7 @@ const Navbar = () => {
 
         <div className='flex gap-2 items-center'>
           <Link href='#' className='hover:font-bold'>
-            [More]
+            [report bug]
           </Link>
         </div>
       </div>

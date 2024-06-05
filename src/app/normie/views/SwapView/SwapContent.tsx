@@ -44,7 +44,7 @@ const SwapContent = () => {
       </div>
       <div
         className={cn(
-          'grid  grid-cols-1 md:grid-cols-[65%_35%] w-full gap-4 h-full mt-20',
+          'grid  grid-cols-1 md:grid-cols-[65%_35%] w-full gap-4 h-full mt-4',
           !swapCtx.isOpenCharts && 'flex justify-center'
         )}
       >
