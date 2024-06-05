@@ -10,7 +10,7 @@ type user = {
   createdAt: Date;
   updatedAt: Date;
 };
-type ContextType = {
+export type ContextType = {
   followed: ({
     id: string;
     followedId: string;

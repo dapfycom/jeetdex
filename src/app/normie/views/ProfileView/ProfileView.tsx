@@ -1,62 +1,39 @@
+'use client';
 import { network } from '@/config';
-import prisma from '@/db';
-import { getSession } from '@/utils/server-utils/sessions';
+import { fetchAxiosJeetdex } from '@/services/rest/api';
 import { faHeart, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Loader2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import ProfileContext from './ProfileContext';
+import useSWR from 'swr';
+import ProfileContext, { ContextType } from './ProfileContext';
 import ProfileTabs from './components/Tabs';
 import UserAvatar from './components/UpdateUserImg';
 const EditProfile = dynamic(() => import('./components/EditProfile'), {
   ssr: false
 });
 
-const ProfileView = async () => {
-  const session = await getSession();
+const ProfileView = () => {
+  const { data, isLoading } = useSWR<{ data: ContextType }>(
+    '/user/private',
+    fetchAxiosJeetdex
+  );
 
-  const user = await prisma.users.findUnique({
-    where: {
-      address: session.address
-    },
-    include: {
-      _count: {
-        select: {
-          likesReceived: true
-        }
-      },
-      followed: {
-        include: {
-          following: true
-        }
-      },
-      following: {
-        include: {
-          followed: true
-        }
-      },
-      messages: {
-        include: {
-          likes: {
-            include: {
-              likedBy: true
-            }
-          },
-          chat: true
-        }
-      }
-    }
-  });
-
-  if (!user) {
-    return null;
+  if (isLoading) {
+    return (
+      <div className='bg-[#1C243E]  max-w-2xl w-full m-auto h-[300px] flex justify-center items-center rounded-sm'>
+        <Loader2 className='animate-spin w-14 h-14' />
+      </div>
+    );
   }
-
+  const user = data?.data;
+  console.log(user);
   return (
-    <ProfileContext ctxValue={user}>
+    <ProfileContext ctxValue={data?.data}>
       <div
         key='1'
-        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-4xl w-full m-auto'
+        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl w-full m-auto'
       >
         <UserAvatar />
         <EditProfile />
