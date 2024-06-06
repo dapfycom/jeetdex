@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table';
 import { explorerAddress } from '@/config/index';
 import { getContrastColor, stringToColor } from '@/lib/utils';
+import { formatBigNumber } from '@/utils/numbers';
 
 const invoices = [
   {
@@ -99,8 +100,12 @@ export default function Trades() {
               </Badge>
             </TableCell>
             <TableCell className='text-center'>{trade.type}</TableCell>
-            <TableCell className='text-center'>{trade.tokenA}</TableCell>
-            <TableCell className='text-center'>{trade.tokenB}</TableCell>
+            <TableCell className='text-center'>
+              {formatBigNumber(trade.tokenA)}
+            </TableCell>
+            <TableCell className='text-center'>
+              {formatBigNumber(trade.tokenB)}
+            </TableCell>
             <TableCell className='text-center'>{trade.date}</TableCell>
 
             <TableCell className='text-right'>

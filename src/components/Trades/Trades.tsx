@@ -12,7 +12,7 @@ import { network } from '@/config';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
 import { timeAgo } from '@/utils/date';
 import { formatAddress, formatBalance, formatTokenI } from '@/utils/mx-utils';
-import { hexToBigNumber } from '@/utils/numbers';
+import { formatBigNumber, hexToBigNumber } from '@/utils/numbers';
 import useSWR from 'swr';
 
 const Trades = ({ pool }: { pool: IPoolPair }) => {
@@ -74,7 +74,7 @@ const Trades = ({ pool }: { pool: IPoolPair }) => {
           return (
             <TableRow key={d.txHash}>
               <TableCell className='text-left w-fit'>
-                <span className='rounded-sm text-xs bg-lime-400/80 text-black px-1 h-[18px] flex items-center w-fit'>{`${formatAddress(
+                <span className='rounded-sm text-xs bg-lime-400/80 text-black px-1 h-[18px] flex items-center w-fit whitespace-nowrap'>{`${formatAddress(
                   d.sender,
                   3,
                   3
@@ -82,22 +82,29 @@ const Trades = ({ pool }: { pool: IPoolPair }) => {
               </TableCell>
               <TableCell className='text-center'>{type}</TableCell>
               <TableCell className='text-center'>
-                {formatBalance({
-                  balance: secondTokenTxValue,
-                  decimals: pool.secondToken.decimals
-                })}
+                {formatBigNumber(
+                  formatBalance({
+                    balance: secondTokenTxValue,
+                    decimals: pool.secondToken.decimals
+                  })
+                )}
               </TableCell>
               <TableCell className='text-center'>
-                {formatBalance({
-                  balance: firstTokenTxValue,
-                  decimals: pool.firstToken.decimals
-                })}
+                {formatBigNumber(
+                  formatBalance(
+                    {
+                      balance: firstTokenTxValue,
+                      decimals: pool.firstToken.decimals
+                    },
+                    true
+                  )
+                )}
               </TableCell>
 
-              <TableCell className='text-center'>
+              <TableCell className='text-center text-gray-400'>
                 {timeAgo(new Date(d.timestamp * 1000))}
               </TableCell>
-              <TableCell className='text-right'>
+              <TableCell className='text-right text-gray-400 hover:text-white'>
                 <a
                   href={network.explorerAddress + '/transactions/' + d.txHash}
                   target='_blank'
