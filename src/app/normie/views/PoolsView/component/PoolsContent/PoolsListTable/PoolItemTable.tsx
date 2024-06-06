@@ -10,6 +10,7 @@ import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { useAuthentication } from '@/hooks';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -27,6 +28,7 @@ interface IProps {
 const PoolItem = ({ pool }: IProps) => {
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
   const { handleLikePool, isLiked } = useLikePool(pool);
+  const { isLoggedIn, handleConnect } = useAuthentication();
 
   return (
     <TableRow className='hover:bg-[#09091bb6] '>
@@ -76,7 +78,6 @@ const PoolItem = ({ pool }: IProps) => {
         })}{' '}
         {formatTokenI(pool.secondToken.ticker)}
       </TableCell>
-      <TableCell className=' py-4'>$1</TableCell>
       <TableCell className=' py-4 flex items-center w-full justify-end gap-3'>
         <Button
           variant='ghost'
@@ -99,8 +100,8 @@ const PoolItem = ({ pool }: IProps) => {
           <Link href={'/'}>swap</Link>
         </Button>
 
-        <Dialog>
-          <RequiredLoginWrapper>
+        {isLoggedIn ? (
+          <Dialog>
             <DialogTrigger asChild className='w-fit'>
               <Button
                 variant='ghost'
@@ -110,11 +111,20 @@ const PoolItem = ({ pool }: IProps) => {
                 deposit
               </Button>
             </DialogTrigger>
-          </RequiredLoginWrapper>
-          <DialogContent className='max-w-2xl'>
-            <AddLiquidity pool={pool} />
-          </DialogContent>
-        </Dialog>
+            <DialogContent className='max-w-2xl'>
+              <AddLiquidity pool={pool} />
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <Button
+            variant='ghost'
+            className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 w-[70px] '
+            size='sm'
+            onClick={handleConnect}
+          >
+            deposit
+          </Button>
+        )}
       </TableCell>
     </TableRow>
   );

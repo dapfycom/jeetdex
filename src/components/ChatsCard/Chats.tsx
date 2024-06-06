@@ -1,26 +1,102 @@
 'use client';
+import { likeMessage } from '@/actions/messages';
 import { cn } from '@/lib/utils';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PlusIcon } from 'lucide-react';
 import { Fragment, useState } from 'react';
 import Divider from '../Divider/Divider';
 import { Button } from '../ui/button';
 import { DialogTrigger } from '../ui/dialog';
 import { Skeleton } from '../ui/skeleton';
+import { toast } from '../ui/use-toast';
 import Message from './Message';
 import SendMessagePopup from './SendMessagePopup';
 import { useGetChat } from './hooks';
-
 interface IProps {
   poolPair?: string;
 }
 
 const Chats = ({ poolPair }: IProps) => {
-  const { chat, isLoading } = useGetChat(poolPair);
+  const { chat, isLoading, mutate } = useGetChat(poolPair);
 
   const [highlight, setHighlight] = useState<number>();
 
   const onHoverChatReply = (replyedId: number) => {
     setHighlight(replyedId);
+  };
+
+  const handleLike = async (message: any) => {
+    if (poolPair) {
+      const data = {
+        data: {
+          ...chat,
+          messages: chat.messages.map((m) => {
+            if (message.id === m.id) {
+              return {
+                ...m,
+                _count: {
+                  likes: m._count.likes + 1
+                }
+              };
+            }
+            return m;
+          })
+        }
+      };
+      try {
+        await mutate(
+          async () => {
+            await likeMessage(message.id, message.sender.id);
+
+            return data;
+          },
+          {
+            optimisticData: data,
+            rollbackOnError: true,
+            populateCache: true,
+            revalidate: false
+          }
+        );
+
+        toast({
+          description: (
+            <div>
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                className='mr-2 text-green-500'
+              />
+              Message liked!
+            </div>
+          )
+        });
+      } catch (error) {
+        console.log(error.message);
+        toast({
+          description: (
+            <div>
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                className='mr-2 text-red-500'
+              />
+              {error.message}
+            </div>
+          )
+        });
+      }
+    } else {
+      toast({
+        description: (
+          <div>
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className='mr-2 text-red-500'
+            />
+            You can&apos;t like this message
+          </div>
+        )
+      });
+    }
   };
   return (
     <div className={cn('relative w-full')}>
@@ -95,6 +171,7 @@ const Chats = ({ poolPair }: IProps) => {
                           highlight={highlight === message.id}
                           onHoverChatReply={onHoverChatReply}
                           time={message.createdAt}
+                          onLike={() => handleLike(message)}
                         />
 
                         <Divider />

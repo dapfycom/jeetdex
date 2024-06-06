@@ -1,15 +1,10 @@
 'use client';
-import { likeMessage } from '@/actions/messages';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { HeartIcon, MessageCircleIcon } from 'lucide-react';
 import Link from 'next/link';
-import { mutate } from 'swr';
 import { DialogTrigger } from '../ui/dialog';
-import { toast } from '../ui/use-toast';
 import SendMessagePopup from './SendMessagePopup';
 
 interface IMessage {
@@ -26,6 +21,7 @@ interface IMessage {
   highlight?: boolean;
   onHoverChatReply?: (messageId: number) => void;
   time: Date;
+  onLike: () => void;
 }
 const Message = ({
   likes,
@@ -36,53 +32,9 @@ const Message = ({
   user,
   highlight,
   time,
-  onHoverChatReply
+  onHoverChatReply,
+  onLike
 }: IMessage) => {
-  const handleLike = async () => {
-    if (poolPair) {
-      try {
-        await likeMessage(messageId, user.id);
-        mutate(['/chats/', poolPair]);
-        toast({
-          description: (
-            <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                className='mr-2 text-green-500'
-              />
-              Message liked!
-            </div>
-          )
-        });
-      } catch (error) {
-        console.log(error.message);
-        toast({
-          description: (
-            <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                className='mr-2 text-red-500'
-              />
-              {error.message}
-            </div>
-          )
-        });
-      }
-    } else {
-      toast({
-        description: (
-          <div>
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              className='mr-2 text-red-500'
-            />
-            You can&apos;t like this message
-          </div>
-        )
-      });
-    }
-  };
-
   const date = new Date(time);
   return (
     <div
@@ -108,10 +60,10 @@ const Message = ({
             {date.toLocaleString()}
           </div>
           <Button
-            className='h-4 hover:bg-transparent text-stone-400 hover:text-stone-900 text-xs'
+            className='h-4 hover:bg-transparent text-stone-400 hover:text-red-600  text-xs'
             size='icon'
             variant='ghost'
-            onClick={handleLike}
+            onClick={onLike}
           >
             <HeartIcon className='w-3 h-3 mr-1' />
             <span>{likes}</span>
@@ -121,7 +73,7 @@ const Message = ({
             <SendMessagePopup pool={poolPair} repliedMessage={messageId}>
               <DialogTrigger asChild>
                 <Button
-                  className='w-4 h-4 hover:bg-transparent text-stone-400 hover:text-stone-900'
+                  className='w-4 h-4 hover:bg-transparent text-stone-400 '
                   size='icon'
                   variant='ghost'
                 >

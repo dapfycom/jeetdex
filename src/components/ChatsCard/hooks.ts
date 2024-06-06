@@ -2,7 +2,7 @@ import { fetchAxiosJeetdex } from '@/services/rest/api';
 import useSWR from 'swr';
 
 export const useGetChat = (pool: string) => {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     pool ? ['/chats/', pool] : null,
     async () => {
       return fetchAxiosJeetdex<{
@@ -20,6 +20,7 @@ export const useGetChat = (pool: string) => {
               createdAt: Date;
               updatedAt: Date;
             };
+            messageReplied: [];
             messageReplying: {
               id: number;
               createdAt: Date;
@@ -47,6 +48,7 @@ export const useGetChat = (pool: string) => {
   return {
     chat: data?.data,
     error,
-    isLoading
+    isLoading,
+    mutate
   };
 };

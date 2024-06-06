@@ -12,8 +12,8 @@ import useDisclosure from '@/hooks/useDisclosure';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowUpIcon } from 'lucide-react';
-import { PropsWithChildren, ReactNode } from 'react';
+import { ArrowUpIcon, Loader2 } from 'lucide-react';
+import { PropsWithChildren, ReactNode, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { mutate } from 'swr';
 import { z } from 'zod';
@@ -28,6 +28,7 @@ const SendMessagePopup = ({
   repliedMessage
 }: PropsWithChildren<{ pool: string; repliedMessage?: number | null }>) => {
   const { isOpen, onClose, onToggle } = useDisclosure();
+  const [loading, setLoading] = useState(false);
   const form = useForm({
     resolver: zodResolver(SendMessageSchema),
 
@@ -37,9 +38,7 @@ const SendMessagePopup = ({
   });
 
   async function onSubmit(values: z.infer<typeof SendMessageSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-
+    setLoading(true);
     try {
       if (repliedMessage) {
         await replyMessage(values.message, pool, repliedMessage);
@@ -58,6 +57,8 @@ const SendMessagePopup = ({
         )
       });
       mutate(['/chats/', pool]);
+
+      onClose();
     } catch (error) {
       console.log(error.message);
 
@@ -76,8 +77,7 @@ const SendMessagePopup = ({
         description: <div className='ml-5'>{error.message}</div>
       });
     }
-
-    onClose();
+    setLoading(false);
   }
   return (
     <Dialog open={isOpen} onOpenChange={onToggle}>
@@ -111,7 +111,11 @@ const SendMessagePopup = ({
                 size='icon'
                 type='submit'
               >
-                <ArrowUpIcon className='w-4 h-4' />
+                {loading ? (
+                  <Loader2 className='w-4 h-4 animate-spin' />
+                ) : (
+                  <ArrowUpIcon className='w-4 h-4' />
+                )}
                 <span className='sr-only'>Send</span>
               </Button>
             </div>
