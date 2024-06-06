@@ -5,6 +5,7 @@ import { utapi } from '@/utils/server-utils/uploadthing';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { createUploadthing, type FileRouter } from 'uploadthing/next';
 import { UploadThingError } from 'uploadthing/server';
+import { z } from 'zod';
 
 const f = createUploadthing();
 
@@ -126,6 +127,93 @@ export const ourFileRouter = {
       }
 
       revalidateTag('CoinsPairs');
+      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+      return { uploadedBy: metadata.userAddress };
+    }),
+  messageImage: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
+    .input(
+      z.object({
+        pool: z.string(),
+        message: z.string(),
+        repliedMessage: z.number().optional()
+      })
+    )
+    .middleware(async ({ input }) => {
+      console.log(input);
+
+      // This code runs on your server before upload
+      const user = await getSession();
+
+      // If you throw, the user will not be able to upload
+      if (!user) throw new UploadThingError('Unauthorized');
+
+      // Whatever is returned here is accessible in onUploadComplete as `metadata`
+      return {
+        userAddress: user.address,
+        pool: input.pool,
+        message: input.message,
+        repliedMessage: input.repliedMessage
+      };
+    })
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      if (metadata.repliedMessage) {
+        // reply
+        try {
+          await prisma.messagesReplies.create({
+            data: {
+              messageReplied: {
+                connect: {
+                  id: metadata.repliedMessage
+                }
+              },
+              messageReplying: {
+                create: {
+                  content: metadata.message,
+                  chat: {
+                    connect: {
+                      pool: metadata.pool
+                    }
+                  },
+                  sender: {
+                    connect: {
+                      address: metadata.userAddress
+                    }
+                  }
+                }
+              }
+            }
+          });
+        } catch (error) {
+          throw new UploadThingError(
+            `Failed to reply to the message: ` + error.message
+          );
+        }
+      } else {
+        // sendPoolMessage
+        await prisma.messages.create({
+          data: {
+            content: metadata.message,
+            image: file.url,
+            chat: {
+              connectOrCreate: {
+                create: {
+                  pool: metadata.pool
+                },
+                where: {
+                  pool: metadata.pool
+                }
+              }
+            },
+            sender: {
+              connect: {
+                address: metadata.userAddress
+              }
+            }
+          }
+        });
+      }
+
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userAddress };
     })

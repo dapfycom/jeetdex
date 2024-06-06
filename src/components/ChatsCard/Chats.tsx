@@ -158,6 +158,7 @@ const Chats = ({ poolPair }: IProps) => {
                         <Message
                           likes={message._count.likes}
                           message={message.content}
+                          image={message.image}
                           user={{
                             id: message.sender.id,
                             img: message.sender.img,

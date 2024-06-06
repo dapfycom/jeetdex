@@ -30,6 +30,7 @@ export const useGetChat = (pool: string) => {
           } & {
             id: number;
             content: string;
+            image?: string;
             type: string;
             createdAt: Date;
             chatId: string;

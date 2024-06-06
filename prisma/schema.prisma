@@ -64,7 +64,7 @@ model Chats {
 model Messages {
   id        Int      @id @default(autoincrement())
   content   String
-  type      String   @default("text")
+  image     String?
   createdAt DateTime @default(now())
   chat      Chats    @relation(fields: [chatId], references: [id])
   chatId    String

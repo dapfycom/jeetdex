@@ -3,6 +3,7 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { HeartIcon, MessageCircleIcon } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { DialogTrigger } from '../ui/dialog';
 import SendMessagePopup from './SendMessagePopup';
@@ -14,6 +15,7 @@ interface IMessage {
     img: string;
   };
   message: string;
+  image?: string;
   messageId: number;
   likes: number;
   poolPair?: string;
@@ -26,6 +28,7 @@ interface IMessage {
 const Message = ({
   likes,
   message,
+  image,
   messageId,
   messageReplyingId,
   poolPair,
@@ -92,6 +95,7 @@ const Message = ({
           )}
         </div>
         <div className='flex gap-2 text-gray-300'>
+          {image && <Image src={image} alt='image' width={100} height={100} />}
           {messageReplyingId && (
             <Link
               href={`#message-${messageReplyingId}`}
