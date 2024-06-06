@@ -190,7 +190,7 @@ const Chats = ({ poolPair }: IProps) => {
         <SendMessagePopup pool={poolPair}>
           <DialogTrigger asChild>
             <Button
-              className='absolute top-3 right-3 w-8 h-8'
+              className='absolute top-[-10px] right-3 w-8 h-8'
               size='icon'
               type='button'
             >

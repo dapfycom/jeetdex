@@ -81,7 +81,7 @@ const SwapCard = ({
         />
       </div>
       <Card className='p-0 text-left rounded-sm bg-[#1C243E] border-none '>
-        <CardContent>
+        <CardContent className='p-3'>
           <InputBox
             selectedTokenI={fromField.selectedToken}
             value={fromField.value}
