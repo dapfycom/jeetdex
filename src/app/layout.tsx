@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en' className={fontSans.variable}>
-      <body className='dark '>
+      <body className='dark scroll-smooth'>
         <Toaster />
         <Toaster2 position='bottom-right' />
         {children}

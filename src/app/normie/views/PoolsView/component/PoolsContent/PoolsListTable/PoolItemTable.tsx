@@ -12,6 +12,7 @@ import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLogi
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useAuthentication } from '@/hooks';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
+import { formatBigNumber } from '@/utils/numbers';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useLikePool } from '../../../utils/hooks';
@@ -64,19 +65,33 @@ const PoolItem = ({ pool }: IProps) => {
         </div>
       </TableCell>
       <TableCell className=' py-4'>
-        {formatBalance({
-          balance: pool.firstTokenReserve,
-          decimals: pool.firstToken.decimals
-        })}{' '}
-        {formatTokenI(pool.firstToken.ticker)}
+        {formatBigNumber(
+          formatBalance(
+            {
+              balance: pool.firstTokenReserve,
+              decimals: pool.firstToken.decimals
+            },
+            true
+          )
+        )}{' '}
+        <span className='text-gray-400'>
+          {formatTokenI(pool.firstToken.ticker)}
+        </span>
       </TableCell>
       <TableCell className=' py-4'>
         {' '}
-        {formatBalance({
-          balance: pool.secondTokenReserve,
-          decimals: pool.secondToken.decimals
-        })}{' '}
-        {formatTokenI(pool.secondToken.ticker)}
+        {formatBigNumber(
+          formatBalance(
+            {
+              balance: pool.secondTokenReserve,
+              decimals: pool.secondToken.decimals
+            },
+            true
+          )
+        )}{' '}
+        <span className='text-gray-400'>
+          {formatTokenI(pool.secondToken.ticker)}
+        </span>
       </TableCell>
       <TableCell className=' py-4 flex items-center w-full justify-end gap-3'>
         <Button

@@ -1,11 +1,7 @@
 'use client';
 
 import { Form } from '@/components/ui/form';
-import {
-  useAppDispatch,
-  useAppSelector,
-  useTrackTransactionStatus
-} from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
@@ -26,11 +22,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import useDisclosure from '@/hooks/useDisclosure';
+import useTxNotification from '@/hooks/useTxNotification';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { z } from 'zod';
 import { setActiveStep, setToke1, setToken2 } from '../../../utils/slice';
-import FormNav from '../FormNav/FormNav';
 import DagePicker from './DatePicker/DagePicker';
 import SubmitButton from './SubmitButton/SubmitButton';
 const convertToPoolItemToken = (
@@ -61,9 +57,11 @@ export const formSchema = z.object({
   })
 });
 
-interface ICreatePoolFormProps {}
+interface ICreatePoolFormProps {
+  onNextStep: () => void;
+}
 
-export default function CreatePoolForm({}: ICreatePoolFormProps) {
+export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
   const { newPairFee, isLoading: loadingFee } = useGetNewPairFee();
 
   const { userTokens, isLoading: loadingUserTokens } = useGetUserTokens();
@@ -92,17 +90,15 @@ export default function CreatePoolForm({}: ICreatePoolFormProps) {
   });
 
   const { mutate } = useGetPoolPair();
-  const [sessionId, setSessionId] = useState<string | null>(null);
 
   const onSuccess = () => {
     mutate();
     setSessionId(null);
     dispatch(setActiveStep('set-lp'));
   };
-
-  useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess
+  const { setSessionId } = useTxNotification({
+    onSuccess,
+    waitTx: true
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
@@ -139,12 +135,12 @@ export default function CreatePoolForm({}: ICreatePoolFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-        <div className='rounded-xl bg-zinc-900 px-4 py-5'>
+        <div className='rounded-sm bg-card px-4 py-5'>
           <h2 className='text-gray-300 text-xl text-left '>
             Generate Pool Address
           </h2>
 
-          <p className='text-gray-400 text-sm mb-10 text-left'>
+          <p className='text-gray-400 text-sm mb-6 text-left'>
             You must be the creator of the tokens.
           </p>
           {loading ? (
@@ -157,7 +153,7 @@ export default function CreatePoolForm({}: ICreatePoolFormProps) {
             </div>
           ) : (
             <>
-              <div className='w-full flex flex-col gap-4'>
+              <div className='w-full flex flex-col gap-4 text-sm'>
                 <PoolItemContainer
                   tokensList={convertToPoolItemToken(ownedTokens)}
                   isLoading={loadingUserTokens}
@@ -202,9 +198,7 @@ export default function CreatePoolForm({}: ICreatePoolFormProps) {
                   </div>
                 </Collapse>
               </div>
-              <SubmitButton />
-
-              <FormNav currentStep='create-pool' />
+              <SubmitButton onNextStep={onNextStep} />
             </>
           )}
         </div>

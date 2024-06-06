@@ -16,6 +16,7 @@ const Replies = () => {
             message={message.content}
             messageId={message.id}
             time={message.createdAt}
+            onLike={() => {}}
             user={{
               ...profileInfo
             }}

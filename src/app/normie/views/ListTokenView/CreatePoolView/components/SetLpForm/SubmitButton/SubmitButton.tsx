@@ -11,7 +11,7 @@ import {
   useGetPoolPair
 } from '../../../../utils/swr.hooks';
 
-const SubmitButton = () => {
+const SubmitButton = ({ onNextStep }) => {
   const dispatch = useAppDispatch();
   const { pair } = useGetPoolPair();
   const { lpName, lpTicker } = useGenerateLPStrings();
@@ -45,7 +45,7 @@ const SubmitButton = () => {
   };
 
   let button = (
-    <Button className='w-full mt-10 p-3 rounded-md' onClick={handleCreateLp}>
+    <Button className='w-full mt-6 p-3 rounded-md' onClick={handleCreateLp}>
       Create LP Token
     </Button>
   );
@@ -53,11 +53,11 @@ const SubmitButton = () => {
   if (!isLoading && lpIdentifier !== '') {
     button = (
       <Button
-        className='w-full mt-10'
+        className='w-full mt-6'
         variant='destructive'
         onClick={(e) => {
           e.preventDefault();
-          dispatch(setActiveStep('set-roles'));
+          onNextStep();
         }}
       >
         Lp Token already exists - Next Step

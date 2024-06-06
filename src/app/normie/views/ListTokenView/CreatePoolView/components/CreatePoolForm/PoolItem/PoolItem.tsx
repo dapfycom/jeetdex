@@ -1,7 +1,4 @@
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from 'next/image';
-
+import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import {
   Popover,
   PopoverContent,
@@ -9,6 +6,7 @@ import {
 } from '@/components/ui/popover';
 import useDisclosure from '@/hooks/useDisclosure';
 import { getRealBalance } from '@/utils/mx-utils';
+import { formatBigNumber } from '@/utils/numbers';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -58,29 +56,24 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
               }}
             >
               <div className='flex gap-3 items-center'>
-                {token?.imgUrl ? (
-                  <Image
-                    src={token?.imgUrl}
-                    alt='logo'
-                    width={24}
-                    height={24}
-                    className='rounded-full'
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faQuestionCircle}
-                    className='w-6 h-6'
-                  />
-                )}
+                <TokenImageSRC
+                  src={token?.imgUrl}
+                  alt='logo'
+                  size={20}
+                  className='rounded-full w-5 h-5'
+                  identifier={token.identifier}
+                />
 
                 <h3 className='text-sm'>{token.identifier}</h3>
               </div>
               {token.balance && (
                 <div>
                   <p className='text-xs'>
-                    {BigNumber(
-                      getRealBalance(token.balance, token.decimals, true)
-                    ).toString()}
+                    {formatBigNumber(
+                      BigNumber(
+                        getRealBalance(token.balance, token.decimals, true)
+                      )
+                    )}
                   </p>
                 </div>
               )}
@@ -102,19 +95,15 @@ const TokenBox = ({
   noBalance?: boolean;
 }) => {
   return (
-    <div className='bg-zinc-800 p-3 rounded-md w-full flex justify-between items-center'>
+    <div className='bg-[#1C243E]  p-3 rounded-md w-full flex justify-between items-center '>
       <div className='flex gap-3 items-center'>
-        {token.imgUrl ? (
-          <Image
-            src={token.imgUrl}
-            alt='logo'
-            width={24}
-            height={24}
-            className='rounded-full'
-          />
-        ) : (
-          <FontAwesomeIcon icon={faQuestionCircle} className='w-6 h-6' />
-        )}
+        <TokenImageSRC
+          src={token?.imgUrl}
+          alt='logo'
+          size={20}
+          className='rounded-full w-5 h-5'
+          identifier={token.identifier}
+        />
 
         <h3 className='text-sm'>{token.identifier}</h3>
       </div>

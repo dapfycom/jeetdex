@@ -1,14 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { useAppDispatch } from '@/hooks';
-import { setActiveStep } from '../../../../utils/slice';
 import { useGetPoolPair } from '../../../../utils/swr.hooks';
 
-const SubmitButton = () => {
-  const dispatch = useAppDispatch();
+const SubmitButton = ({ onNextStep }: { onNextStep: () => void }) => {
   const { exists } = useGetPoolPair();
 
   let button = (
-    <Button type='submit' className='w-full mt-10'>
+    <Button type='submit' className='w-full mt-2'>
       Generate Pool Address
     </Button>
   );
@@ -16,11 +13,11 @@ const SubmitButton = () => {
   if (exists) {
     button = (
       <Button
-        className='w-full mt-10'
+        className='w-full mt-2'
         variant='destructive'
         onClick={(e) => {
           e.preventDefault();
-          dispatch(setActiveStep('set-lp'));
+          onNextStep();
         }}
       >
         Pool already exists - Next Step

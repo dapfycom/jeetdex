@@ -9,10 +9,12 @@ import { useTrackTransactionStatus } from './sdkDappHooks';
 
 const useTxNotification = ({
   submittedTxCallback,
-  onSuccess
+  onSuccess,
+  waitTx
 }: {
   submittedTxCallback?: () => void;
   onSuccess?: () => void;
+  waitTx?: boolean;
 }) => {
   const ref = useRef(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -29,7 +31,7 @@ const useTxNotification = ({
       });
     }
   };
-  const { transactions } = useTrackTransactionStatus({
+  const { transactions, isPending } = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: handleSuccess,
     onFail: handleFail
@@ -37,9 +39,13 @@ const useTxNotification = ({
 
   const handleToast = useCallback(() => {
     if (transactions && transactions[0]?.hash) {
-      toast((t) => ToastSubmitted({ hash: transactions[0]?.hash, t }), {
-        duration: 15000
-      });
+      toast(
+        (t) =>
+          ToastSubmitted({ hash: transactions[0]?.hash, t, isPending, waitTx }),
+        {
+          duration: 15000
+        }
+      );
       if (submittedTxCallback) {
         submittedTxCallback();
       }
@@ -68,20 +74,34 @@ interface IProps {
   hash: string;
 }
 
-const ToastSubmitted = ({ hash, t }: IProps) => {
-  const [loading, setLoading] = useState(true);
+interface IToastWithPendingProps extends IProps {
+  isPending: boolean;
+  waitTx?: boolean;
+}
+
+const ToastSubmitted = ({
+  hash,
+  t,
+  isPending,
+  waitTx
+}: IToastWithPendingProps) => {
+  const [loading, setLoading] = useState(waitTx ? isPending : true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000); // 1.5 seconds
+    if (!waitTx) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000); // 1.5 seconds
 
-    return () => clearTimeout(timer);
-  }, []);
+      return () => clearTimeout(timer);
+    }
+  }, [waitTx]);
+
+  const pendingTx = loading || isPending;
 
   return (
     <div className='relative p-4 text-sm'>
-      {loading ? (
+      {pendingTx ? (
         <span className='flex items-center gap-3'>
           <span>
             <LoaderCircle className='animate-spin' />

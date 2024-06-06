@@ -53,3 +53,31 @@ export function hexToBigNumber(hexString: string): bigint {
 
   return bigNumber;
 }
+
+export function formatBigNumber(input: string | number | BigNumber): string {
+  // Convertir el input a BigNumber
+  const num = new BigNumber(input);
+
+  // Definir los límites y los sufijos
+  const thresholds = [
+    { value: new BigNumber(1e12), suffix: 'T' }, // Trillones
+    { value: new BigNumber(1e9), suffix: 'B' }, // Billones
+    { value: new BigNumber(1e6), suffix: 'M' }, // Millones
+    { value: new BigNumber(1e3), suffix: 'K' } // Miles
+  ];
+
+  // Buscar el sufijo adecuado
+  for (let i = 0; i < thresholds.length; i++) {
+    if (num.isGreaterThanOrEqualTo(thresholds[i].value)) {
+      let formattedNumber = num.dividedBy(thresholds[i].value).toFixed(2); // Una decimal
+      // Eliminar el decimal si es .0
+      if (formattedNumber.endsWith('.0')) {
+        formattedNumber = formattedNumber.slice(0, -2);
+      }
+      return `${formattedNumber} ${thresholds[i].suffix}`;
+    }
+  }
+
+  // Si el número es menor que 1000, devolverlo tal cual
+  return num.toString();
+}

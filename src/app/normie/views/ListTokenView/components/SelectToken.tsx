@@ -1,3 +1,4 @@
+import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import {
   Select,
   SelectContent,
@@ -6,9 +7,6 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from 'next/image';
 import { useEffect } from 'react';
 
 interface ISelectTokenProps {
@@ -25,7 +23,7 @@ const SelectToken = ({ tokens, onChange }: ISelectTokenProps) => {
 
   return (
     <Select defaultValue={tokens[0].identifier} onValueChange={onChange}>
-      <SelectTrigger className='w-full h-12 bg-zinc-800'>
+      <SelectTrigger className='w-full h-10 bg-[#1C243E]'>
         <SelectValue className='py-3' placeholder={null} />
       </SelectTrigger>
       <SelectContent>
@@ -33,20 +31,13 @@ const SelectToken = ({ tokens, onChange }: ISelectTokenProps) => {
           {tokens.map((token) => (
             <SelectItem key={token.identifier} value={token.identifier}>
               <div className='flex gap-3 items-center'>
-                {token?.assets?.svgUrl ? (
-                  <Image
-                    src={token.assets.svgUrl}
-                    alt='logo'
-                    width={24}
-                    height={24}
-                    className='rounded-full'
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faQuestionCircle}
-                    className='w-6 h-6'
-                  />
-                )}
+                <TokenImageSRC
+                  src={token?.assets?.svgUrl}
+                  alt='logo'
+                  identifier={token.identifier}
+                  size={20}
+                  className='rounded-full w-5 h-5'
+                />
 
                 <h3 className='text-sm'>{token.identifier}</h3>
               </div>

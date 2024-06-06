@@ -3,12 +3,11 @@ import { Button } from '@/components/ui/button';
 import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { ForwardedRef, forwardRef, useState } from 'react';
 import { setRoles } from '../../../utils/sc.calls';
 import { useGetPoolPair } from '../../../utils/swr.hooks';
-import FormNav from '../FormNav/FormNav';
 
-const SetLocalRoles = () => {
+const SetLocalRoles = forwardRef((props, ref: ForwardedRef<HTMLDivElement>) => {
   const { pair } = useGetPoolPair();
   const [sessionId, setSessionId] = useState<string | null>(null);
   const router = useRouter();
@@ -32,25 +31,20 @@ const SetLocalRoles = () => {
   };
 
   return (
-    <div className='bg-zinc-900 rounded-xl px-8 py-12 w-full text-left'>
+    <div className='bg-card rounded-sm px-4 py-6 w-full text-left' ref={ref}>
       <h2 className='text-gray-300 text-xl '>Set locale roles</h2>
 
-      <p className='text-gray-400 text-sm mb-10 '>
+      <p className='text-gray-400 text-sm mb-5 '>
         Set the locale roles for the new pool.
       </p>
 
       <div>
-        <Button
-          className='w-full mt-10 p-3 rounded-md'
-          onClick={handleSetRoles}
-        >
+        <Button className='w-full mt-3 p-3 rounded-md' onClick={handleSetRoles}>
           Set Roles
         </Button>
       </div>
-
-      <FormNav currentStep='set-roles' />
     </div>
   );
-};
-
+});
+SetLocalRoles.displayName = 'SetLocalRoles';
 export default SetLocalRoles;
