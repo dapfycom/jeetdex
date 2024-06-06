@@ -41,7 +41,14 @@ const DisconnectComponent = () => {
           />
           <div>
             <div>{account?.username || formatAddress(address, 6, 4)}</div>
-            <div className='block sm:hidden text-xs'>
+            <Image
+              src={userInfo?.data?.img || '/assets/img/logo-jeeter.png'}
+              alt='User'
+              width={20}
+              height={20}
+              className='w-4 h-4 rounded-full mx-auto my-1 block sm:hidden'
+            />
+            <div className='block sm:hidden text-xs text-center'>
               ({' '}
               {formatBalance({
                 balance: balance,

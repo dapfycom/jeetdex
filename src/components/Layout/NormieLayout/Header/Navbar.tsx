@@ -5,9 +5,9 @@ const Navbar = () => {
   // const pathname = usePathname();
 
   return (
-    <div className='text-md '>
+    <div className='text-md text-center'>
       <div>
-        <div className='flex gap-2 items-center'>
+        <div className='flex gap-2 items-center justify-center'>
           <Link href='/' className='hover:font-bold'>
             [Swap]
           </Link>
@@ -21,7 +21,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className='flex gap-2 items-center'>
+        <div className='flex gap-2 items-center md:justify-start justify-center'>
           <a
             href='https://insigh.to/b/jeetdex'
             target='_blank'
@@ -31,8 +31,6 @@ const Navbar = () => {
           </a>
         </div>
       </div>
-
-      <div className='flex gap-2 items-center'></div>
     </div>
   );
 };
