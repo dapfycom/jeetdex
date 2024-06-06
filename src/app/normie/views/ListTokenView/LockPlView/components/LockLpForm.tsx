@@ -1,14 +1,13 @@
 'use client';
 import { Form } from '@/components/ui/form';
-import { useAppSelector, useTrackTransactionStatus } from '@/hooks';
+import { useAppSelector } from '@/hooks';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
+import useTxNotification from '@/hooks/useTxNotification';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ZodTypeAny, z } from 'zod';
 import SelectToken from '../../components/SelectToken';
@@ -55,19 +54,13 @@ const LockLpForm = () => {
     form.watch('firstToken'),
     form.watch('secondToken')
   );
-  const router = useRouter();
-
-  const [sessionId, setSessionId] = useState<string | null>(null);
 
   const onSuccess = () => {
     setSessionId(null);
-    router.push('/create?create-pool=true&lock-lp=true');
+    // router.push('/create?create-pool=true&lock-lp=true');
   };
 
-  useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess
-  });
+  const { setSessionId } = useTxNotification({ onSuccess });
 
   const { lpIdentifier, isLoading: lpLoading } = useGetLpIdentifier(pair);
   const { userTokens, isLoading: utLoading } = useGetUserTokens();

@@ -6,11 +6,13 @@ import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import useTxNotification from '@/hooks/useTxNotification';
 import { admins } from '@/localConstants/admin';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { interactions } from '@/services/sc/interactions';
 import { BigUIntValue, BytesValue } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
+import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import BigNumber from 'bignumber.js';
 import IssueField from './IssueField';
 import IssueTokenSwitch from './IssueTokenSwich';
@@ -48,6 +50,8 @@ export default function IssueTokenForm() {
       }
     }
   });
+
+  const { setSessionId } = useTxNotification({});
 
   async function onSubmit(data: z.infer<typeof IssueTokenSchema>) {
     const tx1 = interactions.metachain.EGLDPaymentOnlyTx({
@@ -93,9 +97,11 @@ export default function IssueTokenForm() {
       value: 0.019
     });
 
-    await sendTransactions({
+    const res: SendTransactionReturnType = await sendTransactions({
       transactions: [tx1, tx2]
     });
+
+    setSessionId(res.sessionId);
   }
 
   return (

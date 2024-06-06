@@ -16,12 +16,14 @@ const useTxNotification = ({
   onSuccess?: () => void;
   waitTx?: boolean;
 }) => {
-  const ref = useRef(false);
+  const ref = useRef<string>(null);
+  const [currentToast, setCurrentToast] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const handleSuccess = () => {
     if (onSuccess) {
       onSuccess();
     }
+    setSessionId(null);
   };
 
   const handleFail = () => {
@@ -30,34 +32,48 @@ const useTxNotification = ({
         duration: 15000
       });
     }
+
+    toast.dismiss(currentToast);
+    setSessionId(null);
   };
-  const { transactions, isPending } = useTrackTransactionStatus({
+  const { transactions, isFailed, isSuccessful } = useTrackTransactionStatus({
     transactionId: sessionId,
     onSuccess: handleSuccess,
     onFail: handleFail
   });
 
   const handleToast = useCallback(() => {
-    if (transactions && transactions[0]?.hash) {
-      toast(
+    if (
+      transactions &&
+      transactions[0]?.hash &&
+      transactions[0]?.hash !== ref.current
+    ) {
+      ref.current = transactions[0]?.hash;
+      const toastId = toast(
         (t) =>
-          ToastSubmitted({ hash: transactions[0]?.hash, t, isPending, waitTx }),
+          ToastSubmitted({
+            hash: transactions[0]?.hash,
+            t,
+            isPending: !isFailed && !isSuccessful,
+            waitTx
+          }),
         {
-          duration: 15000
+          duration: waitTx ? 60000 : 15000
         }
       );
+
+      setCurrentToast(toastId);
+
       if (submittedTxCallback) {
         submittedTxCallback();
       }
-      ref.current = true;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactions]);
+  }, [isFailed, isSuccessful, submittedTxCallback, transactions, waitTx]);
 
   useEffect(() => {
-    if (!ref.current) {
-      handleToast();
-    }
+    console.log(ref.current);
+
+    handleToast();
   }, [handleToast]);
 
   return {
@@ -85,7 +101,7 @@ const ToastSubmitted = ({
   isPending,
   waitTx
 }: IToastWithPendingProps) => {
-  const [loading, setLoading] = useState(waitTx ? isPending : true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!waitTx) {
@@ -96,12 +112,17 @@ const ToastSubmitted = ({
       return () => clearTimeout(timer);
     }
   }, [waitTx]);
+  console.log(isPending);
 
-  const pendingTx = loading || isPending;
+  useEffect(() => {
+    if (!isPending) {
+      setLoading(false);
+    }
+  }, [isPending]);
 
   return (
     <div className='relative p-4 text-sm'>
-      {pendingTx ? (
+      {loading ? (
         <span className='flex items-center gap-3'>
           <span>
             <LoaderCircle className='animate-spin' />

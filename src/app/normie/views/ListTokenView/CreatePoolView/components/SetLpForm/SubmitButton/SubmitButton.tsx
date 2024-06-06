@@ -1,8 +1,8 @@
 import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
-import { useAppDispatch, useTrackTransactionStatus } from '@/hooks';
+import { useAppDispatch } from '@/hooks';
+import useTxNotification from '@/hooks/useTxNotification';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
-import { useState } from 'react';
 import { useGenerateLPStrings } from '../../../../utils/hooks';
 import { createLp } from '../../../../utils/sc.calls';
 import { setActiveStep } from '../../../../utils/slice';
@@ -18,19 +18,13 @@ const SubmitButton = ({ onNextStep }) => {
 
   const { lpIdentifier, isLoading, mutate } = useGetLpIdentifier(pair);
 
-  const [sessionId, setSessionId] = useState<string | null>(null);
-
   const onSuccess = () => {
     mutate();
     setSessionId(null);
     dispatch(setActiveStep('set-roles'));
     revalidatePoolsPairs();
   };
-
-  useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess
-  });
+  const { setSessionId } = useTxNotification({ onSuccess });
 
   const handleCreateLp = async () => {
     const res: SendTransactionReturnType = await createLp(

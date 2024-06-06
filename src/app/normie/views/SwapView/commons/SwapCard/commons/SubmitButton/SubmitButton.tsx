@@ -24,7 +24,7 @@ const SubmitButton = ({ poolAddres }: IProps) => {
 
   const { accountToken, mutate } = useGetAccountToken(fromField.selectedToken);
 
-  const { ref, setSessionId } = useTxNotification({
+  const { setSessionId } = useTxNotification({
     submittedTxCallback: () => {
       clearInputs();
     },
@@ -42,7 +42,6 @@ const SubmitButton = ({ poolAddres }: IProps) => {
       toField.valueDecimals,
       slippage
     );
-    ref.current = false;
     setSessionId(res.sessionId);
   };
 

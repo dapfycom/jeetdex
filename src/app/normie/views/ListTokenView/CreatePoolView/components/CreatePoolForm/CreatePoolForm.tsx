@@ -26,7 +26,7 @@ import useTxNotification from '@/hooks/useTxNotification';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useEffect } from 'react';
 import { z } from 'zod';
-import { setActiveStep, setToke1, setToken2 } from '../../../utils/slice';
+import { setToke1, setToken2 } from '../../../utils/slice';
 import DagePicker from './DatePicker/DagePicker';
 import SubmitButton from './SubmitButton/SubmitButton';
 const convertToPoolItemToken = (
@@ -94,7 +94,7 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
   const onSuccess = () => {
     mutate();
     setSessionId(null);
-    dispatch(setActiveStep('set-lp'));
+    // dispatch(setActiveStep('set-lp'));
   };
   const { setSessionId } = useTxNotification({
     onSuccess,

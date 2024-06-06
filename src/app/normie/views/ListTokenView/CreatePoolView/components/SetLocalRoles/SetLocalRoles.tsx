@@ -1,15 +1,14 @@
 import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
-import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
+import useTxNotification from '@/hooks/useTxNotification';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useRouter } from 'next/navigation';
-import { ForwardedRef, forwardRef, useState } from 'react';
+import { ForwardedRef, forwardRef } from 'react';
 import { setRoles } from '../../../utils/sc.calls';
 import { useGetPoolPair } from '../../../utils/swr.hooks';
 
 const SetLocalRoles = forwardRef((props, ref: ForwardedRef<HTMLDivElement>) => {
   const { pair } = useGetPoolPair();
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const router = useRouter();
   const onSuccess = () => {
     setSessionId(null);
@@ -17,10 +16,7 @@ const SetLocalRoles = forwardRef((props, ref: ForwardedRef<HTMLDivElement>) => {
     revalidatePoolsPairs();
   };
 
-  useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess
-  });
+  const { setSessionId } = useTxNotification({ onSuccess });
 
   const handleSetRoles = async () => {
     const res: SendTransactionReturnType = await setRoles(pair);

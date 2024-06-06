@@ -12,6 +12,7 @@ import {
 import { scAddress, tokensID } from '@/config';
 import { useAppSelector } from '@/hooks';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
+import useTxNotification from '@/hooks/useTxNotification';
 import { selectGlobalData, selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
 import { IElrondAccountToken } from '@/types/scTypes';
@@ -87,8 +88,12 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
     console.log(addressHex);
     return Address.fromHex(addressHex).bech32() === pairForThisToken?.address;
   });
+
+  const { setSessionId } = useTxNotification({});
+
   const handleEnableSwap = async () => {
-    await enableTrade(pairForThisToken.address);
+    const res = await enableTrade(pairForThisToken.address);
+    setSessionId(res.sessionId);
   };
   return (
     <TableRow>
