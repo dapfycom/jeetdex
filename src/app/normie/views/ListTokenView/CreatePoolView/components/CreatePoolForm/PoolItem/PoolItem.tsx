@@ -1,10 +1,10 @@
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover';
-import useDisclosure from '@/hooks/useDisclosure';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger
+} from '@/components/ui/select';
 import { getRealBalance } from '@/utils/mx-utils';
 import { formatBigNumber } from '@/utils/numbers';
 import BigNumber from 'bignumber.js';
@@ -13,7 +13,6 @@ import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
 import { formSchema } from '../CreatePoolForm';
 import { ITokenPool } from './PoolItemContainer';
-
 interface TokenItemProps {
   tokensList: ITokenPool[];
   tokenType: 'firstToken' | 'secondToken';
@@ -21,7 +20,6 @@ interface TokenItemProps {
 
 const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
   const { setValue } = useFormContext<z.infer<typeof formSchema>>();
-  const { isOpen, onClose, onOpen } = useDisclosure();
   const [currentPoolItem, setCurrentPoolItem] = useState<ITokenPool | null>(
     tokensList[0]
   );
@@ -36,26 +34,28 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
   }, [setValue, tokenType, tokensList.length]);
 
   return (
-    <Popover
-      open={isOpen}
-      onOpenChange={(open) => (open ? onOpen() : onClose())}
+    <Select
+      onValueChange={(val) =>
+        setCurrentPoolItem(tokensList.find((t) => t.identifier === val))
+      }
+      defaultValue={tokensList[0].identifier}
     >
-      <PopoverTrigger className='w-full'>
+      <SelectTrigger className='bg-[#1C243E]'>
         <TokenBox token={currentPoolItem} noBalance />
-      </PopoverTrigger>
-      <PopoverContent className='w-full bg-zinc-400 p-3'>
+      </SelectTrigger>
+      <SelectContent>
         <div className='w-[350px] flex flex-col gap-2'>
           {tokensList.map((token) => (
-            <div
+            <SelectItem
+              value={token.identifier}
               key={token.identifier}
-              className='bg-zinc-800 p-3 rounded-md w-full flex justify-between items-center cursor-pointer '
+              className='bg-zinc-800 rounded-md w-full flex justify-between items-center cursor-pointer '
               onClick={() => {
                 setCurrentPoolItem(token);
                 setValue(tokenType, token.identifier);
-                onClose();
               }}
             >
-              <div className='flex gap-3 items-center'>
+              <div className='flex gap-3 items-center w-full'>
                 <TokenImageSRC
                   src={token?.imgUrl}
                   alt='logo'
@@ -63,25 +63,27 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
                   className='rounded-full w-5 h-5'
                   identifier={token.identifier}
                 />
-
                 <h3 className='text-sm'>{token.identifier}</h3>
+                <span className='text-gray-400 flex items-center'>
+                  <span className='whitespace-nowrap'>Balance : </span>
+                  {token.balance && (
+                    <div>
+                      <p className='text-xs ml-2'>
+                        {formatBigNumber(
+                          BigNumber(
+                            getRealBalance(token.balance, token.decimals, true)
+                          )
+                        )}
+                      </p>
+                    </div>
+                  )}
+                </span>
               </div>
-              {token.balance && (
-                <div>
-                  <p className='text-xs'>
-                    {formatBigNumber(
-                      BigNumber(
-                        getRealBalance(token.balance, token.decimals, true)
-                      )
-                    )}
-                  </p>
-                </div>
-              )}
-            </div>
+            </SelectItem>
           ))}
         </div>
-      </PopoverContent>
-    </Popover>
+      </SelectContent>
+    </Select>
   );
 };
 
@@ -95,7 +97,7 @@ const TokenBox = ({
   noBalance?: boolean;
 }) => {
   return (
-    <div className='bg-[#1C243E]  p-3 rounded-md w-full flex justify-between items-center '>
+    <div className='rounded-md w-full flex justify-between items-center '>
       <div className='flex gap-3 items-center'>
         <TokenImageSRC
           src={token?.imgUrl}
