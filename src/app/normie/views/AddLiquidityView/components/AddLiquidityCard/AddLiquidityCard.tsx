@@ -1,5 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
+import useTxNotification from '@/hooks/useTxNotification';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { IElrondAccountToken } from '@/types/scTypes';
 import {
@@ -103,6 +104,8 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
     pool.secondToken.decimals
   ]);
 
+  const { setSessionId } = useTxNotification({});
+
   const handleAddLiquidity = async () => {
     const firstAmount =
       firstTokenAmountDecimals ||
@@ -125,7 +128,7 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
     console.log(secondAmountWithSlipage.toFixed(0));
 
     const int = new SmartContractInteraction(pool.address);
-    await int.MultiESDTNFTTransfer({
+    const res = await int.MultiESDTNFTTransfer({
       functionName: 'addLiquidity',
       tokens: [
         {
@@ -144,6 +147,8 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
         new BigUIntValue(secondAmountWithSlipage.toFixed(0))
       ]
     });
+
+    setSessionId(res.sessionId);
   };
 
   const handleClear = () => {

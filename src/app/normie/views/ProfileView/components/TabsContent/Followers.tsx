@@ -1,5 +1,6 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import Link from 'next/link';
 import { useContext } from 'react';
 import { ProfileCtx } from '../../ProfileContext';
 
@@ -24,9 +25,11 @@ const Followers = () => {
                 <AvatarImage alt='Profile picture' src={follow.following.img} />
               </Avatar>
               <div>
-                <div className='text-lg font-bold'>
-                  @{follow.following.username}
-                </div>
+                <Link href={`/profile/${follow.following.id}`}>
+                  <div className='text-lg font-bold'>
+                    @{follow.following.username}
+                  </div>
+                </Link>
                 {follow.following.bio && (
                   <div className='text-sm'>{follow.following.bio}</div>
                 )}
