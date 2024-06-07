@@ -96,7 +96,7 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
     setSessionId(res.sessionId);
   };
   return (
-    <TableRow>
+    <TableRow className='w-full'>
       <TableCell className='font-medium'>
         <div className='flex items-center gap-3'>
           <UpdateCoinImg token={token} />

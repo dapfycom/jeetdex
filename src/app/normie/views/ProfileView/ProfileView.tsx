@@ -1,6 +1,7 @@
 'use client';
 import { network } from '@/config';
 import { fetchAxiosJeetdex } from '@/services/rest/api';
+import { formatAddress } from '@/utils/mx-utils';
 import { faHeart, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader2 } from 'lucide-react';
@@ -33,12 +34,12 @@ const ProfileView = () => {
     <ProfileContext ctxValue={data?.data}>
       <div
         key='1'
-        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl w-full m-auto'
+        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl w-full m-auto mt-8 sm:mt-0'
       >
         <UserAvatar />
         <EditProfile />
 
-        <div className='flex items-center space-x-2 mb-4'>
+        <div className='flex flex-col sm:flex-row gap-2 items-center space-x-2 mb-4'>
           <div className='flex items-center'>
             <FontAwesomeIcon icon={faHeart} className='text-red-500  w-5 h-5' />
             <span className='ml-1'>
@@ -54,7 +55,7 @@ const ProfileView = () => {
           </div>
         </div>
         <div className='bg-[#0b102280] text-sm p-3 rounded mb-4'>
-          {user.address}
+          {formatAddress(user.address)}
         </div>
         <Link
           className='block mb-4 text-blue-500 underline'
