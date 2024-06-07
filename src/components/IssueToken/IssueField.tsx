@@ -5,7 +5,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -25,9 +24,12 @@ const IssueField = ({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input {...field} />
+            <Input
+              {...field}
+              className='bg-[#1C243E] border-none'
+              placeholder={label}
+            />
           </FormControl>
 
           <FormMessage />

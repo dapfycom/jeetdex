@@ -31,9 +31,9 @@ const CreatePoolModal = ({ children }: PropsWithChildren) => {
       }}
     >
       {children}
-      <DialogContent>
+      <DialogContent className='p-3'>
         {view === null && (
-          <div className='grid grid-cols-2 gap-6 w-full mt-8'>
+          <div className='grid grid-cols-2 gap-6 w-full mt-4'>
             <ActionsBox
               icon={faCoins}
               title=' Create new coin now'

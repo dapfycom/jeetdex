@@ -105,7 +105,7 @@ export default function IssueTokenForm() {
   }
 
   return (
-    <div className='rounded-xl bg-zinc-900 px-4 py-5 w-full'>
+    <div className='rounded-xl bg-card  px-4 py-5 w-full'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

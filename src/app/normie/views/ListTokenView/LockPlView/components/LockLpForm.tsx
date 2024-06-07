@@ -94,7 +94,7 @@ const AddInitialLiquidityForm = forwardRef(
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={cn('w-full max-w-[400px]', !exists && 'opacity-30')}
+          className={cn('w-full', !exists && 'opacity-30')}
         >
           <div className='bg-card rounded-sm p-4' ref={ref}>
             <div className='w-full flex flex-col gap-4 text-left'>

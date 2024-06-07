@@ -36,7 +36,7 @@ const CreatePoolsContainer = () => {
   };
 
   return (
-    <div className='w-full max-w-[400px] flex flex-col gap-4'>
+    <div className='w-full px-3 flex flex-col gap-4'>
       <CreatePoolForm onNextStep={scrollToSetLp} />
       <SetLpForm ref={setLpRef} onNextStep={scrollToSetLocale} />
       <SetLocalRoles
