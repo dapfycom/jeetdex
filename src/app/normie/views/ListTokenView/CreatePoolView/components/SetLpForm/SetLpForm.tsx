@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import { formatAddress } from '@/utils/mx-utils';
 import { ForwardedRef, forwardRef } from 'react';
 import { useGenerateLPStrings } from '../../../utils/hooks';
@@ -10,7 +11,7 @@ interface IProps {
 
 const SetLpForm = forwardRef(
   ({ onNextStep }: IProps, ref: ForwardedRef<HTMLDivElement>) => {
-    const { pair } = useGetPoolPair();
+    const { pair, exists } = useGetPoolPair();
 
     const poolAddress = formatAddress(pair);
 
@@ -18,15 +19,15 @@ const SetLpForm = forwardRef(
 
     return (
       <div
-        className='bg-card rounded-sm px-4 py-6 w-full text-left'
+        className={cn(
+          'bg-card rounded-sm p-4 w-full text-left',
+          !exists && 'opacity-30'
+        )}
         id='#create-lp'
         ref={ref}
       >
-        <h2 className='text-gray-300 text-xl'>Create LP Token</h2>
+        <h2 className='text-gray-300 mb-2'>Create LP Token</h2>
 
-        <p className='text-gray-400 text-sm mb-4'>
-          Set the LP token for the new pool.
-        </p>
         <div className='flex flex-col gap-2 text-sm'>
           <BoxForm label='Pool Address' value={poolAddress} />
 
@@ -47,10 +48,9 @@ SetLpForm.displayName = 'SetLpForm';
 
 export default SetLpForm;
 
-const BoxForm = ({ label, value }: { label: string; value: string }) => {
+const BoxForm = ({ value }: { label: string; value: string }) => {
   return (
     <div>
-      <div className='mb-1 text-sm text-gray-500'>{label}</div>
       <div className='bg-[#1C243E]  p-3 rounded-md w-full flex justify-between items-center'>
         {value}
       </div>

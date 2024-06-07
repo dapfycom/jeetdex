@@ -4,13 +4,14 @@ import { useAppSelector } from '@/hooks';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import useTxNotification from '@/hooks/useTxNotification';
+import { cn } from '@/lib/utils';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
+import { ForwardedRef, forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { ZodTypeAny, z } from 'zod';
-import SelectToken from '../../components/SelectToken';
 import { addInitialLiquidity } from '../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
@@ -32,153 +33,119 @@ export const numericString = (schema: ZodTypeAny) =>
   }, schema);
 
 const formSchema = z.object({
-  firstToken: z.string(),
-  secondToken: z.string(),
   firstTokenAmount: numericString(z.number().min(0)),
   secondTokenAmount: numericString(z.number().min(0))
 });
 
 export type schemaType = z.infer<typeof formSchema>;
 
-const LockLpForm = () => {
-  const form = useForm<schemaType>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstToken: '',
-      secondToken: '',
-      firstTokenAmount: '',
-      secondTokenAmount: ''
-    }
-  });
-  const { pair } = useGetPoolPair(
-    form.watch('firstToken'),
-    form.watch('secondToken')
-  );
+const AddInitialLiquidityForm = forwardRef(
+  (props, ref: ForwardedRef<HTMLDivElement>) => {
+    const form = useForm<schemaType>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        firstTokenAmount: '',
+        secondTokenAmount: ''
+      }
+    });
+    const { pair, exists, tokens: tokensSelected } = useGetPoolPair();
 
-  const onSuccess = () => {
-    setSessionId(null);
-    // router.push('/create?create-pool=true&lock-lp=true');
-  };
+    const onSuccess = () => {
+      setSessionId(null);
+      // router.push('/create?create-pool=true&lock-lp=true');
+    };
 
-  const { setSessionId } = useTxNotification({ onSuccess });
+    const { setSessionId } = useTxNotification({ onSuccess });
 
-  const { lpIdentifier, isLoading: lpLoading } = useGetLpIdentifier(pair);
-  const { userTokens, isLoading: utLoading } = useGetUserTokens();
-  const address = useAppSelector(selectUserAddress);
-  const { allowedPoolTokens } = useGetAllowedPoolTokens();
-  const { tokens, isLoading: tLoading } = useGetMultipleElrondTokens(
-    allowedPoolTokens.map((token) => token.identifier) || []
-  );
-  const ownedTokens = userTokens.filter((token) => token.owner === address);
+    const { lpIdentifier, isLoading: lpLoading } = useGetLpIdentifier(pair);
 
-  const firstTokenDetails = ownedTokens.find(
-    (token) => token.identifier === form.watch('firstToken')
-  );
+    const { userTokens, isLoading: utLoading } = useGetUserTokens();
+    const address = useAppSelector(selectUserAddress);
+    const { allowedPoolTokens } = useGetAllowedPoolTokens();
+    const { tokens, isLoading: tLoading } = useGetMultipleElrondTokens(
+      allowedPoolTokens.map((token) => token.identifier) || []
+    );
+    const ownedTokens = userTokens.filter((token) => token.owner === address);
 
-  const secondTokenDetails = tokens.find(
-    (token) => token.identifier === form.watch('secondToken')
-  );
-  const onSubmit = async (data: schemaType) => {
-    const res: SendTransactionReturnType = await addInitialLiquidity(
-      pair,
-      { ...firstTokenDetails, value: data.firstTokenAmount },
-      { ...secondTokenDetails, value: data.secondTokenAmount }
+    const firstTokenAccountDetails = ownedTokens.find(
+      (token) => token.identifier === tokensSelected.token1
     );
 
-    if (res) {
-      setSessionId(res.sessionId);
-    }
-  };
+    const secondTokenAccountDetails = userTokens.find(
+      (token) => token.identifier === tokensSelected.token2
+    );
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className='w-full max-w-[400px]'
-      >
-        <div className='bg-card rounded-sm px-8 py-12'>
-          <p className='text-gray-400 text-sm mb-10'>
-            Select the tokens of your pool.
-          </p>
+    const secondTokenDetails = tokens.find(
+      (token) => token.identifier === tokensSelected.token2
+    );
+    const onSubmit = async (data: schemaType) => {
+      const res: SendTransactionReturnType = await addInitialLiquidity(
+        pair,
+        { ...firstTokenAccountDetails, value: data.firstTokenAmount },
+        { ...secondTokenDetails, value: data.secondTokenAmount }
+      );
 
-          <div className='w-full flex flex-col gap-4 text-left'>
-            {ownedTokens.length > 0 ? (
+      if (res) {
+        setSessionId(res.sessionId);
+      }
+    };
+
+    return (
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={cn('w-full max-w-[400px]', !exists && 'opacity-30')}
+        >
+          <div className='bg-card rounded-sm p-4' ref={ref}>
+            <div className='w-full flex flex-col gap-4 text-left'>
               <div>
-                <div className='mb-1 text-sm text-gray-500'>First Token</div>
-                <SelectToken
-                  tokens={ownedTokens}
-                  onChange={(value) => form.setValue('firstToken', value)}
-                />
-              </div>
-            ) : null}
-
-            {tokens.length > 0 ? (
-              <div>
-                <div className='mb-1 text-sm text-gray-500'>Second Token</div>
-                <SelectToken
-                  tokens={tokens}
-                  onChange={(value) => form.setValue('secondToken', value)}
-                />
-              </div>
-            ) : null}
-            {form.watch('firstToken') &&
-              form.watch('secondToken') &&
-              lpIdentifier && (
-                <div>
-                  <div className='mb-4'>
-                    <TokenAmount
-                      label='First Token Amount'
-                      token={firstTokenDetails}
-                      tokenType={'firstTokenAmount'}
-                    />
-                    {form.formState.errors.firstTokenAmount && (
-                      <div className='text-red-500 text-sm mt-1'>
-                        {form.formState.errors?.firstTokenAmount?.message.toString()}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className='mb-4'>
-                    <TokenAmount
-                      label={
-                        <span>
-                          Second Token Amount{' '}
-                          <span className='font-bold text-primary'>{`(min - ${formatBalance(
-                            {
-                              balance:
-                                allowedPoolTokens.find(
-                                  (token) =>
-                                    token.identifier ===
-                                    form.watch('secondToken')
-                                )?.minimumToLock || 0,
-                              decimals: secondTokenDetails?.decimals || 0
-                            }
-                          )}) ${formatTokenI(
-                            form.watch('secondToken')
-                          )}`}</span>
-                        </span>
-                      }
-                      token={secondTokenDetails}
-                      tokenType={'secondTokenAmount'}
-                    />
-
-                    {form.formState.errors.secondToken && (
-                      <div className='text-red-500 text-sm mt-1'>
-                        {form.formState.errors?.secondToken?.message.toString()}
-                      </div>
-                    )}
-                  </div>
+                <div className='mb-4'>
+                  <TokenAmount
+                    label='First Token Amount'
+                    token={firstTokenAccountDetails}
+                    tokenType={'firstTokenAmount'}
+                  />
+                  {form.formState.errors.firstTokenAmount && (
+                    <div className='text-red-500 text-sm mt-1'>
+                      {form.formState.errors?.firstTokenAmount?.message.toString()}
+                    </div>
+                  )}
                 </div>
-              )}
-          </div>
-          <SubmitButton
-            lpIdentifier={lpIdentifier}
-            isLoading={utLoading || lpLoading || tLoading}
-          />
-        </div>
-      </form>
-    </Form>
-  );
-};
 
-export default LockLpForm;
+                <div className='mb-4'>
+                  <TokenAmount
+                    label={
+                      <span>
+                        Second Token Amount{' '}
+                        <span className='font-bold text-primary'>{`(min - ${formatBalance(
+                          {
+                            balance:
+                              allowedPoolTokens.find(
+                                (token) =>
+                                  token.identifier === tokensSelected.token2
+                              )?.minimumToLock || 0,
+                            decimals: secondTokenDetails?.decimals || 0
+                          }
+                        )}) ${formatTokenI(tokensSelected.token2)}`}</span>
+                      </span>
+                    }
+                    token={secondTokenAccountDetails}
+                    tokenType={'secondTokenAmount'}
+                  />
+                </div>
+              </div>
+            </div>
+            <SubmitButton
+              lpIdentifier={lpIdentifier}
+              isLoading={utLoading || lpLoading || tLoading}
+            />
+          </div>
+        </form>
+      </Form>
+    );
+  }
+);
+
+AddInitialLiquidityForm.displayName = 'LockLpForm';
+
+export default AddInitialLiquidityForm;

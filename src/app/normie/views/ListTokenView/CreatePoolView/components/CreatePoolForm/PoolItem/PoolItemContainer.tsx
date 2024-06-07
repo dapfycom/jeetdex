@@ -21,10 +21,14 @@ const PoolItemContainer = ({
 }: TokenItemProps) => {
   return (
     <div className='w-full'>
-      {isLoading || tokensList.length === 0 ? (
+      {isLoading ? (
         <PoolItemSkeleton />
-      ) : (
+      ) : tokensList.length !== 0 ? (
         <PoolItem tokensList={tokensList} tokenType={tokenType} />
+      ) : (
+        <div className='bg-[#1C243E]  p-3 rounded-md w-full flex justify-between items-center '>
+          No tokens founds
+        </div>
       )}
     </div>
   );

@@ -80,11 +80,11 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
       secondToken: '',
       buyFee: {
         timestamp: 0,
-        value: '0'
+        value: ''
       },
       sellFee: {
         timestamp: 0,
-        value: '0'
+        value: ''
       }
     }
   });
@@ -135,14 +135,11 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full'>
-        <div className='rounded-sm bg-card px-4 py-5'>
-          <h2 className='text-gray-300 text-xl text-left '>
+        <div className='rounded-sm bg-card p-4 '>
+          <h2 className='text-gray-300 text-left mb-4'>
             Generate Pool Address
           </h2>
 
-          <p className='text-gray-400 text-sm mb-6 text-left'>
-            You must be the creator of the tokens.
-          </p>
           {loading ? (
             <div className='flex  flex-col gap-4'>
               <Skeleton className='h-9 w-full bg-zinc-600' />
@@ -179,19 +176,19 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
                   {isOpen ? 'Less info' : 'More info'}{' '}
                 </Button>
                 <Collapse isOpen={isOpen}>
-                  <div className='flex-col flex gap-3 text-left'>
-                    <div>Buy Fee</div>
+                  <div className='flex-col flex gap-3 text-left mb-3'>
                     <Input
                       placeholder='Buy fee'
+                      className='bg-[#1C243E]'
                       {...form.register('buyFee.value')}
                     />
                     <DagePicker field='buyFee' label='Buy Fee finish' />
                   </div>
 
                   <div className='flex-col flex gap-3 text-left'>
-                    <div>Sell Fee</div>
                     <Input
                       placeholder='Sell fee'
+                      className='bg-[#1C243E]'
                       {...form.register('sellFee.value')}
                     />
                     <DagePicker field='sellFee' label='Sell Fee finish' />

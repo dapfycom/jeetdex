@@ -1,19 +1,16 @@
 import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
-import { useAppDispatch } from '@/hooks';
 import useTxNotification from '@/hooks/useTxNotification';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useGenerateLPStrings } from '../../../../utils/hooks';
 import { createLp } from '../../../../utils/sc.calls';
-import { setActiveStep } from '../../../../utils/slice';
 import {
   useGetLpIdentifier,
   useGetPoolPair
 } from '../../../../utils/swr.hooks';
 
 const SubmitButton = ({ onNextStep }) => {
-  const dispatch = useAppDispatch();
-  const { pair } = useGetPoolPair();
+  const { pair, exists } = useGetPoolPair();
   const { lpName, lpTicker } = useGenerateLPStrings();
 
   const { lpIdentifier, isLoading, mutate } = useGetLpIdentifier(pair);
@@ -21,10 +18,10 @@ const SubmitButton = ({ onNextStep }) => {
   const onSuccess = () => {
     mutate();
     setSessionId(null);
-    dispatch(setActiveStep('set-roles'));
+    onNextStep();
     revalidatePoolsPairs();
   };
-  const { setSessionId } = useTxNotification({ onSuccess });
+  const { setSessionId } = useTxNotification({ onSuccess, waitTx: true });
 
   const handleCreateLp = async () => {
     const res: SendTransactionReturnType = await createLp(
@@ -39,7 +36,11 @@ const SubmitButton = ({ onNextStep }) => {
   };
 
   let button = (
-    <Button className='w-full mt-6 p-3 rounded-md' onClick={handleCreateLp}>
+    <Button
+      className='w-full mt-6 p-3 rounded-md'
+      onClick={handleCreateLp}
+      disabled={!exists}
+    >
       Create LP Token
     </Button>
   );
