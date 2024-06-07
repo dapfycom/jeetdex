@@ -7,7 +7,7 @@ import PoolsContent from './component/PoolsContent/PoolsContent';
 const PoolsView = async () => {
   const pools = await fetchPoolsData();
   return (
-    <Container className='max-w-[600px]  xl:max-w-[1000px]'>
+    <Container className='w-full xl:max-w-[1000px]'>
       <GoBackButton>[go back]</GoBackButton>
       <div className='flex flex-col items-center  mt-5 text-left'>
         <Tabs defaultValue='table' className='w-full'>

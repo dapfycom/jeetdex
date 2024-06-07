@@ -14,10 +14,10 @@ const Options = ({ pools }) => {
 
         <div className='flex-1 flex gap-2 items-center relative '>
           <div className='flex w-full justify-between'>
-            <div className='flex gap-5'>
+            <div className='flex gap-5 flex-col md:flex-row items-center'>
               <Input
                 placeholder='Search by name or symbol'
-                className='bg-card rounded-sm min-w-[450px]'
+                className='bg-card rounded-sm w-full max-w-[450px]'
               />
               <LayoutTabs />
             </div>
