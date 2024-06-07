@@ -7,6 +7,7 @@ import {
 } from '@/services/sc/query';
 import { IElrondToken } from '@/types/scTypes';
 import { getRealBalance } from '@/utils/mx-utils';
+import { errorToast } from '@/utils/toast';
 import {
   Address,
   BigUIntValue,
@@ -15,6 +16,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { useEffect } from 'react';
 import useSWR from 'swr';
+import { clearToInputs } from './functions';
 import { onChangeToField, onChangeToFieldValueDecimals } from './swap-slice';
 
 export const useSearchToken = (tokens: IElrondToken[], searchKey: string) => {
@@ -78,6 +80,11 @@ export const useGetTokenRatio = (
     pair ? (type === 'first' ? pair.secondToken : pair.firstToken) : null
   );
 
+  console.log(tokenOutDetails);
+  console.log(tokenIdentifier);
+  console.log(bigUIntValue.toString());
+  console.log(pair);
+
   if (
     tokenIdentifier.length === 0 ||
     bigUIntValue.isNaN() ||
@@ -91,31 +98,53 @@ export const useGetTokenRatio = (
         ? `${pair.address}:getAmountOut:${bigUIntValue.toString()}:${
             pair.firstToken
           }`
-        : `${pair.address}:getAmountIn${bigUIntValue.toString()}:${
+        : `${pair.address}:getAmountIn:${bigUIntValue.toString()}:${
             pair.firstToken
           }`;
   }
-  const { data } = useSWR(swrKey, async (key) => {
-    const data = await fetchScSimpleDataWithContract(key, pairContractAbi, [
-      new TokenIdentifierValue(tokenIdentifier),
-      new BigUIntValue(bigUIntValue)
-    ]);
+  console.log(swrKey);
 
-    return data;
+  const { data } = useSWR(swrKey, async (key) => {
+    const { data, returnMessage } = await fetchScSimpleDataWithContract(
+      key,
+      pairContractAbi,
+      [
+        new TokenIdentifierValue(tokenIdentifier),
+        new BigUIntValue(bigUIntValue)
+      ]
+    );
+
+    console.log(returnMessage);
+
+    return { data, returnMessage };
   });
 
+  console.log(data);
+
   useEffect(() => {
-    if (data) {
+    if (data?.data) {
       const displayValue = getRealBalance(
-        data as BigNumber,
+        data?.data as BigNumber,
         tokenOutDetails.elrondToken.decimals,
         true
       ).toString();
+      console.log(displayValue);
 
       dispatch(onChangeToField(displayValue));
-      dispatch(onChangeToFieldValueDecimals(data.toString()));
+      dispatch(onChangeToFieldValueDecimals(data?.data?.toString()));
+    } else {
+      if (data?.returnMessage) {
+        errorToast(data?.returnMessage);
+      }
+
+      clearToInputs();
     }
-  }, [data, dispatch, tokenOutDetails?.elrondToken?.decimals]);
+  }, [
+    data?.data,
+    data?.returnMessage,
+    dispatch,
+    tokenOutDetails?.elrondToken?.decimals
+  ]);
 
   return {
     returnAmount: data?.toString() || '0'

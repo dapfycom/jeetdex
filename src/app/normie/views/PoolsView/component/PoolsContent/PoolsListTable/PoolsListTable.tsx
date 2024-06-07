@@ -23,10 +23,10 @@ const PoolsList = ({ pools }: IProps) => {
           <TableHead className='w-[70px] py-5 rounded-ss-sm'></TableHead>
 
           <TableHead className='w-[100px]  ] py-5 '>Pool</TableHead>
-          <TableHead className='] py-5 '>Reserve 1</TableHead>
-          <TableHead className='] py-5 '>Reserve 2</TableHead>
+          <TableHead className='whitespace-nowrap py-5 '>Reserve 1</TableHead>
+          <TableHead className='whitespace-nowrap py-5 '>Reserve 2</TableHead>
 
-          <TableHead className='] py-5 rounded-se-sm'></TableHead>
+          <TableHead className='whitespace-nowrap py-5 rounded-se-sm'></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

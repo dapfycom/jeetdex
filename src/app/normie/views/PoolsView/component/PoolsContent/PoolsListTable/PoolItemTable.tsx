@@ -7,10 +7,11 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
+import { selectNormalDirection } from '@/app/normie/views/SwapView/lib/swap-slice';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { useAuthentication } from '@/hooks';
+import { useAppSelector, useAuthentication } from '@/hooks';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { formatBigNumber } from '@/utils/numbers';
 import dynamic from 'next/dynamic';
@@ -30,7 +31,7 @@ const PoolItem = ({ pool }: IProps) => {
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
   const { handleLikePool, isLiked } = useLikePool(pool);
   const { isLoggedIn, handleConnect } = useAuthentication();
-
+  const direction = useAppSelector(selectNormalDirection);
   return (
     <TableRow className='hover:bg-[#09091bb6] '>
       <TableCell className='text-center py-4'>
@@ -96,7 +97,7 @@ const PoolItem = ({ pool }: IProps) => {
       <TableCell className=' py-4 flex items-center w-full justify-end gap-3'>
         <Button
           variant='ghost'
-          className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
+          className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-sm px-2'
           size='sm'
           onClick={togglePoolChart}
         >
@@ -108,11 +109,19 @@ const PoolItem = ({ pool }: IProps) => {
         )}
         <Button
           variant='ghost'
-          className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-full px-6'
+          className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-sm px-2'
           size='sm'
           asChild
         >
-          <Link href={'/'}>swap</Link>
+          <Link
+            href={`/?firstToken=${
+              direction ? pool.firstTokenId : pool.secondTokenId
+            }&secondToken=${
+              direction ? pool.secondTokenId : pool.firstTokenId
+            }&direction=${direction ? 'true' : 'false'}`}
+          >
+            swap
+          </Link>
         </Button>
 
         {isLoggedIn ? (
@@ -120,7 +129,7 @@ const PoolItem = ({ pool }: IProps) => {
             <DialogTrigger asChild className='w-fit'>
               <Button
                 variant='ghost'
-                className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 w-[70px] '
+                className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 px-2 rounded-sm'
                 size='sm'
               >
                 deposit
@@ -133,7 +142,7 @@ const PoolItem = ({ pool }: IProps) => {
         ) : (
           <Button
             variant='ghost'
-            className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 w-[70px] '
+            className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500  px-2 rounded-sm'
             size='sm'
             onClick={handleConnect}
           >

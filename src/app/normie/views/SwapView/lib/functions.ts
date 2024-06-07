@@ -43,3 +43,10 @@ export const clearInputs = () => {
   dispatch(onChangeToFieldValueDecimals(''));
   dispatch(onChangeToField(''));
 };
+
+export const clearToInputs = () => {
+  const dispatch = store.dispatch;
+
+  dispatch(onChangeToFieldValueDecimals(''));
+  dispatch(onChangeToField(''));
+};

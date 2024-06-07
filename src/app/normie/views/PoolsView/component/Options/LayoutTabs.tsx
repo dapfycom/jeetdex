@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const LayoutTabs = () => {
   return (
-    <div>
+    <div className=''>
       <div className='flex gap-3 items-center text-gray-400'>
         <TabsList className='bg-card rounded-sm px-4 gap-4'>
           <TabsTrigger

@@ -86,6 +86,7 @@ const SwapCardContainer = () => {
         : t.secondToken === fromField.selectedToken
     )
     .map((t) => (normalDirection ? t.secondToken : t.firstToken));
+  console.log(tokensPairs);
 
   const pairSelected = tokensPairs.find((t) =>
     normalDirection
@@ -109,7 +110,7 @@ const SwapCardContainer = () => {
     pairSelected,
     fromField.selectedToken,
     new BigNumber(fromField.valueDecimals),
-    'first'
+    normalDirection ? 'first' : 'second'
   );
 
   return (

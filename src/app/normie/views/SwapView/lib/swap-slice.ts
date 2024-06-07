@@ -74,6 +74,9 @@ export const swapAggregator = createSlice({
 
     onChangePoolPair: (state, action: PayloadAction<string>) => {
       state.poolPair = action.payload;
+    },
+    onChangeDirection: (state, action: PayloadAction<boolean>) => {
+      state.normalDirection = action.payload;
     }
   }
 });
@@ -103,6 +106,7 @@ export const {
   setRate,
   onChangeToFieldValueDecimals,
   onSwapFields,
-  onChangePoolPair
+  onChangePoolPair,
+  onChangeDirection
 } = swapAggregator.actions;
 export default swapAggregator.reducer;

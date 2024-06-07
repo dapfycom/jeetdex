@@ -7,7 +7,8 @@ import {
   ResultsParser,
   SmartContract,
   TypeExpressionParser,
-  TypeMapper
+  TypeMapper,
+  TypedOutcomeBundle
 } from '@multiversx/sdk-core/out';
 import { SmartContractConfigTypes, smartContractsConfig } from '.';
 import { provider } from './provider';
@@ -34,12 +35,17 @@ export const fetchScSimpleDataWithContract = async <T>(
   const scAddress = scInfoArr[0] as string;
   const funcName = scInfoArr[1];
 
-  const res: any = await scQueryWithContract(scAddress, abi, funcName, args);
+  const res: TypedOutcomeBundle = await scQueryWithContract(
+    scAddress,
+    abi,
+    funcName,
+    args
+  );
 
-  const { firstValue } = res;
+  const { firstValue, returnMessage } = res;
   const data: T = firstValue?.valueOf();
 
-  return data;
+  return { data, returnMessage };
 };
 
 export const scQuery = async (
