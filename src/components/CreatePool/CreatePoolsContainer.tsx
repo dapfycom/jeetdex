@@ -1,15 +1,22 @@
 'use client';
 import { useRef } from 'react';
+import ChooseToken from './components/ChooseToken/ChooseToken';
 import CreatePoolForm from './components/CreatePoolForm/CreatePoolForm';
 import AddInitialLiquidityForm from './components/LockPlView/components/AddInitialLiquidityForm';
 import SetLocalRoles from './components/SetLocalRoles/SetLocalRoles';
 import SetLpForm from './components/SetLpForm/SetLpForm';
 
 const CreatePoolsContainer = () => {
-  // const createPoolRef = useRef<HTMLDivElement>(null);
+  const createPoolRef = useRef<HTMLDivElement>(null);
   const setLpRef = useRef<HTMLDivElement>(null);
   const setLocaleRef = useRef<HTMLDivElement>(null);
   const addInitialLiquidityRef = useRef<HTMLDivElement>(null);
+
+  const scrollToCreatePool = () => {
+    if (createPoolRef.current) {
+      createPoolRef.current.scrollIntoView;
+    }
+  };
 
   const scrollToSetLp = () => {
     if (setLpRef.current) {
@@ -37,6 +44,7 @@ const CreatePoolsContainer = () => {
 
   return (
     <div className='w-full px-3 flex flex-col gap-4'>
+      <ChooseToken onNextStep={scrollToCreatePool} />
       <CreatePoolForm onNextStep={scrollToSetLp} />
       <SetLpForm ref={setLpRef} onNextStep={scrollToSetLocale} />
       <SetLocalRoles

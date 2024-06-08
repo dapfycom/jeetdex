@@ -1,4 +1,5 @@
 import { useAuthentication } from '@/hooks';
+import { errorToast } from '@/utils/toast';
 import React, { ReactElement, cloneElement } from 'react';
 
 interface RequiredLoginWrapperProps {
@@ -14,7 +15,11 @@ const RequiredLoginWrapper: React.FC<RequiredLoginWrapperProps> = ({
     if (isLoggedIn && children.props.onClick) {
       children.props.onClick(e);
     } else {
-      handleConnect();
+      if (isLoggedIn) {
+        errorToast('Provide onClick method');
+      } else {
+        handleConnect();
+      }
     }
   };
 

@@ -18,8 +18,8 @@ const viewContext = createContext<{
 }>(null);
 
 const CreatePoolModal = ({ children }: PropsWithChildren) => {
-  const { isOpen, onToggle } = useDisclosure(false);
-  const [view, setView] = useState<'issue' | 'create-pool'>(null);
+  const { isOpen, onToggle } = useDisclosure(true);
+  const [view, setView] = useState<'issue' | 'create-pool'>('create-pool');
   return (
     <Dialog
       open={isOpen}

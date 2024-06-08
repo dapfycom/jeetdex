@@ -1,16 +1,14 @@
-import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Button } from '@/components/ui/button';
 import { useGetPoolPair } from '../../../utils/swr.hooks';
 
 const SubmitButton = ({ onNextStep }: { onNextStep: () => void }) => {
-  const { exists } = useGetPoolPair();
+  const { exists, tokens } = useGetPoolPair();
+  console.log(tokens);
 
   let button = (
-    <RequiredLoginWrapper>
-      <Button type='submit' className='w-full mt-2'>
-        Generate Pool Address
-      </Button>
-    </RequiredLoginWrapper>
+    <Button type='submit' className='w-full mt-2' onClick={() => {}}>
+      Generate Pool Address
+    </Button>
   );
 
   if (exists) {

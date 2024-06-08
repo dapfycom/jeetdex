@@ -7,15 +7,16 @@ import {
 } from '@/components/ui/select';
 import { getRealBalance } from '@/utils/mx-utils';
 import { formatBigNumber } from '@/utils/numbers';
+import { errorToast } from '@/utils/toast';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { z } from 'zod';
-import { formSchema } from '../CreatePoolForm';
+import { formSchema } from '../ChooseToken';
 import { ITokenPool } from './PoolItemContainer';
 interface TokenItemProps {
   tokensList: ITokenPool[];
-  tokenType: 'firstToken' | 'secondToken';
+  tokenType: 'firstToken';
 }
 
 const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
@@ -25,6 +26,8 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
   );
 
   useEffect(() => {
+    console.log(tokensList);
+
     if (tokensList.length > 0) {
       setCurrentPoolItem(tokensList[0]);
 
@@ -35,9 +38,15 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
 
   return (
     <Select
-      onValueChange={(val) =>
-        setCurrentPoolItem(tokensList.find((t) => t.identifier === val))
-      }
+      onValueChange={(val) => {
+        const token = tokensList.find((t) => t.identifier === val);
+        if (token) {
+          setCurrentPoolItem(token);
+          setValue(tokenType, token.identifier);
+        } else {
+          errorToast("This token doesn't exist");
+        }
+      }}
       defaultValue={tokensList[0].identifier}
     >
       <SelectTrigger className='bg-[#1C243E]'>
@@ -52,6 +61,8 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
               className='bg-zinc-800 rounded-md w-full flex justify-between items-center cursor-pointer '
               onClick={() => {
                 setCurrentPoolItem(token);
+                console.log(token);
+
                 setValue(tokenType, token.identifier);
               }}
             >

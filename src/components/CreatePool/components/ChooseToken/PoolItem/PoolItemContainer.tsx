@@ -1,4 +1,4 @@
-import PoolItemSkeleton from '../Skeletons/PoolItemSkeleton';
+import PoolItemSkeleton from '../../CreatePoolForm/Skeletons/PoolItemSkeleton';
 import PoolItem from './PoolItem';
 
 export interface ITokenPool {
@@ -11,7 +11,7 @@ export interface ITokenPool {
 interface TokenItemProps {
   tokensList: ITokenPool[];
   isLoading: boolean;
-  tokenType: 'firstToken' | 'secondToken';
+  tokenType: 'firstToken';
 }
 
 const PoolItemContainer = ({

@@ -1,3 +1,4 @@
+import { tokensID } from '@/config';
 import { AppState } from '@/redux/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -12,7 +13,7 @@ export interface CreatePoolState {
 const initialState: CreatePoolState = {
   activeStep: 'create-pool',
   token1: '',
-  token2: ''
+  token2: tokensID.jeet
 };
 
 export const dapp = createSlice({
