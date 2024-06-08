@@ -26,6 +26,7 @@ const Navbar = () => {
             href='https://insigh.to/b/jeetdex'
             target='_blank'
             rel='noopener noreferrer'
+            className='hover:font-bold'
           >
             [report bug]
           </a>
