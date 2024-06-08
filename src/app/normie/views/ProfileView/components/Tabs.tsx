@@ -9,16 +9,6 @@ import Replies from './TabsContent/Replies';
 
 const tabs = [
   {
-    text: 'replies',
-    value: 'replies',
-    component: Replies
-  },
-  {
-    text: 'notifications',
-    value: 'notifications',
-    component: Notifications
-  },
-  {
     text: 'coins created',
     value: 'created',
     component: CoinsCreated
@@ -27,6 +17,16 @@ const tabs = [
     text: 'coins held',
     value: 'held',
     component: CoinsHeld
+  },
+  {
+    text: 'replies',
+    value: 'replies',
+    component: Replies
+  },
+  {
+    text: 'notifications',
+    value: 'notifications',
+    component: Notifications
   },
   {
     text: 'followers',
