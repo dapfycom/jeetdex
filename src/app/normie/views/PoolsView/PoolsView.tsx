@@ -8,7 +8,9 @@ const PoolsView = async () => {
   const pools = await fetchPoolsData();
   return (
     <Container className='w-full xl:max-w-[1000px]'>
-      <GoBackButton>[go back]</GoBackButton>
+      <div className='flex justify-center '>
+        <GoBackButton>[go back]</GoBackButton>
+      </div>
       <div className='flex flex-col items-center  mt-5 text-left'>
         <Tabs defaultValue='table' className='w-full'>
           <Options pools={pools} />

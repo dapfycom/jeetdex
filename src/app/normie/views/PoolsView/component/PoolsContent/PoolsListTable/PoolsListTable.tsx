@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { useListPools } from '../../../utils/hooks';
+import { useListPools, useSearchPool } from '../../../utils/hooks';
 import { IPoolPair } from '../../../utils/types';
 import PoolItem from './PoolItemTable';
 
@@ -16,6 +16,7 @@ interface IProps {
 
 const PoolsList = ({ pools }: IProps) => {
   const orderedPools = useListPools(pools);
+  const filteredPools = useSearchPool(orderedPools);
   return (
     <Table className='bg-[#1015299d] '>
       <TableHeader className=''>
@@ -30,7 +31,7 @@ const PoolsList = ({ pools }: IProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {orderedPools.map((pool) => (
+        {filteredPools.map((pool) => (
           <PoolItem key={pool.address} pool={pool} />
         ))}
       </TableBody>

@@ -6,7 +6,7 @@ const GoBackButton = ({ children, ...props }) => {
   return (
     <Button
       variant='ghost'
-      className='hover:bg-transparent hover:font-bold'
+      className='hover:bg-transparent hover:font-bold text-2xl'
       {...props}
       onClick={() => {
         router.back();

@@ -1,7 +1,7 @@
 import CreatePoolModal from '@/components/CreatePoolModal/CreatePoolModal';
 import { Button } from '@/components/ui/button';
 import { DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+import SearchPool from './SearchPool';
 
 const Options = ({ pools }) => {
   return (
@@ -13,12 +13,8 @@ const Options = ({ pools }) => {
 
         <div className='flex-1 flex gap-2 items-center relative '>
           <div className='flex w-full justify-between'>
-            <div className='flex gap-5 flex-col items-start md:flex-row md:items-center'>
-              <Input
-                placeholder='Search by name or symbol'
-                className='bg-card rounded-sm w-full max-w-[450px]'
-              />
-              {/* <LayoutTabs /> */}
+            <div className='flex gap-5 flex-col items-start md:flex-row md:items-center w-full'>
+              <SearchPool />
             </div>
 
             <div>

@@ -1,7 +1,9 @@
 import { likePool } from '@/actions/preferences';
+import { useAppSelector } from '@/hooks';
 import { useGetLikedPools } from '@/hooks/useGetUserSettings';
 import { generateRandomString } from '@/utils/strings';
 import { errorToast } from '@/utils/toast';
+import { selectSearchPoolsInput } from './pools-slice';
 import { IPoolPair } from './types';
 
 export const useListPools = (
@@ -19,6 +21,17 @@ export const useListPools = (
     .map((pool) => ({ ...pool, liked: false }));
 
   return [...liked, ...notLiked];
+};
+
+export const useSearchPool = (pools: (IPoolPair & { liked: boolean })[]) => {
+  const searchInput = useAppSelector(selectSearchPoolsInput);
+
+  const filteredPools = pools.filter((pool) => {
+    const poolName = `${pool.firstToken.ticker}-${pool.secondToken.ticker}-${pool.lpTokenIdentifier}`;
+    return poolName.toLowerCase().includes(searchInput.toLowerCase());
+  });
+
+  return filteredPools;
 };
 
 export const useLikePool = (pool: IPoolPair & { liked: boolean }) => {
