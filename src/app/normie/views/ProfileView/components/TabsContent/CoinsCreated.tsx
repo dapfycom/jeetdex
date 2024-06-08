@@ -99,7 +99,9 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
     <TableRow className='w-full'>
       <TableCell className='font-medium'>
         <div className='flex items-center gap-3'>
-          <UpdateCoinImg token={token} />
+          <div className='w-[35px] h-[35px]'>
+            <UpdateCoinImg token={token} />
+          </div>
           <div className='flex flex-col gap-1'>
             <span className=''>
               {token.ticker || formatTokenI(token.identifier)}

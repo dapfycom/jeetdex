@@ -41,7 +41,7 @@ const CoinsHeld = () => {
           <TableHead className='text-right'>Value</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody className='overflow-auto'>
         {userTokens.map((token) => {
           return (
             <TableRow key={token.identifier}>

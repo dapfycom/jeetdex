@@ -65,7 +65,7 @@ const ProfileView = () => {
           View on Explorer
         </Link>
 
-        <div className='flex space-x-4 border-b '>
+        <div className='flex space-x-4 border-b overflow-auto w-full'>
           <ProfileTabs />
         </div>
       </div>
