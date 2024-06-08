@@ -3,9 +3,12 @@ import { PageHeaderHeading } from '@/components/PageHeader/PageHeader';
 
 import dynamic from 'next/dynamic';
 
-const LockLpForm = dynamic(() => import('./components/LockLpForm'), {
-  ssr: false
-});
+const LockLpForm = dynamic(
+  () => import('./components/AddInitialLiquidityForm'),
+  {
+    ssr: false
+  }
+);
 
 const LockPlView = () => {
   return (

@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { formatBalance } from '@/utils/mx-utils';
 import { ReactNode } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { schemaType } from './LockLpForm';
+import { schemaType } from './AddInitialLiquidityForm';
 
 const TokenAmount = ({
   token,

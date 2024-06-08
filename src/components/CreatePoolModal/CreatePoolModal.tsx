@@ -1,6 +1,7 @@
 'use client';
-import CreatePool from '@/components/CreatePool/CreatePoolView';
-import ActionsBox from '@/components/ListTokenView/components/ActionsBox/ActionsBox';
+import CreatePool from '@/components/CreatePool/CreatePool';
+import IssueToken from '@/components/IssueToken/IssueToken';
+import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import useDisclosure from '@/hooks/useDisclosure';
 import {
@@ -10,8 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PropsWithChildren, createContext, useState } from 'react';
-import IssueToken from '../IssueToken/IssueToken';
-import { Button } from '../ui/button';
+import ActionsBox from './ActionsBox';
 const viewContext = createContext<{
   view: 'issue' | 'create-pool';
   setView: (view: 'issue' | 'create-pool') => void;
