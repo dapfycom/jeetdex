@@ -1,6 +1,6 @@
 import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Button } from '@/components/ui/button';
-import { useGetPoolPair } from '../../../../utils/swr.hooks';
+import { useGetPoolPair } from '../../../utils/swr.hooks';
 
 const SubmitButton = ({ onNextStep }: { onNextStep: () => void }) => {
   const { exists } = useGetPoolPair();

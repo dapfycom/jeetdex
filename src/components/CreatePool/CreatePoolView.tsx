@@ -1,5 +1,5 @@
 import CreatePoolsContainer from './CreatePoolsContainer';
-const CreatePoolView = () => {
+const CreatePool = () => {
   return (
     <div>
       <div className='max-h-[600px] overflow-auto'>
@@ -11,4 +11,4 @@ const CreatePoolView = () => {
   );
 };
 
-export default CreatePoolView;
+export default CreatePool;

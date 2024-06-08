@@ -26,7 +26,7 @@ import { Address } from '@multiversx/sdk-core/out';
 import { decodeBase64 } from '@multiversx/sdk-dapp/utils';
 import { useSelector } from 'react-redux';
 import useSWR from 'swr';
-import { enableTrade } from '../../../ListTokenView/utils/sc.calls';
+import { enableTrade } from '../../../../../../components/CreatePool/utils/sc.calls';
 import UpdateCoinImg from '../UpdateCoinImg';
 const CoinsCreated = () => {
   const address = useSelector(selectUserAddress);

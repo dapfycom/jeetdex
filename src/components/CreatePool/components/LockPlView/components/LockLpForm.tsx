@@ -12,12 +12,12 @@ import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { ForwardedRef, forwardRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { ZodTypeAny, z } from 'zod';
-import { addInitialLiquidity } from '../../utils/sc.calls';
+import { addInitialLiquidity } from '../../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
   useGetLpIdentifier,
   useGetPoolPair
-} from '../../utils/swr.hooks';
+} from '../../../utils/swr.hooks';
 import SubmitButton from './SubmitButton';
 import TokenAmount from './TokenAmount';
 

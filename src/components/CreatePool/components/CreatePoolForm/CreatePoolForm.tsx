@@ -8,12 +8,12 @@ import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { ICoreToken } from '@/types/scTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { newPoolTx } from '../../../utils/sc.calls';
+import { newPoolTx } from '../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
   useGetNewPairFee,
   useGetPoolPair
-} from '../../../utils/swr.hooks';
+} from '../../utils/swr.hooks';
 import PoolItemContainer, { ITokenPool } from './PoolItem/PoolItemContainer';
 
 import Collapse from '@/components/Collapse/Collapse';
@@ -26,7 +26,7 @@ import useTxNotification from '@/hooks/useTxNotification';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useEffect } from 'react';
 import { z } from 'zod';
-import { setToke1, setToken2 } from '../../../utils/slice';
+import { setToke1, setToken2 } from '../../utils/slice';
 import DagePicker from './DatePicker/DagePicker';
 import SubmitButton from './SubmitButton/SubmitButton';
 const convertToPoolItemToken = (

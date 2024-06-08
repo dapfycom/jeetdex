@@ -8,9 +8,12 @@ import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import SelectToken from '../components/SelectToken';
-import { enableTrade } from '../utils/sc.calls';
-import { useGetAllowedPoolTokens, useGetPoolPair } from '../utils/swr.hooks';
+import { enableTrade } from '../CreatePool/utils/sc.calls';
+import {
+  useGetAllowedPoolTokens,
+  useGetPoolPair
+} from '../CreatePool/utils/swr.hooks';
+import SelectToken from '../ListTokenView/components/SelectToken';
 import SubmitButton from './SubmitButton';
 
 const formSchema = z.object({

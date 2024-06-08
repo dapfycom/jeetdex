@@ -6,8 +6,8 @@ import { fetchElrondData } from '@/services/rest/elrond';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { ForwardedRef, forwardRef } from 'react';
 import useSWR from 'swr';
-import { setRoles } from '../../../utils/sc.calls';
-import { useGetPoolPair } from '../../../utils/swr.hooks';
+import { setRoles } from '../../utils/sc.calls';
+import { useGetPoolPair } from '../../utils/swr.hooks';
 export interface IAccountRoles {
   type: string;
   identifier: string;

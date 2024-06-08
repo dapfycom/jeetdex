@@ -2,7 +2,7 @@
 import { useAppDispatch } from '@/hooks';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { setActiveStep, stepsType } from '../../../utils/slice';
+import { setActiveStep, stepsType } from '../../utils/slice';
 
 interface FormNavProps {
   currentStep: stepsType;

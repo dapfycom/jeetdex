@@ -1,8 +1,8 @@
 import { cn } from '@/lib/utils';
 import { formatAddress } from '@/utils/mx-utils';
 import { ForwardedRef, forwardRef } from 'react';
-import { useGenerateLPStrings } from '../../../utils/hooks';
-import { useGetPoolPair } from '../../../utils/swr.hooks';
+import { useGenerateLPStrings } from '../../utils/hooks';
+import { useGetPoolPair } from '../../utils/swr.hooks';
 import SubmitButton from './SubmitButton/SubmitButton';
 
 interface IProps {

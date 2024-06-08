@@ -1,6 +1,6 @@
 'use client';
-import CreatePoolView from '@/app/normie/views/ListTokenView/CreatePoolView/CreatePoolView';
-import ActionsBox from '@/app/normie/views/ListTokenView/components/ActionsBox/ActionsBox';
+import CreatePool from '@/components/CreatePool/CreatePoolView';
+import ActionsBox from '@/components/ListTokenView/components/ActionsBox/ActionsBox';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import useDisclosure from '@/hooks/useDisclosure';
 import {
@@ -60,7 +60,7 @@ const CreatePoolModal = ({ children }: PropsWithChildren) => {
         <viewContext.Provider value={{ view, setView }}>
           {view === 'issue' && <IssueToken />}
 
-          {view === 'create-pool' && <CreatePoolView />}
+          {view === 'create-pool' && <CreatePool />}
         </viewContext.Provider>
       </DialogContent>
     </Dialog>

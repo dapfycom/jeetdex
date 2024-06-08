@@ -1,7 +1,7 @@
 'use client';
 import { useRef } from 'react';
-import AddInitialLiquidityForm from '../LockPlView/components/LockLpForm';
 import CreatePoolForm from './components/CreatePoolForm/CreatePoolForm';
+import AddInitialLiquidityForm from './components/LockPlView/components/LockLpForm';
 import SetLocalRoles from './components/SetLocalRoles/SetLocalRoles';
 import SetLpForm from './components/SetLpForm/SetLpForm';
 
