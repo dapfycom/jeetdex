@@ -18,7 +18,7 @@ const SwapCtx = React.createContext<{
 const SwapContext = ({
   children
 }: PropsWithChildren<{ poolsInfo: IPoolPair[] }>) => {
-  const { isOpen: isOPenChats, onToggle: onToggleChats } = useDisclosure(false);
+  const { isOpen: isOPenChats, onToggle: onToggleChats } = useDisclosure(true);
   const { isOpen: isOpenCharts, onToggle } = useDisclosure(true);
 
   const OnToggleCharts = () => {
