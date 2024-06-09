@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <div className='text-md text-center'>
       <div>
-        <div className='flex gap-2 items-center justify-center'>
+        <div className='flex gap-2 items-center justify-center sm:justify-start'>
           <Link href='/' className='hover:font-bold'>
             [Swap]
           </Link>
@@ -29,6 +29,10 @@ const Navbar = () => {
             className='hover:font-bold'
           >
             [report bug]
+          </a>
+
+          <a href='#' className='hover:font-bold'>
+            [how it works]
           </a>
         </div>
       </div>
