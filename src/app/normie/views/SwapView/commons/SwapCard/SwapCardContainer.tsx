@@ -27,12 +27,9 @@ const SwapCardContainer = () => {
   const toField = useAppSelector(selectToField);
   const normalDirection = useAppSelector(selectNormalDirection);
   const { elrondToken } = useGetElrondToken(toField.selectedToken);
-  const { currentParams, updateParams } = useUpdateUrlParams([
-    'firstToken',
-    'secondToken'
-  ]);
+  const { currentParams } = useUpdateUrlParams(['swap']);
 
-  const [firstToken, secondToken] = currentParams;
+  const [swap] = currentParams;
 
   const dispatch = useAppDispatch();
   const handleChangeFromField = (value: string, token?: IElrondToken) => {
@@ -53,12 +50,9 @@ const SwapCardContainer = () => {
   const handleChangeFromToken = (token: IElrondToken) => {
     dispatch(changeFromFieldToken(token.identifier));
     handleChangeFromField(fromField.value, token);
-
-    updateParams('firstToken', token.identifier);
   };
   const handleChangeToToken = (token: IElrondToken) => {
     dispatch(changeToFieldToken(token.identifier));
-    updateParams('secondToken', token.identifier);
   };
   const handlePercentAmount = (
     accountToken: IElrondAccountToken,
@@ -97,14 +91,14 @@ const SwapCardContainer = () => {
   );
 
   useEffect(() => {
-    if (firstToken) {
-      dispatch(changeFromFieldToken(firstToken));
+    const tokenPair = tokensPairs.find(
+      (t) => t.firstToken === swap || t.secondToken === swap
+    );
+    if (tokenPair) {
+      dispatch(changeToFieldToken(tokenPair.firstToken));
+      dispatch(changeFromFieldToken(tokenPair.secondToken));
     }
-
-    if (secondToken) {
-      dispatch(changeToFieldToken(secondToken));
-    }
-  }, [dispatch, firstToken, secondToken]);
+  }, [dispatch, swap, tokensPairs]);
 
   useGetTokenRatio(
     pairSelected,
