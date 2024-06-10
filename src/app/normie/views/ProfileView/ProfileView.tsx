@@ -2,7 +2,7 @@
 import { network } from '@/config';
 import { fetchAxiosJeetdex } from '@/services/rest/api';
 import { formatAddress } from '@/utils/mx-utils';
-import { faHeart, faMessage } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -45,13 +45,6 @@ const ProfileView = () => {
             <span className='ml-1'>
               Likes received: {user._count.likesReceived}
             </span>
-          </div>
-          <div className='flex items-center'>
-            <FontAwesomeIcon
-              icon={faMessage}
-              className='text-blue-500  w-5 h-5'
-            />
-            <span className='ml-1'>Mentions received: 0</span>
           </div>
         </div>
         <div className='bg-[#0b102280] text-sm p-3 rounded mb-4'>

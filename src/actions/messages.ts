@@ -54,32 +54,43 @@ export const likeMessage = async (messageId: number, userIdToLike: string) => {
     }
   });
 
-  if (messageLiked) {
-    throw new Error('You have already liked this message');
-  }
-
-  try {
-    await prisma.likes.create({
-      data: {
-        message: {
-          connect: {
-            id: messageId
-          }
-        },
-        likedBy: {
-          connect: {
-            address: session.address
-          }
-        },
-        userLikes: {
-          connect: {
-            id: userIdToLike
+  if (!messageLiked) {
+    try {
+      await prisma.likes.create({
+        data: {
+          message: {
+            connect: {
+              id: messageId
+            }
+          },
+          likedBy: {
+            connect: {
+              address: session.address
+            }
+          },
+          userLikes: {
+            connect: {
+              id: userIdToLike
+            }
           }
         }
-      }
-    });
-  } catch (error) {
-    throw new Error(`Failed to like the message: ` + error.message);
+      });
+      return 'Message liked successfully';
+    } catch (error) {
+      throw new Error(`Failed to like the message: ` + error.message);
+    }
+  } else {
+    try {
+      await prisma.likes.delete({
+        where: {
+          id: messageLiked.id
+        }
+      });
+
+      return 'Message disliked successfully';
+    } catch (error) {
+      throw new Error(`Failed to like the message: ` + error.message);
+    }
   }
 };
 

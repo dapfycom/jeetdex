@@ -8,7 +8,6 @@ import FollowButton from './components/FollowButton';
 import ProfileTabs from './components/Tabs';
 
 const PublicProfileView = async ({ user }: { user: any }) => {
-
   if (!user) {
     return null;
   }
@@ -32,9 +31,12 @@ const PublicProfileView = async ({ user }: { user: any }) => {
         </div>
 
         <div className='flex items-center space-x-2 mb-4'>
-          <div className='flex items-center'>
-            <span className='mr-1'>{user._count.likesReceived}</span>
-            <FontAwesomeIcon icon={faHeart} className='text-red-500  w-5 h-5' />
+          <div className='flex items-center '>
+            <FontAwesomeIcon
+              icon={faHeart}
+              className='text-red-500  w-5 h-5 mr-1'
+            />
+            <span> Likes received: {user._count.likesReceived}</span>
           </div>
         </div>
 

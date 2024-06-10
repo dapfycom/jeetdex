@@ -24,6 +24,7 @@ interface IMessage {
   onHoverChatReply?: (messageId: number) => void;
   time: Date;
   onLike: () => void;
+  isLiked: boolean;
 }
 const Message = ({
   likes,
@@ -35,6 +36,7 @@ const Message = ({
   user,
   highlight,
   time,
+  isLiked,
   onHoverChatReply,
   onLike
 }: IMessage) => {
@@ -63,7 +65,10 @@ const Message = ({
             {date.toLocaleString()}
           </div>
           <Button
-            className='h-4 hover:bg-transparent text-stone-400 hover:text-red-600  text-xs'
+            className={cn(
+              'h-4 hover:bg-transparent text-stone-400 hover:text-red-600  text-xs',
+              isLiked && 'text-red-500'
+            )}
             size='icon'
             variant='ghost'
             onClick={onLike}

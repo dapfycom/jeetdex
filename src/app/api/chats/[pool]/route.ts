@@ -19,6 +19,11 @@ export async function GET(
                 likes: true
               }
             },
+            likes: {
+              select: {
+                likedById: true
+              }
+            },
             sender: true,
             messageReplied: true,
             messageReplying: true

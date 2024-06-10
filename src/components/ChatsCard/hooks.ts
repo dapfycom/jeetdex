@@ -8,9 +8,9 @@ export const useGetChat = (pool: string) => {
       return fetchAxiosJeetdex<{
         data: {
           messages: ({
-            _count: {
-              likes: number;
-            };
+            likes: {
+              likedById: string;
+            }[];
             sender: {
               id: string;
               username: string;

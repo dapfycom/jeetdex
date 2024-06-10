@@ -26,7 +26,9 @@ const Chats = ({ poolPair }: IProps) => {
     setHighlight(replyedId);
   };
 
-  const handleLike = async (message: any) => {
+  const handleLike = async (message: any, liked?: boolean) => {
+    console.log(liked);
+
     if (poolPair) {
       const data = {
         data: {
@@ -35,9 +37,9 @@ const Chats = ({ poolPair }: IProps) => {
             if (message.id === m.id) {
               return {
                 ...m,
-                _count: {
-                  likes: m._count.likes + 1
-                }
+                likes: liked
+                  ? [...m.likes.filter((l) => l.likedById !== m.senderId)]
+                  : [...m.likes, { likedById: m.senderId }]
               };
             }
             return m;
@@ -47,7 +49,19 @@ const Chats = ({ poolPair }: IProps) => {
       try {
         await mutate(
           async () => {
-            await likeMessage(message.id, message.sender.id);
+            const res = await likeMessage(message.id, message.sender.id);
+
+            toast({
+              description: (
+                <div>
+                  <FontAwesomeIcon
+                    icon={faCheckCircle}
+                    className='mr-2 text-green-500'
+                  />
+                  {res}
+                </div>
+              )
+            });
 
             return data;
           },
@@ -58,20 +72,7 @@ const Chats = ({ poolPair }: IProps) => {
             revalidate: false
           }
         );
-
-        toast({
-          description: (
-            <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                className='mr-2 text-green-500'
-              />
-              Message liked!
-            </div>
-          )
-        });
       } catch (error) {
-        console.log(error.message);
         toast({
           description: (
             <div>
@@ -153,10 +154,13 @@ const Chats = ({ poolPair }: IProps) => {
                   </p>
                 ) : (
                   chat.messages.map((message) => {
+                    const isLiked = message.likes
+                      .map((l) => l.likedById)
+                      .includes(message.senderId);
                     return (
                       <Fragment key={message.id}>
                         <Message
-                          likes={message._count.likes}
+                          likes={message.likes.length}
                           message={message.content}
                           image={message.image}
                           user={{
@@ -172,7 +176,8 @@ const Chats = ({ poolPair }: IProps) => {
                           highlight={highlight === message.id}
                           onHoverChatReply={onHoverChatReply}
                           time={message.createdAt}
-                          onLike={() => handleLike(message)}
+                          onLike={() => handleLike(message, isLiked)}
+                          isLiked={isLiked}
                         />
 
                         <Divider />

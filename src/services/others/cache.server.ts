@@ -117,24 +117,15 @@ export const fetchUsersData = unstable_cache(
               followed: true
             }
           },
-          likesReceived: {
+          _count: {
             select: {
-              id: true
+              likesReceived: true
             }
           }
         }
       });
 
-      const usersWithCountLikes = users.map((u) => {
-        return {
-          ...u,
-          _count: {
-            likesReceived: u.likesReceived.length
-          }
-        };
-      });
-
-      return usersWithCountLikes;
+      return users;
     } catch (error) {
       console.log(error);
     }
