@@ -67,11 +67,11 @@ const SetLocalRoles = forwardRef(
       <div
         className={cn(
           'bg-card rounded-sm p-4 w-full text-left',
-          !exists && 'opacity-30'
+          !exists && 'hidden'
         )}
         ref={ref}
       >
-        <h2 className='text-gray-300'>Set locale roles</h2>
+        <h2 className='text-gray-300'>4. Set locale roles</h2>
 
         <div>
           {data && data[0]?.canLocalMint && data[0]?.canLocalBurn ? (

@@ -58,7 +58,7 @@ const ChooseToken = ({ onNextStep }) => {
   const loading = loadingUserTokens;
   return (
     <div className='rounded-sm bg-card p-4 '>
-      <h2 className='text-gray-300 text-left mb-4'>Choose your coin</h2>
+      <h2 className='text-gray-300 text-left mb-4'>1. Choose your coin</h2>
 
       <div className='w-full flex flex-col gap-4 text-sm'>
         <Form {...form}>

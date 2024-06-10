@@ -82,7 +82,7 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
       <form onSubmit={form.handleSubmit(onSubmit)} className={cn('w-full')}>
         <div className='rounded-sm bg-card p-4 '>
           <h2 className='text-gray-300 text-left mb-4'>
-            Generate Pool Address
+            2. Generate Pool Address
           </h2>
 
           <div className='w-full flex flex-col gap-4 text-sm'>

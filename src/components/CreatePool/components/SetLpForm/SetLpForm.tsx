@@ -21,12 +21,12 @@ const SetLpForm = forwardRef(
       <div
         className={cn(
           'bg-card rounded-sm p-4 w-full text-left',
-          !exists && 'opacity-30'
+          !exists && 'hidden'
         )}
         id='#create-lp'
         ref={ref}
       >
-        <h2 className='text-gray-300 mb-2'>Create LP Token</h2>
+        <h2 className='text-gray-300 mb-2'>3. Create LP Token</h2>
 
         <div className='flex flex-col gap-2 text-sm'>
           <BoxForm label='Pool Address' value={poolAddress} />
