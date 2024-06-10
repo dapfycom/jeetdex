@@ -1,4 +1,5 @@
 'use client';
+import HowItWorksModal from '@/components/HowItWorksModal/HowItWorksModal';
 import Link from 'next/link';
 
 const Navbar = () => {
@@ -30,10 +31,7 @@ const Navbar = () => {
           >
             [report bug]
           </a>
-
-          <a href='#' className='hover:font-bold'>
-            [how it works]
-          </a>
+          <HowItWorksModal />
         </div>
       </div>
     </div>
