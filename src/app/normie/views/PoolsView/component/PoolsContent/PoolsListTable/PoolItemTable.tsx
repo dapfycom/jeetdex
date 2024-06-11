@@ -7,11 +7,10 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
-import { selectNormalDirection } from '@/app/normie/views/SwapView/lib/swap-slice';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { useAppSelector, useAuthentication } from '@/hooks';
+import { useAuthentication } from '@/hooks';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { formatBigNumber } from '@/utils/numbers';
 import dynamic from 'next/dynamic';
@@ -31,7 +30,6 @@ const PoolItem = ({ pool }: IProps) => {
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
   const { handleLikePool, isLiked } = useLikePool(pool);
   const { isLoggedIn, handleConnect } = useAuthentication();
-  const direction = useAppSelector(selectNormalDirection);
   return (
     <TableRow className='hover:bg-[#09091bb6] '>
       <TableCell className='text-center py-4'>
@@ -113,15 +111,7 @@ const PoolItem = ({ pool }: IProps) => {
           size='sm'
           asChild
         >
-          <Link
-            href={`/?firstToken=${
-              direction ? pool.firstTokenId : pool.secondTokenId
-            }&secondToken=${
-              direction ? pool.secondTokenId : pool.firstTokenId
-            }&direction=${direction ? 'true' : 'false'}`}
-          >
-            swap
-          </Link>
+          <Link href={`/?swap=${pool.firstTokenId}`}>swap</Link>
         </Button>
 
         {isLoggedIn ? (
