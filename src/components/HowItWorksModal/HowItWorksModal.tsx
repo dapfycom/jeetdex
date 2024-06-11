@@ -41,7 +41,9 @@ const HowItWorksModal = () => {
       </DialogTrigger>
       <DialogContent className='w-full max-w-md'>
         <DialogHeader>
-          <DialogTitle>How it works?</DialogTitle>
+          <DialogTitle className='text-center text-sm'>
+            launch a coin that is instantly tradable in one click
+          </DialogTitle>
           <DialogDescription>
             <div className='flex flex-col mt-3'>
               <div>
