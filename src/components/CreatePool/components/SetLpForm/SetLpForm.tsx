@@ -19,25 +19,23 @@ const SetLpForm = forwardRef(
 
     return (
       <div
-        className={cn(
-          'bg-card rounded-sm p-4 w-full text-left',
-          !exists && 'hidden'
-        )}
+        className={cn('bg-card rounded-sm p-4 w-full text-left')}
         id='#create-lp'
         ref={ref}
       >
         <h2 className='text-gray-300 mb-2'>3. Create LP Token</h2>
+        <div className={cn(!exists && 'hidden')}>
+          <div className={'flex flex-col gap-2 text-sm'}>
+            <BoxForm label='Pool Address' value={poolAddress} />
 
-        <div className='flex flex-col gap-2 text-sm'>
-          <BoxForm label='Pool Address' value={poolAddress} />
+            <BoxForm label='LP Token Name' value={lpName} />
 
-          <BoxForm label='LP Token Name' value={lpName} />
+            <BoxForm label='LP Token Ticker' value={lpTicker} />
+          </div>
 
-          <BoxForm label='LP Token Ticker' value={lpTicker} />
-        </div>
-
-        <div>
-          <SubmitButton onNextStep={onNextStep} />
+          <div>
+            <SubmitButton onNextStep={onNextStep} />
+          </div>
         </div>
       </div>
     );

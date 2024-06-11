@@ -2,12 +2,14 @@ import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
 import useTxNotification from '@/hooks/useTxNotification';
 import { cn } from '@/lib/utils';
-import { fetchElrondData } from '@/services/rest/elrond';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { ForwardedRef, forwardRef } from 'react';
-import useSWR from 'swr';
 import { setRoles } from '../../utils/sc.calls';
-import { useGetPoolPair } from '../../utils/swr.hooks';
+import {
+  useGetLpIdentifier,
+  useGetPoolPair,
+  usePoolHaveLocalRoles
+} from '../../utils/swr.hooks';
 export interface IAccountRoles {
   type: string;
   identifier: string;
@@ -44,12 +46,14 @@ export interface Role {
 const SetLocalRoles = forwardRef(
   (props: { onNextStep: () => void }, ref: ForwardedRef<HTMLDivElement>) => {
     const { pair, exists } = useGetPoolPair();
-    const { data } = useSWR<IAccountRoles[]>(
-      `/accounts/${pair}/roles/tokens`,
-      fetchElrondData
-    );
+    const { haveLocales, mutate } = usePoolHaveLocalRoles(pair);
+
+    const { lpIdentifier } = useGetLpIdentifier(pair);
+    console.log(lpIdentifier);
+
     const onSuccess = () => {
       props.onNextStep();
+      mutate();
       revalidatePoolsPairs();
     };
 
@@ -64,17 +68,11 @@ const SetLocalRoles = forwardRef(
     };
 
     return (
-      <div
-        className={cn(
-          'bg-card rounded-sm p-4 w-full text-left',
-          !exists && 'hidden'
-        )}
-        ref={ref}
-      >
+      <div className={cn('bg-card rounded-sm p-4 w-full text-left')} ref={ref}>
         <h2 className='text-gray-300'>4. Set locale roles</h2>
 
-        <div>
-          {data && data[0]?.canLocalMint && data[0]?.canLocalBurn ? (
+        <div className={cn(lpIdentifier === '' && 'hidden')}>
+          {haveLocales ? (
             <Button
               className='w-full mt-2'
               variant='destructive'

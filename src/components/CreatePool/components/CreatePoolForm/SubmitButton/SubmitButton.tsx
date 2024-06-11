@@ -2,8 +2,7 @@ import { Button } from '@/components/ui/button';
 import { useGetPoolPair } from '../../../utils/swr.hooks';
 
 const SubmitButton = ({ onNextStep }: { onNextStep: () => void }) => {
-  const { exists, tokens } = useGetPoolPair();
-  console.log(tokens);
+  const { exists } = useGetPoolPair();
 
   let button = (
     <Button type='submit' className='w-full mt-2' onClick={() => {}}>

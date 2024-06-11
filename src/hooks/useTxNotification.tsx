@@ -58,7 +58,7 @@ const useTxNotification = ({
             waitTx
           }),
         {
-          duration: waitTx ? 60000 : 15000
+          duration: waitTx ? 180000 : 15000
         }
       );
 
@@ -127,7 +127,21 @@ const ToastSubmitted = ({
           <span>
             <LoaderCircle className='animate-spin' />
           </span>
-          processing transaction
+          <div>
+            processing transaction <br />
+            {typeof hash === 'string' && (
+              <span>
+                view on explorer:{' '}
+                <a
+                  href={network.explorerAddress + '/transactions/' + hash}
+                  target='_blank'
+                  className='text-primary'
+                >
+                  {formatAddress(hash)}
+                </a>
+              </span>
+            )}
+          </div>
         </span>
       ) : (
         <div className=''>

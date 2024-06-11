@@ -1,5 +1,4 @@
 'use client';
-import CreatePool from '@/components/CreatePool/CreatePool';
 import IssueToken from '@/components/IssueToken/IssueToken';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -11,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PropsWithChildren, createContext, useState } from 'react';
+import CreatePoolsContainer from '../CreatePool/CreatePoolsContainer';
 import ActionsBox from './ActionsBox';
 const viewContext = createContext<{
   view: 'issue' | 'create-pool';
@@ -60,7 +60,7 @@ const CreatePoolModal = ({ children }: PropsWithChildren) => {
         <viewContext.Provider value={{ view, setView }}>
           {view === 'issue' && <IssueToken />}
 
-          {view === 'create-pool' && <CreatePool />}
+          {view === 'create-pool' && <CreatePoolsContainer />}
         </viewContext.Provider>
       </DialogContent>
     </Dialog>

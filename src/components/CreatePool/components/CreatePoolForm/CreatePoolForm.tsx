@@ -56,8 +56,6 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
 
   const onSuccess = () => {
     mutate();
-    setSessionId(null);
-    // dispatch(setActiveStep('set-lp'));
   };
   const { setSessionId } = useTxNotification({
     onSuccess,

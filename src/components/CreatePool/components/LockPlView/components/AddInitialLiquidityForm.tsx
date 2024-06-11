@@ -16,7 +16,8 @@ import { addInitialLiquidity } from '../../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
   useGetLpIdentifier,
-  useGetPoolPair
+  useGetPoolPair,
+  usePoolHaveLocalRoles
 } from '../../../utils/swr.hooks';
 import SubmitButton from './SubmitButton';
 import TokenAmount from './TokenAmount';
@@ -48,7 +49,9 @@ const AddInitialLiquidityForm = forwardRef(
         secondTokenAmount: ''
       }
     });
-    const { pair, exists, tokens: tokensSelected } = useGetPoolPair();
+
+    const { pair, tokens: tokensSelected } = useGetPoolPair();
+    const { haveLocales } = usePoolHaveLocalRoles(pair);
 
     const onSuccess = () => {
       setSessionId(null);
@@ -92,53 +95,55 @@ const AddInitialLiquidityForm = forwardRef(
 
     return (
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className={cn('w-full', !exists && 'hidden')}
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className={'w-full'}>
           <div className='bg-card rounded-sm p-4' ref={ref}>
-            <div className='w-full flex flex-col gap-4 text-left'>
-              <div>
-                <div className='mb-4'>
-                  <TokenAmount
-                    label='First Token Amount'
-                    token={firstTokenAccountDetails}
-                    tokenType={'firstTokenAmount'}
-                  />
-                  {form.formState.errors.firstTokenAmount && (
-                    <div className='text-red-500 text-sm mt-1'>
-                      {form.formState.errors?.firstTokenAmount?.message.toString()}
-                    </div>
-                  )}
-                </div>
+            <h2 className='text-gray-300 text-left mb-3'>
+              5. Add initial liquidity
+            </h2>
+            <div className={cn(!haveLocales && 'hidden')}>
+              <div className='w-full flex flex-col gap-4 text-left'>
+                <div>
+                  <div className='mb-4'>
+                    <TokenAmount
+                      label='First Token Amount'
+                      token={firstTokenAccountDetails}
+                      tokenType={'firstTokenAmount'}
+                    />
+                    {form.formState.errors.firstTokenAmount && (
+                      <div className='text-red-500 text-sm mt-1'>
+                        {form.formState.errors?.firstTokenAmount?.message.toString()}
+                      </div>
+                    )}
+                  </div>
 
-                <div className='mb-4'>
-                  <TokenAmount
-                    label={
-                      <span>
-                        Second Token Amount{' '}
-                        <span className='font-bold text-primary'>{`(min - ${formatBalance(
-                          {
-                            balance:
-                              allowedPoolTokens.find(
-                                (token) =>
-                                  token.identifier === tokensSelected.token2
-                              )?.minimumToLock || 0,
-                            decimals: secondTokenDetails?.decimals || 0
-                          }
-                        )}) ${formatTokenI(tokensSelected.token2)}`}</span>
-                      </span>
-                    }
-                    token={secondTokenAccountDetails}
-                    tokenType={'secondTokenAmount'}
-                  />
+                  <div className='mb-4'>
+                    <TokenAmount
+                      label={
+                        <span>
+                          Second Token Amount{' '}
+                          <span className='font-bold text-primary'>{`(min - ${formatBalance(
+                            {
+                              balance:
+                                allowedPoolTokens.find(
+                                  (token) =>
+                                    token.identifier === tokensSelected.token2
+                                )?.minimumToLock || 0,
+                              decimals: secondTokenDetails?.decimals || 0
+                            }
+                          )}) ${formatTokenI(tokensSelected.token2)}`}</span>
+                        </span>
+                      }
+                      token={secondTokenAccountDetails}
+                      tokenType={'secondTokenAmount'}
+                    />
+                  </div>
                 </div>
               </div>
+              <SubmitButton
+                lpIdentifier={lpIdentifier}
+                isLoading={utLoading || lpLoading || tLoading}
+              />
             </div>
-            <SubmitButton
-              lpIdentifier={lpIdentifier}
-              isLoading={utLoading || lpLoading || tLoading}
-            />
           </div>
         </form>
       </Form>

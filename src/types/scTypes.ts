@@ -296,10 +296,10 @@ export interface IElrondUserAccount {
   };
 }
 
-export type ITransactionStatuts = 'success' | 'pending' | 'invalid' | 'fail';
+export type ITransactionStatus = 'success' | 'pending' | 'invalid' | 'fail';
 export type ISortOrder = 'desc' | 'asc';
 
-export interface ITransacation {
+export interface ITransaction {
   txHash: string;
   gasLimit?: number;
   gasPrice?: number;
@@ -312,7 +312,7 @@ export interface ITransacation {
   sender: string;
   senderShard: number;
   signature: string;
-  status: ITransactionStatuts;
+  status: ITransactionStatus;
   value: string;
   fee?: string;
   timestamp: number;

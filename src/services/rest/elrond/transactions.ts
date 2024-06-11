@@ -1,8 +1,4 @@
-import {
-  ISortOrder,
-  ITransacation,
-  ITransactionStatuts
-} from '@/types/scTypes';
+import { ISortOrder, ITransaction, ITransactionStatus } from '@/types/scTypes';
 import mxApi from '.';
 
 export interface IFetchTransactionParams {
@@ -15,7 +11,7 @@ export interface IFetchTransactionParams {
   receiverShard?: number;
   miniBlockHash?: string;
   hashes?: string;
-  status?: ITransactionStatuts;
+  status?: ITransactionStatus;
   function?: string;
   before?: number;
   after?: number;
@@ -30,8 +26,8 @@ export interface IFetchTransactionParams {
 }
 export const fetchTransactions = async (
   params?: IFetchTransactionParams
-): Promise<ITransacation[]> => {
-  const res = await mxApi.get<ITransacation[]>('/transactions', {
+): Promise<ITransaction[]> => {
+  const res = await mxApi.get<ITransaction[]>('/transactions', {
     params: params
   });
   return res.data;
@@ -39,15 +35,15 @@ export const fetchTransactions = async (
 
 export const fetchTransactionByHash = async (
   txHash: string
-): Promise<ITransacation> => {
-  const res = await mxApi.get<ITransacation>(`/transactions/${txHash}`);
+): Promise<ITransaction> => {
+  const res = await mxApi.get<ITransaction>(`/transactions/${txHash}`);
   return res.data;
 };
 
 export const fetchTransfers = async (
   params?: IFetchTransactionParams
-): Promise<ITransacation[]> => {
-  const res = await mxApi.get<ITransacation[]>('/transfers', {
+): Promise<ITransaction[]> => {
+  const res = await mxApi.get<ITransaction[]>('/transfers', {
     params: params
   });
   return res.data;

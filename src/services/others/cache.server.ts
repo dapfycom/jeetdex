@@ -14,8 +14,10 @@ export const fetchPoolsData = unstable_cache(
     );
 
     const pools = adaptAllPairsContractData(firstValue.valueOf());
+    console.log(pools);
+
     const newPools: IPoolPair[] = [
-      ...pools.filter((pool) => pool.lpTokenIdentifier !== '')
+      ...pools.filter((pool) => pool.lpTokenSupply !== '0')
     ];
 
     const tokensIds = pools
