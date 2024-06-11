@@ -20,6 +20,7 @@ const Replies = () => {
             user={{
               ...profileInfo
             }}
+            isLiked={false}
           />
         );
       })}
