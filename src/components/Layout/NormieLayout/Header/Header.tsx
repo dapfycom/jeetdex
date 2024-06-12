@@ -19,8 +19,14 @@ export const Header = () => {
         </MxLink>
         <div className='flex gap-2 items-center'>
           <Navbar />
-          <SellBuyTokenShakingBox />
-          <CreatedTokenShakingBox />
+          <div className='flex gap-2 items-center'>
+            <div>
+              <SellBuyTokenShakingBox />
+            </div>
+            <div>
+              <CreatedTokenShakingBox />
+            </div>
+          </div>
         </div>
       </div>
 

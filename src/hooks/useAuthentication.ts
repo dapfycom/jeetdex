@@ -56,6 +56,41 @@ export const useGetUserInfo = () => {
       bio: string;
       createdAt: string;
       updatedAt: string;
+      followed: ({
+        following: {
+          id: string;
+          username: string;
+          address: string;
+          img: string;
+          bio: string;
+          createdAt: Date;
+          updatedAt: Date;
+        };
+      } & {
+        id: string;
+        followedId: string;
+        followingId: string;
+        createdAt: Date;
+      })[];
+      following: ({
+        following: {
+          id: string;
+          username: string;
+          address: string;
+          img: string;
+          bio: string;
+          createdAt: Date;
+          updatedAt: Date;
+        };
+      } & {
+        id: string;
+        followedId: string;
+        followingId: string;
+        createdAt: Date;
+      })[];
+      _count: {
+        likesReceived: number;
+      };
     };
   }>('/user', fetchAxiosJeetdex);
 

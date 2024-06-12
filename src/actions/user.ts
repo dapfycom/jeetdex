@@ -84,9 +84,7 @@ export const followUser = async (followedId: string) => {
   const session = await getSession();
 
   if (!session) {
-    return {
-      error: 'No session found'
-    };
+    throw new Error('No session found');
   }
   const user = await prisma.users.findUnique({
     where: {
@@ -107,20 +105,30 @@ export const followUser = async (followedId: string) => {
   }
 
   // Check if user is already following
-  const isFollowing = user.following.some(
+  const following = user.following.find(
     (follow) => follow.followedId === followedId
   );
 
-  if (isFollowing) {
-    throw new Error('You are already following this user');
+  if (following) {
+    await prisma.follows.delete({
+      where: {
+        id: following.id
+      }
+    });
+
+    return {
+      message: 'User unfollowed'
+    };
+  } else {
+    await prisma.follows.create({
+      data: {
+        followedId: followedId,
+        followingId: user.id
+      }
+    });
+
+    return {
+      message: 'User followed'
+    };
   }
-
-  await prisma.follows.create({
-    data: {
-      followedId: followedId,
-      followingId: user.id
-    }
-  });
-
-  revalidateTag('users');
 };

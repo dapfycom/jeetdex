@@ -107,25 +107,7 @@ export const fetchCoinsData = unstable_cache(
 export const fetchUsersData = unstable_cache(
   async () => {
     try {
-      const users = await prisma.users.findMany({
-        include: {
-          followed: {
-            include: {
-              following: true
-            }
-          },
-          following: {
-            include: {
-              followed: true
-            }
-          },
-          _count: {
-            select: {
-              likesReceived: true
-            }
-          }
-        }
-      });
+      const users = await prisma.users.findMany();
 
       return users;
     } catch (error) {
@@ -136,5 +118,25 @@ export const fetchUsersData = unstable_cache(
   {
     tags: ['users'],
     revalidate: 60 * 60 * 6 // 6 hours
+  }
+);
+
+export const fetchSingleUserData = unstable_cache(
+  async (id: string) => {
+    try {
+      const user = await prisma.users.findUnique({
+        where: {
+          id: id
+        }
+      });
+
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  ['single-users'],
+  {
+    tags: ['single-users']
   }
 );
