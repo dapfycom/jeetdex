@@ -56,13 +56,13 @@ const SwapContent = () => {
           <div
             className={cn(
               'w-full md:grid hidden mt-4',
-              !swapCtx.isOpenCharts && 'flex justify-center'
+              !swapCtx.isOpenCharts && ' justify-center md:hidden'
             )}
           >
             <Tabs
               defaultValue='chats'
               className={cn(
-                'w-full rounded-sm bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)] p-4',
+                'w-full rounded-sm bg-[#1C243E] border-none  p-4',
                 !swapCtx.isOPenChats && 'hidden'
               )}
             >
@@ -89,14 +89,14 @@ const SwapContent = () => {
       <div
         className={cn(
           'grid  grid-cols-1 md:grid-cols-[65%_35%] w-full gap-4 h-full mt-4 md:hidden',
-          !swapCtx.isOpenCharts && 'flex justify-center'
+          !swapCtx.isOpenCharts && 'flex justify-center md:grid md:grid-cols-1'
         )}
       >
         <Tabs
           defaultValue='chats'
           className={cn(
-            'w-full rounded-sm bg-[#1C243E] border-none shadow-[0px_8px_24px_rgba(79,_83,_243,_0.12)] p-4',
-            !swapCtx.isOPenChats && 'hidden'
+            'w-full rounded-sm bg-[#1C243E] border-none p-4',
+            !swapCtx.isOPenChats && 'hidden '
           )}
         >
           <TabsList className='w-full justify-start flex bg-transparent'>
