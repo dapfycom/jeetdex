@@ -90,11 +90,16 @@ model MessagesReplies {
 }
 
 model Coins {
-  id         String @id @default(cuid())
-  identifier String @unique
-  img        String @unique
-  owner      Users  @relation("coins", fields: [ownerId], references: [id])
-  ownerId    String
+  id          String  @id @default(cuid())
+  identifier  String  @unique
+  img         String? @unique
+  owner       Users   @relation("coins", fields: [ownerId], references: [id])
+  ownerId     String
+  twitter     String?
+  telegram    String?
+  website     String?
+  title       String?
+  description String?
 }
 
 model UserSettings {

@@ -3,5 +3,6 @@
         "jeet",
         "jeetdex",
         "metachain"
-    ]
+    ],
+    "cody.autocomplete.enabled": true
 }

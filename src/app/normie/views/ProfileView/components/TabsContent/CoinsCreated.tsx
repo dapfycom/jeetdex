@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/table';
 import { scAddress, tokensID } from '@/config';
 import { useAppSelector } from '@/hooks';
+import useDisclosure from '@/hooks/useDisclosure';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import useTxNotification from '@/hooks/useTxNotification';
 import { selectGlobalData, selectUserAddress } from '@/redux/dapp/dapp-slice';
@@ -24,10 +25,17 @@ import {
 } from '@/utils/mx-utils';
 import { Address } from '@multiversx/sdk-core/out';
 import { decodeBase64 } from '@multiversx/sdk-dapp/utils';
+import dynamic from 'next/dynamic';
 import { useSelector } from 'react-redux';
 import useSWR from 'swr';
 import { enableTrade } from '../../../../../../components/CreatePool/utils/sc.calls';
 import UpdateCoinImg from '../UpdateCoinImg';
+const AddSocialsModal = dynamic(
+  () => import('@/components/AddSocialsModal/AddSocialsModal'),
+  {
+    ssr: false
+  }
+);
 const CoinsCreated = () => {
   const address = useSelector(selectUserAddress);
 
@@ -95,6 +103,7 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
     const res = await enableTrade(pairForThisToken.address);
     setSessionId(res.sessionId);
   };
+  const { isOpen, onToggle } = useDisclosure();
   return (
     <TableRow className='w-full'>
       <TableCell className='font-medium'>
@@ -118,15 +127,31 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
       <TableCell className='text-center'>
         {formatBalanceDollar(token, token.price)}
       </TableCell>
-      <TableCell className='text-center'>
+      <TableCell className='text-end'>
         {pairForThisToken ? (
-          <div>
-            {alreadyEnabled ? (
-              <div>swap active</div>
-            ) : (
-              <Button variant='ghost' onClick={handleEnableSwap}>
+          <div className='flex items-center justify-end gap-3'>
+            {alreadyEnabled ? null : (
+              <Button
+                variant='ghost'
+                className='p-0 h-fit font-normal hover:bg-transparent hover:font-bold hover:text-white'
+                onClick={handleEnableSwap}
+              >
                 [enable swap]
               </Button>
+            )}
+            <Button
+              variant='ghost'
+              className='p-0 h-fit font-normal hover:bg-transparent hover:font-bold hover:text-white'
+              onClick={onToggle}
+            >
+              [add socials]
+            </Button>
+            {isOpen && (
+              <AddSocialsModal
+                tokenIdentifier={token.identifier}
+                onToggle={onToggle}
+                isOpen={isOpen}
+              />
             )}
           </div>
         ) : (
