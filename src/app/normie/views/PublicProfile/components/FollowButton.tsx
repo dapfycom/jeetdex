@@ -3,17 +3,65 @@ import { followUser } from '@/actions/user';
 import { Button } from '@/components/ui/button';
 import { useGetUserInfo } from '@/hooks';
 import { useGetSingleUserInfo } from '@/hooks/useUser';
+import { generateRandomString } from '@/utils/strings';
 import { errorToast, successToast } from '@/utils/toast';
 
 const FollowButton = ({ user }) => {
+  console.log(user);
+
   const { userInfo, mutate } = useGetSingleUserInfo(user?.id);
+  console.log(userInfo);
+
   const { userInfo: currentUserInfo } = useGetUserInfo();
+  const followed = userInfo?.data.followed.find(
+    (follow) => follow.followingId === currentUserInfo?.data.id
+  );
+  console.log(followed);
 
   const handleFollow = async () => {
+    let newData;
+    if (followed) {
+      newData = {
+        data: {
+          ...userInfo.data,
+          followed: userInfo.data.followed.filter(
+            (follow) => follow.followingId !== currentUserInfo.data.id
+          )
+        }
+      };
+    } else {
+      newData = {
+        data: {
+          ...userInfo.data,
+          followed: [
+            ...userInfo.data.followed,
+
+            {
+              id: generateRandomString(20),
+              followedId: user.id,
+              followingId: currentUserInfo.data.id,
+              createdAt: new Date(),
+              following: { ...currentUserInfo.data }
+            }
+          ]
+        }
+      };
+    }
     try {
-      const res = await followUser(user.id);
-      successToast(res.message);
-      mutate();
+      mutate(
+        async () => {
+          const res = await followUser(user.id);
+          successToast(res.message);
+
+          return newData;
+        },
+        {
+          optimisticData: newData,
+          rollbackOnError: true,
+          populateCache: true,
+          revalidate: false
+        }
+      );
     } catch (error) {
       console.log(error);
 
@@ -21,14 +69,9 @@ const FollowButton = ({ user }) => {
     }
   };
 
-  const following = userInfo?.data.following.find(
-    (follow) => follow.followedId === currentUserInfo?.data.id
-  );
-  console.log(following);
-
   return (
     <Button className='mb-3' onClick={handleFollow}>
-      {following ? 'Unfollow' : 'Follow'}
+      {followed ? 'Unfollow' : 'Follow'}
     </Button>
   );
 };

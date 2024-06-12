@@ -31,7 +31,9 @@ const HowItWorksModal = () => {
       onOpenChange={(open) => {
         onToggle();
         if (!open) {
-          setCookie('how-it-works', 'true');
+          setCookie('how-it-works', 'true', {
+            maxAge: 100 * 365 * 24 * 60 * 60
+          });
         }
       }}
     >

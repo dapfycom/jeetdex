@@ -54,8 +54,8 @@ export const useGetUserInfo = () => {
       address: string;
       img: string;
       bio: string;
-      createdAt: string;
-      updatedAt: string;
+      createdAt: Date;
+      updatedAt: Date;
       followed: ({
         following: {
           id: string;
