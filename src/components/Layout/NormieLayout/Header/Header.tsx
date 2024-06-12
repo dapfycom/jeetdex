@@ -1,6 +1,8 @@
+import CreatedTokenShakingBox from '@/components/CreatedTokenShakingBox/CreatedTokenShakingBox';
 import Login from '@/components/Login/normie/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
+import SellBuyTokenShakingBox from '@/components/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
 import Navbar from './Navbar';
 import ViewProfileButton from './ViewProfileButton';
@@ -15,8 +17,11 @@ export const Header = () => {
         >
           <Logo className='rounded-full w-9 h-9' />
         </MxLink>
-
-        <Navbar />
+        <div className='flex gap-2 items-center'>
+          <Navbar />
+          <SellBuyTokenShakingBox />
+          <CreatedTokenShakingBox />
+        </div>
       </div>
 
       <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex items-center'>
