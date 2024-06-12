@@ -9,36 +9,41 @@ import ViewProfileButton from './ViewProfileButton';
 
 export const Header = () => {
   return (
-    <header className='relative flex flex-col sm:flex-row items-center sm:items-start  justify-between  gap-3 p-1'>
-      <div className='flex gap-4 items-center'>
-        <MxLink
-          to={'/'}
-          className=' items-center justify-between gap-3 hidden sm:flex'
-        >
-          <Logo className='rounded-full w-9 h-9' />
-        </MxLink>
-        <div className='flex gap-2 items-center'>
-          <Navbar />
+    <div>
+      <header className='relative flex items-center sm:items-start  justify-between  gap-3 p-1 flex-wrap'>
+        <div className='flex gap-4 items-center'>
+          <MxLink
+            to={'/'}
+            className=' items-center justify-between gap-3 hidden sm:flex'
+          >
+            <Logo className='rounded-full w-9 h-9' />
+          </MxLink>
           <div className='flex gap-2 items-center'>
-            <div>
-              <SellBuyTokenShakingBox />
-            </div>
-            <div>
-              <CreatedTokenShakingBox />
+            <Navbar />
+            <div className='flex gap-2 items-center'>
+              <div className='md:block hidden'>
+                <SellBuyTokenShakingBox />
+              </div>
+              <div className='lg:block hidden'>
+                <CreatedTokenShakingBox />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex items-center'>
-        {process.env.DEGEN_MODE === 'true' && <SiteMode />}
+        <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex items-center'>
+          {process.env.DEGEN_MODE === 'true' && <SiteMode />}
 
-        <div className='relative'>
-          <Login />
+          <div className='relative'>
+            <Login />
 
-          <ViewProfileButton />
+            <ViewProfileButton />
+          </div>
         </div>
+      </header>
+      <div className='md:hidden block w-fit mx-auto sm:mt-0 mt-8'>
+        <SellBuyTokenShakingBox />
       </div>
-    </header>
+    </div>
   );
 };

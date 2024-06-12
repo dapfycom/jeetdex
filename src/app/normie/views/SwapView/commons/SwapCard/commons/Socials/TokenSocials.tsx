@@ -6,9 +6,10 @@ interface IProps {
 const TokenSocials = ({ tokenIdentifier }: IProps) => {
   const { coinRes } = useGetCoins(tokenIdentifier);
   console.log(coinRes);
-  if (!coinRes?.data) {
+  if (!coinRes.data) {
     return null;
   }
+
   return (
     <div>
       <div className='flex gap-3 mb-3'>
@@ -46,13 +47,15 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
       </div>
 
       <div className='flex gap-3'>
-        <Image
-          alt={tokenIdentifier}
-          src={coinRes?.data?.img}
-          width={100}
-          height={100}
-          className='w-[100px] h-[100px]'
-        />
+        {coinRes?.data?.img && (
+          <Image
+            alt={tokenIdentifier}
+            src={coinRes?.data?.img}
+            width={100}
+            height={100}
+            className='w-[100px] h-[100px]'
+          />
+        )}
 
         <div className='text-left'>
           <div>{coinRes?.data?.title}</div>

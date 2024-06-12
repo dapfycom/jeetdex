@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from '@/db';
+import { fetchTokenById } from '@/services/rest/elrond/tokens';
 import { getSession } from '@/utils/server-utils/sessions';
 
 export const addSocialsCoin = async ({
@@ -21,16 +22,11 @@ export const addSocialsCoin = async ({
 
   const { address } = session;
 
-  const user = await prisma.users.findUniqueOrThrow({
-    where: {
-      address: address,
-      coins: {
-        some: {
-          identifier
-        }
-      }
-    }
-  });
+  const tokenDetails = await fetchTokenById(identifier);
+
+  if (tokenDetails.owner !== address) {
+    throw new Error('You are not the owner of this token');
+  }
 
   const coin = await prisma.coins.upsert({
     create: {
@@ -40,7 +36,11 @@ export const addSocialsCoin = async ({
       twitter,
       telegram,
       website,
-      ownerId: user.id
+      owner: {
+        connect: {
+          address: address
+        }
+      }
     },
     update: {
       title,
