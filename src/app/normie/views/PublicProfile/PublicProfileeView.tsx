@@ -5,8 +5,8 @@ import { useGetSingleUserInfo } from '@/hooks/useUser';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import Address from '../../../../components/Address';
 import ProfileContext from './ProfileContext';
-import Address from './components/Address';
 import FollowButton from './components/FollowButton';
 import ProfileTabs from './components/Tabs';
 

@@ -1,7 +1,7 @@
 'use client';
+import Address from '@/components/Address';
 import { network } from '@/config';
 import { fetchAxiosJeetdex } from '@/services/rest/api';
-import { formatAddress } from '@/utils/mx-utils';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader2 } from 'lucide-react';
@@ -29,7 +29,6 @@ const ProfileView = () => {
     );
   }
   const user = data?.data;
-  console.log(user);
   return (
     <ProfileContext ctxValue={data?.data}>
       <div
@@ -47,9 +46,8 @@ const ProfileView = () => {
             </span>
           </div>
         </div>
-        <div className='bg-[#0b102280] text-sm p-3 rounded mb-4'>
-          {formatAddress(user.address)}
-        </div>
+        <Address address={user.address} />
+
         <Link
           className='block mb-4 text-blue-500 underline'
           href={`${network.explorerAddress}/accounts/${user.address}`}
