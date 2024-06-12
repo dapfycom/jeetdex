@@ -11,6 +11,7 @@ import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useAuthentication } from '@/hooks';
+import { IElrondAccountToken } from '@/types/scTypes';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { formatBigNumber } from '@/utils/numbers';
 import dynamic from 'next/dynamic';
@@ -24,9 +25,10 @@ const PoolChartModal = dynamic(
 
 interface IProps {
   pool: IPoolPair & { liked: boolean };
+  userLp: IElrondAccountToken;
 }
 
-const PoolItem = ({ pool }: IProps) => {
+const PoolItem = ({ pool, userLp }: IProps) => {
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
   const { handleLikePool, isLiked } = useLikePool(pool);
   const { isLoggedIn, handleConnect } = useAuthentication();
@@ -44,7 +46,6 @@ const PoolItem = ({ pool }: IProps) => {
           />
         </RequiredLoginWrapper>
       </TableCell>
-
       <TableCell className='font-medium py-4'>
         <div className='flex'>
           <PoolCoins
@@ -91,6 +92,9 @@ const PoolItem = ({ pool }: IProps) => {
         <span className='text-gray-400'>
           {formatTokenI(pool.secondToken.ticker)}
         </span>
+      </TableCell>{' '}
+      <TableCell className=' py-4 cursor-pointer'>
+        {userLp ? formatBalance(userLp) : '0.00'}
       </TableCell>
       <TableCell className=' py-4 flex items-center w-full justify-end gap-3'>
         <Button
