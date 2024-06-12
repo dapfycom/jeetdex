@@ -49,8 +49,8 @@ const SwapContent = () => {
           !swapCtx.isOpenCharts && 'flex justify-center'
         )}
       >
-        <div>
-          <div className='h-full max-h-[450px]'>
+        <div className='h-full'>
+          <div className=''>
             <ChartCard poolPair={poolPair} />
           </div>
           <div

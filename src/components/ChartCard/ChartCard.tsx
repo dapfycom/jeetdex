@@ -13,14 +13,14 @@ export default function ChartCard({ poolPair }: IProps) {
   return (
     <div
       className={cn(
-        'h-full  rounded-2xl overflow-hidden md:block hidden',
+        'h-full min-h-[450px]  rounded-sm  overflow-hidden md:block hidden',
         !swapCtx.isOpenCharts && 'md:hidden'
       )}
     >
       <TokenInfo poolPair={poolPair} />
       <Iframe
         url='https://e-compass.io/embeddedChart/JEX-9040ca/USDC-c76f1f'
-        className='w-full h-full'
+        className='w-full min-h-[400px]'
         display='block'
         position='relative'
       />

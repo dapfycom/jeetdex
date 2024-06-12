@@ -6,7 +6,7 @@ interface IProps {
 const TokenSocials = ({ tokenIdentifier }: IProps) => {
   const { coinRes } = useGetCoins(tokenIdentifier);
   console.log(coinRes);
-  if (!coinRes.data) {
+  if (!coinRes?.data) {
     return null;
   }
 
