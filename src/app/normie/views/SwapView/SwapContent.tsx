@@ -86,7 +86,12 @@ const SwapContent = () => {
           </div>
         </div>
 
-        <div className='flex flex-col gap-4'>
+        <div
+          className={cn(
+            'flex flex-col gap-4',
+            !swapCtx.isOpenCharts && 'flex-row'
+          )}
+        >
           <SwapCardContainer />
           <TokenSocials tokenIdentifier={poolPair?.firstTokenId} />
         </div>
