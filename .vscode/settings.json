@@ -4,5 +4,6 @@
         "jeetdex",
         "metachain"
     ],
-    "cody.autocomplete.enabled": true
+    "cody.autocomplete.enabled": true,
+    "cody.commandCodeLenses": false
 }

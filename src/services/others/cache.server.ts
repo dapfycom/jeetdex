@@ -66,7 +66,7 @@ export const fetchPoolsData = unstable_cache(
   ['poolsPairs'],
   {
     tags: ['poolsPairs'],
-    revalidate: 60 * 60 * 6 // 6 hours
+    revalidate: 60 * 60 * 1 // 1 hours
   }
 );
 

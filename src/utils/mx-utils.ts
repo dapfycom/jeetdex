@@ -1,3 +1,4 @@
+import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import BigNumber from 'bignumber.js';
 import { numberWithCommas, preventExponetialNotation } from './numbers';
 
@@ -158,7 +159,7 @@ export const formatTokenI = (tokenIdentifier: string): string => {
 };
 
 // slipapge is % number like 1% or 5%
-export const calculateSlipageAmount = (
+export const calculateSlippageAmount = (
   slipapge: number,
   aproxAmount: string | number | BigNumber
 ): BigNumber => {
@@ -169,4 +170,50 @@ export const calculateSlipageAmount = (
   const finalAmount = new BigNumber(aproxAmount).minus(amountWithSlipage);
 
   return finalAmount;
+};
+
+export const get_token_amount_for_given_position = (
+  liquidity: BigNumber.Value,
+  tokenI: string,
+  pair: IPoolPair
+): BigNumber => {
+  const reserve =
+    pair.firstTokenId === tokenI
+      ? pair.firstTokenReserve
+      : pair.secondTokenReserve;
+  const total_supply = new BigNumber(pair.lpTokenSupply);
+  if (!total_supply.isZero()) {
+    const amount = new BigNumber(liquidity)
+      .multipliedBy(reserve)
+      .dividedBy(total_supply);
+    return amount;
+  } else {
+    return total_supply;
+  }
+};
+
+export const get_both_tokens_for_given_position = (
+  liquidity: string,
+  pair: IPoolPair
+): {
+  firstTokenAmount: string;
+  secondTokenAmount: string;
+} => {
+  const first_token_id = pair.firstTokenId;
+  const token_first_token_amount = get_token_amount_for_given_position(
+    liquidity,
+    first_token_id,
+    pair
+  );
+  const second_token_id = pair.secondTokenId;
+  const token_second_token_amount = get_token_amount_for_given_position(
+    liquidity,
+    second_token_id,
+    pair
+  );
+
+  return {
+    firstTokenAmount: token_first_token_amount.toString(),
+    secondTokenAmount: token_second_token_amount.toString()
+  };
 };

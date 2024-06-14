@@ -26,9 +26,10 @@ const PoolChartModal = dynamic(
 interface IProps {
   pool: IPoolPair & { liked: boolean };
   userLp: IElrondAccountToken;
+  onClickLp: () => void;
 }
 
-const PoolItem = ({ pool, userLp }: IProps) => {
+const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
   const { handleLikePool, isLiked } = useLikePool(pool);
   const { isLoggedIn, handleConnect } = useAuthentication();
@@ -93,7 +94,7 @@ const PoolItem = ({ pool, userLp }: IProps) => {
           {formatTokenI(pool.secondToken.ticker)}
         </span>
       </TableCell>{' '}
-      <TableCell className=' py-4 cursor-pointer'>
+      <TableCell className=' py-4 cursor-pointer' onClick={onClickLp}>
         {userLp ? formatBalance(userLp) : '0.00'}
       </TableCell>
       <TableCell className=' py-4 flex items-center w-full justify-end gap-3'>

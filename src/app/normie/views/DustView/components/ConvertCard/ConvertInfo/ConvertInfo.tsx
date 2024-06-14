@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppSelector } from '@/hooks/useRedux';
 import {
-  calculateSlipageAmount,
+  calculateSlippageAmount,
   formatBalance,
   formatBalanceDollar,
   formatTokenI
@@ -21,7 +21,7 @@ const ConvertInfo = () => {
   const { data, isLoading } = useGetAmountOut(selectedTokens);
   const slipage = useAppSelector(selectDustSlippage);
 
-  const receiveAmount = calculateSlipageAmount(
+  const receiveAmount = calculateSlippageAmount(
     slipage,
     data?.amountOut || 0
   ).toString();

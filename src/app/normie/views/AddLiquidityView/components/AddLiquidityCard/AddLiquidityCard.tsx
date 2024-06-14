@@ -4,7 +4,7 @@ import useTxNotification from '@/hooks/useTxNotification';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { IElrondAccountToken } from '@/types/scTypes';
 import {
-  calculateSlipageAmount,
+  calculateSlippageAmount,
   formatBalance,
   getRealBalance
 } from '@/utils/mx-utils';
@@ -122,8 +122,8 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
     console.log(firstAmount);
     console.log(secondAmount);
 
-    const firstAmountWithSlipage = calculateSlipageAmount(5, firstAmount);
-    const secondAmountWithSlipage = calculateSlipageAmount(5, secondAmount);
+    const firstAmountWithSlipage = calculateSlippageAmount(5, firstAmount);
+    const secondAmountWithSlipage = calculateSlippageAmount(5, secondAmount);
     console.log(firstAmountWithSlipage.toFixed(0));
     console.log(secondAmountWithSlipage.toFixed(0));
 
