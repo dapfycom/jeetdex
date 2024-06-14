@@ -20,7 +20,7 @@ import useSWR from 'swr';
 const UserTrades = ({ pool }: { pool: IPoolPair }) => {
   const address = useAppSelector(selectUserAddress);
   const { data } = useSWR(
-    `/transactions/${pool.address}/swapIn/${address}`,
+    address ? `/transactions/${pool.address}/swapIn/${address}` : null,
     async () => {
       return fetchTransactions({
         receiver: pool.address,
