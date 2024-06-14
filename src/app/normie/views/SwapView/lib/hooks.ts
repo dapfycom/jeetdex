@@ -93,14 +93,9 @@ export const useGetTokenRatio = (
   ) {
     swrKey = null;
   } else {
-    swrKey =
-      type === 'first'
-        ? `${pair.address}:getAmountOut:${bigUIntValue.toString()}:${
-            pair.firstToken
-          }`
-        : `${pair.address}:getAmountIn:${bigUIntValue.toString()}:${
-            pair.firstToken
-          }`;
+    swrKey = `${pair.address}:getAmountOut:${bigUIntValue.toString()}:${
+      pair.firstToken
+    }`;
   }
   console.log(swrKey);
 
