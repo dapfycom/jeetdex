@@ -2,6 +2,7 @@
 import ChartCard from '@/components/ChartCard/ChartCard';
 import Chats from '@/components/ChatsCard/Chats';
 import Trades from '@/components/Trades/Trades';
+import UserTrades from '@/components/Trades/UserTrades';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAppSelector } from '@/hooks';
 import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
@@ -69,6 +70,7 @@ const SwapContent = () => {
               <TabsList className='w-full justify-start flex bg-transparent'>
                 <TabsTrigger value='chats'>chats</TabsTrigger>
                 <TabsTrigger value='trades'>trades</TabsTrigger>
+                <TabsTrigger value='my-trades'>my trades</TabsTrigger>
               </TabsList>
               <TabsContent value='chats'>
                 {' '}
@@ -76,6 +78,9 @@ const SwapContent = () => {
               </TabsContent>
               <TabsContent value='trades'>
                 <Trades pool={poolPair} />
+              </TabsContent>
+              <TabsContent value='my-trades'>
+                <UserTrades pool={poolPair} />
               </TabsContent>
             </Tabs>
           </div>
