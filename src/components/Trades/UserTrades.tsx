@@ -10,12 +10,15 @@ import {
 } from '@/components/ui/table';
 import { network } from '@/config';
 import { useAppSelector } from '@/hooks';
+import { cn } from '@/lib/utils';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
 import { timeAgo } from '@/utils/date';
+import { textToLightColor } from '@/utils/general';
 import { formatAddress, formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { formatBigNumber, hexToBigNumber } from '@/utils/numbers';
 import useSWR from 'swr';
+import { colorByType } from './Trades';
 
 const UserTrades = ({ pool }: { pool: IPoolPair }) => {
   const address = useAppSelector(selectUserAddress);
@@ -80,13 +83,16 @@ const UserTrades = ({ pool }: { pool: IPoolPair }) => {
           return (
             <TableRow key={d.txHash}>
               <TableCell className='text-left w-fit'>
-                <span className='rounded-sm text-xs bg-lime-400/80 text-black px-1 h-[18px] flex items-center w-fit whitespace-nowrap'>{`${formatAddress(
-                  d.sender,
-                  3,
-                  3
-                )}`}</span>
+                <span
+                  className='rounded-sm text-xs bg-lime-400/80 text-black px-1 h-[18px] flex items-center w-fit whitespace-nowrap'
+                  style={{
+                    background: textToLightColor(d.sender)
+                  }}
+                >{`${formatAddress(d.sender, 3, 3)}`}</span>
               </TableCell>
-              <TableCell className='text-center'>{type}</TableCell>
+              <TableCell className={cn('text-center', colorByType[type])}>
+                {type}
+              </TableCell>
               <TableCell className='text-center'>
                 {formatBigNumber(
                   formatBalance({

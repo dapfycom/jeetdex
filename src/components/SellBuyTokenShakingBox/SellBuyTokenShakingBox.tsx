@@ -1,4 +1,5 @@
 'use client';
+import { generateLightColor } from '@/utils/general';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
@@ -55,14 +56,6 @@ const values = [
   { user: 'peggy', amount: 0.134, token: 'WALDO', type: 'bought' },
   { user: 'trent', amount: 0.137, token: 'FRED', type: 'sold' }
 ];
-
-// Función para generar un color claro aleatorio
-const generateLightColor = () => {
-  const r = Math.floor(Math.random() * 156) + 100; // Valores entre 100 y 255 para asegurar colores claros
-  const g = Math.floor(Math.random() * 156) + 100;
-  const b = Math.floor(Math.random() * 156) + 100;
-  return `rgb(${r}, ${g}, ${b})`;
-};
 
 const SellBuyTokenShakingBox = () => {
   const [index, setIndex] = useState(0);
