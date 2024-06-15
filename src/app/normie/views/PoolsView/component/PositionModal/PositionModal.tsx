@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog';
+import { Slider } from '@/components/ui/slider';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import useTxNotification from '@/hooks/useTxNotification';
 import { IElrondAccountToken } from '@/types/scTypes';
@@ -16,6 +17,8 @@ import {
   formatTokenI,
   get_both_tokens_for_given_position
 } from '@/utils/mx-utils';
+import BigNumber from 'bignumber.js';
+import { useState } from 'react';
 import { removeLiquidity } from '../../utils/functions';
 import { IPoolPair } from '../../utils/types';
 
@@ -32,29 +35,41 @@ const PositionModal = ({
 }) => {
   console.log(pool, liquidity);
   const { mutate } = useGetUserTokens();
-
+  const [percentage, setPercentage] = useState(100);
   const onSuccess = () => {
     mutate();
   };
 
-  const { firstTokenAmount, secondTokenAmount } =
-    get_both_tokens_for_given_position(liquidity?.balance, pool);
-
-  console.log(firstTokenAmount, secondTokenAmount);
   const { setSessionId } = useTxNotification({
     onSuccess: onSuccess
   });
 
+  const withdrawLiquidityAmount = new BigNumber(liquidity.balance)
+    .times(percentage)
+    .div(100)
+    .toString();
+
+  const { firstTokenAmount, secondTokenAmount } =
+    get_both_tokens_for_given_position(withdrawLiquidityAmount, pool);
+
   const handleRemoveLiquidity = async () => {
-    const res = await removeLiquidity(pool.address, liquidity, {
-      firstTokenAmount: calculateSlippageAmount(5, firstTokenAmount).toString(),
-      secondTokenAmount: calculateSlippageAmount(
-        5,
-        secondTokenAmount
-      ).toString()
-    });
+    const res = await removeLiquidity(
+      pool.address,
+      { ...liquidity, balance: withdrawLiquidityAmount },
+      {
+        firstTokenAmount: calculateSlippageAmount(
+          5,
+          firstTokenAmount
+        ).toString(),
+        secondTokenAmount: calculateSlippageAmount(
+          5,
+          secondTokenAmount
+        ).toString()
+      }
+    );
     setSessionId(res.sessionId);
   };
+
   return (
     <Dialog onOpenChange={onToggle} open={isOpen}>
       <DialogContent>
@@ -96,13 +111,24 @@ const PositionModal = ({
               </div>
             </div>
 
+            <Slider
+              defaultValue={[percentage]}
+              max={100}
+              step={1}
+              onValueChange={(number) => setPercentage(number[0])}
+            />
+
             <div className='flex items-center gap-3 mt-8'>
               <Button className='' onClick={handleRemoveLiquidity}>
                 Remove LP
               </Button>
 
               <div className='text-gray-300 text-lg align-middle'>
-                {formatBalance(liquidity)} {formatTokenI(liquidity.identifier)}
+                {formatBalance({
+                  balance: withdrawLiquidityAmount,
+                  decimals: liquidity.decimals
+                })}{' '}
+                {formatTokenI(liquidity.identifier)}
               </div>
             </div>
           </DialogDescription>
