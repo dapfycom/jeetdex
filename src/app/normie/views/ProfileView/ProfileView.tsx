@@ -1,19 +1,11 @@
 'use client';
-import Address from '@/components/Address';
-import { network } from '@/config';
+import GoBackButton from '@/components/GoBackButton';
 import { fetchAxiosJeetdex } from '@/services/rest/api';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader2 } from 'lucide-react';
-import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import useSWR from 'swr';
 import ProfileContext, { ContextType } from './ProfileContext';
 import ProfileTabs from './components/Tabs';
 import UserAvatar from './components/UpdateUserImg';
-const EditProfile = dynamic(() => import('./components/EditProfile'), {
-  ssr: false
-});
 
 const ProfileView = () => {
   const { data, isLoading } = useSWR<{ data: ContextType }>(
@@ -28,36 +20,21 @@ const ProfileView = () => {
       </div>
     );
   }
-  const user = data?.data;
   return (
     <ProfileContext ctxValue={data?.data}>
-      <div
-        key='1'
-        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl w-full m-auto mt-8 sm:mt-0'
-      >
-        <UserAvatar />
-        <EditProfile />
-
-        <div className='flex flex-col sm:flex-row gap-2 items-center space-x-2 mb-4'>
-          <div className='flex items-center'>
-            <FontAwesomeIcon icon={faHeart} className='text-red-500  w-5 h-5' />
-            <span className='ml-1'>
-              Likes received: {user._count.likesReceived}
-            </span>
-          </div>
+      <div className='mt-8'>
+        <div className='flex justify-center w-full mb-3'>
+          <GoBackButton>[Go back]</GoBackButton>
         </div>
-        <Address address={user.address} />
-
-        <Link
-          className='block mb-4 text-blue-500 underline'
-          href={`${network.explorerAddress}/accounts/${user.address}`}
-          target='_blank'
+        <div
+          key='1'
+          className='flex flex-col h-fit max-h-[800px]  items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl w-full m-auto '
         >
-          View on Explorer
-        </Link>
+          <UserAvatar />
 
-        <div className='flex space-x-4 border-b overflow-auto w-full'>
-          <ProfileTabs />
+          <div className='flex space-x-4 border-b overflow-x-auto w-full'>
+            <ProfileTabs />
+          </div>
         </div>
       </div>
     </ProfileContext>

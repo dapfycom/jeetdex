@@ -83,7 +83,7 @@ const EditProfile = () => {
   return (
     <Dialog onOpenChange={onToggle} open={isOpen}>
       <DialogTrigger asChild>
-        <Button className='text-xs mb-4 items-center ' variant='outline'>
+        <Button className='text-xs mb-1 items-center ' variant='outline'>
           Edit profile
           <FontAwesomeIcon icon={faPencil} className='ml-2 w-4 h-4' />
         </Button>

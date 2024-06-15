@@ -54,7 +54,7 @@ const ProfileTabs = () => {
         <TabsContent
           key={tab.value}
           value={tab.value}
-          className='px-3 sm:px-8 w-full '
+          className='px-3 sm:px-8 w-full overflow-y-auto'
         >
           {<tab.component />}
         </TabsContent>
