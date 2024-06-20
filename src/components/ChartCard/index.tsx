@@ -1,41 +1,32 @@
 import { useEffect, useRef } from 'react';
 import {
   ChartingLibraryWidgetOptions,
-  LanguageCode,
   ResolutionString,
   widget
 } from '../../../public/static/charting_library';
+import config from './datafeed';
 
-export const TVChartContainer = (
-  props: Partial<ChartingLibraryWidgetOptions>
-) => {
+export const TVChartContainer = () => {
+  console.log('render');
+
   const chartContainerRef =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
 
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
-      symbol: props.symbol,
-      // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new (window as any).Datafeeds.UDFCompatibleDatafeed(
-        'https://demo_feed.tradingview.com',
-        undefined,
-        {
-          maxResponseLength: 1000,
-          expectedOrder: 'latestFirst'
-        }
-      ),
-      interval: props.interval as ResolutionString,
+      symbol: 'JEETDEX-fa1a41',
+      interval: '1D' as ResolutionString,
+      library_path: 'static/charting_library/',
+      locale: 'en',
+      charts_storage_url: 'https://saveload.tradingview.com',
+      charts_storage_api_version: '1.1',
+      client_id: 'tradingview.com',
+      user_id: 'public_user_id',
+      fullscreen: false,
+      autosize: true,
+      datafeed: config,
       container: chartContainerRef.current,
-      library_path: props.library_path,
-      locale: props.locale as LanguageCode,
-      disabled_features: ['use_localstorage_for_settings'],
-      enabled_features: ['study_templates'],
-      charts_storage_url: props.charts_storage_url,
-      charts_storage_api_version: props.charts_storage_api_version,
-      client_id: props.client_id,
-      user_id: props.user_id,
-      fullscreen: props.fullscreen,
-      autosize: props.autosize,
+
       theme: 'dark'
     };
 
@@ -63,7 +54,7 @@ export const TVChartContainer = (
     return () => {
       tvWidget.remove();
     };
-  }, [props]);
+  }, []);
 
   return (
     <>

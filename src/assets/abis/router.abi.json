@@ -447,6 +447,37 @@
             "outputs": []
         }
     ],
+    "events": [
+        {
+            "identifier": "pairSwapEnabled",
+            "inputs": [
+                {
+                    "name": "first_token_id",
+                    "type": "TokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "second_token_id",
+                    "type": "TokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "caller",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "epoch",
+                    "type": "u64",
+                    "indexed": true
+                },
+                {
+                    "name": "swap_enabled_event",
+                    "type": "UserPairSwapEnabledEvent"
+                }
+            ]
+        }
+    ],
     "esdtAttributes": [],
     "hasCallback": true,
     "types": {
@@ -543,6 +574,27 @@
                 {
                     "name": "second_token_id",
                     "type": "TokenIdentifier"
+                }
+            ]
+        },
+        "UserPairSwapEnabledEvent": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "caller",
+                    "type": "Address"
+                },
+                {
+                    "name": "first_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "second_token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "pair_address",
+                    "type": "Address"
                 }
             ]
         }
