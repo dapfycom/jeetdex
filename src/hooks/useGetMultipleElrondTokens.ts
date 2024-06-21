@@ -45,6 +45,8 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
           assets: {
             svgUrl: '/images/egld.svg'
           },
+          burnt: '0',
+          initialMinted: '0',
 
           price: egldData.price,
           marketCap: egldData.marketCap,
