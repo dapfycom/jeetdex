@@ -1,6 +1,7 @@
 'use client';
 import ChartCard from '@/components/ChartCard/ChartCard';
 import Chats from '@/components/ChatsCard/Chats';
+import HoldersList from '@/components/HoldersList/HoldersList';
 import Trades from '@/components/Trades/Trades';
 import UserTrades from '@/components/Trades/UserTrades';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -93,7 +94,10 @@ const SwapContent = () => {
           )}
         >
           <SwapCardContainer />
-          <TokenSocials tokenIdentifier={poolPair?.firstTokenId} />
+          <div className='flex flex-col gap-4'>
+            <TokenSocials tokenIdentifier={poolPair?.firstTokenId} />
+            <HoldersList tokenIdentifier={poolPair?.firstTokenId} />
+          </div>
         </div>
       </div>
       <div

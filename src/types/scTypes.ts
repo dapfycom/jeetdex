@@ -193,6 +193,8 @@ export interface ICoreToken {
 
 export interface IElrondToken extends ICoreToken {
   type: ElrondType;
+  burnt: string;
+  initialMinted: string;
   owner?: string;
   isPaused?: boolean;
   assets: {
