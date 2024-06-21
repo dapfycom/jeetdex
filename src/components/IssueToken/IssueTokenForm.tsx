@@ -18,10 +18,23 @@ import IssueField from './IssueField';
 import IssueTokenSwitch from './IssueTokenSwich';
 
 export const IssueTokenSchema = z.object({
-  name: z.string().min(1),
-  ticker: z.string().min(1),
-  mintAmount: z.string().min(1),
-  decimals: z.string().min(1),
+  name: z.string().min(1).regex(/^\S*$/, 'name must not contain whitespace'),
+  ticker: z
+    .string()
+    .min(1)
+    .regex(/^\S*$/, 'ticker must not contain whitespace'),
+  mintAmount: z
+    .string()
+    .min(1)
+    .refine((val) => !isNaN(Number(val)), {
+      message: 'mintAmount must be a number'
+    }),
+  decimals: z
+    .string()
+    .min(1)
+    .refine((val) => !isNaN(Number(val)), {
+      message: 'decimals must be a number'
+    }),
   properties: z.object({
     canFreeze: z.boolean(),
     canWipe: z.boolean(),
@@ -54,6 +67,10 @@ export default function IssueTokenForm() {
   const { setSessionId } = useTxNotification({});
 
   async function onSubmit(data: z.infer<typeof IssueTokenSchema>) {
+    console.log(data);
+    if (data) {
+      return;
+    }
     const tx1 = interactions.metachain.EGLDPaymentOnlyTx({
       value: 0.05,
       functionName: 'issue',
