@@ -120,7 +120,7 @@ export const useGetTokenRatio = (
     if (data?.data) {
       const displayValue = getRealBalance(
         data?.data as BigNumber,
-        tokenOutDetails.elrondToken.decimals,
+        tokenOutDetails?.elrondToken.decimals,
         true
       ).toString();
       console.log(displayValue);

@@ -50,6 +50,7 @@ const SellBuyTokenShakingBox = () => {
   }, []);
 
   const { data } = useSWR<ISwapInEventData>('/lastSwapTx', fetchEventsApiData);
+  console.log(data);
 
   const currentValue: {
     user: string;

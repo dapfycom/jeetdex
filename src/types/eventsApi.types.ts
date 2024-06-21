@@ -12,3 +12,11 @@ export interface ISwapInEventData {
   epoch: number;
   timestamp: number;
 }
+
+export interface IPairCreatedEventData {
+  caller: string;
+  firstToken: string;
+  secondToken: string;
+  address: string;
+  date: string;
+}
