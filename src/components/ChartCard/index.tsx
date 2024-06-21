@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import {
   ChartingLibraryWidgetOptions,
   ResolutionString,
@@ -6,7 +6,7 @@ import {
 } from '../../../public/static/charting_library';
 import config from './datafeed';
 
-export const TVChartContainer = () => {
+const TVChartContainer = () => {
   console.log('render');
 
   const chartContainerRef =
@@ -14,7 +14,7 @@ export const TVChartContainer = () => {
 
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
-      symbol: 'JEETDEX-fa1a41',
+      symbol: 'KAKA-88b332',
       interval: '1D' as ResolutionString,
       library_path: 'static/charting_library/',
       locale: 'en',
@@ -62,3 +62,5 @@ export const TVChartContainer = () => {
     </>
   );
 };
+
+export default memo(TVChartContainer);

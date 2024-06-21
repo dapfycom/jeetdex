@@ -6,10 +6,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import TokenInfo from './TokenInfo';
 
-const TVChartContainer = dynamic(
-  () => import('./index').then((mod) => mod.TVChartContainer),
-  { ssr: false }
-);
+const TVChartContainer = dynamic(() => import('./index'), { ssr: false });
 interface IProps {
   poolPair?: IPoolPair;
 }

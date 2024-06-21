@@ -1,9 +1,8 @@
-import { tokensID } from '@/config';
 import { bars } from './fakeData';
 
 const configurationData = {
   // Represents the resolutions for bars supported by your datafeed
-  supported_resolutions: ['1D'],
+  supported_resolutions: ['1D', '1W', '1M'],
   // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
   exchanges: [
     {
@@ -31,15 +30,15 @@ async function getAllSymbols(): Promise<
     {
       description: 'Token of the exchange',
       exchange: 'Jeetdex',
-      symbol: 'JEETDEX-fa1a41',
-      ticker: 'JEETDEX',
+      symbol: 'JEETDEX',
+      ticker: 'JEETDEX-fa1a41',
       type: 'crypto'
     },
     {
       description: 'Kaka memecoin 💩',
       exchange: 'Jeetdex',
-      symbol: 'KAKA-88b332',
-      ticker: 'KAKA',
+      symbol: 'KAKA',
+      ticker: 'KAKA-88b332',
       type: 'crypto'
     }
   ];
@@ -69,13 +68,10 @@ const config = {
     symbolName,
     onSymbolResolvedCallback,
     onResolveErrorCallback
-    // extension
   ) => {
     console.log('[resolveSymbol]: Method call', symbolName);
     const symbols = await getAllSymbols();
-    console.log(symbols);
-
-    const symbolItem = symbols.find(({ symbol }) => symbol === symbolName);
+    const symbolItem = symbols.find(({ ticker }) => ticker === symbolName);
     if (!symbolItem) {
       console.log('[resolveSymbol]: Cannot resolve symbol', symbolName);
       onResolveErrorCallback('Cannot resolve symbol');
@@ -109,10 +105,16 @@ const config = {
     onHistoryCallback,
     onErrorCallback
   ) => {
-    const { from, to /* firstDataRequest */ } = periodParams;
+    const { from, to } = periodParams;
+    console.log({
+      from,
+      to
+    });
     console.log('[getBars]: Method call', symbolInfo, resolution, from, to);
+
     const urlParameters = {
-      fsym: tokensID.jeet,
+      e: 'JEETDEX',
+      fsym: 'JEET-2346a',
       tsym: symbolInfo.ticker,
       toTs: to,
       limit: 2000
@@ -120,20 +122,11 @@ const config = {
     const query = Object.keys(urlParameters)
       .map((name) => `${name}=${encodeURIComponent(urlParameters[name])}`)
       .join('&');
-
-    console.log(query);
-
+    console.log({ query });
     try {
-      let currentBars: {
-        time: number;
-        low: number;
-        high: number;
-        open: number;
-        close: number;
-        isLastBar?: boolean;
-        isBarClosed?: boolean;
-      }[] = bars;
-      currentBars.forEach((bar) => {
+      let currentBars = [];
+
+      bars.forEach((bar) => {
         if (bar.time >= from && bar.time < to) {
           currentBars = [
             ...currentBars,
@@ -147,8 +140,8 @@ const config = {
           ];
         }
       });
-
-      console.log(`[getBars]: returned ${bars.length} bar(s)`);
+      console.log(`[getcurrentBars]: returned ${currentBars.length} bar(s)`);
+      console.log({ currentBars });
       onHistoryCallback(currentBars, { noData: false });
     } catch (error) {
       console.log('[getBars]: Get error', error);
@@ -160,7 +153,6 @@ const config = {
     resolution,
     onRealtimeCallback,
     subscriberUID
-    // onResetCacheNeededCallback
   ) => {
     console.log(
       '[subscribeBars]: Method call with subscriberUID:',
