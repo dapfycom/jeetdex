@@ -12,6 +12,8 @@ interface IProps {
   poolPair?: IPoolPair;
 }
 export default memo(function ChartCard({ poolPair }: IProps) {
+  console.log(poolPair);
+
   console.log('render');
   const isOpenCharts = useAppSelector(selectIsOpenCharts);
   const [isScriptReady, setIsScriptReady] = useState(false);
@@ -45,10 +47,10 @@ export default memo(function ChartCard({ poolPair }: IProps) {
       )}
     >
       <TokenInfo poolPair={poolPair} />
-      {isScriptReady && (
+      {isScriptReady && poolPair && (
         <TVChartContainer
-          tokenIdentifier={poolPair.firstTokenId}
-          key={poolPair.firstTokenId}
+          tokenIdentifier={poolPair?.firstTokenId}
+          key={poolPair?.firstTokenId}
         />
       )}
     </div>

@@ -57,7 +57,7 @@ const SwapContent = () => {
         )}
       >
         <div className='h-full'>
-          <div className=''>
+          <div className='h-[450px]'>
             <ChartCard poolPair={poolPair} />
           </div>
 

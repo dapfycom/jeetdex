@@ -108,7 +108,11 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
         </Button>
 
         {poolChart && (
-          <PoolChartModal isOpen={poolChart} toggleOpen={togglePoolChart} />
+          <PoolChartModal
+            isOpen={poolChart}
+            toggleOpen={togglePoolChart}
+            poolPair={pool}
+          />
         )}
         <Button
           variant='ghost'

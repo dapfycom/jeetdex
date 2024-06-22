@@ -1,10 +1,10 @@
-import { memo, useEffect, useRef } from 'react';
 import {
   ChartingLibraryWidgetOptions,
   IChartingLibraryWidget,
   ResolutionString,
   widget
-} from '../../../public/static/charting_library';
+} from '@/../public/static/charting_library';
+import { memo, useEffect, useRef } from 'react';
 import config from './datafeed';
 
 const TVChartContainer = ({ tokenIdentifier }: { tokenIdentifier: string }) => {
@@ -19,7 +19,7 @@ const TVChartContainer = ({ tokenIdentifier }: { tokenIdentifier: string }) => {
       interval: '1' as ResolutionString,
       debug: true,
 
-      library_path: 'static/charting_library/',
+      library_path: `${process.env.NEXT_PUBLIC_FRONTED_URL}/static/charting_library/`,
       locale: 'en',
       charts_storage_url: 'https://saveload.tradingview.com',
       charts_storage_api_version: '1.1',
@@ -35,29 +35,15 @@ const TVChartContainer = ({ tokenIdentifier }: { tokenIdentifier: string }) => {
 
     const tvWidget = new widget(widgetOptions);
     charWidgettRef.current = tvWidget;
-    tvWidget.onChartReady(() => {
-      tvWidget.headerReady().then(() => {
-        const button = tvWidget.createButton();
-        button.setAttribute('title', 'Click to show a notification popup');
-        button.classList.add('apply-common-tooltip');
-        button.addEventListener('click', () =>
-          tvWidget.showNoticeDialog({
-            title: 'Notification',
-            body: 'TradingView Charting Library API works correctly',
-            callback: () => {
-              console.log('Noticed!');
-            }
-          })
-        );
 
-        button.innerHTML = 'Check API';
-      });
-    });
+    return () => {
+      tvWidget.remove();
+    };
   }, []);
 
   return (
     <>
-      <div ref={chartContainerRef} className={'h-[450px]'} />
+      <div ref={chartContainerRef} className={'h-full'} />
     </>
   );
 };

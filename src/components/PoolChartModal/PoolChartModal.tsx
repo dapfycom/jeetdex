@@ -1,5 +1,6 @@
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 
+import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import ChartCard from '@/components/ChartCard/ChartCard';
 import {
   Tooltip,
@@ -11,9 +12,10 @@ import {
 interface IProps {
   isOpen: boolean;
   toggleOpen: () => void;
+  poolPair: IPoolPair;
 }
 
-const PoolChartModal = ({ isOpen, toggleOpen }: IProps) => {
+const PoolChartModal = ({ isOpen, toggleOpen, poolPair }: IProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={toggleOpen}>
       <DialogTrigger asChild>
@@ -26,9 +28,9 @@ const PoolChartModal = ({ isOpen, toggleOpen }: IProps) => {
           </Tooltip>
         </TooltipProvider>
       </DialogTrigger>
-      <DialogContent>
-        <div className='min-h-[400px]'>
-          <ChartCard />
+      <DialogContent className='sm:max-w-[1200px] px-4 pt-10 '>
+        <div className='h-full sm:min-h-[600px]'>
+          <ChartCard poolPair={poolPair} />
         </div>
       </DialogContent>
     </Dialog>
