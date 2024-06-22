@@ -54,7 +54,7 @@ const TokenInfo = ({ poolPair }: IProps) => {
             <span className='flex items-center'>
               <span className='text-primary mr-1'>created by</span>
               <Link
-                href={`/profile/${token.owner.id}`}
+                href={`/profile/${token.owner.address}`}
                 className='flex items-center'
               >
                 <Image

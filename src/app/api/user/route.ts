@@ -8,11 +8,11 @@ export async function GET(request: Request) {
   }
 
   const { searchParams } = new URL(request.url);
-  const id = searchParams.get('id');
-  console.log(id);
+  const userAddress = searchParams.get('userAddress');
+  console.log(userAddress);
 
   let data;
-  if (!id) {
+  if (!userAddress) {
     data = await prisma.users.findUnique({
       where: {
         address: session.address
@@ -38,7 +38,7 @@ export async function GET(request: Request) {
   } else {
     data = await prisma.users.findUnique({
       where: {
-        id: id
+        address: userAddress
       },
       include: {
         followed: {

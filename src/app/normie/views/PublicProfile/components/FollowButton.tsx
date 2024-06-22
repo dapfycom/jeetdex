@@ -13,7 +13,7 @@ const FollowButton = ({ user }) => {
   console.log(userInfo);
 
   const { userInfo: currentUserInfo } = useGetUserInfo();
-  const followed = userInfo?.data.followed.find(
+  const followed = userInfo?.data?.followed.find(
     (follow) => follow.followingId === currentUserInfo?.data.id
   );
   console.log(followed);

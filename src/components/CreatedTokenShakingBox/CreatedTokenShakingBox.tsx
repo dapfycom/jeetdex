@@ -3,7 +3,9 @@ import { fetchEventsApiData } from '@/services/rest/events';
 import { socket } from '@/services/ws';
 import { IPairCreatedEventData } from '@/types/eventsApi.types';
 import { generateLightColor } from '@/utils/general';
+import { formatTokenI } from '@/utils/mx-utils';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Button } from '../ui/button';
@@ -35,9 +37,7 @@ const CreatedTokenShakingBox = () => {
     '/lastPairCreated',
     fetchEventsApiData
   );
-  console.log(data);
   const currentValue = adaptPairCreatedData(pairCreatedData || data);
-  console.log(pairCreatedData);
 
   if (!currentValue) return null;
 
@@ -57,10 +57,20 @@ const CreatedTokenShakingBox = () => {
           height={20}
           className='rounded-full w-5 h-5'
         />
-        {/* Date in format 6/11/2024 */}
-        <div>{`${currentValue.user} created ${currentValue.token} on ${new Date(
-          currentValue.date
-        ).toLocaleDateString('en-US', {
+        <Link
+          href={`/profile/${currentValue.address}`}
+          className='hover:text-blue-700 hover:font-bold'
+        >
+          {currentValue.user}
+        </Link>
+        created
+        <Link
+          href={`/?swap=${currentValue.token}`}
+          className='hover:text-blue-700 hover:font-bold'
+        >
+          {formatTokenI(currentValue.token)}
+        </Link>
+        <div>{`on ${new Date(currentValue.date).toLocaleDateString('en-US', {
           month: '2-digit',
           day: '2-digit',
           year: 'numeric'

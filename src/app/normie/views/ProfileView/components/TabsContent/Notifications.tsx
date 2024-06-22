@@ -12,7 +12,7 @@ interface INotificationData {
   createdAt: Date;
   description: string;
   type: 'LIKE' | 'FOLLOW';
-  userId: string;
+  userAddress: string;
 }
 
 const Notifications = () => {
@@ -32,7 +32,7 @@ const Notifications = () => {
       username: l.likedBy.username,
       type: 'LIKE',
       createdAt: new Date(l.createdAt), // Store the original createdAt date
-      userId: l.likedById
+      userAddress: l.likedBy.address
     };
 
     return data;
@@ -47,7 +47,7 @@ const Notifications = () => {
         img: f.following.img,
         username: f.following.username,
         createdAt: new Date(f.createdAt), // Store the original createdAt date
-        userId: f.followingId
+        userAddress: f.following.address
       };
 
       return data;
@@ -72,7 +72,7 @@ const NotificationItem = ({
   createdAt,
   type,
   username,
-  userId
+  userAddress
 }: INotificationData) => {
   if (type === 'LIKE') {
     return (
@@ -83,7 +83,7 @@ const NotificationItem = ({
         <div className='flex-1'>
           <div className='flex items-center justify-between'>
             <div className='flex gap-3 items-end'>
-              <Link href={`/profile/${userId}`}>
+              <Link href={`/profile/${userAddress}`}>
                 <p className=' text-primary'>@{username}</p>
               </Link>
               <p className='text-sm text-gray-500 dark:text-gray-400'>
@@ -108,7 +108,7 @@ const NotificationItem = ({
       <div className='flex-1'>
         <div className='flex items-center justify-between'>
           <div className='flex gap-3 items-end'>
-            <Link href={`/profile/${userId}`}>
+            <Link href={`/profile/${userAddress}`}>
               <p className=' text-primary'>@{username}</p>
             </Link>
             <p className='text-sm text-gray-500 dark:text-gray-400'>

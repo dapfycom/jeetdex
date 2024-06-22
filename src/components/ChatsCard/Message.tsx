@@ -13,6 +13,7 @@ interface IMessage {
     username: string;
     id: string;
     img: string;
+    address: string;
   };
   message: string;
   image?: string;
@@ -51,7 +52,7 @@ const Message = ({
     >
       <div className='grid gap-1'>
         <div className='flex items-center gap-2'>
-          <Link href={`/profile/${user.id}`}>
+          <Link href={`/profile/${user.address}`}>
             <Avatar className='border w-5 h-5'>
               <AvatarImage alt={user.username} src={user.img} />
             </Avatar>

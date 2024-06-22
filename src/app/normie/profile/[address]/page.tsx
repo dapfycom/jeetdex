@@ -6,7 +6,7 @@ export async function generateStaticParams() {
   const users = await fetchUsersData();
 
   const generatedIdForUserPages = users.map((u) => ({
-    id: u.id
+    address: u.address
   }));
 
   console.log(generatedIdForUserPages);
@@ -14,8 +14,8 @@ export async function generateStaticParams() {
   return generatedIdForUserPages;
 }
 
-async function Page({ params }: { params: { id: string } }) {
-  return <PublicProfileView userId={params.id} />;
+async function Page({ params }: { params: { address: string } }) {
+  return <PublicProfileView userAddress={params.address} />;
 }
 
 export default Page;

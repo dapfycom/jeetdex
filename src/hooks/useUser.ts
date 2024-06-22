@@ -1,7 +1,7 @@
 import { fetchAxiosJeetdex } from '@/services/rest/api';
 import useSWR from 'swr';
 
-export const useGetSingleUserInfo = (id: string) => {
+export const useGetSingleUserInfo = (userAddress: string) => {
   const { data, error, isLoading, isValidating, mutate } = useSWR<{
     data: {
       id: string;
@@ -47,7 +47,7 @@ export const useGetSingleUserInfo = (id: string) => {
         likesReceived: number;
       };
     };
-  }>(`/user?id=${id}`, fetchAxiosJeetdex);
+  }>(`/user?userAddress=${userAddress}`, fetchAxiosJeetdex);
   console.log(data);
 
   return {

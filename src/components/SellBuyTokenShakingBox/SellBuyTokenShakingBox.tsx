@@ -5,6 +5,7 @@ import { ISwapInEventData } from '@/types/eventsApi.types';
 import { generateLightColor } from '@/utils/general';
 import { formatNumber, formatTokenI } from '@/utils/mx-utils';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Button } from '../ui/button';
@@ -57,6 +58,7 @@ const SellBuyTokenShakingBox = () => {
     amount: string;
     token: string;
     type: string;
+    address: string;
   } = adaptSwapInEventData(swapInTxEvent || data);
 
   if (!currentValue) return null;
@@ -77,9 +79,22 @@ const SellBuyTokenShakingBox = () => {
           height={20}
           className='rounded-full w-5 h-5'
         />
-        <div>{`${currentValue.user} ${currentValue.type} ${formatNumber(
-          currentValue.amount
-        )} JEET of ${formatTokenI(currentValue.token)}`}</div>
+        <div>
+          {' '}
+          <Link
+            href={`/profile/${currentValue.address}`}
+            className='hover:text-blue-700 hover:font-bold'
+          >
+            {currentValue.user}
+          </Link>{' '}
+          {`${currentValue.type} ${formatNumber(currentValue.amount)} JEET of`}{' '}
+          <Link
+            href={`/?swap=${currentValue.token}`}
+            className='hover:text-blue-700 hover:font-bold'
+          >
+            {formatTokenI(currentValue.token)}
+          </Link>
+        </div>
       </div>
     </Button>
   );

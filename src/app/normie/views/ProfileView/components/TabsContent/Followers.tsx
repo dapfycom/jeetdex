@@ -25,7 +25,7 @@ const Followers = () => {
                 <AvatarImage alt='Profile picture' src={follow.following.img} />
               </Avatar>
               <div>
-                <Link href={`/profile/${follow.following.id}`}>
+                <Link href={`/profile/${follow.following.address}`}>
                   <div className='text-lg font-bold'>
                     @{follow.following.username}
                   </div>

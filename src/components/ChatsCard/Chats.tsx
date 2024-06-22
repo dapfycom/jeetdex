@@ -166,7 +166,8 @@ const Chats = ({ poolPair }: IProps) => {
                           user={{
                             id: message.sender.id,
                             img: message.sender.img,
-                            username: message.sender.username
+                            username: message.sender.username,
+                            address: message.sender.address
                           }}
                           messageId={message.id}
                           poolPair={poolPair}

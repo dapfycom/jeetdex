@@ -10,10 +10,10 @@ import ProfileContext from './ProfileContext';
 import FollowButton from './components/FollowButton';
 import ProfileTabs from './components/Tabs';
 
-const PublicProfileView = ({ userId }: { userId: string }) => {
-  console.log(userId);
+const PublicProfileView = ({ userAddress }: { userAddress: string }) => {
+  console.log(userAddress);
 
-  const { userInfo } = useGetSingleUserInfo(userId);
+  const { userInfo } = useGetSingleUserInfo(userAddress);
   const user = userInfo?.data;
   if (!user) {
     return null;
