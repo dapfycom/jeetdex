@@ -3,9 +3,7 @@
 import * as React from 'react';
 
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
-import { Button } from '@/components/ui/button';
 import {
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
@@ -15,23 +13,12 @@ import {
 import { useAppSelector } from '@/hooks';
 import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
+import { Command, useCommandState } from 'cmdk';
 
 export function CommandDialogDemo() {
-  const [open, setOpen] = React.useState(false);
+  const [searchVal, setSearchVal] = React.useState('');
   const allPools = useAppSelector(selectGlobalData).pools;
   const { updateParams } = useUpdateUrlParams(['swap']);
-
-  React.useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === 'j' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setOpen((open) => !open);
-      }
-    };
-
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
-  }, []);
 
   const handleSelectToken = (value: string) => {
     const valueIdentifier = value.split(':')[1];
@@ -41,48 +28,57 @@ export function CommandDialogDemo() {
     const tokenIdentifier = ticker + '-' + parts[1];
 
     updateParams('swap', tokenIdentifier);
-    setOpen(false);
+    setSearchVal('');
   };
 
   return (
     <>
-      <Button
-        className='text-sm gap-5'
-        size='sm'
-        onClick={() => setOpen((open) => !open)}
-      >
-        Search token{' '}
-        <kbd className='pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-gray-700 px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 '>
-          <span className='text-xs'>⌘</span>J
-        </kbd>
-      </Button>
-      <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder='Search a token by ticker or LP contract' />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading='Suggestions'>
-            {allPools.map((pool) => {
-              return (
-                <CommandItem
-                  key={pool.address}
-                  className='cursor-pointer'
-                  value={`${pool.address}:${pool.firstTokenId}`}
-                  onSelect={handleSelectToken}
-                >
-                  <TokenImageSRC
-                    alt={pool.firstToken?.ticker}
-                    identifier={pool.firstTokenId}
-                    size={16}
-                    src={pool.firstToken?.assets?.svgUrl}
-                    className='h-4 w-4 rounded-full'
-                  />
-                  <span className='ml-2 '>{pool.firstTokenId}</span>
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
-        </CommandList>
-      </CommandDialog>
+      <Command className='relative w-full border-1 border-[#30364F] bg-[#1C243E] text-[#C4C4C4] placeholder-[#C4C4C4] '>
+        <CommandInput
+          placeholder='Search a token ...'
+          className=''
+          autoFocus={true}
+          value={searchVal}
+          onValueChange={setSearchVal}
+        />
+        <List allPools={allPools} handleSelectToken={handleSelectToken} />
+      </Command>
     </>
   );
 }
+
+const List = ({ allPools, handleSelectToken }) => {
+  const search = useCommandState((state) => state.search);
+  if (!search) return null;
+
+  return (
+    <CommandList className='absolute bg-card w-full'>
+      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandGroup heading='Suggestions'>
+        {allPools.map((pool) => {
+          return (
+            <SubItem
+              key={pool.address}
+              className='cursor-pointer'
+              value={`${pool.address}:${pool.firstTokenId}`}
+              onSelect={handleSelectToken}
+            >
+              <TokenImageSRC
+                alt={pool.firstToken?.ticker}
+                identifier={pool.firstTokenId}
+                size={16}
+                src={pool.firstToken?.assets?.svgUrl}
+                className='h-4 w-4 rounded-full'
+              />
+              <span className='ml-2 '>{pool.firstTokenId}</span>
+            </SubItem>
+          );
+        })}
+      </CommandGroup>
+    </CommandList>
+  );
+};
+
+const SubItem = (props) => {
+  return <CommandItem {...props} />;
+};
