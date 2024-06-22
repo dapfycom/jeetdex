@@ -24,11 +24,8 @@ interface IProps {
   isLoading: boolean;
   handlePercentAmount: (val: IElrondAccountToken, percent: number) => void;
   handleClear: () => void;
-  tokensPairs: { firstToken: string; secondToken: string; address: string }[];
-  normalDirection: boolean;
   handleChangeToField: (value: string) => void;
   handleChangeToToken: (value: IElrondToken) => void;
-  secondTokensForFirstToken: any[];
   pairSelected: { firstToken: string; secondToken: string; address: string };
   swapFields: () => void;
   toFieldElrondToken: IElrondToken;
@@ -43,12 +40,10 @@ const SwapCard = ({
   handleClear,
   handlePercentAmount: handleMax,
   isLoading,
-  normalDirection,
-  tokensPairs,
+
   handleChangeToField,
   handleChangeToToken,
   pairSelected,
-  secondTokensForFirstToken,
   swapFields: swapFileds,
   toFieldElrondToken
 }: IProps) => {
@@ -65,9 +60,7 @@ const SwapCard = ({
             isLoadingInput={isLoading}
             handlePercentAmount={handleMax}
             clear={handleClear}
-            tokensIdentifiers={tokensPairs.map((t) =>
-              normalDirection ? t.firstToken : t.secondToken
-            )}
+            tokensIdentifiers={[]}
             label='From'
             dollarValue={
               toFieldElrondToken
@@ -100,9 +93,7 @@ const SwapCard = ({
             onChange={handleChangeToField}
             onChangeToken={handleChangeToToken}
             isLoadingInput={isLoading}
-            tokensIdentifiers={Array.from(
-              new Set([...secondTokensForFirstToken])
-            )}
+            tokensIdentifiers={[]}
             label='To'
           />
         </CardContent>

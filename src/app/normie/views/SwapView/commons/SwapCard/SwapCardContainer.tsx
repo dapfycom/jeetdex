@@ -73,13 +73,6 @@ const SwapCardContainer = () => {
 
   const { tokensPairs } = useGetSwapbleTokens();
 
-  const secondTokensForFirstToken = tokensPairs
-    .filter((t) =>
-      normalDirection
-        ? t.firstToken === fromField.selectedToken
-        : t.secondToken === fromField.selectedToken
-    )
-    .map((t) => (normalDirection ? t.secondToken : t.firstToken));
   console.log(tokensPairs);
 
   const pairSelected = tokensPairs.find((t) =>
@@ -119,12 +112,9 @@ const SwapCardContainer = () => {
       handleClear={handleClear}
       handlePercentAmount={handlePercentAmount}
       isLoading={false}
-      normalDirection={normalDirection}
       pairSelected={pairSelected}
-      secondTokensForFirstToken={secondTokensForFirstToken}
       swapFields={swapFields}
       toField={toField}
-      tokensPairs={tokensPairs}
       toFieldElrondToken={elrondToken}
     />
   );
