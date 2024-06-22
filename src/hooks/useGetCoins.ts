@@ -19,7 +19,7 @@ export const useGetCoins = (tokenIdentifier) => {
       title?: string;
       description?: string;
     };
-  }>(`/coins/${tokenIdentifier}`, fetchAxiosJeetdex);
+  }>(tokenIdentifier ? `/coins/${tokenIdentifier}` : null, fetchAxiosJeetdex);
 
   return {
     coinRes,

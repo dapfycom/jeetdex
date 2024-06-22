@@ -1,29 +1,40 @@
+import { selectIsOpenCharts } from '@/app/normie/views/SwapView/lib/swap-slice';
 import { network } from '@/config';
+import { useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { fetchElrondData } from '@/services/rest/elrond';
 import { formatAddress, formatNumber } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
+import { memo } from 'react';
 import useSWR from 'swr';
 import { getBalancePercentage } from './helper';
 
 const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
+  const isOpenHolders = useAppSelector(selectIsOpenCharts);
+
+  console.log('render');
+
   const { data: holders } = useSWR<
     {
       address: string;
       balance: string;
     }[]
   >(
-    tokenIdentifier ? `/tokens/${tokenIdentifier}/accounts` : null,
+    isOpenHolders && tokenIdentifier
+      ? `/tokens/${tokenIdentifier}/accounts`
+      : null,
     fetchElrondData
   );
-  const { elrondToken } = useGetElrondToken(tokenIdentifier);
+  const { elrondToken } = useGetElrondToken(
+    isOpenHolders ? tokenIdentifier : null
+  );
   console.log(elrondToken);
 
   const totalBalance = new BigNumber(elrondToken?.initialMinted || 0).minus(
     elrondToken?.burnt || 0
   );
 
-  if (!holders) return null;
+  if (!holders || !isOpenHolders) return null;
   return (
     <div className='text-left'>
       <div className='text-lg mb-2'>Holder distribution</div>
@@ -54,4 +65,4 @@ const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
   );
 };
 
-export default HoldersList;
+export default memo(HoldersList);

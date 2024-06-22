@@ -3,7 +3,7 @@ import {
   fetchUsersData
 } from '@/services/others/cache.server';
 import PublicProfileView from '../../views/PublicProfile/PublicProfileeView';
-export const dynamicParams = false; // true | false,
+export const dynamicParams = true; // true | false,
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {
   const users = await fetchUsersData();

@@ -16,6 +16,11 @@ export interface SwapState {
   normalDirection: boolean;
   rate: number;
   poolPair: string;
+
+  isOPenChats: boolean;
+  isOpenCharts: boolean;
+  isOpenTokenSocials: boolean;
+  isOpenTokenHolders: boolean;
 }
 
 const initialState: SwapState = {
@@ -31,7 +36,11 @@ const initialState: SwapState = {
   },
   normalDirection: false,
   rate: 0,
-  poolPair: ''
+  poolPair: '',
+  isOpenCharts: true,
+  isOPenChats: true,
+  isOpenTokenSocials: true,
+  isOpenTokenHolders: true
 };
 
 export const swapAggregator = createSlice({
@@ -77,6 +86,20 @@ export const swapAggregator = createSlice({
     },
     onChangeDirection: (state, action: PayloadAction<boolean>) => {
       state.normalDirection = action.payload;
+    },
+
+    onToggleChats: (state) => {
+      state.isOPenChats = !state.isOPenChats;
+    },
+
+    OnToggleCharts: (state) => {
+      state.isOpenCharts = !state.isOpenCharts;
+    },
+    OnToggleTokenSocials: (state) => {
+      state.isOpenTokenSocials = !state.isOpenTokenSocials;
+    },
+    OnToggleTokenHolders: (state) => {
+      state.isOpenTokenHolders = !state.isOpenTokenHolders;
     }
   }
 });
@@ -97,6 +120,13 @@ export const selectFromField = (state: AppState) => state.swap.fromField;
 export const selectToField = (state: AppState) => state.swap.toField;
 export const selectPoolPair = (state: AppState) => state.swap.poolPair;
 
+export const selectIsOpenChats = (state: AppState) => state.swap.isOPenChats;
+export const selectIsOpenCharts = (state: AppState) => state.swap.isOpenCharts;
+export const selectIsOpenTokenSocials = (state: AppState) =>
+  state.swap.isOpenTokenSocials;
+export const selectIsOpenTokenHolders = (state: AppState) =>
+  state.swap.isOpenTokenHolders;
+
 export const {
   onChageFromFieldValue,
   onChageFromFieldValueDecimals,
@@ -107,6 +137,10 @@ export const {
   onChangeToFieldValueDecimals,
   onSwapFields,
   onChangePoolPair,
-  onChangeDirection
+  onChangeDirection,
+  onToggleChats,
+  OnToggleCharts,
+  OnToggleTokenSocials,
+  OnToggleTokenHolders
 } = swapAggregator.actions;
 export default swapAggregator.reducer;

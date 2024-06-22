@@ -11,7 +11,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: 'Jeetdex',
+  title: 'Jeet Dex',
   description:
     'Best memecoin dex on the Multiversx blockchain. Trade your favorite memecoins with ease.',
   viewport: {

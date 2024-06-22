@@ -55,16 +55,6 @@ const TVChartContainer = ({ tokenIdentifier }: { tokenIdentifier: string }) => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   if (charWidgettRef.current) {
-  //   }
-  //   charWidgettRef.current.setSymbol(
-  //     tokenIdentifier,
-  //     '1' as ResolutionString,
-  //     () => {}
-  //   );
-  // }, [tokenIdentifier]);
-
   return (
     <>
       <div ref={chartContainerRef} className={'h-[450px]'} />

@@ -1,20 +1,20 @@
 'use client';
 import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
-import { useSwapContext } from '@/app/normie/views/SwapView/SwapContext';
+import { selectIsOpenCharts } from '@/app/normie/views/SwapView/lib/swap-slice';
+import { useAppSelector } from '@/hooks';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import TokenInfo from './TokenInfo';
 
 const TVChartContainer = dynamic(() => import('./index'), { ssr: false });
 interface IProps {
   poolPair?: IPoolPair;
 }
-export default function ChartCard({ poolPair }: IProps) {
+export default memo(function ChartCard({ poolPair }: IProps) {
   console.log('render');
-
+  const isOpenCharts = useAppSelector(selectIsOpenCharts);
   const [isScriptReady, setIsScriptReady] = useState(false);
-  const swapCtx = useSwapContext();
   useEffect(() => {
     const script = document.createElement('script');
     script.src = '/static/datafeeds/udf/dist/bundle.js';
@@ -41,7 +41,7 @@ export default function ChartCard({ poolPair }: IProps) {
     <div
       className={cn(
         'h-full min-h-[450px]  rounded-sm  overflow-hidden md:block hidden',
-        !swapCtx.isOpenCharts && 'md:hidden'
+        !isOpenCharts && 'md:hidden'
       )}
     >
       <TokenInfo poolPair={poolPair} />
@@ -53,4 +53,4 @@ export default function ChartCard({ poolPair }: IProps) {
       )}
     </div>
   );
-}
+});

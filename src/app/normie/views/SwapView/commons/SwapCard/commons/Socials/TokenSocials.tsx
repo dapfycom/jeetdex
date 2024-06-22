@@ -1,12 +1,15 @@
+import { useAppSelector } from '@/hooks';
 import { useGetCoins } from '@/hooks/useGetCoins';
 import Image from 'next/image';
+import { memo } from 'react';
+import { selectIsOpenCharts } from '../../../../lib/swap-slice';
 interface IProps {
   tokenIdentifier: string;
 }
 const TokenSocials = ({ tokenIdentifier }: IProps) => {
-  const { coinRes } = useGetCoins(tokenIdentifier);
-  console.log(coinRes);
-  if (!coinRes?.data) {
+  const isOpenTokenSocials = useAppSelector(selectIsOpenCharts);
+  const { coinRes } = useGetCoins(isOpenTokenSocials ? tokenIdentifier : null);
+  if (!coinRes?.data || !isOpenTokenSocials) {
     return null;
   }
 
@@ -68,4 +71,4 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
   );
 };
 
-export default TokenSocials;
+export default memo(TokenSocials);
