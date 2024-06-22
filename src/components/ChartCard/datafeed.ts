@@ -1,8 +1,9 @@
-import { bars } from './fakeData';
+import store from '@/redux/store';
+import { formatTokenI } from '@/utils/mx-utils';
 
 const configurationData = {
   // Represents the resolutions for bars supported by your datafeed
-  supported_resolutions: ['1D', '1W', '1M'],
+  supported_resolutions: ['1', '5'],
   // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
   exchanges: [
     {
@@ -26,22 +27,26 @@ async function getAllSymbols(): Promise<
     type: 'crypto';
   }[]
 > {
-  return [
-    {
-      description: 'Token of the exchange',
+  const coinsInfo = store.getState().dapp.globalData.coins;
+
+  return store.getState().dapp.globalData.pools.map((pool) => {
+    const info = coinsInfo.find(
+      (coin) => coin.identifier === pool.firstToken.identifier
+    );
+    console.log(info);
+
+    return {
+      symbol: formatTokenI(pool.firstToken.ticker),
+      ticker: pool.firstToken.identifier,
+      description:
+        pool.firstToken.assets?.description ||
+        info?.description ||
+        formatTokenI(pool.firstToken.ticker),
       exchange: 'Jeetdex',
-      symbol: 'JEETDEX',
-      ticker: 'JEETDEX-fa1a41',
-      type: 'crypto'
-    },
-    {
-      description: 'Kaka memecoin 💩',
-      exchange: 'Jeetdex',
-      symbol: 'KAKA',
-      ticker: 'KAKA-88b332',
-      type: 'crypto'
-    }
-  ];
+      type: 'crypto',
+      logo_urls: [info?.img || '/assets/img/coin-placeholder.svg']
+    };
+  });
 }
 const config = {
   onReady: (callback) => {
@@ -62,7 +67,11 @@ const config = {
         symbol.ticker.toLowerCase().indexOf(userInput.toLowerCase()) !== -1;
       return isExchangeValid && isFullSymbolContainsInput;
     });
-    onResultReadyCallback(newSymbols);
+    onResultReadyCallback(
+      newSymbols.map((s) => ({
+        ...s
+      }))
+    );
   },
   resolveSymbol: async (
     symbolName,
@@ -79,21 +88,21 @@ const config = {
     }
     // Symbol information object
     const symbolInfo = {
-      ticker: symbolItem.ticker,
+      ...symbolItem,
       name: symbolItem.symbol,
-      description: symbolItem.description,
-      type: symbolItem.type,
       session: '24x7',
       timezone: 'Etc/UTC',
-      exchange: symbolItem.exchange,
-      minmov: 1,
+      minmov: 0.1,
       pricescale: 100,
-      has_intraday: false,
+      has_intraday: true,
+      intraday_multipliers: ['1'],
       visible_plots_set: 'ohlc',
       has_weekly_and_monthly: false,
       supported_resolutions: configurationData.supported_resolutions,
       volume_precision: 2,
-      data_status: 'streaming'
+      data_status: 'streaming',
+
+      variable_tick_size: '0.000000001'
     };
     console.log('[resolveSymbol]: Symbol resolved', symbolName);
     onSymbolResolvedCallback(symbolInfo);
@@ -124,7 +133,11 @@ const config = {
       .join('&');
     console.log({ query });
     try {
+      const bars = await fetch(
+        `${process.env.NEXT_PUBLIC_EVENTS_API_URL}/datafeed?${query}`
+      ).then((response) => response.json() || []);
       let currentBars = [];
+      console.log(bars);
 
       bars.forEach((bar) => {
         if (bar.time >= from && bar.time < to) {

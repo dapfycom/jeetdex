@@ -45,7 +45,12 @@ export default function ChartCard({ poolPair }: IProps) {
       )}
     >
       <TokenInfo poolPair={poolPair} />
-      {isScriptReady && <TVChartContainer />}
+      {isScriptReady && (
+        <TVChartContainer
+          tokenIdentifier={poolPair.firstTokenId}
+          key={poolPair.firstTokenId}
+        />
+      )}
     </div>
   );
 }

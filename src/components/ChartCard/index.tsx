@@ -1,21 +1,24 @@
 import { memo, useEffect, useRef } from 'react';
 import {
   ChartingLibraryWidgetOptions,
+  IChartingLibraryWidget,
   ResolutionString,
   widget
 } from '../../../public/static/charting_library';
 import config from './datafeed';
 
-const TVChartContainer = () => {
+const TVChartContainer = ({ tokenIdentifier }: { tokenIdentifier: string }) => {
   console.log('render');
 
   const chartContainerRef =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
-
+  const charWidgettRef = useRef<IChartingLibraryWidget>();
   useEffect(() => {
     const widgetOptions: ChartingLibraryWidgetOptions = {
-      symbol: 'KAKA-88b332',
-      interval: '1D' as ResolutionString,
+      symbol: tokenIdentifier,
+      interval: '1' as ResolutionString,
+      debug: true,
+
       library_path: 'static/charting_library/',
       locale: 'en',
       charts_storage_url: 'https://saveload.tradingview.com',
@@ -26,12 +29,12 @@ const TVChartContainer = () => {
       autosize: true,
       datafeed: config,
       container: chartContainerRef.current,
-
+      enabled_features: ['show_symbol_logos'],
       theme: 'dark'
     };
 
     const tvWidget = new widget(widgetOptions);
-
+    charWidgettRef.current = tvWidget;
     tvWidget.onChartReady(() => {
       tvWidget.headerReady().then(() => {
         const button = tvWidget.createButton();
@@ -50,11 +53,17 @@ const TVChartContainer = () => {
         button.innerHTML = 'Check API';
       });
     });
-
-    return () => {
-      tvWidget.remove();
-    };
   }, []);
+
+  // useEffect(() => {
+  //   if (charWidgettRef.current) {
+  //   }
+  //   charWidgettRef.current.setSymbol(
+  //     tokenIdentifier,
+  //     '1' as ResolutionString,
+  //     () => {}
+  //   );
+  // }, [tokenIdentifier]);
 
   return (
     <>

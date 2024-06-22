@@ -1,4 +1,5 @@
 import { adaptAllPairsContractData } from '@/adapters/routerAdapter';
+import { tokensID } from '@/config';
 import prisma from '@/db';
 import { getFromAllTokens } from '@/services/rest/elrond/tokens';
 import { scQuery } from '@/services/sc/query';
@@ -17,8 +18,12 @@ export const fetchPoolsData = unstable_cache(
     console.log(pools);
 
     const newPools: IPoolPair[] = [
-      ...pools.filter((pool) => pool.lpTokenSupply !== '0')
+      ...pools.filter(
+        (pool) =>
+          pool.lpTokenSupply !== '0' && pool.secondTokenId === tokensID.jeet
+      )
     ];
+    console.log(newPools);
 
     const tokensIds = pools
       .map((pool) => pool.firstTokenId)
@@ -66,7 +71,7 @@ export const fetchPoolsData = unstable_cache(
   ['poolsPairs'],
   {
     tags: ['poolsPairs'],
-    revalidate: 60 * 60 * 1 // 1 hours
+    revalidate: 60 * 5 * 1 // 5 min
   }
 );
 
