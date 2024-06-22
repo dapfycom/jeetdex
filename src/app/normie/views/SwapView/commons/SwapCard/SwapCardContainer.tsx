@@ -91,6 +91,8 @@ const SwapCardContainer = () => {
   );
 
   useEffect(() => {
+    console.log(swap);
+
     const tokenPair = tokensPairs.find(
       (t) => t.firstToken === swap || t.secondToken === swap
     );
