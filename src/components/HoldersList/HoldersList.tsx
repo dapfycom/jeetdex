@@ -2,6 +2,7 @@ import { selectIsOpenCharts } from '@/app/normie/views/SwapView/lib/swap-slice';
 import { network } from '@/config';
 import { useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
+import { devs } from '@/localConstants/devs';
 import { fetchElrondData } from '@/services/rest/elrond';
 import { formatAddress, formatNumber } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
@@ -45,6 +46,8 @@ const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
             h.address,
             totalBalance.toString()
           );
+
+          const isDev = devs.includes(h.address);
           return (
             <div key={h.address} className='text-gray-400 text-sm'>
               <div className='flex w-full justify-between'>
@@ -52,8 +55,12 @@ const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
                   href={`${network.explorerAddress}/accounts/${h.address}`}
                   target='_blank'
                   rel='noopener noreferrer'
+                  className='flex gap-2'
                 >
                   {i + 1}. {formatAddress(h.address)}
+                  {isDev && (
+                    <div className='text-xs text-gray-400'>( 👑 dev ) </div>
+                  )}
                 </a>
                 {elrondToken && <div>{formatNumber(percent.toNumber())}%</div>}
               </div>
