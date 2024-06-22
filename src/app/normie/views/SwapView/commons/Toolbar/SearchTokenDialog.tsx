@@ -20,6 +20,7 @@ export function CommandDialogDemo() {
   const allPools = useAppSelector(selectGlobalData).pools;
   const { updateParams } = useUpdateUrlParams(['swap']);
 
+  const inputRef = React.useRef<any>();
   const handleSelectToken = (value: string) => {
     const valueIdentifier = value.split(':')[1];
     const parts = valueIdentifier.split('-');
@@ -31,6 +32,12 @@ export function CommandDialogDemo() {
     setSearchVal('');
   };
 
+  const handleOnBlur = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <>
       <Command className='relative w-full border-1 border-[#30364F] bg-[#1C243E] text-[#C4C4C4] placeholder-[#C4C4C4] '>
@@ -40,6 +47,8 @@ export function CommandDialogDemo() {
           autoFocus={true}
           value={searchVal}
           onValueChange={setSearchVal}
+          ref={inputRef}
+          onBlur={handleOnBlur}
         />
         <List allPools={allPools} handleSelectToken={handleSelectToken} />
       </Command>
