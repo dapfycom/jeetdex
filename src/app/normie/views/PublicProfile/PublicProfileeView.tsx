@@ -10,8 +10,11 @@ import ProfileContext from './ProfileContext';
 import FollowButton from './components/FollowButton';
 import ProfileTabs from './components/Tabs';
 
-const PublicProfileView = ({ user }: { user: any }) => {
-  const { userInfo } = useGetSingleUserInfo(user?.id);
+const PublicProfileView = ({ userId }: { userId: string }) => {
+  console.log(userId);
+
+  const { userInfo } = useGetSingleUserInfo(userId);
+  const user = userInfo?.data;
   if (!user) {
     return null;
   }

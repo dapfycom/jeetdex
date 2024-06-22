@@ -126,22 +126,16 @@ export const fetchUsersData = unstable_cache(
   }
 );
 
-export const fetchSingleUserData = unstable_cache(
-  async (id: string) => {
-    try {
-      const user = await prisma.users.findUnique({
-        where: {
-          id: id
-        }
-      });
+export const fetchSingleUserData = async (id: string) => {
+  try {
+    const user = await prisma.users.findUnique({
+      where: {
+        id: id
+      }
+    });
 
-      return user;
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  ['single-users'],
-  {
-    tags: ['single-users']
+    return user;
+  } catch (error) {
+    console.log(error);
   }
-);
+};
