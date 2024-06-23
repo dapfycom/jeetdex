@@ -32,12 +32,6 @@ export function CommandDialogDemo() {
     setSearchVal('');
   };
 
-  const handleOnBlur = () => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
   return (
     <>
       <Command className='relative w-full border-1 border-[#30364F] bg-[#1C243E] text-[#C4C4C4] placeholder-[#C4C4C4] '>
@@ -48,7 +42,6 @@ export function CommandDialogDemo() {
           value={searchVal}
           onValueChange={setSearchVal}
           ref={inputRef}
-          onBlur={handleOnBlur}
         />
         <List allPools={allPools} handleSelectToken={handleSelectToken} />
       </Command>
