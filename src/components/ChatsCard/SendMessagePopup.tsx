@@ -7,7 +7,6 @@ import {
   DialogTitle
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import useDisclosure from '@/hooks/useDisclosure';
 import { useUploadThing } from '@/hooks/useUploadThing';
 import { errorToast, successToast } from '@/utils/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -26,8 +25,17 @@ const SendMessageSchema = z.object({
 const SendMessagePopup = ({
   pool,
   children,
-  repliedMessage
-}: PropsWithChildren<{ pool: string; repliedMessage?: number | null }>) => {
+  repliedMessage,
+  onClose,
+  onToggle,
+  isOpen
+}: PropsWithChildren<{
+  pool: string;
+  repliedMessage?: number | null;
+  isOpen: boolean;
+  onClose: () => void;
+  onToggle: () => void;
+}>) => {
   const [loading, setLoading] = useState(false);
 
   // file upload
@@ -58,7 +66,6 @@ const SendMessagePopup = ({
 
   // others
 
-  const { isOpen, onClose, onToggle } = useDisclosure();
   const form = useForm({
     resolver: zodResolver(SendMessageSchema),
 

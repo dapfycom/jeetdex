@@ -1,25 +1,27 @@
 'use client';
 import { likeMessage } from '@/actions/messages';
+import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PlusIcon } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import { Fragment, useState } from 'react';
 import Divider from '../Divider/Divider';
 import { Button } from '../ui/button';
-import { DialogTrigger } from '../ui/dialog';
 import { Skeleton } from '../ui/skeleton';
 import { toast } from '../ui/use-toast';
 import Message from './Message';
-import SendMessagePopup from './SendMessagePopup';
 import { useGetChat } from './hooks';
+
+const SendMessagePopup = dynamic(() => import('./SendMessagePopup'));
 interface IProps {
   poolPair?: string;
 }
 
 const Chats = ({ poolPair }: IProps) => {
   const { chat, isLoading, mutate } = useGetChat(poolPair);
-
+  const { isOpen, onToggle, onClose } = useDisclosure();
   const [highlight, setHighlight] = useState<number>();
 
   const onHoverChatReply = (replyedId: number) => {
@@ -193,18 +195,24 @@ const Chats = ({ poolPair }: IProps) => {
       </div>
 
       {poolPair && (
-        <SendMessagePopup pool={poolPair}>
-          <DialogTrigger asChild>
-            <Button
-              className='absolute top-[-10px] right-3 w-8 h-8'
-              size='icon'
-              type='button'
-            >
-              <PlusIcon className='w-4 h-4' />
-              <span className='sr-only'>Open Message Input</span>
-            </Button>
-          </DialogTrigger>
-        </SendMessagePopup>
+        <Button
+          className='absolute top-[-10px] right-3 w-8 h-8'
+          size='icon'
+          type='button'
+          onClick={onToggle}
+        >
+          <PlusIcon className='w-4 h-4' />
+          <span className='sr-only'>Open Message Input</span>
+        </Button>
+      )}
+
+      {isOpen && (
+        <SendMessagePopup
+          pool={poolPair}
+          isOpen={isOpen}
+          onClose={onClose}
+          onToggle={onToggle}
+        />
       )}
     </div>
   );

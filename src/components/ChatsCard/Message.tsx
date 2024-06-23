@@ -1,12 +1,14 @@
 'use client';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import useDisclosure from '@/hooks/useDisclosure';
 import { cn } from '@/lib/utils';
 import { HeartIcon, MessageCircleIcon } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { DialogTrigger } from '../ui/dialog';
-import SendMessagePopup from './SendMessagePopup';
+
+const SendMessagePopup = dynamic(() => import('./SendMessagePopup'));
 
 interface IMessage {
   user: {
@@ -42,6 +44,8 @@ const Message = ({
   onLike
 }: IMessage) => {
   const date = new Date(time);
+  const { isOpen, onClose, onToggle } = useDisclosure();
+
   return (
     <div
       className={cn(
@@ -78,20 +82,27 @@ const Message = ({
             <span>{likes}</span>
             <span className='sr-only'>Like</span>
           </Button>
+
+          {isOpen && (
+            <SendMessagePopup
+              pool={poolPair}
+              repliedMessage={messageId}
+              isOpen={isOpen}
+              onClose={onClose}
+              onToggle={onToggle}
+            />
+          )}
           {poolPair ? (
-            <SendMessagePopup pool={poolPair} repliedMessage={messageId}>
-              <DialogTrigger asChild>
-                <Button
-                  className='w-4 h-4 hover:bg-transparent text-stone-400 '
-                  size='icon'
-                  variant='ghost'
-                >
-                  #{messageId}
-                  <MessageCircleIcon className='w-4 h-4' />
-                  <span className='sr-only'>Reply</span>
-                </Button>
-              </DialogTrigger>
-            </SendMessagePopup>
+            <Button
+              className='w-4 h-4 hover:bg-transparent text-stone-400 '
+              size='icon'
+              variant='ghost'
+              onClick={onToggle}
+            >
+              #{messageId}
+              <MessageCircleIcon className='w-4 h-4' />
+              <span className='sr-only'>Reply</span>
+            </Button>
           ) : (
             <div className='flex text-xs text-muted-foreground items-center gap-1'>
               {' '}
