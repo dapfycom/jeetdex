@@ -1,7 +1,9 @@
 import { fetchAxiosJeetdex } from '@/services/rest/api';
 import useSWR from 'swr';
+import { useAuthentication } from './useAuthentication';
 
 export const useGetUserSettings = () => {
+  const { isLoggedIn } = useAuthentication();
   const { data, error, isLoading, mutate } = useSWR<{
     data: {
       id: string;
@@ -16,7 +18,7 @@ export const useGetUserSettings = () => {
         };
       }[];
     };
-  }>('/user/settings', fetchAxiosJeetdex);
+  }>(isLoggedIn ? '/user/settings' : null, fetchAxiosJeetdex);
   console.log(data);
 
   return {

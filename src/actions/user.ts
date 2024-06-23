@@ -68,7 +68,7 @@ export const updateUserProfile = async ({
   }
   try {
     console.log('updating user profile');
-    return await prisma.users.update({
+    const user = await prisma.users.update({
       where: {
         address: session.address
       },
@@ -78,6 +78,9 @@ export const updateUserProfile = async ({
         img: img
       }
     });
+    console.log(user);
+
+    return user;
   } catch (error) {
     console.log(error);
 

@@ -1,9 +1,10 @@
 import store from '@/redux/store';
+import { cachedEventsApi } from '@/services/rest/events';
 import { formatTokenI } from '@/utils/mx-utils';
 
 const configurationData = {
   // Represents the resolutions for bars supported by your datafeed
-  supported_resolutions: ['1', '5'],
+  supported_resolutions: ['10', '30'],
   // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
   exchanges: [
     {
@@ -125,7 +126,7 @@ const config = {
       e: 'JEETDEX',
       fsym: 'JEET-2346a',
       tsym: symbolInfo.ticker,
-      toTs: to,
+      // toTs: to,
       limit: 2000
     };
     const query = Object.keys(urlParameters)
@@ -133,9 +134,9 @@ const config = {
       .join('&');
     console.log({ query });
     try {
-      const bars = await fetch(
-        `${process.env.NEXT_PUBLIC_EVENTS_API_URL}/datafeed?${query}`
-      ).then((response) => response.json() || []);
+      const bars = await cachedEventsApi(`/datafeed?${query}`);
+      console.log(bars);
+
       let currentBars = [];
       console.log(bars);
 

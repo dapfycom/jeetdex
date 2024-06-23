@@ -40,5 +40,7 @@ export async function GET() {
     }
   });
 
+  console.log(user);
+
   return Response.json({ data: user });
 }
