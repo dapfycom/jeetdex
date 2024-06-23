@@ -5,6 +5,7 @@ import { useAppSelector } from '@/hooks';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 import { memo, useEffect, useState } from 'react';
+import { Skeleton } from '../ui/skeleton';
 import TokenInfo from './TokenInfo';
 
 const TVChartContainer = dynamic(() => import('./index'), { ssr: false });
@@ -47,6 +48,9 @@ export default memo(function ChartCard({ poolPair }: IProps) {
       )}
     >
       <TokenInfo poolPair={poolPair} />
+      {!(isScriptReady && poolPair) && (
+        <Skeleton className='h-[450px] w-full bg-[#1C243E]' />
+      )}
       {isScriptReady && poolPair && (
         <TVChartContainer
           tokenIdentifier={poolPair?.firstTokenId}
