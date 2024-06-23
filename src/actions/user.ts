@@ -3,7 +3,6 @@
 import prisma from '@/db';
 import { getSession, removeSession } from '@/utils/server-utils/sessions';
 import { generateRandomString } from '@/utils/strings';
-import { revalidatePath, revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { createAlreadyProfiledCookie } from './cookies';
 
@@ -58,26 +57,32 @@ export const updateUserProfile = async ({
   img?: string;
 }) => {
   const session = await getSession();
+  console.log('Get here', session);
 
   if (!session) {
+    console.log('no session');
+
     return {
       error: 'No session found'
     };
   }
+  try {
+    console.log('updating user profile');
+    return await prisma.users.update({
+      where: {
+        address: session.address
+      },
+      data: {
+        username: username,
+        bio: bio,
+        img: img
+      }
+    });
+  } catch (error) {
+    console.log(error);
 
-  await prisma.users.update({
-    where: {
-      address: session.address
-    },
-    data: {
-      username: username,
-      bio: bio,
-      img: img
-    }
-  });
-
-  revalidatePath('/profile');
-  revalidateTag('CoinsPairs');
+    throw new Error('User failed to update');
+  }
 };
 
 export const followUser = async (followedId: string) => {

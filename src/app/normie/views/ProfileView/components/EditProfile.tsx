@@ -59,25 +59,28 @@ const EditProfile = () => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    await updateUserProfile({
-      username: values.username,
-      bio: values.bio
-    });
+    try {
+      await updateUserProfile({
+        username: values.username,
+        bio: values.bio
+      });
+      onClose();
+      toast({
+        description: (
+          <div>
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className='mr-2 text-green-500'
+            />
+            User profile updated!
+          </div>
+        )
+      });
 
-    onClose();
-    toast({
-      description: (
-        <div>
-          <FontAwesomeIcon
-            icon={faCheckCircle}
-            className='mr-2 text-green-500'
-          />
-          User profile updated!
-        </div>
-      )
-    });
-
-    mutate('/user');
+      mutate('/user/private');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

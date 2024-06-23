@@ -9,7 +9,7 @@ import { errorToast, successToast } from '@/utils/toast';
 const FollowButton = ({ user }) => {
   console.log(user);
 
-  const { userInfo, mutate } = useGetSingleUserInfo(user?.id);
+  const { userInfo, mutate } = useGetSingleUserInfo(user?.address);
   console.log(userInfo);
 
   const { userInfo: currentUserInfo } = useGetUserInfo();
