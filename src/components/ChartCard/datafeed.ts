@@ -4,7 +4,20 @@ import { formatTokenI } from '@/utils/mx-utils';
 
 const configurationData = {
   // Represents the resolutions for bars supported by your datafeed
-  supported_resolutions: ['10', '30'],
+  supported_resolutions: [
+    '1',
+    '3',
+    '5',
+    '15',
+    '30',
+    '60',
+    '120',
+    '180',
+    '240',
+    '1D',
+    '1W',
+    '1M'
+  ],
   // The `exchanges` arguments are used for the `searchSymbols` method if a user selects the exchange
   exchanges: [
     {
