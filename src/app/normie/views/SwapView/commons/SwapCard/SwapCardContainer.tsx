@@ -85,13 +85,14 @@ const SwapCardContainer = () => {
 
   useEffect(() => {
     console.log(swap);
-
-    const tokenPair = tokensPairs.find(
-      (t) => t.firstToken === swap || t.secondToken === swap
-    );
-    if (tokenPair) {
-      dispatch(changeToFieldToken(tokenPair.firstToken));
-      dispatch(changeFromFieldToken(tokenPair.secondToken));
+    if (tokensPairs.length > 0) {
+      const tokenPair = tokensPairs.find(
+        (t) => t.firstToken === swap || t.secondToken === swap
+      );
+      if (tokenPair) {
+        dispatch(changeToFieldToken(tokenPair.firstToken));
+        dispatch(changeFromFieldToken(tokenPair.secondToken));
+      }
     }
   }, [dispatch, swap, tokensPairs]);
 
