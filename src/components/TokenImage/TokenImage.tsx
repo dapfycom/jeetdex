@@ -90,7 +90,7 @@ export const TokenImageSRC = ({
     <>
       {coin?.img || src ? (
         <Image
-          src={coin ? coin.img : src}
+          src={coin?.img ? coin.img : src}
           alt={alt}
           width={size}
           height={size}

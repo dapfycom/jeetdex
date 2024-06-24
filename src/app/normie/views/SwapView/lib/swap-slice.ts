@@ -27,7 +27,7 @@ const initialState: SwapState = {
   fromField: {
     value: '',
     valueDecimals: '',
-    selectedToken: tokensID.wegld
+    selectedToken: tokensID.jeet
   },
   toField: {
     value: '',

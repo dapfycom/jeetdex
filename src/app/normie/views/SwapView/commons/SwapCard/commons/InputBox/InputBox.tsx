@@ -51,6 +51,7 @@ const InputBox = ({
   hideAmountButtons
 }: IProps) => {
   const { elrondToken, isLoading } = useGetElrondToken(selectedTokenI);
+
   const { accountToken } = useGetAccountToken(selectedTokenI);
   console.log(accountToken);
 
