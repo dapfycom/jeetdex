@@ -155,7 +155,7 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
   };
 
   return (
-    <div className='bg-card px-5 rounded-3xl py-6'>
+    <div className='bg-card px-5 rounded-sm py-6'>
       <div className='text-center'>
         <h3 className='text-2xl'>Deposit amounts</h3>
 
@@ -187,6 +187,7 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
             value={secondTokenAmount}
             handlePercentAmount={handlePercentFirstAmount}
             clear={handleClear}
+            hideAmountButtons
           />
         </div>
       </div>
