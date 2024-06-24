@@ -13,11 +13,9 @@ import {
 } from '@/app/normie/views/SwapView/lib/swap-slice';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
-import { useEffect } from 'react';
 import { changeField, clearInputs } from '../../lib/functions';
 import { useGetSwapbleTokens, useGetTokenRatio } from '../../lib/hooks';
 import SwapCard from './SwapCard';
@@ -27,11 +25,9 @@ const SwapCardContainer = () => {
   const toField = useAppSelector(selectToField);
   const normalDirection = useAppSelector(selectNormalDirection);
   const { elrondToken } = useGetElrondToken(toField.selectedToken);
-  const { currentParams } = useUpdateUrlParams(['swap']);
-
-  const [swap] = currentParams;
 
   const dispatch = useAppDispatch();
+
   const handleChangeFromField = (value: string, token?: IElrondToken) => {
     changeField(
       value,
@@ -73,8 +69,6 @@ const SwapCardContainer = () => {
 
   const { tokensPairs } = useGetSwapbleTokens();
 
-  console.log(tokensPairs);
-
   const pairSelected = tokensPairs.find((t) =>
     normalDirection
       ? t.firstToken === fromField.selectedToken &&
@@ -82,19 +76,6 @@ const SwapCardContainer = () => {
       : t.secondToken === fromField.selectedToken &&
         t.firstToken === toField.selectedToken
   );
-
-  useEffect(() => {
-    console.log(swap);
-    if (tokensPairs.length > 0) {
-      const tokenPair = tokensPairs.find(
-        (t) => t.firstToken === swap || t.secondToken === swap
-      );
-      if (tokenPair) {
-        dispatch(changeToFieldToken(tokenPair.firstToken));
-        dispatch(changeFromFieldToken(tokenPair.secondToken));
-      }
-    }
-  }, [dispatch, swap, tokensPairs]);
 
   useGetTokenRatio(
     pairSelected,
