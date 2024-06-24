@@ -21,7 +21,7 @@ const ProfileView = () => {
     fetchAxiosJeetdex
   );
 
-  if (isLoading) {
+  if (isLoading || !data?.data) {
     return (
       <div className='bg-[#1C243E]  max-w-2xl w-full m-auto h-[300px] flex justify-center items-center rounded-sm'>
         <Loader2 className='animate-spin w-14 h-14' />
@@ -29,6 +29,7 @@ const ProfileView = () => {
     );
   }
   const user = data?.data;
+
   return (
     <ProfileContext ctxValue={data?.data}>
       <div
@@ -42,15 +43,15 @@ const ProfileView = () => {
           <div className='flex items-center'>
             <FontAwesomeIcon icon={faHeart} className='text-red-500  w-5 h-5' />
             <span className='ml-1'>
-              Likes received: {user._count.likesReceived}
+              Likes received: {user?._count.likesReceived || 0}
             </span>
           </div>
         </div>
-        <Address address={user.address} />
+        <Address address={user?.address} />
 
         <Link
           className='block mb-4 text-blue-500 underline'
-          href={`${network.explorerAddress}/accounts/${user.address}`}
+          href={`${network.explorerAddress}/accounts/${user?.address}`}
           target='_blank'
         >
           View on Explorer
