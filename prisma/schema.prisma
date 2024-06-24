@@ -1,57 +1,47 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Users {
-  id            String    @id @default(cuid())
-  username      String    @unique
-  address       String    @unique
+  id            String        @id @default(cuid())
+  username      String        @unique
+  address       String        @unique
   img           String
   bio           String?
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  likesReceived Likes[]   @relation("likesReceived")
-  likesGiven    Likes[]   @relation("likesGiven")
-  followed      Follows[] @relation("followed")
-  following     Follows[] @relation("following")
-
-  messages Messages[] @relation("messages")
-
-  coins Coins[] @relation("coins")
-
-  settings UserSettings?
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  coins         Coins[]       @relation("coins")
+  followed      Follows[]     @relation("followed")
+  following     Follows[]     @relation("following")
+  likesGiven    Likes[]       @relation("likesGiven")
+  likesReceived Likes[]       @relation("likesReceived")
+  messages      Messages[]    @relation("messages")
+  settings      UserSettings?
 }
 
 model Likes {
-  id String @id @default(cuid())
-
-  likedBy   Users?  @relation("likesGiven", fields: [likedById], references: [id])
+  id        String   @id @default(cuid())
   likedById String?
-
-  userLikes Users?  @relation("likesReceived", fields: [userId], references: [id])
   userId    String?
-
   createdAt DateTime @default(now())
-
-  message   Messages @relation("message-likes", fields: [messageId], references: [id])
   messageId Int
+  likedBy   Users?   @relation("likesGiven", fields: [likedById], references: [id])
+  message   Messages @relation("message-likes", fields: [messageId], references: [id])
+  userLikes Users?   @relation("likesReceived", fields: [userId], references: [id])
 }
 
 model Follows {
-  id         String @id @default(cuid())
-  followed   Users  @relation("followed", fields: [followedId], references: [id])
-  followedId String
-
-  following   Users  @relation("following", fields: [followingId], references: [id])
+  id          String   @id @default(cuid())
+  followedId  String
   followingId String
-
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  followed    Users    @relation("followed", fields: [followedId], references: [id])
+  following   Users    @relation("following", fields: [followingId], references: [id])
 }
 
 model Chats {
@@ -62,71 +52,89 @@ model Chats {
 }
 
 model Messages {
-  id        Int      @id @default(autoincrement())
-  content   String
-  image     String?
-  createdAt DateTime @default(now())
-  chat      Chats    @relation(fields: [chatId], references: [id])
-  chatId    String
-  sender    Users    @relation("messages", fields: [senderId], references: [id])
-  senderId  String
-
-  likes Likes[] @relation("message-likes")
-
-  messageReplied MessagesReplies[] @relation("meessage-replied")
-
-  messageReplying MessagesReplies? @relation("meessage-replying")
+  id              Int               @id @default(autoincrement())
+  content         String
+  image           String?
+  createdAt       DateTime          @default(now())
+  chatId          String
+  senderId        String
+  likes           Likes[]           @relation("message-likes")
+  chat            Chats             @relation(fields: [chatId], references: [id])
+  sender          Users             @relation("messages", fields: [senderId], references: [id])
+  messageReplied  MessagesReplies[] @relation("meessage-replied")
+  messageReplying MessagesReplies?  @relation("meessage-replying")
 }
 
 model MessagesReplies {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-
-  messageReplied   Messages @relation("meessage-replied", fields: [messageRepleidId], references: [id])
-  messageRepleidId Int
-
-  messageReplying   Messages @relation("meessage-replying", fields: [messageReplyingId], references: [id])
+  id                Int      @id @default(autoincrement())
+  createdAt         DateTime @default(now())
+  messageRepleidId  Int
   messageReplyingId Int      @unique
+  messageReplied    Messages @relation("meessage-replied", fields: [messageRepleidId], references: [id])
+  messageReplying   Messages @relation("meessage-replying", fields: [messageReplyingId], references: [id])
 }
 
 model Coins {
   id          String  @id @default(cuid())
   identifier  String  @unique
   img         String? @unique
-  owner       Users   @relation("coins", fields: [ownerId], references: [id])
   ownerId     String
   twitter     String?
   telegram    String?
   website     String?
   title       String?
   description String?
+  owner       Users   @relation("coins", fields: [ownerId], references: [id])
 }
 
 model UserSettings {
-  id       String @id @default(cuid())
+  id       String       @id @default(cuid())
   slippage Float
-
-  user   Users  @relation(fields: [userId], references: [id])
-  userId String @unique
-
-  pools PoolsLikes[]
+  userId   String       @unique
+  pools    PoolsLikes[]
+  user     Users        @relation(fields: [userId], references: [id])
 }
 
 model Pools {
-  id String @id @default(cuid())
-
-  lpIdentifier String @unique
+  id           String       @id @default(cuid())
+  lpIdentifier String       @unique
   token1       String
   token2       String
-
-  usersLiked PoolsLikes[]
+  usersLiked   PoolsLikes[]
 }
 
 model PoolsLikes {
-  id String @id @default(cuid())
-
-  userSetting   UserSettings @relation(fields: [userSettingId], references: [id])
+  id            String       @id @default(cuid())
   userSettingId String
-  pool          Pools        @relation(fields: [poolId], references: [id])
   poolId        String
+  pool          Pools        @relation(fields: [poolId], references: [id])
+  userSetting   UserSettings @relation(fields: [userSettingId], references: [id])
+}
+
+model EnablePairTransaction {
+  id          Int      @id @default(autoincrement())
+  caller      String
+  firstToken  String
+  secondToken String
+  address     String
+  date        DateTime
+  txHash      String
+}
+
+model SwapInTransaction {
+  id              Int    @id @default(autoincrement())
+  caller          String
+  tokenIn         String
+  tokenAmountIn   String
+  tokenOut        String
+  tokenAmountOut  String
+  fee             String
+  tokenInReserve  String
+  tokenOutReserve String
+  block           Int
+  epoch           Int
+  timestamp       Int
+
+  @@index([caller])
+  @@index([timestamp])
 }

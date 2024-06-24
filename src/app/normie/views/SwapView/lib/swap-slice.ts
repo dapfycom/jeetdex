@@ -31,7 +31,7 @@ const initialState: SwapState = {
   },
   toField: {
     value: '',
-    selectedToken: 'JEETDEX-fa1a41',
+    selectedToken: '',
     valueDecimals: ''
   },
   normalDirection: false,

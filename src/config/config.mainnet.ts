@@ -2,8 +2,6 @@ import { EnvironmentsEnum } from '@/types';
 
 export * from './sharedConfig';
 
-export const contractAddress =
-  'erd1qqqqqqqqqqqqqpgqtmcuh307t6kky677ernjj9ulk64zq74w9l5qxyhdn7';
 export const API_URL = 'https://template-api.multiversx.com';
 export const explorerAddress = 'https://explorer.multiversx.com';
 
@@ -32,11 +30,16 @@ export const scAddress = {
   wrapEGLDShard1:
     'erd1qqqqqqqqqqqqqpgqhe8t5jewej70zupmh44jurgn29psua5l2jps3ntjj3',
   wrapEGLDShard2:
-    'erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln'
+    'erd1qqqqqqqqqqqqqpgqmuk0q2saj0mgutxm4teywre6dl8wqf58xamqdrukln',
+
+  mainRouter: 'erd1qqqqqqqqqqqqqpgqjyycuqgf3hpwccew0257te9cgsh7l0fxtaes73r7w0',
+  dust: 'erd1qqqqqqqqqqqqqpgq4lux8f506mkp6zn9kmy8fy2c0xyg375cy26sddccwm',
+  metachain: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
 };
 
 export const tokensID = {
   egld: 'EGLD',
   wegld: 'WEGLD-bd4d79',
+  bsk: 'BSK-baa025',
   jeet: 'JEET-dda037'
 };

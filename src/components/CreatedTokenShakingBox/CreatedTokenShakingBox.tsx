@@ -37,6 +37,8 @@ const CreatedTokenShakingBox = () => {
     '/lastPairCreated',
     fetchEventsApiData
   );
+  console.log(data);
+
   const currentValue = adaptPairCreatedData(pairCreatedData || data);
 
   if (!currentValue) return null;
