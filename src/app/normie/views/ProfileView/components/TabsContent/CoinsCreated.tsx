@@ -84,7 +84,8 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
         function: 'enablePair',
         sender: token.owner,
         receiver: scAddress.mainRouter,
-        status: 'success'
+        status: 'success',
+        size:100
       })
   );
 

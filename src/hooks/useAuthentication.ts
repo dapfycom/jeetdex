@@ -92,7 +92,7 @@ export const useGetUserInfo = () => {
         likesReceived: number;
       };
     };
-  }>('/user', fetchAxiosJeetdex);
+  }>('/user/private', fetchAxiosJeetdex);
 
   return {
     userInfo: data,
