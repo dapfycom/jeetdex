@@ -7,15 +7,12 @@ import { useForm } from 'react-hook-form';
 import { newPoolTx } from '../../utils/sc.calls';
 import { useGetNewPairFee, useGetPoolPair } from '../../utils/swr.hooks';
 
-import Divider from '@/components/Divider/Divider';
-import { Input } from '@/components/ui/input';
 import useTxNotification from '@/hooks/useTxNotification';
 import { cn } from '@/lib/utils';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useState } from 'react';
 import { z } from 'zod';
 import { selectToken1, selectToken2 } from '../../utils/slice';
-import DagePicker from './DatePicker/DagePicker';
 import SubmitButton from './SubmitButton/SubmitButton';
 
 export const formSchema = z.object({
@@ -88,7 +85,7 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
             2. Generate Pool Address
           </h2>
 
-          <div className='w-full flex flex-col gap-4 text-sm'>
+          {/* <div className='w-full flex flex-col gap-4 text-sm'>
             <Divider />
 
             <div className='flex-col flex gap-3 text-left mb-3'>
@@ -108,7 +105,7 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
               />
               <DagePicker field='sellFee' label='Sell Fee finish (Optional)' />
             </div>
-          </div>
+          </div> */}
           <SubmitButton onNextStep={onNextStep} />
         </div>
       </form>
