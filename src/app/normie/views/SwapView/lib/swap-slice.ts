@@ -31,7 +31,7 @@ const initialState: SwapState = {
   },
   toField: {
     value: '',
-    selectedToken: '',
+    selectedToken: tokensID.bsk,
     valueDecimals: ''
   },
   normalDirection: false,
