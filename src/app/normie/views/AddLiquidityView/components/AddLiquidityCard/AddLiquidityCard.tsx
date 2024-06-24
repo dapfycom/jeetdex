@@ -36,9 +36,6 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
 
   let amountForEquivalent = firstTokenAmount;
   let elrondTokenForEquivalent = pool.firstToken;
-  console.log(firstTokenAmount);
-  console.log(firstTokenAmountDecimals);
-  console.log(secondTokenAmountDecimals);
 
   if (!normalDirection) {
     amountForEquivalent = secondTokenAmount;
@@ -103,8 +100,9 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
     pool.firstToken.decimals,
     pool.secondToken.decimals
   ]);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const { setSessionId } = useTxNotification({});
+  useTxNotification({ sessionId, setSessionId, waitTx: true });
 
   const handleAddLiquidity = async () => {
     const firstAmount =
@@ -124,8 +122,6 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
 
     const firstAmountWithSlipage = calculateSlippageAmount(5, firstAmount);
     const secondAmountWithSlipage = calculateSlippageAmount(5, secondAmount);
-    console.log(firstAmountWithSlipage.toFixed(0));
-    console.log(secondAmountWithSlipage.toFixed(0));
 
     const int = new SmartContractInteraction(pool.address);
     const res = await int.MultiESDTNFTTransfer({

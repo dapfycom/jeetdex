@@ -1,6 +1,4 @@
 import CreatePoolModal from '@/components/CreatePoolModal/CreatePoolModal';
-import { Button } from '@/components/ui/button';
-import { DialogTrigger } from '@/components/ui/dialog';
 import SearchPool from './SearchPool';
 
 const Options = ({ pools }) => {
@@ -18,15 +16,11 @@ const Options = ({ pools }) => {
             </div>
 
             <div>
-              <CreatePoolModal>
-                <DialogTrigger asChild>
-                  <Button
-                    variant='ghost'
-                    className='border-primary text-primary hover:bg-[#3ff2ff13]'
-                  >
-                    create
-                  </Button>
-                </DialogTrigger>
+              <CreatePoolModal
+                variant='ghost'
+                className='border-primary text-primary hover:bg-[#3ff2ff13]'
+              >
+                create
               </CreatePoolModal>
             </div>
           </div>

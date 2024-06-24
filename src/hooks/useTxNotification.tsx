@@ -3,72 +3,82 @@ import { formatAddress } from '@/utils/mx-utils';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CheckCircle, LoaderCircle, X } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import toast, { Toast } from 'react-hot-toast';
-import { useTrackTransactionStatus } from './sdkDappHooks';
+import { useGetSignedTransactions } from './sdkDappHooks';
+import { useTrackTransactionStatus } from './useTrackTransactionsStatus';
 
 const useTxNotification = ({
   submittedTxCallback,
   onSuccess,
-  waitTx
+  waitTx,
+  sessionId // setSessionId
 }: {
   submittedTxCallback?: () => void;
   onSuccess?: () => void;
   waitTx?: boolean;
+  sessionId: string;
+  setSessionId: (v: string | null) => void;
 }) => {
   const ref = useRef<string>(null);
-  const [currentToast, setCurrentToast] = useState<string | null>(null);
-  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  const signtx = useGetSignedTransactions();
+  const transactions = useMemo(
+    () => signtx.signedTransactions[sessionId]?.transactions,
+    [sessionId, signtx.signedTransactions]
+  );
+
   const handleSuccess = () => {
     if (onSuccess) {
       onSuccess();
     }
-    setSessionId(null);
   };
 
-  const handleFail = () => {
+  const handleFail = (t: string) => {
     if (transactions && transactions[0]?.hash) {
       toast((t) => ToastFailed({ hash: transactions[0]?.hash, t }), {
         duration: 15000
       });
     }
+    console.log(t);
 
-    toast.dismiss(currentToast);
-    setSessionId(null);
+    toast.dismiss(t);
   };
-  const { transactions, isFailed, isSuccessful } = useTrackTransactionStatus({
-    transactionId: sessionId,
-    onSuccess: handleSuccess,
-    onFail: handleFail
-  });
 
   const handleToast = useCallback(() => {
     if (
       transactions &&
       transactions[0]?.hash &&
-      transactions[0]?.hash !== ref.current
+      transactions[0]?.hash !== ref.current &&
+      sessionId
     ) {
+      console.log(transactions);
+      console.log(sessionId);
+
       ref.current = transactions[0]?.hash;
+
       const toastId = toast(
         (t) =>
           ToastSubmitted({
             hash: transactions[0]?.hash,
             t,
-            isPending: !isFailed && !isSuccessful,
-            waitTx
+            waitTx,
+            handleFail,
+            handleSuccess,
+            sessionId
           }),
         {
           duration: waitTx ? 180000 : 15000
         }
       );
-
-      setCurrentToast(toastId);
+      console.log(toastId);
 
       if (submittedTxCallback) {
         submittedTxCallback();
       }
     }
-  }, [isFailed, isSuccessful, submittedTxCallback, transactions, waitTx]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId, transactions, waitTx]);
 
   useEffect(() => {
     console.log(ref.current);
@@ -78,8 +88,7 @@ const useTxNotification = ({
 
   return {
     toastTxNotification: handleToast,
-    ref,
-    setSessionId
+    ref
   };
 };
 
@@ -91,17 +100,28 @@ interface IProps {
 }
 
 interface IToastWithPendingProps extends IProps {
-  isPending: boolean;
   waitTx?: boolean;
+
+  sessionId: string;
+  handleSuccess: () => void;
+  handleFail: (tid: string) => void;
 }
 
 const ToastSubmitted = ({
   hash,
   t,
-  isPending,
-  waitTx
+  waitTx,
+  sessionId,
+  handleSuccess,
+  handleFail
 }: IToastWithPendingProps) => {
   const [loading, setLoading] = useState(true);
+
+  const { isPending } = useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess: handleSuccess,
+    onFail: () => handleFail(t.id)
+  });
 
   useEffect(() => {
     if (!waitTx) {
@@ -135,7 +155,7 @@ const ToastSubmitted = ({
                 <a
                   href={network.explorerAddress + '/transactions/' + hash}
                   target='_blank'
-                  className='text-primary'
+                  className='text-green-700'
                 >
                   {formatAddress(hash)}
                 </a>
@@ -157,7 +177,7 @@ const ToastSubmitted = ({
                   <a
                     href={network.explorerAddress + '/transactions/' + hash}
                     target='_blank'
-                    className='text-primary'
+                    className='text-green-700'
                   >
                     {formatAddress(hash)}
                   </a>
@@ -193,7 +213,7 @@ const ToastFailed = ({ hash, t }: IProps) => {
                 <a
                   href={network.explorerAddress + '/transactions/' + hash}
                   target='_blank'
-                  className='text-primary'
+                  className='text-green-700'
                 >
                   {formatAddress(hash)}
                 </a>

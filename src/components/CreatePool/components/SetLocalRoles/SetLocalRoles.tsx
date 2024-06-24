@@ -1,9 +1,8 @@
-import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
 import useTxNotification from '@/hooks/useTxNotification';
 import { cn } from '@/lib/utils';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, useState } from 'react';
 import { setRoles } from '../../utils/sc.calls';
 import {
   useGetLpIdentifier,
@@ -54,10 +53,10 @@ const SetLocalRoles = forwardRef(
     const onSuccess = () => {
       props.onNextStep();
       mutate();
-      revalidatePoolsPairs();
     };
+    const [sessionId, setSessionId] = useState<string | null>(null);
 
-    const { setSessionId } = useTxNotification({ onSuccess, waitTx: true });
+    useTxNotification({ onSuccess, waitTx: true, sessionId, setSessionId });
 
     const handleSetRoles = async () => {
       const res: SendTransactionReturnType = await setRoles(pair);

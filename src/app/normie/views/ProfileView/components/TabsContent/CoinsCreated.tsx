@@ -26,6 +26,7 @@ import {
 import { Address } from '@multiversx/sdk-core/out';
 import { decodeBase64 } from '@multiversx/sdk-dapp/utils';
 import dynamic from 'next/dynamic';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import useSWR from 'swr';
 import { enableTrade } from '../../../../../../components/CreatePool/utils/sc.calls';
@@ -85,7 +86,7 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
         sender: token.owner,
         receiver: scAddress.mainRouter,
         status: 'success',
-        size:100
+        size: 100
       })
   );
 
@@ -97,8 +98,9 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
     console.log(addressHex);
     return Address.fromHex(addressHex).bech32() === pairForThisToken?.address;
   });
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const { setSessionId } = useTxNotification({});
+  useTxNotification({ sessionId, setSessionId });
 
   const handleEnableSwap = async () => {
     const res = await enableTrade(pairForThisToken.address);

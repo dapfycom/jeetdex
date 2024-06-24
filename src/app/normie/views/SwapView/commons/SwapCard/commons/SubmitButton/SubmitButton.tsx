@@ -10,6 +10,7 @@ import { useGetSlippage } from '@/hooks/useGetUserSettings';
 import useTxNotification from '@/hooks/useTxNotification';
 import { useGetLoginInfo } from '@multiversx/sdk-dapp/hooks/account/useGetLoginInfo';
 import BigNumber from 'bignumber.js';
+import { useState } from 'react';
 import { submitSwap } from '../../../../lib/calls';
 import { clearInputs } from '../../../../lib/functions';
 
@@ -23,14 +24,17 @@ const SubmitButton = ({ poolAddres }: IProps) => {
   const { slippage } = useGetSlippage();
 
   const { accountToken, mutate } = useGetAccountToken(fromField.selectedToken);
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const { setSessionId } = useTxNotification({
+  useTxNotification({
     submittedTxCallback: () => {
       clearInputs();
     },
     onSuccess: () => {
       mutate();
-    }
+    },
+    sessionId,
+    setSessionId
   });
 
   const handleSwap = async () => {

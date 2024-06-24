@@ -12,6 +12,7 @@ import { Input } from '@/components/ui/input';
 import useTxNotification from '@/hooks/useTxNotification';
 import { cn } from '@/lib/utils';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
+import { useState } from 'react';
 import { z } from 'zod';
 import { selectToken1, selectToken2 } from '../../utils/slice';
 import DagePicker from './DatePicker/DagePicker';
@@ -57,9 +58,13 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
   const onSuccess = () => {
     mutate();
   };
-  const { setSessionId } = useTxNotification({
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  useTxNotification({
     onSuccess,
-    waitTx: true
+    waitTx: true,
+    sessionId,
+    setSessionId
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {

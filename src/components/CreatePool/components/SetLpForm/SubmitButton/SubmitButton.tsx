@@ -1,7 +1,7 @@
-import { revalidatePoolsPairs } from '@/actions/pools';
 import { Button } from '@/components/ui/button';
 import useTxNotification from '@/hooks/useTxNotification';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
+import { useState } from 'react';
 import { useGenerateLPStrings } from '../../../utils/hooks';
 import { createLp } from '../../../utils/sc.calls';
 import { useGetLpIdentifier, useGetPoolPair } from '../../../utils/swr.hooks';
@@ -13,12 +13,18 @@ const SubmitButton = ({ onNextStep }) => {
   const { lpIdentifier, isLoading, mutate } = useGetLpIdentifier(pair);
 
   const onSuccess = () => {
+    console.log('success');
     mutate();
-    setSessionId(null);
     onNextStep();
-    revalidatePoolsPairs();
   };
-  const { setSessionId } = useTxNotification({ onSuccess, waitTx: true });
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  useTxNotification({
+    onSuccess,
+    waitTx: true,
+    sessionId,
+    setSessionId
+  });
 
   const handleCreateLp = async () => {
     const res: SendTransactionReturnType = await createLp(

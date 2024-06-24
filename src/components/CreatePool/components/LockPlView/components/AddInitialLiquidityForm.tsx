@@ -9,7 +9,7 @@ import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
-import { ForwardedRef, forwardRef } from 'react';
+import { ForwardedRef, forwardRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ZodTypeAny, z } from 'zod';
 import { addInitialLiquidity } from '../../../utils/sc.calls';
@@ -33,41 +33,12 @@ export const numericString = (schema: ZodTypeAny) =>
     }
   }, schema);
 
-const formSchema = z.object({
-  firstTokenAmount: numericString(z.number().min(0)),
-  secondTokenAmount: numericString(z.number().min(0))
-});
-
-export type schemaType = z.infer<typeof formSchema>;
-
 const AddInitialLiquidityForm = forwardRef(
   (props, ref: ForwardedRef<HTMLDivElement>) => {
-    const form = useForm<schemaType>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        firstTokenAmount: '',
-        secondTokenAmount: ''
-      }
-    });
-
     const { pair, tokens: tokensSelected } = useGetPoolPair();
-    const { haveLocales } = usePoolHaveLocalRoles(pair);
 
-    const onSuccess = () => {
-      setSessionId(null);
-      // router.push('/create?create-pool=true&lock-lp=true');
-    };
-
-    const { setSessionId } = useTxNotification({ onSuccess });
-
-    const { lpIdentifier, isLoading: lpLoading } = useGetLpIdentifier(pair);
-
-    const { userTokens, isLoading: utLoading } = useGetUserTokens();
     const address = useAppSelector(selectUserAddress);
-    const { allowedPoolTokens } = useGetAllowedPoolTokens();
-    const { tokens, isLoading: tLoading } = useGetMultipleElrondTokens(
-      allowedPoolTokens.map((token) => token.identifier) || []
-    );
+    const { userTokens, isLoading: utLoading } = useGetUserTokens();
     const ownedTokens = userTokens.filter((token) => token.owner === address);
 
     const firstTokenAccountDetails = ownedTokens.find(
@@ -76,6 +47,42 @@ const AddInitialLiquidityForm = forwardRef(
 
     const secondTokenAccountDetails = userTokens.find(
       (token) => token.identifier === tokensSelected.token2
+    );
+
+    const formSchema = z.object({
+      firstTokenAmount: numericString(
+        z
+          .number()
+          .min(0)
+          .max(formatBalance(firstTokenAccountDetails, true) as number)
+      ),
+      secondTokenAmount: numericString(z.number().min(2))
+    });
+    type schemaType = z.infer<typeof formSchema>;
+
+    const form = useForm<schemaType>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        firstTokenAmount: '',
+        secondTokenAmount: ''
+      }
+    });
+
+    const { haveLocales } = usePoolHaveLocalRoles(pair);
+
+    const onSuccess = () => {
+      setSessionId(null);
+      // router.push('/create?create-pool=true&lock-lp=true');
+    };
+    const [sessionId, setSessionId] = useState<string | null>(null);
+
+    useTxNotification({ onSuccess, sessionId, setSessionId, waitTx: true });
+
+    const { lpIdentifier, isLoading: lpLoading } = useGetLpIdentifier(pair);
+
+    const { allowedPoolTokens } = useGetAllowedPoolTokens();
+    const { tokens, isLoading: tLoading } = useGetMultipleElrondTokens(
+      allowedPoolTokens.map((token) => token.identifier) || []
     );
 
     const secondTokenDetails = tokens.find(
@@ -136,6 +143,11 @@ const AddInitialLiquidityForm = forwardRef(
                       token={secondTokenAccountDetails}
                       tokenType={'secondTokenAmount'}
                     />
+                    {form.formState.errors.secondTokenAmount && (
+                      <div className='text-red-500 text-sm mt-1'>
+                        {form.formState.errors?.secondTokenAmount?.message.toString()}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

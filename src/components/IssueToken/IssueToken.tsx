@@ -1,6 +1,8 @@
 import IssueTokenForm from './IssueTokenForm';
 
 const IssueToken = () => {
+  console.log('IssueToken');
+
   return (
     <div>
       <div>

@@ -1,7 +1,5 @@
 'use client';
-import IssueToken from '@/components/IssueToken/IssueToken';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Button, ButtonProps } from '@/components/ui/button';
 import useDisclosure from '@/hooks/useDisclosure';
 import {
   faArrowLeft,
@@ -9,29 +7,42 @@ import {
   faWaterLadder
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dynamic from 'next/dynamic';
 import { PropsWithChildren, createContext, useState } from 'react';
-import CreatePoolsContainer from '../CreatePool/CreatePoolsContainer';
+import Modal from 'react-modal';
 import ActionsBox from './ActionsBox';
+
+const IssueToken = dynamic(() => import('@/components/IssueToken/IssueToken'));
+const CreatePoolsContainer = dynamic(
+  () => import('../CreatePool/CreatePoolsContainer')
+);
+
 const viewContext = createContext<{
   view: 'issue' | 'create-pool';
   setView: (view: 'issue' | 'create-pool') => void;
 }>(null);
 
-const CreatePoolModal = ({ children }: PropsWithChildren) => {
-  const { isOpen, onToggle } = useDisclosure(false);
+const CreatePoolModal = ({
+  children,
+  ...props
+}: PropsWithChildren<ButtonProps>) => {
+  const { isOpen, onToggle, onClose } = useDisclosure(false);
   const [view, setView] = useState<'issue' | 'create-pool'>(null);
+  console.log('render');
+
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={(open) => {
-        if (open === false) {
-          setView(null);
-        }
-        onToggle();
-      }}
-    >
-      {children}
-      <DialogContent className='p-3'>
+    <>
+      <Button {...props} onClick={onToggle}>
+        {children}
+      </Button>
+      <Modal
+        isOpen={isOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={onClose}
+        // style={customStyles}
+        contentLabel='Example Modal'
+        className='fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200'
+      >
         {view === null && (
           <div className='grid grid-cols-2 gap-6 w-full mt-4'>
             <ActionsBox
@@ -62,8 +73,8 @@ const CreatePoolModal = ({ children }: PropsWithChildren) => {
 
           {view === 'create-pool' && <CreatePoolsContainer />}
         </viewContext.Provider>
-      </DialogContent>
-    </Dialog>
+      </Modal>
+    </>
   );
 };
 

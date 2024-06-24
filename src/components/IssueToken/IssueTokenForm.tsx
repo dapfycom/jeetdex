@@ -14,14 +14,20 @@ import { BigUIntValue, BytesValue } from '@multiversx/sdk-core/out';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import BigNumber from 'bignumber.js';
+import { useState } from 'react';
 import IssueField from './IssueField';
 import IssueTokenSwitch from './IssueTokenSwich';
 
 export const IssueTokenSchema = z.object({
-  name: z.string().min(1).regex(/^\S*$/, 'name must not contain whitespace'),
+  name: z
+    .string()
+    .min(3)
+    .max(50)
+    .regex(/^\S*$/, 'name must not contain whitespace'),
   ticker: z
     .string()
-    .min(1)
+    .min(3)
+    .max(10)
     .regex(/^\S*$/, 'ticker must not contain whitespace'),
   mintAmount: z
     .string()
@@ -32,9 +38,12 @@ export const IssueTokenSchema = z.object({
   decimals: z
     .string()
     .min(1)
-    .refine((val) => !isNaN(Number(val)), {
-      message: 'decimals must be a number'
-    }),
+    .refine(
+      (val) => !isNaN(Number(val)) && Number(val) >= 0 && Number(val) <= 18,
+      {
+        message: 'decimals must be a number between 0 and 18'
+      }
+    ),
   properties: z.object({
     canFreeze: z.boolean(),
     canWipe: z.boolean(),
@@ -63,21 +72,20 @@ export default function IssueTokenForm() {
       }
     }
   });
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const { setSessionId } = useTxNotification({});
+  useTxNotification({ waitTx: true, sessionId, setSessionId });
 
   async function onSubmit(data: z.infer<typeof IssueTokenSchema>) {
     console.log(data);
-    if (data) {
-      return;
-    }
+
     const tx1 = interactions.metachain.EGLDPaymentOnlyTx({
       value: 0.05,
       functionName: 'issue',
       gasL: 60000000,
       arg: [
         BytesValue.fromUTF8(data.name),
-        BytesValue.fromUTF8(data.ticker),
+        BytesValue.fromUTF8(data.ticker.toUpperCase()),
         new BigUIntValue(
           new BigNumber(data.mintAmount).multipliedBy(
             10 ** Number(data.decimals)
@@ -117,12 +125,13 @@ export default function IssueTokenForm() {
     const res: SendTransactionReturnType = await sendTransactions({
       transactions: [tx1, tx2]
     });
+    console.log(res);
 
     setSessionId(res.sessionId);
   }
 
   return (
-    <div className='rounded-xl bg-card  px-4 py-5 w-full'>
+    <div className='rounded-sm bg-card  px-4 py-5 w-full'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

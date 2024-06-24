@@ -72,7 +72,7 @@
 
 
 body{
-  pointer-events: initial !important;
+  /* pointer-events: initial !important; */
 }
 
 .go2072408551{
@@ -80,3 +80,6 @@ body{
   background: #ffff00 !important;
 }
 
+.ReactModal__Overlay--after-open{
+  @apply !bg-black/80
+}

@@ -39,9 +39,12 @@ const PositionModal = ({
   const onSuccess = () => {
     mutate();
   };
+  const [sessionId, setSessionId] = useState<string | null>(null);
 
-  const { setSessionId } = useTxNotification({
-    onSuccess: onSuccess
+  useTxNotification({
+    onSuccess: onSuccess,
+    sessionId,
+    setSessionId
   });
 
   const withdrawLiquidityAmount = new BigNumber(liquidity.balance)
