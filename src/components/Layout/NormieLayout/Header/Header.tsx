@@ -10,13 +10,10 @@ import ViewProfileButton from './ViewProfileButton';
 export const Header = () => {
   return (
     <div>
-      <header className='relative flex items-center sm:items-start  justify-between  gap-3 p-1 flex-wrap'>
-        <div className='flex gap-4 items-center'>
-          <MxLink
-            to={'/'}
-            className=' items-center justify-between gap-3 hidden sm:flex'
-          >
-            <Logo className='rounded-full w-9 h-9' />
+      <header className='relative flex items-start  justify-between  gap-3 p-1 flex-wrap'>
+        <div className='flex gap-2 sm:gap-4 items-center'>
+          <MxLink to={'/'} className=' items-center justify-between gap-3 flex'>
+            <Logo className='rounded-full w-8 h-8 sm:w-9 sm:h-9' />
           </MxLink>
           <div className='flex gap-2 items-center'>
             <Navbar />

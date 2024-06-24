@@ -43,7 +43,7 @@ export default memo(function ChartCard({ poolPair }: IProps) {
   return (
     <div
       className={cn(
-        'h-full min-h-[450px]  rounded-sm  overflow-hidden md:block hidden',
+        'h-full min-h-[450px]  rounded-sm  overflow-hidden md:block',
         !isOpenCharts && 'md:hidden'
       )}
     >

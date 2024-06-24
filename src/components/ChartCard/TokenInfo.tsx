@@ -18,10 +18,10 @@ const TokenInfo = ({ poolPair }: IProps) => {
   console.log(token);
 
   return (
-    <div className='w-full flex mb-3 gap-3 h-[26.8px] justify-between  items-end text-sm'>
+    <div className='w-full flex mb-3 gap-1 sm:gap-3  justify-between  items-end text-sm'>
       {poolPair && (
         <>
-          <div className='flex gap-4'>
+          <div className='flex gap-x-1 gap-y-1 sm:gap-4 flex-wrap justify-between'>
             <span className='text-muted-foreground'>
               {formatTokenI(poolPair.firstToken.name)}
             </span>

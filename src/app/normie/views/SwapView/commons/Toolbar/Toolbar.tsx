@@ -14,7 +14,7 @@ const Toolbar = ({
 }) => {
   const dispatch = useAppDispatch();
   return (
-    <div className='mb-3 flex justify-between items-center'>
+    <div className='mb-3 flex justify-between items-center sm:flex-row flex-col gap-y-4'>
       <CommandDialogDemo />
       <div className='w-full flex justify-end gap-3'>
         <Button
