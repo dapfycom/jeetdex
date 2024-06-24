@@ -105,7 +105,7 @@ export const fetchCoinsData = unstable_cache(
   ['CoinsPairs'],
   {
     tags: ['CoinsPairs'],
-    revalidate: 60 * 60 * 6 // 6 hours
+    revalidate: 60 * 60 * 1 // 1 hours
   }
 );
 

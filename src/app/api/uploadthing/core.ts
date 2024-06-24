@@ -106,29 +106,47 @@ export const ourFileRouter = {
           identifier: tokenI
         }
       });
-
-      await prisma.coins.create({
-        data: {
-          identifier: tokenI,
-          img: file.url,
-          owner: {
-            connect: {
-              address: metadata.userAddress
+      console.log('before create coin');
+      try {
+        await prisma.coins.upsert({
+          create: {
+            identifier: tokenI,
+            img: file.url,
+            owner: {
+              connect: {
+                address: metadata.userAddress
+              }
             }
+          },
+          update: {
+            img: file.url
+          },
+          where: {
+            identifier: tokenI
+          }
+        });
+        console.log('after create coin');
+        console.log(currentCoin);
+
+        if (currentCoin) {
+          const fileKey = currentCoin.img.split('/').pop();
+          console.log(fileKey);
+          try {
+            await utapi.deleteFiles(fileKey);
+          } catch (error) {
+            console.log(error);
           }
         }
-      });
+        console.log('get here');
 
-      if (currentCoin) {
-        const fileKey = currentCoin.img.split('/').pop();
-        console.log(fileKey);
+        revalidateTag('CoinsPairs');
+        // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+        return { uploadedBy: metadata.userAddress };
+      } catch (error) {
+        console.log(error);
 
-        await utapi.deleteFiles(fileKey);
+        throw new UploadThingError('Error updating database');
       }
-
-      revalidateTag('CoinsPairs');
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userAddress };
     }),
   messageImage: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
     .input(
@@ -143,6 +161,7 @@ export const ourFileRouter = {
 
       // This code runs on your server before upload
       const user = await getSession();
+      console.log(user);
 
       // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError('Unauthorized');

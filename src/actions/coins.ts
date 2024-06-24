@@ -3,6 +3,7 @@
 import prisma from '@/db';
 import { fetchTokenById } from '@/services/rest/elrond/tokens';
 import { getSession } from '@/utils/server-utils/sessions';
+import { revalidateTag } from 'next/cache';
 
 export const addSocialsCoin = async ({
   identifier,
@@ -53,6 +54,8 @@ export const addSocialsCoin = async ({
       identifier
     }
   });
+
+  revalidateTag('CoinsPairs');
 
   return coin;
 };
