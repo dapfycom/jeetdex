@@ -39,6 +39,8 @@ const Trades = ({ pool }: { pool: IPoolPair }) => {
   );
 
   const finalData = data || [];
+  console.log(finalData);
+
   return (
     <Table className='bg-card'>
       <TableHeader>
@@ -75,6 +77,7 @@ const Trades = ({ pool }: { pool: IPoolPair }) => {
               : hexToBigNumber(d.action.arguments.functionArgs[1]).toString();
 
           console.log(firstTokenTxValue);
+          console.log(secondTokenTxValue);
 
           return (
             <TableRow key={d.txHash}>
@@ -91,10 +94,13 @@ const Trades = ({ pool }: { pool: IPoolPair }) => {
               </TableCell>
               <TableCell className='text-center'>
                 {formatBigNumber(
-                  formatBalance({
-                    balance: secondTokenTxValue,
-                    decimals: pool.secondToken.decimals
-                  })
+                  formatBalance(
+                    {
+                      balance: secondTokenTxValue,
+                      decimals: pool.secondToken.decimals
+                    },
+                    true
+                  )
                 )}
               </TableCell>
               <TableCell className='text-center'>
