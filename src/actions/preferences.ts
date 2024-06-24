@@ -84,8 +84,14 @@ export const likePool = async (
           }
         },
         userSetting: {
-          connect: {
-            userId: user.id
+          connectOrCreate: {
+            create: {
+              slippage: 5,
+              userId: user.id
+            },
+            where: {
+              userId: user.id
+            }
           }
         }
       }

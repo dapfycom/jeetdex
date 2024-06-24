@@ -36,9 +36,16 @@ export const useSearchPool = (pools: (IPoolPair & { liked: boolean })[]) => {
 
 export const useLikePool = (pool: IPoolPair & { liked: boolean }) => {
   const { mutate, settings } = useGetLikedPools();
+  console.log(settings);
 
   const handleLikePool = async () => {
     try {
+      const newSettings = settings || {
+        id: generateRandomString(10),
+        pools: [],
+        slippage: 5,
+        userId: generateRandomString(10)
+      };
       const newLikedPool = {
         id: generateRandomString(10),
         userSettingId: generateRandomString(10),
@@ -51,14 +58,14 @@ export const useLikePool = (pool: IPoolPair & { liked: boolean }) => {
         }
       };
       let data = {
-        ...settings,
-        pools: [...settings.pools, newLikedPool]
+        ...newSettings,
+        pools: [...newSettings.pools, newLikedPool]
       };
       if (pool.liked) {
         data = {
-          ...settings,
+          ...newSettings,
           pools: [
-            ...settings.pools.filter(
+            ...newSettings.pools.filter(
               (p) => p.pool.lpIdentifier !== pool.lpTokenIdentifier
             )
           ]
