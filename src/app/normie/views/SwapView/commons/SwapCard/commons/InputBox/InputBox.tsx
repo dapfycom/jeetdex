@@ -35,6 +35,7 @@ interface IProps {
 
   handlePercentAmount?: (t: IElrondAccountToken, percent: number) => void;
   clear?: () => void;
+  hideAmountButtons?: boolean;
 }
 
 const InputBox = ({
@@ -46,7 +47,8 @@ const InputBox = ({
   onChange,
   onChangeToken,
   handlePercentAmount: onMax,
-  clear
+  clear,
+  hideAmountButtons
 }: IProps) => {
   const { elrondToken, isLoading } = useGetElrondToken(selectedTokenI);
   const { accountToken } = useGetAccountToken(selectedTokenI);
@@ -66,53 +68,55 @@ const InputBox = ({
           <div className='flex justify-between items-start px-2 md:px-4 pb-3 gap-2'>
             <h5 className='text-xs lg:text-sm '>{label}</h5>
 
-            <div className='flex items-center gap-2'>
-              <div className='flex gap-2'>
-                <Button
-                  variant='ghost'
-                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
-                  onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken, 25)
-                  }
-                >
-                  25%
-                </Button>
-                <Button
-                  variant='ghost'
-                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
-                  onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken, 50)
-                  }
-                >
-                  50%
-                </Button>
-                <Button
-                  variant='ghost'
-                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
-                  onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken, 75)
-                  }
-                >
-                  75%
-                </Button>
-                <Button
-                  variant='ghost'
-                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
-                  onClick={() =>
-                    onMax && onMax(accountToken as IElrondAccountToken, 100)
-                  }
-                >
-                  100%
-                </Button>
-                <Button
-                  className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
-                  variant='destructive'
-                  onClick={clear}
-                >
-                  Clear
-                </Button>
+            {!hideAmountButtons && (
+              <div className='flex items-center gap-2'>
+                <div className='flex gap-2'>
+                  <Button
+                    variant='ghost'
+                    className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
+                    onClick={() =>
+                      onMax && onMax(accountToken as IElrondAccountToken, 25)
+                    }
+                  >
+                    25%
+                  </Button>
+                  <Button
+                    variant='ghost'
+                    className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
+                    onClick={() =>
+                      onMax && onMax(accountToken as IElrondAccountToken, 50)
+                    }
+                  >
+                    50%
+                  </Button>
+                  <Button
+                    variant='ghost'
+                    className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
+                    onClick={() =>
+                      onMax && onMax(accountToken as IElrondAccountToken, 75)
+                    }
+                  >
+                    75%
+                  </Button>
+                  <Button
+                    variant='ghost'
+                    className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
+                    onClick={() =>
+                      onMax && onMax(accountToken as IElrondAccountToken, 100)
+                    }
+                  >
+                    100%
+                  </Button>
+                  <Button
+                    className='px-[3px] lg:px-[6px] h-[20px]  text-[10px] lg:text-[12px]'
+                    variant='destructive'
+                    onClick={clear}
+                  >
+                    Clear
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           <div className='w-full  rounded-2xl py-3 px-2 lg:px-4'>
             <div className=' flex justify-between w-full '>

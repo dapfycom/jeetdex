@@ -95,6 +95,7 @@ const SwapCard = ({
             isLoadingInput={isLoading}
             tokensIdentifiers={[]}
             label='To'
+            hideAmountButtons
           />
         </CardContent>
         <CardFooter>
