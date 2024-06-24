@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { explorerAddress } from '@/config/index';
+import { network } from '@/config';
 import { getContrastColor, stringToColor } from '@/lib/utils';
 import { formatBigNumber } from '@/utils/numbers';
 
@@ -110,7 +110,7 @@ export default function Trades() {
 
             <TableCell className='text-right'>
               <a
-                href={explorerAddress}
+                href={network.explorerAddress}
                 target='_blank'
                 rel='noopener noreferrer'
               >
