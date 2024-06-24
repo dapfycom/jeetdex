@@ -80,6 +80,7 @@ const AddSocialsModal = ({
       mutate();
 
       successToast('Socials updated successfully');
+      onToggle();
     } catch (error) {
       console.log(error);
 
