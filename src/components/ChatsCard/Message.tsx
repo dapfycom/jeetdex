@@ -61,7 +61,7 @@ const Message = ({
               <AvatarImage alt={user.username} src={user.img} />
             </Avatar>
           </Link>
-          <Link href={`/profile/${user.id}`}>
+          <Link href={`/profile/${user.address}`}>
             <div className='rounded-sm text-xs bg-lime-400/70 text-black px-1 h-[16px] flex items-center'>
               {user.username}
             </div>
