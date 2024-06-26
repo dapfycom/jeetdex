@@ -54,7 +54,7 @@ const ProfileContext = ({
   children,
   ctxValue
 }: PropsWithChildren<{
-  ctxValue: ContextType;
+  ctxValue: any;
 }>) => {
   return <ProfileCtx.Provider value={ctxValue}>{children}</ProfileCtx.Provider>;
 };

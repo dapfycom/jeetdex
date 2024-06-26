@@ -47,6 +47,7 @@ export const useAuthentication = () => {
 };
 
 export const useGetUserInfo = () => {
+  const { isLoggedIn } = useAuthentication();
   const { data, error, isLoading, isValidating, mutate } = useSWR<{
     data: {
       id: string;
@@ -92,7 +93,7 @@ export const useGetUserInfo = () => {
         likesReceived: number;
       };
     };
-  }>('/user/private', fetchAxiosJeetdex);
+  }>(isLoggedIn ? '/user/private' : null, fetchAxiosJeetdex);
 
   return {
     userInfo: data,

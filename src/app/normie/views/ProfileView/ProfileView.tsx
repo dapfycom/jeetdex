@@ -1,14 +1,13 @@
 'use client';
 import Address from '@/components/Address';
 import { network } from '@/config';
-import { fetchAxiosJeetdex } from '@/services/rest/api';
+import { useGetUserInfo } from '@/hooks';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import useSWR from 'swr';
-import ProfileContext, { ContextType } from './ProfileContext';
+import ProfileContext from './ProfileContext';
 import ProfileTabs from './components/Tabs';
 import UserAvatar from './components/UpdateUserImg';
 const EditProfile = dynamic(() => import('./components/EditProfile'), {
@@ -16,22 +15,19 @@ const EditProfile = dynamic(() => import('./components/EditProfile'), {
 });
 
 const ProfileView = () => {
-  const { data, isLoading } = useSWR<{ data: ContextType }>(
-    '/user/private',
-    fetchAxiosJeetdex
-  );
+  const { userInfo, isLoading } = useGetUserInfo();
 
-  if (isLoading || !data?.data) {
+  if (isLoading || !userInfo.data) {
     return (
       <div className='bg-[#1C243E]  max-w-2xl w-full m-auto h-[300px] flex justify-center items-center rounded-sm'>
         <Loader2 className='animate-spin w-14 h-14' />
       </div>
     );
   }
-  const user = data?.data;
+  const user = userInfo.data;
 
   return (
-    <ProfileContext ctxValue={data?.data}>
+    <ProfileContext ctxValue={userInfo.data}>
       <div
         key='1'
         className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl w-full m-auto mt-8 sm:mt-0'

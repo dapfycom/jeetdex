@@ -15,6 +15,8 @@ export async function generateStaticParams() {
 }
 
 async function Page({ params }: { params: { address: string } }) {
+  console.log(params.address);
+
   return <PublicProfileView userAddress={params.address} />;
 }
 

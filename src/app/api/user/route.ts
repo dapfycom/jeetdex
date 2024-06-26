@@ -3,9 +3,6 @@ import { getSession } from '@/utils/server-utils/sessions';
 
 export async function GET(request: Request) {
   const session = await getSession();
-  if (!session) {
-    return Response.json({ error: 'User not authenticated' }, { status: 401 });
-  }
 
   const { searchParams } = new URL(request.url);
   const userAddress = searchParams.get('userAddress');
@@ -13,6 +10,13 @@ export async function GET(request: Request) {
 
   let data;
   if (!userAddress) {
+    if (!session) {
+      return Response.json(
+        { error: 'User not authenticated' },
+        { status: 401 }
+      );
+    }
+
     data = await prisma.users.findUnique({
       where: {
         address: session.address

@@ -14,6 +14,8 @@ const PublicProfileView = ({ userAddress }: { userAddress: string }) => {
   console.log(userAddress);
 
   const { userInfo } = useGetSingleUserInfo(userAddress);
+  console.log(userInfo);
+
   const user = userInfo?.data;
   if (!user) {
     return null;
