@@ -47,7 +47,7 @@ const PositionModal = ({
     setSessionId
   });
 
-  const withdrawLiquidityAmount = new BigNumber(liquidity.balance)
+  const withdrawLiquidityAmount = new BigNumber(liquidity?.balance || 0)
     .times(percentage)
     .div(100)
     .toString();

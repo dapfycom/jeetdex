@@ -9,6 +9,7 @@ import {
 import useDisclosure from '@/hooks/useDisclosure';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import { IElrondAccountToken } from '@/types/scTypes';
+import { errorToast } from '@/utils/toast';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useListPools, useSearchPool } from '../../../utils/hooks';
@@ -47,9 +48,13 @@ const PoolsList = ({ pools }: IProps) => {
   ) => {
     console.log(pool, liquidity);
 
-    setSelectedPool(pool);
-    setSelectedLiquidity(liquidity);
-    onToggle();
+    if (liquidity) {
+      setSelectedPool(pool);
+      setSelectedLiquidity(liquidity);
+      onToggle();
+    } else {
+      errorToast("You don't have any liquidity in this pool");
+    }
   };
 
   return (
@@ -84,7 +89,7 @@ const PoolsList = ({ pools }: IProps) => {
           })}
         </TableBody>
       </Table>
-      {isOpen && (
+      {isOpen && selectedLiquidity && (
         <PositionModal
           isOpen={isOpen}
           onToggle={onToggle}
