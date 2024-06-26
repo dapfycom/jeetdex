@@ -12,7 +12,11 @@ import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLogi
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useAuthentication } from '@/hooks';
 import { IElrondAccountToken } from '@/types/scTypes';
-import { formatBalance, formatTokenI } from '@/utils/mx-utils';
+import {
+  formatBalance,
+  formatBalanceDollar,
+  formatTokenI
+} from '@/utils/mx-utils';
 import { formatBigNumber } from '@/utils/numbers';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -66,33 +70,59 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
         </div>
       </TableCell>
       <TableCell className=' py-4'>
-        {formatBigNumber(
-          formatBalance(
+        <div>
+          {formatBigNumber(
+            formatBalance(
+              {
+                balance: pool.firstTokenReserve,
+                decimals: pool.firstToken.decimals
+              },
+              true
+            )
+          )}{' '}
+          <span className='text-gray-400'>
+            {formatTokenI(pool.firstToken.ticker)}
+          </span>
+        </div>
+        <div>
+          ${' '}
+          {formatBalanceDollar(
             {
               balance: pool.firstTokenReserve,
               decimals: pool.firstToken.decimals
             },
+            pool.firstTokenJeetdexPrice,
             true
-          )
-        )}{' '}
-        <span className='text-gray-400'>
-          {formatTokenI(pool.firstToken.ticker)}
-        </span>
+          )}
+        </div>
       </TableCell>
       <TableCell className=' py-4'>
-        {' '}
-        {formatBigNumber(
-          formatBalance(
+        <div>
+          {formatBigNumber(
+            formatBalance(
+              {
+                balance: pool.secondTokenReserve,
+                decimals: pool.secondToken.decimals
+              },
+              true
+            )
+          )}{' '}
+          <span className='text-gray-400'>
+            {formatTokenI(pool.secondToken.ticker)}
+          </span>
+        </div>
+
+        <div>
+          ${' '}
+          {formatBalanceDollar(
             {
               balance: pool.secondTokenReserve,
               decimals: pool.secondToken.decimals
             },
+            pool.secondToken.price,
             true
-          )
-        )}{' '}
-        <span className='text-gray-400'>
-          {formatTokenI(pool.secondToken.ticker)}
-        </span>
+          )}
+        </div>
       </TableCell>{' '}
       <TableCell className=' py-4 cursor-pointer' onClick={onClickLp}>
         {userLp ? formatBalance(userLp) : '0.00'}
