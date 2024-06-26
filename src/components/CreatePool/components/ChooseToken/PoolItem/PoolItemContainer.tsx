@@ -27,7 +27,7 @@ const PoolItemContainer = ({
         <PoolItem tokensList={tokensList} tokenType={tokenType} />
       ) : (
         <div className='bg-[#1C243E]  p-3 rounded-md w-full flex justify-between items-center '>
-          No tokens founds, make sure you are the owner of the token
+          No tokens found, make sure you are the owner of the token
         </div>
       )}
     </div>
