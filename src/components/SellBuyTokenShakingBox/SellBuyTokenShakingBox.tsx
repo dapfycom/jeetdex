@@ -59,6 +59,7 @@ const SellBuyTokenShakingBox = () => {
     token: string;
     type: string;
     address: string;
+    username: string;
   } = adaptSwapInEventData(swapInTxEvent || data);
 
   if (!currentValue) return null;
@@ -85,9 +86,9 @@ const SellBuyTokenShakingBox = () => {
             href={`/profile/${currentValue.address}`}
             className='hover:text-blue-700 hover:font-bold'
           >
-            {currentValue.user}
+            {currentValue.username || currentValue.user}
           </Link>{' '}
-          {`${currentValue.type} ${formatNumber(currentValue.amount)} JEET of`}{' '}
+          {`${currentValue.type} ${formatNumber(currentValue.amount)} JEET to`}{' '}
           <Link
             href={`/?swap=${currentValue.token}`}
             className='hover:text-blue-700 hover:font-bold'

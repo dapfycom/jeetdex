@@ -1,6 +1,5 @@
 'use client';
 import { fetchEventsApiData } from '@/services/rest/events';
-import { socket } from '@/services/ws';
 import { IPairCreatedEventData } from '@/types/eventsApi.types';
 import { generateLightColor } from '@/utils/general';
 import { formatTokenI } from '@/utils/mx-utils';
@@ -14,33 +13,33 @@ import { adaptPairCreatedData } from './adapter';
 const CreatedTokenShakingBox = () => {
   const [shake, setShake] = useState(false);
   const [bgColor, setBgColor] = useState(generateLightColor());
-  const [pairCreatedData, setPairCreatedData] =
-    useState<IPairCreatedEventData | null>(null);
 
-  useEffect(() => {
-    socket.on(
-      'enablePair',
-      ({ message: data }: { message: IPairCreatedEventData }) => {
-        setShake(true);
-        setTimeout(() => setShake(false), 500); // Duración del shake, ajusta según tu configuración
-        setBgColor(generateLightColor());
-        setPairCreatedData(data);
-      }
-    );
+  const [index, setIndex] = useState(0);
 
-    return () => {
-      socket.off('enablePair');
-    };
-  }, []);
-
-  const { data } = useSWR<IPairCreatedEventData>(
-    '/lastPairCreated',
+  const { data } = useSWR<IPairCreatedEventData[]>(
+    '/pairsCreated',
     fetchEventsApiData
   );
-  console.log(data);
 
-  const currentValue = adaptPairCreatedData(pairCreatedData || data);
+  const adaptedData =
+    data?.map((creation) => {
+      return adaptPairCreatedData(creation);
+    }) || [];
 
+  useEffect(() => {
+    // Función para simular la llegada de nuevos valores con un delay
+    const interval = setInterval(() => {
+      setShake(true);
+      setTimeout(() => setShake(false), 500); // Duración del shake, ajusta según tu configuración
+      setBgColor(generateLightColor()); // Cambiar el color de fondo
+
+      setIndex((prevIndex) => (prevIndex + 1) % adaptedData.length);
+    }, 5000); // Ajusta el delay entre cada nuevo valor
+
+    return () => clearInterval(interval);
+  }, [adaptedData.length]);
+
+  const currentValue = adaptedData[index];
   if (!currentValue) return null;
 
   return (

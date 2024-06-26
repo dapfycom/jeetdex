@@ -9,6 +9,7 @@ export const adaptSwapInEventData = (
   token: string;
   type: string;
   address: string;
+  username: string;
 } => {
   if (!data) return null;
   return {
@@ -18,6 +19,7 @@ export const adaptSwapInEventData = (
 
     token: data.tokenIn === tokensID.jeet ? data.tokenOut : data.tokenIn,
     type: data.tokenIn === tokensID.jeet ? 'sold' : 'bought',
-    address: data.caller
+    address: data.caller,
+    username: data.username
   };
 };
