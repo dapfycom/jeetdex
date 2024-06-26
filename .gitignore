@@ -52,3 +52,4 @@ dev.db
 dev.db-shm
 dev.db-wal
 .env
+.env.production
