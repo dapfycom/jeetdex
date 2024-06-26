@@ -24,7 +24,7 @@ export const createProfile = async ({
     return;
   }
 
-  const nickname = herotag || generateRandomString(6);
+  const nickname = herotag ? herotag.split('.')[0] : generateRandomString(6);
 
   const img = '/assets/img/logo-jeeter.png';
 
