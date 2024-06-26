@@ -16,9 +16,34 @@ const PublicProfileView = ({ userAddress }: { userAddress: string }) => {
   const { userInfo } = useGetSingleUserInfo(userAddress);
   console.log(userInfo);
 
-  const user = userInfo?.data;
-  if (!user) {
+  if (!userInfo) {
     return null;
+  }
+  const user = userInfo?.data;
+
+  if (!user) {
+    return (
+      <div className='flex flex-col items-center justify-center text-center px-4'>
+        <h1 className='text-3xl font-bold mb-3'>
+          This account does not exist on jeetdex.
+        </h1>
+
+        <div className='flex gap-2'>
+          <Link href='/' className='text-blue-500 underline'>
+            Go back to home
+          </Link>
+          or{' '}
+          <a
+            href={`${network.explorerAddress}/accounts/${userAddress}`}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='text-blue-500 underline'
+          >
+            Check explorer
+          </a>
+        </div>
+      </div>
+    );
   }
 
   return (
