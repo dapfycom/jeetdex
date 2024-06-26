@@ -13,7 +13,7 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: 'Jeet Dex',
   description:
-    'Best memecoin dex on the Multiversx blockchain. Trade your favorite memecoins with ease.',
+    'Launch coins on MultiversX in just a few clicks: Get instant branding, real-time charts and chats.',
   viewport: {
     width: 'device-width',
     initialScale: 1
