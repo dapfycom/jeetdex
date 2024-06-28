@@ -1,4 +1,5 @@
 'use client';
+import { tokensID } from '@/config';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import useIsMobile from '@/hooks/useIsMobile';
 import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
@@ -18,7 +19,7 @@ const SwapContent = () => {
   const fromToken = useAppSelector(selectFromFieldSelectedToken);
   const toToken = useAppSelector(selectToFieldSelectedToken);
   const global = useAppSelector(selectGlobalData);
-  const { currentParams, updateParams } = useUpdateUrlParams(['swap']);
+  const { currentParams } = useUpdateUrlParams(['swap']);
   const dispatch = useAppDispatch();
 
   const [swap] = currentParams;
@@ -37,14 +38,6 @@ const SwapContent = () => {
   const { tokensPairs } = useGetSwapbleTokens();
 
   useEffect(() => {
-    if (poolPair?.firstTokenId) {
-      updateParams('swap', poolPair.firstTokenId);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [poolPair?.firstTokenId]);
-
-  useEffect(() => {
     console.log(swap);
     if (tokensPairs.length > 0) {
       const tokenPair = tokensPairs.find(
@@ -53,6 +46,9 @@ const SwapContent = () => {
       if (tokenPair) {
         dispatch(changeToFieldToken(tokenPair.firstToken));
         dispatch(changeFromFieldToken(tokenPair.secondToken));
+      } else {
+        dispatch(changeToFieldToken(swap || tokensID.bsk));
+        dispatch(changeFromFieldToken(tokensID.jeet));
       }
     }
   }, [dispatch, swap, tokensPairs]);

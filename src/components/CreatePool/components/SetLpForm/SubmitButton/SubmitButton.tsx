@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import useTxNotification from '@/hooks/useTxNotification';
+import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useState } from 'react';
 import { useGenerateLPStrings } from '../../../utils/hooks';
@@ -19,11 +19,21 @@ const SubmitButton = ({ onNextStep }) => {
   };
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  useTxNotification({
+  // useTxNotification({
+  //   onSuccess,
+  //   waitTx: true,
+  //   sessionId,
+  //   setSessionId
+  // });
+
+  useTrackTransactionStatus({
+    transactionId: sessionId,
     onSuccess,
-    waitTx: true,
-    sessionId,
-    setSessionId
+
+    onFail: (transactionId: string | null, errorMessage?: string) => {
+      console.error('transactionId', transactionId);
+      console.error('errorMessage', errorMessage);
+    }
   });
 
   const handleCreateLp = async () => {

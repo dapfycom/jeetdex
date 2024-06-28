@@ -6,11 +6,11 @@ import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import useTxNotification from '@/hooks/useTxNotification';
 import { admins } from '@/localConstants/admin';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { interactions } from '@/services/sc/interactions';
 import { BigUIntValue, BytesValue } from '@multiversx/sdk-core/out';
+import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import { sendTransactions } from '@multiversx/sdk-dapp/services';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import BigNumber from 'bignumber.js';
@@ -74,8 +74,10 @@ export default function IssueTokenForm() {
   });
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  useTxNotification({ waitTx: true, sessionId, setSessionId });
-
+  // useTxNotification({ waitTx: true, sessionId, setSessionId });
+  useTrackTransactionStatus({
+    transactionId: sessionId
+  });
   async function onSubmit(data: z.infer<typeof IssueTokenSchema>) {
     console.log(data);
 

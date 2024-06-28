@@ -43,7 +43,7 @@ const useGetMultipleElrondTokens = (tokensIdentifiers: string[]) => {
           ticker: 'EGLD',
           decimals: 18,
           assets: {
-            svgUrl: '/images/egld.svg'
+            svgUrl: 'assets/img/egld.svg'
           },
           burnt: '0',
           initialMinted: '0',

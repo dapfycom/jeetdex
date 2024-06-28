@@ -81,3 +81,11 @@ export function formatBigNumber(input: string | number | BigNumber): string {
   // Si el número es menor que 1000, devolverlo tal cual
   return num.toString();
 }
+
+export const isValidNumber = (value: string) => {
+  if (value === '') return false;
+  if (value === '.') return false;
+
+  const regex = /^[0-9]*\.?[0-9]*$/;
+  return regex.test(value);
+};

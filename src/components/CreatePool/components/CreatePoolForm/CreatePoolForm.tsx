@@ -1,13 +1,12 @@
 'use client';
 
 import { Form } from '@/components/ui/form';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useTrackTransactionStatus } from '@/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { newPoolTx } from '../../utils/sc.calls';
 import { useGetNewPairFee, useGetPoolPair } from '../../utils/swr.hooks';
 
-import useTxNotification from '@/hooks/useTxNotification';
 import { cn } from '@/lib/utils';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { useState } from 'react';
@@ -57,11 +56,21 @@ export default function CreatePoolForm({ onNextStep }: ICreatePoolFormProps) {
   };
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  useTxNotification({
+  // useTxNotification({
+  //   onSuccess,
+  //   waitTx: true,
+  //   sessionId,
+  //   setSessionId
+  // });
+
+  useTrackTransactionStatus({
+    transactionId: sessionId,
     onSuccess,
-    waitTx: true,
-    sessionId,
-    setSessionId
+
+    onFail: (transactionId: string | null, errorMessage?: string) => {
+      console.error('transactionId', transactionId);
+      console.error('errorMessage', errorMessage);
+    }
   });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {

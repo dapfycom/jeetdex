@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
-import useTxNotification from '@/hooks/useTxNotification';
 import { IElrondAccountToken } from '@/types/scTypes';
 import {
   calculateSlippageAmount,
@@ -17,6 +16,7 @@ import {
   formatTokenI,
   get_both_tokens_for_given_position
 } from '@/utils/mx-utils';
+import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
 import { useState } from 'react';
 import { removeLiquidity } from '../../utils/functions';
@@ -41,10 +41,19 @@ const PositionModal = ({
   };
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  useTxNotification({
-    onSuccess: onSuccess,
-    sessionId,
-    setSessionId
+  // useTxNotification({
+  //   onSuccess: onSuccess,
+  //   sessionId,
+  //   setSessionId
+  // });
+  useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess,
+
+    onFail: (transactionId: string | null, errorMessage?: string) => {
+      console.error('transactionId', transactionId);
+      console.error('errorMessage', errorMessage);
+    }
   });
 
   const withdrawLiquidityAmount = new BigNumber(liquidity?.balance || 0)

@@ -10,10 +10,9 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { scAddress, tokensID } from '@/config';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useTrackTransactionStatus } from '@/hooks';
 import useDisclosure from '@/hooks/useDisclosure';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
-import useTxNotification from '@/hooks/useTxNotification';
 import { selectGlobalData, selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
 import { IElrondAccountToken } from '@/types/scTypes';
@@ -100,8 +99,10 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
   });
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  useTxNotification({ sessionId, setSessionId });
-
+  // useTxNotification({ sessionId, setSessionId });
+  useTrackTransactionStatus({
+    transactionId: sessionId
+  });
   const handleEnableSwap = async () => {
     const res = await enableTrade(pairForThisToken.address);
     setSessionId(res.sessionId);

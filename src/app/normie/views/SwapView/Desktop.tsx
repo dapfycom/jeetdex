@@ -50,10 +50,10 @@ const Desktop = ({ poolPair }) => {
                   <Chats poolPair={poolPair?.lpTokenIdentifier} />
                 </TabsContent>
                 <TabsContent value='trades'>
-                  <Trades pool={poolPair} />
+                  <Trades poolPair={poolPair} />
                 </TabsContent>
                 <TabsContent value='my-trades'>
-                  <UserTrades pool={poolPair} />
+                  <UserTrades poolPair={poolPair} />
                 </TabsContent>
               </Tabs>
             )}
@@ -92,7 +92,7 @@ const Desktop = ({ poolPair }) => {
               <Chats poolPair={poolPair?.lpTokenIdentifier} />
             </TabsContent>
             <TabsContent value='trades'>
-              <Trades pool={poolPair} />
+              <Trades poolPair={poolPair} />
             </TabsContent>
           </Tabs>
         )}

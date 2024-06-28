@@ -17,7 +17,11 @@ import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { changeField, clearInputs } from '../../lib/functions';
-import { useGetSwapbleTokens, useGetTokenRatio } from '../../lib/hooks';
+import {
+  useGetAggregate,
+  useGetSwapbleTokens,
+  useGetTokenRatio
+} from '../../lib/hooks';
 import SwapCard from './SwapCard';
 
 const SwapCardContainer = () => {
@@ -83,7 +87,10 @@ const SwapCardContainer = () => {
     new BigNumber(fromField.valueDecimals),
     normalDirection ? 'first' : 'second'
   );
+  console.log(toField);
+  console.log(fromField);
 
+  useGetAggregate(pairSelected);
   return (
     <SwapCard
       fromField={fromField}

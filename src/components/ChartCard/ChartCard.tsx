@@ -2,6 +2,7 @@
 import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import { selectIsOpenCharts } from '@/app/normie/views/SwapView/lib/swap-slice';
 import { useAppSelector } from '@/hooks';
+import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 import { memo, useEffect, useState } from 'react';
@@ -13,9 +14,6 @@ interface IProps {
   poolPair?: IPoolPair;
 }
 export default memo(function ChartCard({ poolPair }: IProps) {
-  console.log(poolPair);
-
-  console.log('render');
   const isOpenCharts = useAppSelector(selectIsOpenCharts);
   const [isScriptReady, setIsScriptReady] = useState(false);
   useEffect(() => {
@@ -40,6 +38,7 @@ export default memo(function ChartCard({ poolPair }: IProps) {
     };
   }, []); // Empty dependency array means this effect runs once on mount and clean up on unmount
 
+  const pool = useGetDefaultPool(poolPair);
   return (
     <div
       className={cn(
@@ -47,14 +46,14 @@ export default memo(function ChartCard({ poolPair }: IProps) {
         !isOpenCharts && 'md:hidden'
       )}
     >
-      <TokenInfo poolPair={poolPair} />
-      {!(isScriptReady && poolPair) && (
+      <TokenInfo poolPair={pool} />
+      {!(isScriptReady && pool) && (
         <Skeleton className='h-[450px] w-full bg-[#1C243E]' />
       )}
-      {isScriptReady && poolPair && (
+      {isScriptReady && pool && (
         <TVChartContainer
-          tokenIdentifier={poolPair?.firstTokenId}
-          key={poolPair?.firstTokenId}
+          tokenIdentifier={pool?.firstTokenId}
+          key={pool?.firstTokenId}
         />
       )}
     </div>

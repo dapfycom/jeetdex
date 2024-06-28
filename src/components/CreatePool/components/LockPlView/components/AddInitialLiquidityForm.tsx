@@ -1,9 +1,8 @@
 'use client';
 import { Form } from '@/components/ui/form';
-import { useAppSelector } from '@/hooks';
+import { useAppSelector, useTrackTransactionStatus } from '@/hooks';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
-import useTxNotification from '@/hooks/useTxNotification';
 import { cn } from '@/lib/utils';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
@@ -76,8 +75,16 @@ const AddInitialLiquidityForm = forwardRef(
     };
     const [sessionId, setSessionId] = useState<string | null>(null);
 
-    useTxNotification({ onSuccess, sessionId, setSessionId, waitTx: true });
+    // useTxNotification({ onSuccess, sessionId, setSessionId, waitTx: true });
+    useTrackTransactionStatus({
+      transactionId: sessionId,
+      onSuccess,
 
+      onFail: (transactionId: string | null, errorMessage?: string) => {
+        console.error('transactionId', transactionId);
+        console.error('errorMessage', errorMessage);
+      }
+    });
     const { lpIdentifier, isLoading: lpLoading } = useGetLpIdentifier(pair);
 
     const { allowedPoolTokens } = useGetAllowedPoolTokens();

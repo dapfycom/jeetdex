@@ -1,4 +1,5 @@
 import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
+import { SmartContractConfigTypes } from '@/services/sc';
 import BigNumber from 'bignumber.js';
 import { numberWithCommas, preventExponetialNotation } from './numbers';
 
@@ -216,4 +217,18 @@ export const get_both_tokens_for_given_position = (
     firstTokenAmount: token_first_token_amount.toString(),
     secondTokenAmount: token_second_token_amount.toString()
   };
+};
+
+export const getWspOfWrapedEgld = (shard: number): SmartContractConfigTypes => {
+  switch (shard) {
+    case 0:
+      return 'wrapEGLDShard0';
+    case 1:
+      return 'wrapEGLDShard1';
+    case 2:
+      return 'wrapEGLDShard2';
+
+    default:
+      return 'wrapEGLDShard1';
+  }
 };

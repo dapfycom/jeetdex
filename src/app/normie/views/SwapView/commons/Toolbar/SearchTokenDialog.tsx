@@ -10,26 +10,49 @@ import {
   CommandItem,
   CommandList
 } from '@/components/ui/command';
+import { tokensID } from '@/config';
 import { useAppSelector } from '@/hooks';
+import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
+import useOnClickOutside from '@/hooks/useOnClickOutside';
 import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
-import { Command, useCommandState } from 'cmdk';
+import { IElrondToken } from '@/types/scTypes';
+import { Command } from 'cmdk';
+import { useGetSwapbleAggregatorTokens } from '../../lib/hooks';
 
 export function CommandDialogDemo() {
   const [searchVal, setSearchVal] = React.useState('');
   const allPools = useAppSelector(selectGlobalData).pools;
+  const [openTokensList, setOpenTokensList] = React.useState<boolean>(false);
   const { updateParams } = useUpdateUrlParams(['swap']);
 
-  const inputRef = React.useRef<any>();
+  const listOfTokens: (IElrondToken & { address?: string })[] = allPools.map(
+    (p) => {
+      return {
+        address: p.address,
+        ...p.firstToken
+      };
+    }
+  );
+
+  const { ashTokens } = useGetSwapbleAggregatorTokens();
+  const tokensToSwap = [tokensID.egld, ...ashTokens.map((t) => t.id)];
+  const { tokens } = useGetMultipleElrondTokens(tokensToSwap);
+
+  const finalTokens = [...listOfTokens, ...tokens];
+
   const handleSelectToken = (value: string) => {
-    const valueIdentifier = value.split(':')[1];
+    const valueIdentifier = value.split(':')[0];
     const parts = valueIdentifier.split('-');
     const ticker = parts[0].toUpperCase();
-
-    const tokenIdentifier = ticker + '-' + parts[1];
+    let tokenIdentifier = ticker;
+    if (ticker !== tokensID.egld) {
+      tokenIdentifier += '-' + parts[1];
+    }
 
     updateParams('swap', tokenIdentifier);
     setSearchVal('');
+    setOpenTokensList(false);
   };
 
   return (
@@ -38,41 +61,65 @@ export function CommandDialogDemo() {
         <CommandInput
           placeholder='Search a token ...'
           className=''
-          autoFocus={true}
           value={searchVal}
           onValueChange={setSearchVal}
-          ref={inputRef}
+          onFocus={() => {
+            console.log('focus');
+
+            setOpenTokensList(true);
+          }}
         />
-        <List allPools={allPools} handleSelectToken={handleSelectToken} />
+        <List
+          tokens={finalTokens}
+          handleSelectToken={handleSelectToken}
+          openTokensList={openTokensList}
+          setOpenTokensList={setOpenTokensList}
+        />
       </Command>
     </>
   );
 }
 
-const List = ({ allPools, handleSelectToken }) => {
-  const search = useCommandState((state) => state.search);
-  if (!search) return null;
+const List = ({
+  tokens,
+  handleSelectToken,
+  openTokensList,
+  setOpenTokensList
+}: {
+  tokens: (IElrondToken & { address?: string })[];
+  handleSelectToken: (string) => void;
+  openTokensList: boolean;
+  setOpenTokensList: (v: boolean) => void;
+}) => {
+  const ref = React.useRef();
+  useOnClickOutside(ref, () => setOpenTokensList(false));
+
+  if (!openTokensList) return null;
 
   return (
-    <CommandList className='absolute bg-card w-full'>
+    <CommandList className='absolute bg-card w-full z-10' ref={ref}>
       <CommandEmpty>No results found.</CommandEmpty>
       <CommandGroup heading='Suggestions'>
-        {allPools.map((pool) => {
+        {tokens.map((token) => {
           return (
             <SubItem
-              key={pool.address}
+              key={token.identifier}
               className='cursor-pointer'
-              value={`${pool.address}:${pool.firstTokenId}`}
+              value={
+                token.address
+                  ? `${token.identifier}:${token.address}`
+                  : token.identifier
+              }
               onSelect={handleSelectToken}
             >
               <TokenImageSRC
-                alt={pool.firstToken?.ticker}
-                identifier={pool.firstTokenId}
+                alt={token.ticker}
+                identifier={token.identifier}
                 size={16}
-                src={pool.firstToken?.assets?.svgUrl}
+                src={token.assets?.svgUrl}
                 className='h-4 w-4 rounded-full'
               />
-              <span className='ml-2 '>{pool.firstTokenId}</span>
+              <span className='ml-2 '>{token.identifier}</span>
             </SubItem>
           );
         })}

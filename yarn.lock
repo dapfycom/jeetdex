@@ -15,6 +15,15 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
+"@ashswap/ash-sdk-js@^2.0.11":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@ashswap/ash-sdk-js/-/ash-sdk-js-2.0.11.tgz#535c5000efddde5ff2c80e3b279e7133455b000b"
+  integrity sha512-yPz529n1ewZJCuC6i94zKUM1Oa82zgVcJYhEslHXQeabPq0l/C3I4b0huXjneBxOt40cV0GEMqohT+mab1NR/Q==
+  dependencies:
+    "@multiversx/sdk-core" "12.19.2"
+    "@multiversx/sdk-network-providers" "2.4.3"
+    lodash.chunk "^4.2.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.24.7":
   version "7.24.7"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.24.7.tgz#882fd9e09e8ee324e496bd040401c6f046ef4465"
@@ -1005,6 +1014,19 @@
     keccak "3.0.2"
     protobufjs "7.2.4"
 
+"@multiversx/sdk-core@12.19.2":
+  version "12.19.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.19.2.tgz#a507fda7f2847178305672e6ea3b34f96cae852b"
+  integrity sha512-WFV0kxx0i0dDUTiwZCsPy6GRWzkzY8ADMq98vy9GOH4CIcB5Ak/sgyBncM9trWdH52A4/Hv6O6yPR+RG4Mi+1A==
+  dependencies:
+    "@multiversx/sdk-transaction-decoder" "1.0.2"
+    bech32 "1.1.4"
+    blake2b "2.1.3"
+    buffer "6.0.3"
+    json-duplicate-key-handle "1.0.0"
+    keccak "3.0.2"
+    protobufjs "7.2.4"
+
 "@multiversx/sdk-core@13.0.1":
   version "13.0.1"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.0.1.tgz#19e93e3f7f5a51a11b1ef2691688dbf95068ecb9"
@@ -1116,6 +1138,17 @@
   integrity sha512-dY7HI3rMgHHulxY9XR/O6/tCWji6ZvkuetW0NmLUjFnfOtkIdnhUzQ0u5wZaMN0SeuJIWf1QPZEsiGN82ilfTQ==
   dependencies:
     axios "1.6.5"
+    bech32 "1.1.4"
+    bignumber.js "9.0.1"
+    buffer "6.0.3"
+    json-bigint "1.0.0"
+
+"@multiversx/sdk-network-providers@2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-network-providers/-/sdk-network-providers-2.4.3.tgz#67613191231630ba31ea3e65a6e44d2f00870729"
+  integrity sha512-tJmJuxU+BjtC2q29PuzQOM4Qr6aiXujKwQXgIAPHTiuNbMc3Yi6Q4B0DC1PfI3iG+M4DONwfXknvM1uwqnY2zA==
+  dependencies:
+    axios "1.6.8"
     bech32 "1.1.4"
     bignumber.js "9.0.1"
     buffer "6.0.3"
@@ -3312,6 +3345,15 @@ axios@1.6.5:
   integrity sha512-Ii012v05KEVuUoFWmMW/UQv9aRIc3ZwkWDcM+h5Il8izZCtRVpDUfwpoFf7eOtajT3QiGR4yDUx7lPqHJULgbg==
   dependencies:
     follow-redirects "^1.15.4"
+    form-data "^4.0.0"
+    proxy-from-env "^1.1.0"
+
+axios@1.6.8:
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-1.6.8.tgz#66d294951f5d988a00e87a0ffb955316a619ea66"
+  integrity sha512-v/ZHtJDU39mDpyBoFVkETcd/uNdxrWRrg3bKpOKzXFA6Bvqopts6ALSMU3y6ijYxbw2B+wPrIv46egTzJXCLGQ==
+  dependencies:
+    follow-redirects "^1.15.6"
     form-data "^4.0.0"
     proxy-from-env "^1.1.0"
 
@@ -6331,6 +6373,11 @@ locate-path@^6.0.0:
   integrity sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==
   dependencies:
     p-locate "^5.0.0"
+
+lodash.chunk@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.chunk/-/lodash.chunk-4.2.0.tgz#66e5ce1f76ed27b4303d8c6512e8d1216e8106bc"
+  integrity sha512-ZzydJKfUHJwHa+hF5X66zLFCBrWn5GeF28OHEr4WVWtNDXlQ/IjWKPBiikqKo2ne0+v6JgCgJ0GzJp8k8bHC7w==
 
 lodash.debounce@4.0.8:
   version "4.0.8"

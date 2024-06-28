@@ -15,7 +15,6 @@ export const fetchPoolsData = unstable_cache(
     );
 
     const pools = adaptAllPairsContractData(firstValue.valueOf());
-    console.log(pools);
 
     const newPools: IPoolPair[] = [
       ...pools.filter(
@@ -23,7 +22,6 @@ export const fetchPoolsData = unstable_cache(
           pool.lpTokenSupply !== '0' && pool.secondTokenId === tokensID.jeet
       )
     ];
-    console.log(newPools);
 
     const tokensIds = pools
       .map((pool) => pool.firstTokenId)

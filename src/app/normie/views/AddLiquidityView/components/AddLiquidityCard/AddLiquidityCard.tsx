@@ -1,6 +1,5 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import useTxNotification from '@/hooks/useTxNotification';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { IElrondAccountToken } from '@/types/scTypes';
 import {
@@ -9,6 +8,7 @@ import {
   getRealBalance
 } from '@/utils/mx-utils';
 import { BigUIntValue } from '@multiversx/sdk-core/out';
+import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { IPoolPair } from '../../../PoolsView/utils/types';
@@ -102,7 +102,10 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
   ]);
   const [sessionId, setSessionId] = useState<string | null>(null);
 
-  useTxNotification({ sessionId, setSessionId, waitTx: true });
+  // useTxNotification({ sessionId, setSessionId, waitTx: true });
+  useTrackTransactionStatus({
+    transactionId: sessionId
+  });
 
   const handleAddLiquidity = async () => {
     const firstAmount =

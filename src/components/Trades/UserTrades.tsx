@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table';
 import { network } from '@/config';
 import { useAppSelector } from '@/hooks';
+import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import { cn } from '@/lib/utils';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
@@ -20,10 +21,11 @@ import { formatBigNumber, hexToBigNumber } from '@/utils/numbers';
 import useSWR from 'swr';
 import { colorByType } from './Trades';
 
-const UserTrades = ({ pool }: { pool: IPoolPair }) => {
+const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
+  const pool = useGetDefaultPool(poolPair);
   const address = useAppSelector(selectUserAddress);
   const { data } = useSWR(
-    address ? `/transactions/${pool.address}/swapIn/${address}` : null,
+    address && pool ? `/transactions/${pool.address}/swapIn/${address}` : null,
     async () => {
       return fetchTransactions({
         receiver: pool.address,

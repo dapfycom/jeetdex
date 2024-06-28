@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
-import useTxNotification from '@/hooks/useTxNotification';
 import { cn } from '@/lib/utils';
+import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { ForwardedRef, forwardRef, useState } from 'react';
 import { setRoles } from '../../utils/sc.calls';
@@ -56,8 +56,16 @@ const SetLocalRoles = forwardRef(
     };
     const [sessionId, setSessionId] = useState<string | null>(null);
 
-    useTxNotification({ onSuccess, waitTx: true, sessionId, setSessionId });
+    // useTxNotification({ onSuccess, waitTx: true, sessionId, setSessionId });
+    useTrackTransactionStatus({
+      transactionId: sessionId,
+      onSuccess,
 
+      onFail: (transactionId: string | null, errorMessage?: string) => {
+        console.error('transactionId', transactionId);
+        console.error('errorMessage', errorMessage);
+      }
+    });
     const handleSetRoles = async () => {
       const res: SendTransactionReturnType = await setRoles(pair);
 

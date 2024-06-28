@@ -1,6 +1,8 @@
-import { useAppDispatch } from '@/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { pairContractAbi } from '@/localConstants/globals';
+import { fetchAggregatorData } from '@/services/rest/ash';
+import { fetchAggregate } from '@/services/rest/ash/aggregate';
 import {
   fetchScSimpleData,
   fetchScSimpleDataWithContract
@@ -17,7 +19,13 @@ import BigNumber from 'bignumber.js';
 import { useEffect } from 'react';
 import useSWR from 'swr';
 import { clearToInputs } from './functions';
-import { onChangeToField, onChangeToFieldValueDecimals } from './swap-slice';
+import {
+  onChangeToField,
+  onChangeToFieldValueDecimals,
+  selectFromFieldSelectedToken,
+  selectFromFieldValueDecimals,
+  selectToFieldSelectedToken
+} from './swap-slice';
 
 export const useSearchToken = (tokens: IElrondToken[], searchKey: string) => {
   let filteredTokens: IElrondToken[] = [];
@@ -117,7 +125,7 @@ export const useGetTokenRatio = (
   console.log(data);
 
   useEffect(() => {
-    if (data?.data) {
+    if (data?.data && tokenOutDetails.elrondToken) {
       const displayValue = getRealBalance(
         data?.data as BigNumber,
         tokenOutDetails?.elrondToken.decimals,
@@ -134,6 +142,7 @@ export const useGetTokenRatio = (
 
       clearToInputs();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     data?.data,
     data?.returnMessage,
@@ -143,5 +152,74 @@ export const useGetTokenRatio = (
 
   return {
     returnAmount: data?.toString() || '0'
+  };
+};
+
+export const useGetAggregate = (pair?: {
+  firstToken: string;
+  secondToken: string;
+  address: string;
+}) => {
+  const token1 = useAppSelector(selectFromFieldSelectedToken);
+  const token2 = useAppSelector(selectToFieldSelectedToken);
+  const token1Value = useAppSelector(selectFromFieldValueDecimals);
+  const dispatch = useAppDispatch();
+  console.log(token1);
+  console.log(token2);
+  console.log(token1Value);
+
+  let swrKey = null;
+
+  if (!pair) {
+    swrKey = ['aggregate', token1, token2, token1Value];
+  }
+
+  console.log(swrKey);
+
+  const { data, isLoading, error } = useSWR(
+    token1 && token2 && token1Value && token1Value !== '0' ? swrKey : null,
+    async () => {
+      const res = await fetchAggregate({
+        from: token1,
+        to: token2,
+        amount: token1Value
+      });
+      return res;
+    }
+  );
+  console.log(data);
+
+  useEffect(() => {
+    if (data?.returnAmount) {
+      dispatch(onChangeToField(data.returnAmount));
+      dispatch(onChangeToFieldValueDecimals(data.returnAmountWithDecimal));
+    }
+  }, [
+    data?.tokenOut,
+    data?.returnAmount,
+    data?.returnAmountWithDecimal,
+    dispatch
+  ]);
+
+  return {
+    data,
+    isLoading,
+    error
+  };
+};
+
+export const useGetSwapbleAggregatorTokens = () => {
+  const { data, error, isLoading } = useSWR<
+    {
+      id: string;
+      coingeckoId: string;
+      decimals: number;
+    }[]
+  >('/tokens', fetchAggregatorData);
+
+  return {
+    ashTokens: data || [],
+    error,
+    isLoading
   };
 };

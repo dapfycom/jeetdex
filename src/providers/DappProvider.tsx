@@ -4,6 +4,7 @@ import {
   // TransactionsTracker
   NotificationModal,
   SignTransactionsModals,
+  TransactionsToastList,
   TransactionsTracker
 } from '@/components';
 import {
@@ -49,7 +50,7 @@ const MxDappProvider = ({ children }: PropsWithChildren) => {
           }}
         >
           <AxiosInterceptorContext.Listener>
-            {/* <TransactionsToastList /> */}
+            <TransactionsToastList />
             <NotificationModal />
             <SignTransactionsModals />
             {children}

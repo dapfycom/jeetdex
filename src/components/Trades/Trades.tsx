@@ -9,6 +9,7 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { network } from '@/config';
+import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import { cn } from '@/lib/utils';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
 import { timeAgo } from '@/utils/date';
@@ -22,9 +23,10 @@ export const colorByType = {
   sell: 'text-red-400'
 };
 
-const Trades = ({ pool }: { pool: IPoolPair }) => {
+const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
+  const pool = useGetDefaultPool(poolPair);
   const { data } = useSWR(
-    `/transactions/${pool.address}/swapIn`,
+    pool ? `/transactions/${pool.address}/swapIn` : null,
     async () => {
       return fetchTransactions({
         receiver: pool.address,

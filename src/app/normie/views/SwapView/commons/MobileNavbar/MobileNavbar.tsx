@@ -62,7 +62,7 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
               <Chats poolPair={poolPair?.lpTokenIdentifier} />
             </TabsContent>
             <TabsContent value='trades'>
-              <Trades pool={poolPair} />
+              <Trades poolPair={poolPair} />
             </TabsContent>
           </Tabs>
         </div>
@@ -78,10 +78,10 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
           </TabsList>
 
           <TabsContent value='trades'>
-            <Trades pool={poolPair} />
+            <Trades poolPair={poolPair} />
           </TabsContent>
           <TabsContent value='my-trades'>
-            <UserTrades pool={poolPair} />
+            <UserTrades poolPair={poolPair} />
           </TabsContent>
         </Tabs>
       </TabsContent>

@@ -71,9 +71,6 @@
 }
 
 
-body{
-  /* pointer-events: initial !important; */
-}
 
 .go2072408551{
   padding: 0 !important;
@@ -82,4 +79,7 @@ body{
 
 .ReactModal__Overlay--after-open{
   @apply !bg-black/80
+}
+.dapp-core-component__dappModalStyles__dappModalContent{
+  color: black;
 }
