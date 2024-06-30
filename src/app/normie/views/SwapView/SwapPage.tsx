@@ -14,7 +14,7 @@ const Swap = async () => {
           className='text-center text-xl sm:text-3xl hover:font-bold mx-auto my-3 hover:bg-transparent'
           variant='ghost'
         >
-          [ Start a new coin today ? ]
+          [ Start a new pool today ? ]
         </CreatePool>
       </div>
       <SwapContent />
