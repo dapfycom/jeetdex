@@ -2,8 +2,8 @@ import { useAuthentication, useGetUserInfo } from '@/hooks';
 
 import { formatBalance } from '@/utils/mx-utils';
 import { useGetAccount } from '@multiversx/sdk-dapp/hooks';
-import { LogOut } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +19,7 @@ const DisconnectComponent = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className='relative flex items-center text-sm gap-1 px-1 py-0 rounded-sm border border-gray-300   cursor-pointer min-w-[85px]'>
+        <div className='flex items-center text-sm gap-1 px-1 py-0 rounded-sm border border-gray-300   cursor-pointer min-w-[85px] whitespace-nowrap'>
           <div className='hidden sm:block'>
             (
             {formatBalance({
@@ -41,9 +41,13 @@ const DisconnectComponent = () => {
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='min-w-[200px]'>
+        <DropdownMenuItem asChild>
+          <Link href={'/profile'} className='whitespace-nowrap'>
+            [View profile]
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem onClick={handleDisconnect}>
-          <LogOut className='mr-2 h-4 w-4' />
-          <span>Disconnect</span>
+          <span>[Disconnect]</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

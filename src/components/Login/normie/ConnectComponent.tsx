@@ -5,7 +5,9 @@ import { OnProviderLoginType } from '@multiversx/sdk-dapp/types';
 import { usePathname } from 'next/navigation';
 
 const desktopLoginComponent = (
-  <span className='flex items-center gap-2 h-full'>[connect wallet]</span>
+  <span className='flex items-center gap-2 h-full text-sm'>
+    [connect wallet]
+  </span>
 );
 
 const ConnectComponent = () => {

@@ -66,7 +66,7 @@ const SellBuyTokenShakingBox = () => {
 
   return (
     <Button
-      className={`flex items-center gap-2 font-normal ${
+      className={`flex items-center gap-1 lg:gap-2 font-normal px-2 lg:px-4 h-7 lg:h-9 text-xs lg:text-sm ${
         shake ? 'animate-shake' : ''
       }`}
       style={{ backgroundColor: bgColor }}

@@ -8,10 +8,10 @@ const Swap = async () => {
   console.log('Render Swap');
 
   return (
-    <Container>
-      <div className='flex flex-col items-center text-center mt-5 mb-3'>
+    <Container className='mt-8'>
+      <div className=' flex-col items-center text-center mb-5 lg:mb-6 hidden sm:flex'>
         <CreatePool
-          className='text-center text-xl sm:text-3xl hover:font-bold mx-auto my-3 hover:bg-transparent'
+          className='text-center text-xl sm:text-3xl hover:font-bold mx-auto  hover:bg-transparent'
           variant='ghost'
         >
           [ Start a new pool today ? ]
