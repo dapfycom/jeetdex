@@ -15,16 +15,17 @@ const TokenInfo = ({ poolPair }: IProps) => {
   const token = globalData.coins.find(
     (t) => t.identifier === poolPair?.firstToken?.identifier
   );
+  if (!poolPair) return null;
 
   return (
-    <div className='w-full flex mb-3 gap-1 sm:gap-3  justify-between  items-end text-sm flex-wrap '>
-      {poolPair && (
+    <div>
+      <div className='w-full flex mb-3 gap-1 sm:gap-3  justify-between  items-end text-sm flex-wrap '>
         <>
-          <div className='flex gap-x-1 gap-y-1 sm:gap-4 flex-wrap justify-between'>
-            <span className='text-muted-foreground'>
+          <div className='flex gap-x-3 gap-y-2 sm:gap-4 flex-wrap justify-between'>
+            <span className='text-muted-foreground hidden sm:inline'>
               {formatTokenI(poolPair.firstToken.name)}
             </span>
-            <span className='text-muted-foreground'>
+            <span className='text-muted-foreground hidden sm:inline'>
               Ticker: ${formatTokenI(poolPair.firstToken.identifier)}
             </span>
             <span className='text-primary'>
@@ -68,7 +69,15 @@ const TokenInfo = ({ poolPair }: IProps) => {
             </span>
           ) : null}
         </>
-      )}
+      </div>
+      <div className='w-full flex gap-5'>
+        <span className='text-muted-foreground inline sm:hidden'>
+          {formatTokenI(poolPair.firstToken.name)}
+        </span>
+        <span className='text-muted-foreground inline sm:hidden'>
+          Ticker: ${formatTokenI(poolPair.firstToken.identifier)}
+        </span>
+      </div>
     </div>
   );
 };
