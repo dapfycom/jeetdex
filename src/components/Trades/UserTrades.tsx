@@ -80,7 +80,29 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
               ? d.action.arguments.transfers[0].value
               : hexToBigNumber(d.action.arguments.functionArgs[1]).toString();
 
-          console.log(firstTokenTxValue);
+          const jeetAmount = formatBigNumber(
+            formatBalance(
+              {
+                balance: secondTokenTxValue,
+                decimals: pool.secondToken.decimals
+              },
+              true
+            )
+          );
+
+          const jeetAmountParts = jeetAmount.split(' ');
+
+          const firstTokenAmount = formatBigNumber(
+            formatBalance(
+              {
+                balance: firstTokenTxValue,
+                decimals: pool.firstToken.decimals
+              },
+              true
+            )
+          );
+
+          const firstTokenAmountParts = firstTokenAmount.split(' ');
 
           return (
             <TableRow key={d.txHash}>
@@ -95,24 +117,20 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
               <TableCell className={cn('text-center', colorByType[type])}>
                 {type}
               </TableCell>
-              <TableCell className='text-center'>
-                {formatBigNumber(
-                  formatBalance({
-                    balance: secondTokenTxValue,
-                    decimals: pool.secondToken.decimals
-                  })
-                )}
+              <TableCell className='text-center '>
+                <div className='flex  flex-col justify-center h-full'>
+                  <span>{jeetAmountParts[0]}</span>
+                  {jeetAmountParts[1] && <span> {jeetAmountParts[1]}</span>}
+                </div>
               </TableCell>
-              <TableCell className='text-center'>
-                {formatBigNumber(
-                  formatBalance(
-                    {
-                      balance: firstTokenTxValue,
-                      decimals: pool.firstToken.decimals
-                    },
-                    true
-                  )
-                )}
+              <TableCell className='text-center '>
+                <div className='flex  flex-col justify-center h-full'>
+                  <span>{firstTokenAmountParts[0]}</span>
+
+                  {firstTokenAmountParts[1] && (
+                    <span> {firstTokenAmountParts[1]}</span>
+                  )}
+                </div>
               </TableCell>
 
               <TableCell className='text-center text-gray-400'>
@@ -123,8 +141,9 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
                   href={network.explorerAddress + '/transactions/' + d.txHash}
                   target='_blank'
                   rel='noopener noreferrer'
+                  className='whitespace-nowrap'
                 >
-                  {formatAddress(d.txHash)}
+                  {formatAddress(d.txHash, 4, 4)}
                 </a>
               </TableCell>
             </TableRow>

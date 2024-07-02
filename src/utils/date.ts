@@ -4,28 +4,28 @@ export function timeAgo(date: Date): string {
 
   let interval = Math.floor(seconds / 31536000);
   if (interval >= 1) {
-    return interval === 1 ? '1 year ago' : `${interval} years ago`;
+    return interval === 1 ? '1 year ago' : `${interval} years `;
   }
 
   interval = Math.floor(seconds / 2592000);
   if (interval >= 1) {
-    return interval === 1 ? '1 month ago' : `${interval} months ago`;
+    return interval === 1 ? '1 month ' : `${interval} months `;
   }
 
   interval = Math.floor(seconds / 86400);
   if (interval >= 1) {
-    return interval === 1 ? '1 day ago' : `${interval} days ago`;
+    return interval === 1 ? '1 day ' : `${interval} days `;
   }
 
   interval = Math.floor(seconds / 3600);
   if (interval >= 1) {
-    return interval === 1 ? '1 hour ago' : `${interval} hours ago`;
+    return interval === 1 ? '1 hour ' : `${interval} hours `;
   }
 
   interval = Math.floor(seconds / 60);
   if (interval >= 1) {
-    return interval === 1 ? '1 minute ago' : `${interval} minutes ago`;
+    return interval === 1 ? '1 minute ' : `${interval} minutes `;
   }
 
-  return seconds === 1 ? '1 second ago' : `${seconds} seconds ago`;
+  return seconds === 1 ? '1 second ' : `${seconds} seconds `;
 }
