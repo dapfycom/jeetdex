@@ -1,8 +1,9 @@
-import CreatedTokenShakingBox from '@/components/CreatedTokenShakingBox/CreatedTokenShakingBox';
 import Login from '@/components/Login/normie/Login';
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
-import SellBuyTokenShakingBox from '@/components/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
+import CreatedTokenShakingBox from '@/components/ShakingBoxes/CreatedTokenShakingBox/CreatedTokenShakingBox';
+import PoolAndBuySellShakingBox from '@/components/ShakingBoxes/PoolAndBuySellShakingBox/PoolAndBuySellShakingBox';
+import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
 import { DrawerDialogDemo } from './Drawer';
 import Navbar from './Navbar';
@@ -21,11 +22,14 @@ export const Header = () => {
           <div className=' gap-2 items-center lg:flex hidden'>
             <Navbar />
           </div>
-          <div className='flex gap-2 items-center'>
+          <div className='flex lg:hidden'>
+            <PoolAndBuySellShakingBox />
+          </div>
+          <div className=' gap-2 items-center lg:flex hidden'>
             <div>
               <SellBuyTokenShakingBox />
             </div>
-            <div className='lg:block hidden'>
+            <div className=''>
               <CreatedTokenShakingBox />
             </div>
           </div>

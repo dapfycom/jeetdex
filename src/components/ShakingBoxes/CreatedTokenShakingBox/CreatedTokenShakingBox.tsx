@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import { fetchEventsApiData } from '@/services/rest/events';
 import { IPairCreatedEventData } from '@/types/eventsApi.types';
 import { generateLightColor } from '@/utils/general';
@@ -7,7 +8,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Button } from '../ui/button';
 import { adaptPairCreatedData } from './adapter';
 
 const CreatedTokenShakingBox = () => {

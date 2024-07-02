@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@/components/ui/button';
 import { fetchEventsApiData } from '@/services/rest/events';
 import { socket } from '@/services/ws/index';
 import { ISwapInEventData } from '@/types/eventsApi.types';
@@ -8,7 +9,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Button } from '../ui/button';
 import { adaptSwapInEventData } from './adapter';
 
 const SellBuyTokenShakingBox = () => {
