@@ -8,7 +8,7 @@ const Swap = async () => {
   console.log('Render Swap');
 
   return (
-    <Container className='mt-8'>
+    <Container className='mt-12'>
       <div className=' flex-col items-center text-center mb-5 lg:mb-6 hidden sm:flex'>
         <CreatePool
           className='text-center text-xl sm:text-3xl hover:font-bold mx-auto  hover:bg-transparent'

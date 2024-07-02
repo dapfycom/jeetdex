@@ -19,10 +19,10 @@ export function DrawerDialogDemo() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className='w-full mb-4  lg:hidden absolute  bottom-[-50px]   sm:translate-x-0 right-[0px] '>
-          <div className='flex items-center cursor-pointer border-gray-300 h-7 px-3 border rounded-sm'>
-            Menu
-          </div>
+        <div className='w-full mb-4  lg:hidden absolute  bottom-[-60px]   sm:translate-x-0 right-[0px] flex justify-end'>
+          <Button variant='outline' className='rounded-full'>
+            ⌘
+          </Button>
         </div>
       </DrawerTrigger>
       <DrawerContent>
