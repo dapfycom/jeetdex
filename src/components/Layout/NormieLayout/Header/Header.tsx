@@ -5,6 +5,7 @@ import CreatedTokenShakingBox from '@/components/ShakingBoxes/CreatedTokenShakin
 import PoolAndBuySellShakingBox from '@/components/ShakingBoxes/PoolAndBuySellShakingBox/PoolAndBuySellShakingBox';
 import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
+import Statics from '@/components/Statics/Statics';
 import { DrawerDialogDemo } from './Drawer';
 import Navbar from './Navbar';
 
@@ -47,6 +48,9 @@ export const Header = () => {
           </div>
         </div>
       </header>
+      <div>
+        <Statics />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import Container from '@/components/Container/Container';
+import Volume from '@/components/Statics/Volume';
 import { Tabs } from '@/components/ui/tabs';
 import { fetchPoolsData } from '@/services/others/cache.server';
 import GoBackButton from '../../../../components/GoBackButton';
@@ -13,6 +14,9 @@ const PoolsView = async () => {
       </div>
       <div className='flex flex-col items-center  mt-5 text-left'>
         <Tabs defaultValue='table' className='w-full'>
+          <div className='w-full flex justify-end'>
+            <Volume />
+          </div>
           <Options pools={pools} />
           <PoolsContent pools={pools} />
         </Tabs>
