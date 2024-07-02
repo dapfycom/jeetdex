@@ -1,6 +1,14 @@
 'use client';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import {
+  faBroom,
+  faRightLeft,
+  faSquarePollHorizontal,
+  faUser,
+  faWaterLadder
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Fragment } from 'react';
@@ -8,23 +16,28 @@ import { Fragment } from 'react';
 export const adminRoutes = [
   {
     path: '/',
-    title: '[ Swap ]'
+    title: 'Swap',
+    icon: faRightLeft
   },
   {
     path: '/pools',
-    title: '[ Pool ]'
+    title: 'Pool',
+    icon: faWaterLadder
   },
   {
     path: '/dust',
-    title: '[ Dust ]'
+    title: 'Dust',
+    icon: faBroom
   },
   {
     path: '/profile',
-    title: '[ Profile ]'
+    title: 'Profile',
+    icon: faUser
   },
   {
     path: '/new-pool',
-    title: '[ Start a new pool today ? ]'
+    title: 'Start a new pool today ?',
+    icon: faSquarePollHorizontal
   }
 ];
 
@@ -55,7 +68,6 @@ export const MenuLinks = () => {
   if (pathname.startsWith('/normie')) {
     pathname = pathname.slice('/normie'.length);
   }
-  console.log(pathname);
 
   return (
     <div className='space-y-1'>
@@ -72,7 +84,8 @@ export const MenuLinks = () => {
               )}
             >
               <Link href={r.path}>
-                <span>{r.title}</span>
+                <FontAwesomeIcon icon={r.icon} />
+                <span className='ml-3'>{r.title}</span>
               </Link>
             </Button>
           </Fragment>
