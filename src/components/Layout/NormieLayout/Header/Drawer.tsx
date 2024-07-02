@@ -19,7 +19,7 @@ const FloatingButton = dynamic(
     ssr: false
   }
 );
-export function DrawerDialogDemo() {
+function DrawerDialogDemo() {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -47,3 +47,5 @@ export function DrawerDialogDemo() {
     </Drawer>
   );
 }
+
+export default DrawerDialogDemo;

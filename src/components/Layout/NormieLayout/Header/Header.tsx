@@ -6,8 +6,8 @@ import PoolAndBuySellShakingBox from '@/components/ShakingBoxes/PoolAndBuySellSh
 import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
 import Statics from '@/components/Statics/Statics';
-import { DrawerDialogDemo } from './Drawer';
 import Navbar from './Navbar';
+import ClientDrawer from './ClientDrawer';
 
 export const Header = () => {
   return (
@@ -44,7 +44,7 @@ export const Header = () => {
 
               {/* <ViewProfileButton /> */}
 
-              <DrawerDialogDemo />
+              <ClientDrawer />
             </div>
           </div>
         </div>
