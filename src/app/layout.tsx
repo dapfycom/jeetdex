@@ -13,6 +13,7 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_FRONTED_URL),
   title: 'Jeet Dex',
+
   description:
     'Launch coins on MultiversX in just a few clicks: Get instant branding, real-time charts and chats.',
   openGraph: {
@@ -32,7 +33,8 @@ export const metadata: Metadata = {
   },
   viewport: {
     width: 'device-width',
-    initialScale: 1
+    initialScale: 1,
+    maximumScale: 1
   },
   icons: {
     icon: '/favicon.ico'
