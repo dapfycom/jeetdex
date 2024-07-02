@@ -6,7 +6,9 @@ import HoldersList from '@/components/HoldersList/HoldersList';
 import Trades from '@/components/Trades/Trades';
 import UserTrades from '@/components/Trades/UserTrades';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { cn } from '@/lib/utils';
+import { useEffect } from 'react';
 import { IPoolPair } from '../../../PoolsView/utils/types';
 import SwapCardContainer from '../SwapCard/SwapCardContainer';
 import TokenSocials from '../SwapCard/commons/Socials/TokenSocials';
@@ -16,12 +18,17 @@ type NavItem = 'info' | 'chart' | 'buy/sell' | 'txs';
 const nav: NavItem[] = ['info', 'chart', 'buy/sell', 'txs'];
 
 const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
-  console.log(poolPair);
-
   const navItemStyle = `bg-none data-[state=active]:bg-transparent px-4 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400`;
+  const { currentParams, updateParams } = useUpdateUrlParams(['tab']);
 
+  useEffect(() => {
+    updateParams('tab', nav[2]);
+  }, []);
   return (
-    <Tabs defaultValue={nav[2]}>
+    <Tabs
+      value={currentParams[0]}
+      onValueChange={(val) => updateParams('tab', val)}
+    >
       <TabsList className='bg-[#08111b] px-6 py-5 flex justify-between fixed bottom-0 left-0 right-0 w-full h-[80px] z-10'>
         {nav.map((item) => {
           return (

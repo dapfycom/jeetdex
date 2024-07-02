@@ -24,8 +24,9 @@ export function CommandDialogDemo() {
   const [searchVal, setSearchVal] = React.useState('');
   const allPools = useAppSelector(selectGlobalData).pools;
   const [openTokensList, setOpenTokensList] = React.useState<boolean>(false);
-  const { updateParams } = useUpdateUrlParams(['swap']);
+  const { updateParams, currentParams } = useUpdateUrlParams(['swap', 'tab']);
 
+  const isInInfo = currentParams[1] === 'info';
   const listOfTokens: (IElrondToken & { address?: string })[] = allPools.map(
     (p) => {
       return {
@@ -39,7 +40,9 @@ export function CommandDialogDemo() {
   const tokensToSwap = [tokensID.egld, ...ashTokens.map((t) => t.id)];
   const { tokens } = useGetMultipleElrondTokens(tokensToSwap);
 
-  const finalTokens = [...listOfTokens, ...tokens];
+  const finalTokens = isInInfo
+    ? [...listOfTokens]
+    : [...listOfTokens, ...tokens];
 
   const handleSelectToken = (value: string) => {
     const valueIdentifier = value.split(':')[0];
