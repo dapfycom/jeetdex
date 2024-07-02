@@ -15,10 +15,9 @@ const TokenInfo = ({ poolPair }: IProps) => {
   const token = globalData.coins.find(
     (t) => t.identifier === poolPair?.firstToken?.identifier
   );
-  console.log(token);
 
   return (
-    <div className='w-full flex mb-3 gap-1 sm:gap-3  justify-between  items-end text-sm'>
+    <div className='w-full flex mb-3 gap-1 sm:gap-3  justify-between  items-end text-sm flex-wrap '>
       {poolPair && (
         <>
           <div className='flex gap-x-1 gap-y-1 sm:gap-4 flex-wrap justify-between'>
