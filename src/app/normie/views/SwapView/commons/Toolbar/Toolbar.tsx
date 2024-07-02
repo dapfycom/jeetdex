@@ -20,7 +20,7 @@ const Toolbar = ({
       </div>
       <div className='w-full flex justify-end gap-3'>
         <Button
-          className='px-[8px] h-[26.8px] text-gray-700 text-[12px] '
+          className='px-[8px] h-[26.8px] text-gray-700 text-[12px] hidden sm:block'
           onClick={() => dispatch(OnToggleCharts())}
           size='icon'
         >
