@@ -38,7 +38,6 @@ const SwapContent = () => {
   const { tokensPairs } = useGetSwapbleTokens();
 
   useEffect(() => {
-    console.log(swap);
     if (tokensPairs.length > 0) {
       const tokenPair = tokensPairs.find(
         (t) => t.firstToken === swap || t.secondToken === swap

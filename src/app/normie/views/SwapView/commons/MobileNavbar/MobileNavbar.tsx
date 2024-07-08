@@ -6,10 +6,12 @@ import HoldersList from '@/components/HoldersList/HoldersList';
 import Trades from '@/components/Trades/Trades';
 import UserTrades from '@/components/Trades/UserTrades';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAppSelector } from '@/hooks';
 import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { cn } from '@/lib/utils';
 import { useEffect } from 'react';
 import { IPoolPair } from '../../../PoolsView/utils/types';
+import { selectIsOpenChats } from '../../lib/swap-slice';
 import SwapCardContainer from '../SwapCard/SwapCardContainer';
 import TokenSocials from '../SwapCard/commons/Socials/TokenSocials';
 
@@ -20,6 +22,7 @@ const nav: NavItem[] = ['info', 'chart', 'buy/sell', 'txs'];
 const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
   const navItemStyle = `bg-none data-[state=active]:bg-transparent px-4 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400`;
   const { currentParams, updateParams } = useUpdateUrlParams(['tab']);
+  const isOpenChats = useAppSelector(selectIsOpenChats);
 
   useEffect(() => {
     updateParams('tab', nav[2]);
@@ -55,24 +58,27 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
       </TabsContent>
       <TabsContent value={nav[2]} className='w-full'>
         <SwapCardContainer />
-        <div className='mt-6'>
-          <Tabs
-            defaultValue='chats'
-            className={cn('w-full rounded-sm bg-[#1C243E] border-none p-4')}
-          >
-            <TabsList className='w-full justify-start flex bg-transparent'>
-              <TabsTrigger value='chats'>chats</TabsTrigger>
-              <TabsTrigger value='trades'>trades</TabsTrigger>
-            </TabsList>
-            <TabsContent value='chats'>
-              {' '}
-              <Chats poolPair={poolPair?.lpTokenIdentifier} />
-            </TabsContent>
-            <TabsContent value='trades'>
-              <Trades poolPair={poolPair} />
-            </TabsContent>
-          </Tabs>
-        </div>
+
+        {isOpenChats && (
+          <div className='mt-6'>
+            <Tabs
+              defaultValue='chats'
+              className={cn('w-full rounded-sm bg-[#1C243E] border-none p-4')}
+            >
+              <TabsList className='w-full justify-start flex bg-transparent'>
+                <TabsTrigger value='chats'>chats</TabsTrigger>
+                <TabsTrigger value='trades'>trades</TabsTrigger>
+              </TabsList>
+              <TabsContent value='chats'>
+                {' '}
+                <Chats poolPair={poolPair?.lpTokenIdentifier} />
+              </TabsContent>
+              <TabsContent value='trades'>
+                <Trades poolPair={poolPair} />
+              </TabsContent>
+            </Tabs>
+          </div>
+        )}
       </TabsContent>
       <TabsContent value={nav[3]} className='w-full'>
         <Tabs
