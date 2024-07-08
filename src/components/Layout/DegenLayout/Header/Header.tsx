@@ -1,12 +1,12 @@
-import Login from '@/components/Login/degen/Login';
+import Login from '@/components/Login/normie/Login';
+
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
 import SiteMode from '@/components/SiteMode/SiteMode';
-import Link from 'next/link';
 
 export const Header = () => {
   return (
-    <header className='flex flex-row items-center  justify-between pl-6 pr-6 pt-6'>
+    <header className='flex flex-row   justify-between pl-1 pr-1 pt-1'>
       <div className='flex gap-4'>
         <MxLink to={'/'} className='flex items-center justify-between gap-3'>
           <Logo className='rounded-full w-12 h-12' />
@@ -46,18 +46,14 @@ export const Header = () => {
         </div>
       </div>
 
-      <nav className='h-full w-full text-sm sm:relative  sm:flex sm:w-auto sm:flex-row sm:justify-end sm:bg-transparent flex items-center'>
-        <SiteMode />
-
-        <div className='flex items-center gap-2'>
-          <Login />
+      <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex '>
+        {process.env.DEGEN_MODE === 'true' && <SiteMode />}
+        <div className='w-full '>
+          <div className='relative'>
+            <Login />
+          </div>
         </div>
-        <div className='absolute bottom-[5px] right-[-20px] flex gap-2 hover:font-bold'>
-          <Link href={'/profile'} className='whitespace-nowrap'>
-            [View profile]
-          </Link>
-        </div>
-      </nav>
+      </div>
     </header>
   );
 };
