@@ -2,7 +2,7 @@ import dustAbi from '@/assets/abis/dust_sc.abi.json';
 import routerAbi from '@/assets/abis/router.abi.json';
 import { scAddress } from '@/config';
 import { Address } from '@multiversx/sdk-core/out';
-
+import degenMasterAbi from "@/assets/abis/master.abi.json"
 export const smartContractsConfig = {
   wrapEGLDShard0: {
     simpleAddress: scAddress.wrapEGLDShard0,
@@ -34,7 +34,14 @@ export const smartContractsConfig = {
     simpleAddress: scAddress.metachain,
     address: new Address(scAddress.metachain),
     abi: null
-  }
+  },
+  degenMaster: {
+    simpleAddress: scAddress.degenMaster,
+    address: new Address(scAddress.degenMaster),
+    abi: degenMasterAbi
+  },
+
+
 };
 
 export type SmartContractConfigTypes = keyof typeof smartContractsConfig;
