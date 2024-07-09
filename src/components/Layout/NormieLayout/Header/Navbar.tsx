@@ -20,6 +20,12 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
+
+        <div className='flex gap-2 items-center justify-start '>
+          <Link href='/analytics' className='hover:font-bold'>
+            [Analytics]
+          </Link>
+        </div>
       </div>
     </div>
   );
