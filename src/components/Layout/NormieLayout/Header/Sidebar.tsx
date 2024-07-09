@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import {
   faBroom,
+  faChartLine,
   faRightLeft,
   faSquarePollHorizontal,
   faUser,
@@ -33,6 +34,11 @@ export const adminRoutes = [
     path: '/profile',
     title: 'Profile',
     icon: faUser
+  },
+  {
+    path: '/analytics',
+    title: 'Analytics',
+    icon: faChartLine
   },
   {
     path: '/new-pool',

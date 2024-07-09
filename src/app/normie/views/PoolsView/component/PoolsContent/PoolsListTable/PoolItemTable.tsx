@@ -1,23 +1,27 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { TableCell, TableRow } from '@/components/ui/table';
 import useDisclosure from '@/hooks/useDisclosure';
-import { cn } from '@/lib/utils';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import AddLiquidity from '@/app/normie/views/AddLiquidityView/AddLiquidity';
+import Collapse from '@/components/Collapse/Collapse';
 import PoolCoins from '@/components/PoolCoins/PoolCoins';
 import RequiredLoginWrapper from '@/components/RequiredLoginWrapper/RequiredLoginWrapper';
+import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { tokensID } from '@/config';
 import { useAuthentication } from '@/hooks';
+import useGetElrondToken from '@/hooks/useGetElrondToken';
+import { cn } from '@/lib/utils';
 import { IElrondAccountToken } from '@/types/scTypes';
 import {
   formatBalance,
   formatBalanceDollar,
-  formatTokenI
+  formatTokenI,
+  get_both_tokens_for_given_position
 } from '@/utils/mx-utils';
-import { formatBigNumber } from '@/utils/numbers';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useLikePool } from '../../../utils/hooks';
@@ -29,7 +33,7 @@ const PoolChartModal = dynamic(
 
 interface IProps {
   pool: IPoolPair & { liked: boolean };
-  userLp: IElrondAccountToken;
+  userLp?: IElrondAccountToken;
   onClickLp: () => void;
 }
 
@@ -37,39 +41,84 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
   const { isOpen: poolChart, onToggle: togglePoolChart } = useDisclosure();
   const { handleLikePool, isLiked } = useLikePool(pool);
   const { isLoggedIn, handleConnect } = useAuthentication();
-  return (
-    <TableRow className='hover:bg-[#09091bb6] '>
-      <TableCell className='text-center py-4'>
-        <RequiredLoginWrapper>
-          <FontAwesomeIcon
-            icon={faStar}
-            className={cn(
-              'cursor-pointer',
-              isLiked ? 'text-primary' : 'text-gray-400/50'
-            )}
-            onClick={handleLikePool}
-          />
-        </RequiredLoginWrapper>
-      </TableCell>
-      <TableCell className='font-medium py-4'>
-        <div className='flex'>
-          <PoolCoins
-            size={18}
-            src1={pool?.firstToken?.assets?.svgUrl}
-            src2={pool?.secondToken?.assets?.svgUrl}
-            identifier1={pool.firstTokenId}
-            identifier2={pool.secondTokenId}
-          />
+  const { elrondToken: jeetToken } = useGetElrondToken(tokensID.jeet);
+  const {
+    isOpen: isOpenPanel,
 
-          <div>
-            <div className='whitespace-nowrap'>
-              {formatTokenI(pool.firstToken.ticker)}-
-              {formatTokenI(pool.secondToken.ticker)}
+    onToggle: onTogglePanel
+  } = useDisclosure();
+
+  const tokens = get_both_tokens_for_given_position(
+    userLp?.balance || '0',
+    pool
+  );
+
+  const lpDollarAmount = formatBalanceDollar(
+    {
+      balance: new BigNumber(tokens.secondTokenAmount)
+        .multipliedBy(2)
+        .toString(),
+      decimals: jeetToken?.decimals
+    },
+    jeetToken?.price
+  );
+
+  const poolValue = new BigNumber(
+    formatBalanceDollar(
+      {
+        balance: pool.firstTokenReserve,
+        decimals: pool.firstToken.decimals
+      },
+      pool.firstTokenJeetdexPrice
+    )
+  )
+    .plus(
+      new BigNumber(
+        formatBalanceDollar(
+          {
+            balance: pool.secondTokenReserve,
+            decimals: pool.secondToken.decimals
+          },
+          pool.secondToken.price
+        )
+      )
+    )
+    .toNumber();
+
+  return (
+    <div>
+      <div
+        className='hover:bg-[#09091bb6] bg-card rounded-sm grid md:grid-cols-4 grid-cols-1 gap-2 sm:gap-4 p-4 cursor-pointer'
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          onTogglePanel();
+        }}
+      >
+        <div className='flex '>
+          <div className='font-medium py-2 sm:py-4'>
+            <div className='flex'>
+              <div className='flex flex-col'>
+                <PoolCoins
+                  size={18}
+                  src1={pool?.firstToken?.assets?.svgUrl}
+                  src2={pool?.secondToken?.assets?.svgUrl}
+                  identifier1={pool.firstTokenId}
+                  identifier2={pool.secondTokenId}
+                />
+              </div>
+
+              <div>
+                <div className='whitespace-nowrap'>
+                  {formatTokenI(pool.firstToken.ticker)}-
+                  {formatTokenI(pool.secondToken.ticker)}
+                </div>
+                <span className='text-gray-400'>${poolValue}</span>
+              </div>
             </div>
           </div>
         </div>
-      </TableCell>
-      <TableCell className=' py-4'>
+        {/* <div className=' py-2 sm:py-4'>
         <div>
           {formatBigNumber(
             formatBalance(
@@ -95,8 +144,8 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
             true
           )}
         </div>
-      </TableCell>
-      <TableCell className=' py-4'>
+      </div>
+      <div className=' py-2 sm:py-4'>
         <div>
           {formatBigNumber(
             formatBalance(
@@ -123,63 +172,139 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
             true
           )}
         </div>
-      </TableCell>{' '}
-      <TableCell className=' py-4 cursor-pointer' onClick={onClickLp}>
-        {userLp ? formatBalance(userLp) : '0.00'}
-      </TableCell>
-      <TableCell className=' py-4 flex items-center w-full justify-end gap-3'>
-        <Button
-          variant='ghost'
-          className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-sm px-2'
-          size='sm'
-          onClick={togglePoolChart}
-        >
-          chart
-        </Button>
-
-        {poolChart && (
-          <PoolChartModal
-            isOpen={poolChart}
-            toggleOpen={togglePoolChart}
-            poolPair={pool}
-          />
-        )}
-        <Button
-          variant='ghost'
-          className='border-primary text-primary py-4 hover:bg-[#3ff2ff13] rounded-sm px-2'
-          size='sm'
-          asChild
-        >
-          <Link href={`/?swap=${pool.firstTokenId}`}>swap</Link>
-        </Button>
-
-        {isLoggedIn ? (
-          <Dialog>
-            <DialogTrigger asChild className='w-fit'>
-              <Button
-                variant='ghost'
-                className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500 px-2 rounded-sm'
-                size='sm'
-              >
-                deposit
-              </Button>
-            </DialogTrigger>
-            <DialogContent className='max-w-2xl'>
-              <AddLiquidity pool={pool} />
-            </DialogContent>
-          </Dialog>
-        ) : (
-          <Button
-            variant='ghost'
-            className='border-green-500 text-green-500 py-4 hover:bg-[#3ff2ff13] hover:text-green-500  px-2 rounded-sm'
-            size='sm'
-            onClick={handleConnect}
+      </div>{' '} */}
+        <div className=' py-2 sm:py-4  flex flex-col w-fit'>
+          <span>Fee Rewards</span>
+          <div className='text-sm text-gray-400 '>
+            <span className='border-b border-dashed border-gray-400 pb-1'>
+              0.07 %
+            </span>
+          </div>
+        </div>
+        <div className='w-full'>
+          <div
+            className='hover:bg-teal-400/10 py-2 sm:px-4 sm:py-4 rounded-sm cursor-pointer flex flex-col items-center w-fit'
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickLp();
+            }}
           >
-            deposit
+            <span>My LP</span>
+            <div className='text-sm text-gray-400 '>
+              <span>{userLp ? formatBalance(userLp) : '0'}</span>= $
+              {lpDollarAmount}
+            </div>
+          </div>
+        </div>
+        <div className='py-2 sm:py-4 flex flex-col sm:flex-row items-center w-full justify-end gap-3 '>
+          <Button
+            className='border-primary py-2 sm:py-4 hover:bg-[#3ff2ff13] rounded-sm px-2 w-full'
+            size='sm'
+            onClick={(e) => {
+              e.stopPropagation();
+              togglePoolChart();
+            }}
+          >
+            chart
           </Button>
-        )}
-      </TableCell>
-    </TableRow>
+
+          {poolChart && (
+            <PoolChartModal
+              isOpen={poolChart}
+              toggleOpen={togglePoolChart}
+              poolPair={pool}
+            />
+          )}
+          <Button
+            className='border-primary py-2 sm:py-4 hover:bg-[#3ff2ff13] rounded-sm px-2 w-full'
+            size='sm'
+            asChild
+          >
+            <Link href={`/?swap=${pool.firstTokenId}`}>swap</Link>
+          </Button>
+
+          {isLoggedIn ? (
+            <Dialog>
+              <DialogTrigger asChild className='w-fit'>
+                <Button
+                  className=' py-2 sm:py-4 hover:bg-[#3ff2ff13] px-2 rounded-sm w-full'
+                  size='sm'
+                >
+                  deposit
+                </Button>
+              </DialogTrigger>
+              <DialogContent className='max-w-2xl'>
+                <AddLiquidity pool={pool} />
+              </DialogContent>
+            </Dialog>
+          ) : (
+            <Button
+              className='border-green-500 text-green-500 py-2 sm:py-4 hover:bg-[#3ff2ff13] hover:text-green-500  px-2 rounded-sm'
+              size='sm'
+              onClick={handleConnect}
+            >
+              deposit
+            </Button>
+          )}
+
+          <div className='text-center mt-1'>
+            <RequiredLoginWrapper>
+              <FontAwesomeIcon
+                icon={faStar}
+                className={cn(
+                  'cursor-pointer',
+                  isLiked ? 'text-primary' : 'text-gray-400/50'
+                )}
+                onClick={handleLikePool}
+              />
+            </RequiredLoginWrapper>
+          </div>
+        </div>
+      </div>
+      <Collapse isOpen={isOpenPanel}>
+        <div className='bg-slate-900 p-8 flex flex-col gap-3'>
+          <div className='flex justify-between items-center'>
+            <div className='flex gap-3 items-center'>
+              <TokenImageSRC
+                alt={`${pool.secondToken.name} logo`}
+                identifier={pool.secondTokenId}
+                size={30}
+                src={pool.secondToken.assets.svgUrl}
+                className='w-8 h-8 rounded-full'
+              />
+              <h4>Total {pool.secondToken.ticker}</h4>
+            </div>
+
+            <p>
+              {formatBalance({
+                balance: pool.secondTokenReserve,
+                decimals: pool.secondToken.decimals
+              })}
+            </p>
+          </div>
+
+          <div className='flex justify-between items-center'>
+            <div className='flex gap-3 items-center'>
+              <TokenImageSRC
+                alt={`${pool.firstToken.name} logo`}
+                identifier={pool.firstTokenId}
+                size={30}
+                src={pool.firstToken.assets.svgUrl}
+                className='w-8 h-8 rounded-full'
+              />
+              <h4>Total {pool.firstToken.ticker}</h4>
+            </div>
+
+            <p>
+              {formatBalance({
+                balance: pool.firstTokenReserve,
+                decimals: pool.firstToken.decimals
+              })}
+            </p>
+          </div>
+        </div>
+      </Collapse>
+    </div>
   );
 };
 

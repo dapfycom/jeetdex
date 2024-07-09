@@ -5,9 +5,8 @@ import CreatedTokenShakingBox from '@/components/ShakingBoxes/CreatedTokenShakin
 import PoolAndBuySellShakingBox from '@/components/ShakingBoxes/PoolAndBuySellShakingBox/PoolAndBuySellShakingBox';
 import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
-import Statics from '@/components/Statics/Statics';
-import Navbar from './Navbar';
 import ClientDrawer from './ClientDrawer';
+import Navbar from './Navbar';
 
 export const Header = () => {
   return (
@@ -49,9 +48,6 @@ export const Header = () => {
           </div>
         </div>
       </header>
-      <div>
-        <Statics />
-      </div>
     </div>
   );
 };
