@@ -81,6 +81,9 @@ const config = {
         'accordion-up': 'accordion-up 0.2s ease-out',
         shake: 'shake 0.7s ease-in-out infinite'
       }
+    },
+    screens: {
+      xs: '375px'
     }
   },
   plugins: [require('tailwindcss-animate')]
