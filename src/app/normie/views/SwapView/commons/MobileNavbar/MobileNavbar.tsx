@@ -3,30 +3,30 @@
 import ChartCard from '@/components/ChartCard/ChartCard';
 import Chats from '@/components/ChatsCard/Chats';
 import HoldersList from '@/components/HoldersList/HoldersList';
+import DrawerDialogDemo from '@/components/Layout/NormieLayout/Header/Drawer';
 import Trades from '@/components/Trades/Trades';
 import UserTrades from '@/components/Trades/UserTrades';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAppSelector } from '@/hooks';
 import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { cn } from '@/lib/utils';
-import { useEffect } from 'react';
+import { nav } from '@/localConstants';
+import { useEffect, useState } from 'react';
 import { IPoolPair } from '../../../PoolsView/utils/types';
 import { selectIsOpenChats } from '../../lib/swap-slice';
 import SwapCardContainer from '../SwapCard/SwapCardContainer';
 import TokenSocials from '../SwapCard/commons/Socials/TokenSocials';
 
-type NavItem = 'info' | 'chart' | 'buy/sell' | 'txs';
-
-const nav: NavItem[] = ['info', 'chart', 'buy/sell', 'txs'];
-
 const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
-  const navItemStyle = `bg-none data-[state=active]:bg-transparent px-4 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400`;
+  const navItemStyle = `bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400`;
   const { currentParams, updateParams } = useUpdateUrlParams(['tab']);
   const isOpenChats = useAppSelector(selectIsOpenChats);
-
+  const [open, setOpen] = useState(false);
   useEffect(() => {
-    updateParams('tab', nav[2]);
-  }, []);
+    if (!currentParams[0]) {
+      updateParams('tab', nav[2]);
+    }
+  }, [currentParams[0]]);
   return (
     <Tabs
       value={currentParams[0]}
@@ -40,8 +40,17 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
             </TabsTrigger>
           );
         })}
+
+        <TabsTrigger
+          value=''
+          className={navItemStyle}
+          onClick={() => setOpen(true)}
+        >
+          [menu]
+        </TabsTrigger>
       </TabsList>
 
+      <DrawerDialogDemo open={open} setOpen={setOpen} />
       <TabsContent value={nav[0]} className='w-full'>
         <TokenSocials tokenIdentifier={poolPair?.firstTokenId} />
         <HoldersList tokenIdentifier={poolPair?.firstTokenId} />

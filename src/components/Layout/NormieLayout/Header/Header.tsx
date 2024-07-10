@@ -5,7 +5,9 @@ import CreatedTokenShakingBox from '@/components/ShakingBoxes/CreatedTokenShakin
 import PoolAndBuySellShakingBox from '@/components/ShakingBoxes/PoolAndBuySellShakingBox/PoolAndBuySellShakingBox';
 import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
-import ClientDrawer from './ClientDrawer';
+import { nav } from '@/localConstants';
+import Link from 'next/link';
+import DrawerClient from './DrawerClient';
 import Navbar from './Navbar';
 
 export const Header = () => {
@@ -42,10 +44,24 @@ export const Header = () => {
               <Login />
 
               {/* <ViewProfileButton /> */}
-
-              <ClientDrawer />
             </div>
           </div>
+        </div>
+
+        <div className='bg-[#08111b] px-6 py-5 flex justify-between fixed bottom-0 left-0 right-0 w-full h-[80px] z-10 sm:hidden '>
+          {nav.map((item) => {
+            return (
+              <Link
+                href={`/?tab=${item}`}
+                key={item}
+                className='bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400'
+              >
+                {item}
+              </Link>
+            );
+          })}
+
+          <DrawerClient />
         </div>
       </header>
     </div>

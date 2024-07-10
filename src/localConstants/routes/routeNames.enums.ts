@@ -5,3 +5,7 @@ export enum RouteNamesEnum {
   burn = '/burn',
   dust = '/dust'
 }
+
+type NavItem = 'info' | 'chart' | 'buy/sell' | 'txs';
+
+export const nav: NavItem[] = ['info', 'chart', 'buy/sell', 'txs'];
