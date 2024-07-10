@@ -53,3 +53,6 @@ dev.db-shm
 dev.db-wal
 .env
 .env.production
+
+# Sentry Config File
+.env.sentry-build-plugin
