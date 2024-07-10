@@ -52,7 +52,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
   close: () => void;
 }
 
-export function Sidebar({ className, noTitle }: SidebarProps) {
+export function Sidebar({ className, noTitle, close }: SidebarProps) {
   return (
     <div className={cn('pb-12', className)}>
       <div className='space-y-4 py-4'>
@@ -62,14 +62,14 @@ export function Sidebar({ className, noTitle }: SidebarProps) {
               Menu
             </h2>
           )}
-          <MenuLinks />
+          <MenuLinks close={close} />
         </div>
       </div>
     </div>
   );
 }
 
-export const MenuLinks = () => {
+export const MenuLinks = ({ close }) => {
   let pathname = usePathname();
   if (pathname.startsWith('/normie')) {
     pathname = pathname.slice('/normie'.length);
@@ -88,6 +88,7 @@ export const MenuLinks = () => {
                 'w-full justify-start px-0 bg-transparent hover:bg-transparent',
                 active ? 'text-primary' : 'text-white'
               )}
+              onClick={close}
             >
               <Link href={r.path}>
                 <FontAwesomeIcon icon={r.icon} />

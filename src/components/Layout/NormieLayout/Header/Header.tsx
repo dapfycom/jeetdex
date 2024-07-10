@@ -48,7 +48,7 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className='bg-[#08111b] px-6 py-5 flex justify-between fixed bottom-0 left-0 right-0 w-full h-[80px] z-10 sm:hidden '>
+        <div className='bg-[#08111b] px-6 py-5 flex justify-between fixed bottom-0 left-0 right-0 w-full h-[80px] z-[100] sm:hidden '>
           {nav.map((item) => {
             return (
               <Link

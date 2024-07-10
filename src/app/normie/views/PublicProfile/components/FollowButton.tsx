@@ -7,18 +7,18 @@ import { generateRandomString } from '@/utils/strings';
 import { errorToast, successToast } from '@/utils/toast';
 
 const FollowButton = ({ user }) => {
-  console.log(user);
-
   const { userInfo, mutate } = useGetSingleUserInfo(user?.address);
-  console.log(userInfo);
 
   const { userInfo: currentUserInfo } = useGetUserInfo();
+
   const followed = userInfo?.data?.followed.find(
     (follow) => follow.followingId === currentUserInfo?.data.id
   );
-  console.log(followed);
 
   const handleFollow = async () => {
+    if (!currentUserInfo) {
+      errorToast('You need to log in to perferm this action');
+    }
     let newData;
     if (followed) {
       newData = {

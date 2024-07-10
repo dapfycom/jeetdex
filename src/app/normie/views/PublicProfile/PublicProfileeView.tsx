@@ -11,10 +11,7 @@ import FollowButton from './components/FollowButton';
 import ProfileTabs from './components/Tabs';
 
 const PublicProfileView = ({ userAddress }: { userAddress: string }) => {
-  console.log(userAddress);
-
   const { userInfo } = useGetSingleUserInfo(userAddress);
-  console.log(userInfo);
 
   if (!userInfo) {
     return null;
@@ -50,7 +47,7 @@ const PublicProfileView = ({ userAddress }: { userAddress: string }) => {
     <ProfileContext ctxValue={user}>
       <div
         key='1'
-        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl m-auto'
+        className='flex flex-col h-fit items-center justify-center bg-[#1C243E] p-6 rounded-3xl text-white max-w-2xl m-auto mx-4 my-10'
       >
         <div className='flex items-center space-x-4 mb-4'>
           <Avatar>
@@ -86,7 +83,9 @@ const PublicProfileView = ({ userAddress }: { userAddress: string }) => {
           View on Explorer
         </Link>
 
-        <div className='flex space-x-4 border-b '>{<ProfileTabs />}</div>
+        <div className='flex space-x-4 border-b overflow-auto w-full'>
+          {<ProfileTabs />}
+        </div>
       </div>
     </ProfileContext>
   );
