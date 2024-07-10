@@ -32,8 +32,6 @@ const PoolsList = ({ pools }: IProps) => {
     pool: IPoolPair,
     liquidity: IElrondAccountToken
   ) => {
-    console.log(pool, liquidity);
-
     if (liquidity) {
       setSelectedPool(pool);
       setSelectedLiquidity(liquidity);

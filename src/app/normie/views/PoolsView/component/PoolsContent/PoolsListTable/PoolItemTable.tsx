@@ -198,7 +198,7 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
         </div>
         <div className='py-2 sm:py-4 flex flex-col sm:flex-row items-center w-full justify-end gap-3 '>
           <Button
-            className='border-primary py-2 sm:py-4 hover:bg-[#3ff2ff13] rounded-sm px-2 w-full'
+            className='border-primary py-2 sm:py-4 hover:bg-[#3ff2ff13] rounded-sm px-2 w-full hover:text-white'
             size='sm'
             onClick={(e) => {
               e.stopPropagation();
@@ -216,7 +216,7 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
             />
           )}
           <Button
-            className='border-primary py-2 sm:py-4 hover:bg-[#3ff2ff13] rounded-sm px-2 w-full'
+            className='border-primary py-2 sm:py-4 hover:bg-[#3ff2ff13] rounded-sm px-2 w-full hover:text-white'
             size='sm'
             asChild
           >
@@ -227,7 +227,7 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
             <Dialog>
               <DialogTrigger asChild className='w-fit'>
                 <Button
-                  className=' py-2 sm:py-4 hover:bg-[#3ff2ff13] px-2 rounded-sm w-full'
+                  className=' py-2 sm:py-4 hover:bg-[#3ff2ff13] px-2 rounded-sm w-full hover:text-white'
                   size='sm'
                 >
                   deposit
@@ -239,7 +239,7 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
             </Dialog>
           ) : (
             <Button
-              className='border-green-500 text-green-500 py-2 sm:py-4 hover:bg-[#3ff2ff13] hover:text-green-500  px-2 rounded-sm'
+              className='border-green-500  py-2 sm:py-4 hover:bg-[#3ff2ff13] w-full  px-2 rounded-sm hover:text-white'
               size='sm'
               onClick={handleConnect}
             >
