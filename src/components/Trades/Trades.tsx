@@ -57,7 +57,7 @@ const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
 
           <TableHead className='text-center'>date</TableHead>
 
-          <TableHead className='text-right'>transaction</TableHead>
+          <TableHead className='text-right'>hash</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -139,7 +139,7 @@ const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
                   rel='noopener noreferrer'
                   className='whitespace-nowrap'
                 >
-                  {formatAddress(d.txHash, 4, 4)}
+                  {formatAddress(d.txHash, 2, 2)}
                 </a>
               </TableCell>
             </TableRow>
