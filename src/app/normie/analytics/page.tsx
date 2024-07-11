@@ -3,9 +3,13 @@
 import useGetStatics from '@/components/Statics/useGetStatics';
 import { Skeleton } from '@/components/ui/skeleton';
 import { tokensID } from '@/config';
+import { useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
-import { formatBalanceDollar } from '@/utils/mx-utils';
+import { selectGlobalData } from '@/redux/dapp/dapp-slice';
+import { formatBalanceDollar, formatNumber } from '@/utils/mx-utils';
+import BigNumber from 'bignumber.js';
+import { useMemo } from 'react';
 
 export default function Analitics() {
   const { data, isLoading: isLoadingStatics } = useGetStatics();
@@ -21,6 +25,34 @@ export default function Analitics() {
           .concat(data.topLosers.map((l) => l.token))
       : []
   );
+
+  const globalData = useAppSelector(selectGlobalData);
+  const pools = globalData.pools;
+
+  const tvl = useMemo(() => {
+    return pools.reduce((acc, pool) => {
+      const poolValue = new BigNumber(
+        formatBalanceDollar(
+          {
+            balance: pool.firstTokenReserve,
+            decimals: pool.firstToken.decimals
+          },
+          pool.firstTokenJeetdexPrice
+        )
+      ).plus(
+        new BigNumber(
+          formatBalanceDollar(
+            {
+              balance: pool.secondTokenReserve,
+              decimals: pool.secondToken.decimals
+            },
+            pool.secondToken.price
+          )
+        )
+      );
+      return acc.plus(poolValue);
+    }, new BigNumber(0));
+  }, [pools]);
 
   const topGainers: {
     name: string;
@@ -56,6 +88,23 @@ export default function Analitics() {
   return (
     <div className='container mx-auto px-4 py-8 md:px-6 md:py-12'>
       <h1 className='text-3xl font-bold mb-8'>Jeetdex Analytics</h1>
+
+      <section className='mb-12'>
+        <h2 className='text-2xl font-bold mb-4'>🔒Total Value Locked (TVL) </h2>
+        {!tvl ? (
+          <Skeleton className='w-[160px] h-[80px]' />
+        ) : (
+          <div className='bg-background rounded-lg shadow-lg p-6 w-fit'>
+            <div className='flex '>
+              <div className='text-center'>
+                <div className='text-2xl font-bold'>
+                  $ {formatNumber(tvl.toNumber())}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
       <section className='mb-12'>
         <h2 className='text-2xl font-bold mb-4'>Daily Volume</h2>
         {isLoading ? (
@@ -80,6 +129,7 @@ export default function Analitics() {
           </div>
         )}
       </section>
+
       <section className='mb-12'>
         <h2 className='text-2xl font-bold mb-4'>Top Gainers</h2>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4'>
