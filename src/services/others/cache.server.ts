@@ -1,5 +1,4 @@
 import { adaptAllPairsContractData } from '@/adapters/routerAdapter';
-import { tokensID } from '@/config';
 import prisma from '@/db';
 import { getFromAllTokens } from '@/services/rest/elrond/tokens';
 import { scQuery } from '@/services/sc/query';
@@ -17,10 +16,7 @@ export const fetchPoolsData = unstable_cache(
     const pools = adaptAllPairsContractData(firstValue.valueOf());
 
     const newPools: IPoolPair[] = [
-      ...pools.filter(
-        (pool) =>
-          pool.lpTokenSupply !== '0' && pool.secondTokenId === tokensID.jeet
-      )
+      ...pools.filter((pool) => pool.lpTokenSupply !== '0')
     ];
 
     const tokensIds = pools

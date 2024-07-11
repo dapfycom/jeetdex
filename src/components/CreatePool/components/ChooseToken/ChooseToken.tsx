@@ -10,7 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { setToke1 } from '../../utils/slice';
+import { setToke1, setToken2 } from '../../utils/slice';
+import { useGetAllowedPoolTokens } from '../../utils/swr.hooks';
 
 const convertToPoolItemToken = (
   tokens: (ICoreToken & {
@@ -28,7 +29,8 @@ const convertToPoolItemToken = (
 };
 
 export const formSchema = z.object({
-  firstToken: z.string()
+  firstToken: z.string(),
+  secondToken: z.string()
 });
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -36,12 +38,20 @@ const ChooseToken = ({ onNextStep }) => {
   const { userTokens, isLoading: loadingUserTokens } = useGetUserTokens();
   const address = useAppSelector(selectUserAddress);
   const dispatch = useAppDispatch();
+  const { allowedPoolTokens } = useGetAllowedPoolTokens();
 
   const ownedTokens = userTokens.filter((token) => token.owner === address);
+  const allowedTokens = userTokens.filter((token) =>
+    allowedPoolTokens.find(
+      (allowedToken) => allowedToken.identifier === token.identifier
+    )
+  );
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstToken: ''
+      firstToken: '',
+      secondToken: ''
     }
   });
 
@@ -50,9 +60,13 @@ const ChooseToken = ({ onNextStep }) => {
       if (form.watch('firstToken')) {
         dispatch(setToke1(form.watch('firstToken')));
       }
+
+      if (form.watch('secondToken')) {
+        dispatch(setToken2(form.watch('secondToken')));
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [form.watch('firstToken')]
+    [form.watch('firstToken'), form.watch('secondToken')]
   );
 
   const loading = loadingUserTokens;
@@ -74,6 +88,12 @@ const ChooseToken = ({ onNextStep }) => {
                     tokensList={convertToPoolItemToken(ownedTokens)}
                     isLoading={loadingUserTokens}
                     tokenType='firstToken'
+                  />
+
+                  <PoolItemContainer
+                    tokensList={convertToPoolItemToken(allowedTokens)}
+                    isLoading={loadingUserTokens}
+                    tokenType='secondToken'
                   />
                 </div>
                 {/* <SubmitButton onNextStep={onNextStep} /> */}

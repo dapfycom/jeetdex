@@ -16,7 +16,7 @@ import { formSchema } from '../ChooseToken';
 import { ITokenPool } from './PoolItemContainer';
 interface TokenItemProps {
   tokensList: ITokenPool[];
-  tokenType: 'firstToken';
+  tokenType: 'firstToken' | 'secondToken';
 }
 
 const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
