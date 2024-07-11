@@ -101,7 +101,9 @@ const SwapCard = ({
             onChange={handleChangeToField}
             onChangeToken={handleChangeToToken}
             isLoadingInput={isLoading}
-            tokensIdentifiers={[]}
+            tokensIdentifiers={tokensSuggested.allTokens.map(
+              (t) => t.identifier
+            )}
             label='To'
             hideAmountButtons
           />
