@@ -9,14 +9,10 @@ export async function generateStaticParams() {
     address: u.address
   }));
 
-  console.log(generatedIdForUserPages);
-
   return generatedIdForUserPages;
 }
 
 async function Page({ params }: { params: { address: string } }) {
-  console.log(params.address);
-
   return <PublicProfileView userAddress={params.address} />;
 }
 

@@ -10,7 +10,6 @@ export const useListPools = (
   pools: IPoolPair[]
 ): (IPoolPair & { liked: boolean })[] => {
   const { likedPools } = useGetLikedPools();
-  console.log(likedPools);
 
   const likedPoolIdentifiers = likedPools.map((lp) => lp.pool.lpIdentifier);
   const liked = pools
@@ -36,7 +35,6 @@ export const useSearchPool = (pools: (IPoolPair & { liked: boolean })[]) => {
 
 export const useLikePool = (pool: IPoolPair & { liked: boolean }) => {
   const { mutate, settings } = useGetLikedPools();
-  console.log(settings);
 
   const handleLikePool = async () => {
     try {

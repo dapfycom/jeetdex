@@ -104,7 +104,7 @@ export const scSimpleQuery = async (
 
     return bundle;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

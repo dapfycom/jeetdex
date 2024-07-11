@@ -110,7 +110,7 @@ export const fetchUsersData = unstable_cache(
 
       return users;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   },
   ['users'],

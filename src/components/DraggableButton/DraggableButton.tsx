@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const FloatingButton = ({ children, initialPosition }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -78,7 +78,6 @@ const FloatingButton = ({ children, initialPosition }) => {
   };
 
   const handleClick = () => {
-    console.log('Button clicked!');
     // Add your button click logic here
   };
 

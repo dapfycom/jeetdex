@@ -5,7 +5,6 @@ import useGetStatics from './useGetStatics';
 const Statics = () => {
   const { data } = useGetStatics();
   if (!data) return null;
-  console.log(data);
 
   return (
     <div className='px-2 flex gap-x-10 flex-wrap mt-10 lg:mt-0'>

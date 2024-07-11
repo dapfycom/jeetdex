@@ -48,9 +48,6 @@ const SetLocalRoles = forwardRef(
     const { haveLocales, mutate } = usePoolHaveLocalRoles(pair);
 
     const { lpIdentifier } = useGetLpIdentifier(pair);
-    console.log(pair);
-
-    console.log(lpIdentifier);
 
     const onSuccess = () => {
       props.onNextStep();

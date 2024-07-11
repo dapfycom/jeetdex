@@ -48,14 +48,11 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
     Number(amountForEquivalent),
     elrondTokenForEquivalent.decimals
   );
-  console.log(data);
 
   const handleOnChangeFirstAmount = (
     val: string,
     token: { identifier: string; decimals: number }
   ) => {
-    console.log(val);
-
     setFirstTokenAmount(val);
     setSelectedToken(token);
   };
@@ -119,9 +116,6 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
       new BigNumber(secondTokenAmount)
         .multipliedBy(10 ** pool.secondToken.decimals)
         .toFixed(0);
-
-    console.log(firstAmount);
-    console.log(secondAmount);
 
     const firstAmountWithSlipage = calculateSlippageAmount(5, firstAmount);
     const secondAmountWithSlipage = calculateSlippageAmount(5, secondAmount);

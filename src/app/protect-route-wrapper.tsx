@@ -4,7 +4,6 @@ import { PropsWithChildren } from 'react';
 
 const ProtectRouteWrapper = async ({ children }: PropsWithChildren) => {
   const session = await getSession();
-  console.log(session);
 
   if (!session) {
     redirect('/');

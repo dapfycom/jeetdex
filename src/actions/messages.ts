@@ -9,8 +9,6 @@ export const sendPoolMessage = async (message: string, pool: string) => {
     throw new Error('User not authenticated');
   }
 
-  console.log('sendPoolMessage');
-
   try {
     const data = await prisma.messages.create({
       data: {
@@ -35,8 +33,6 @@ export const sendPoolMessage = async (message: string, pool: string) => {
 
     return data;
   } catch (error) {
-    console.log(error);
-
     throw new Error(`Failed to create the message: ` + error.message);
   }
 };

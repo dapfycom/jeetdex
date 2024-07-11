@@ -125,9 +125,6 @@ export const usePoolHaveSwaps = (poolAddress: string) => {
       size: 1
     });
   });
-  console.log(poolAddress);
-
-  console.log(data);
 
   return {
     haveSwaps: data?.length > 0,
@@ -143,7 +140,6 @@ export const usePoolHaveLocalRoles = (pair: string) => {
     `/accounts/${pair}/roles/tokens`,
     fetchElrondData
   );
-  console.log(data);
 
   return {
     ...data,

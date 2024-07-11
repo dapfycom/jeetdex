@@ -23,7 +23,6 @@ const Notifications = () => {
   );
 
   const follows = profileInfo.followed;
-  console.log(follows);
 
   let notifications: INotificationData[] = likes.map((l) => {
     const data: INotificationData = {

@@ -79,8 +79,6 @@ export default function IssueTokenForm() {
     transactionId: sessionId
   });
   async function onSubmit(data: z.infer<typeof IssueTokenSchema>) {
-    console.log(data);
-
     const tx1 = interactions.metachain.EGLDPaymentOnlyTx({
       value: 0.05,
       functionName: 'issue',
@@ -127,7 +125,6 @@ export default function IssueTokenForm() {
     const res: SendTransactionReturnType = await sendTransactions({
       transactions: [tx1, tx2]
     });
-    console.log(res);
 
     setSessionId(res.sessionId);
   }

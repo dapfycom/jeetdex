@@ -63,7 +63,7 @@ const FollowButton = ({ user }) => {
         }
       );
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       errorToast('Error following/unfollowing user');
     }

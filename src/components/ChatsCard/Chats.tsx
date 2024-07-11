@@ -29,8 +29,6 @@ const Chats = ({ poolPair }: IProps) => {
   };
 
   const handleLike = async (message: any, liked?: boolean) => {
-    console.log(liked);
-
     if (poolPair) {
       const data = {
         data: {

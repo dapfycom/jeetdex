@@ -37,14 +37,7 @@ const MxDappProvider = ({ children }: PropsWithChildren) => {
               // uncomment this to use the custom transaction tracker
               component: TransactionsTracker,
               props: {
-                onSuccess: (sessionId: string) => {
-                  console.log(`Session ${sessionId} successfully completed`);
-                },
-                onFail: (sessionId: string, errorMessage: string) => {
-                  console.log(
-                    `Session ${sessionId} failed. ${errorMessage ?? ''}`
-                  );
-                }
+                onSuccess: () => {}
               }
             }
           }}

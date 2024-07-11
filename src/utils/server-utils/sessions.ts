@@ -14,8 +14,6 @@ export const verifyToken = async (
     const valid = await server.validate(authToken);
     return valid;
   } catch (error) {
-    console.log('Error validating token: ', error);
-
     return null;
   }
 };
@@ -38,8 +36,6 @@ export const getSession = async (): Promise<NativeAuthDecoded> => {
   const authTokenCookie = cookies().get('auth-token');
 
   if (!authTokenCookie?.value) {
-    console.log('No auth token found');
-
     return null;
   }
 
@@ -47,8 +43,6 @@ export const getSession = async (): Promise<NativeAuthDecoded> => {
   const valid = await verifyToken(authTokenCookie.value);
   // if invalid, return null
   if (!valid) {
-    console.log('Invalid auth token: ');
-
     return null;
   }
   // else, return the session

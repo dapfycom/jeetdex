@@ -13,8 +13,6 @@ import { getBalancePercentage } from './helper';
 const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
   const isOpenHolders = useAppSelector(selectIsOpenCharts);
 
-  console.log('render');
-
   const { data: holders } = useSWR<
     {
       address: string;
@@ -29,7 +27,6 @@ const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
   const { elrondToken } = useGetElrondToken(
     isOpenHolders ? tokenIdentifier : null
   );
-  console.log(elrondToken);
 
   const totalBalance = new BigNumber(elrondToken?.initialMinted || 0).minus(
     elrondToken?.burnt || 0

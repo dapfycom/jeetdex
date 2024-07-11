@@ -16,10 +16,9 @@ const UpdateCoinImg = ({ token }) => {
       appearance={{
         button: 'bg-transparent w-fit'
       }}
-      onClientUploadComplete={(res) => {
+      onClientUploadComplete={() => {
         setIsEditing(false);
         // Do something with the response
-        console.log(res);
 
         toast({
           description: (
@@ -68,9 +67,6 @@ const UpdateCoinImg = ({ token }) => {
         allowedContent: <div></div>
       }}
       onBeforeUploadBegin={(files) => {
-        // Preprocess files before uploading (e.g. rename them)
-        console.log(files);
-
         return files.map(
           (f) =>
             new File([f], token.identifier + '.' + f.name.split('.').pop(), {

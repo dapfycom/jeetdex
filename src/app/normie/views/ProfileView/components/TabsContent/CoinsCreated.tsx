@@ -57,8 +57,6 @@ const CoinsCreated = () => {
       </TableHeader>
       <TableBody>
         {tokensHeld.map((token) => {
-          console.log(token);
-
           return <CoinRow key={token.identifier} token={token} />;
         })}
       </TableBody>
@@ -89,12 +87,10 @@ const CoinRow = ({ token }: { token: IElrondAccountToken }) => {
       })
   );
 
-  console.log(data);
   const transactions = data || [];
 
   const alreadyEnabled = !!transactions.find((tx) => {
     const addressHex = decodeBase64(tx.data).split('@')[1];
-    console.log(addressHex);
     return Address.fromHex(addressHex).bech32() === pairForThisToken?.address;
   });
   const [sessionId, setSessionId] = useState<string | null>(null);

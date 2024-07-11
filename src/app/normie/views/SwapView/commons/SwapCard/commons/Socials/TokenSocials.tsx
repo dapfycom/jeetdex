@@ -9,8 +9,6 @@ interface IProps {
 const TokenSocials = ({ tokenIdentifier }: IProps) => {
   const isOpenTokenSocials = useAppSelector(selectIsOpenCharts);
   const { coinRes } = useGetCoins(isOpenTokenSocials ? tokenIdentifier : null);
-  console.log(tokenIdentifier);
-  console.log(coinRes);
 
   if (!coinRes?.data || !isOpenTokenSocials) {
     return null;

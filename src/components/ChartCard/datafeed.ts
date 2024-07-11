@@ -47,7 +47,6 @@ async function getAllSymbols(): Promise<
     const info = coinsInfo.find(
       (coin) => coin.identifier === pool.firstToken.identifier
     );
-    console.log(info);
 
     return {
       symbol: formatTokenI(pool.firstToken.ticker),
@@ -64,7 +63,6 @@ async function getAllSymbols(): Promise<
 }
 const config = {
   onReady: (callback) => {
-    console.log('[onReady]: Method call');
     setTimeout(() => callback(configurationData));
   },
   searchSymbols: async (
@@ -73,7 +71,6 @@ const config = {
     symbolType,
     onResultReadyCallback
   ) => {
-    console.log('[searchSymbols]: Method call');
     const symbols = await getAllSymbols();
     const newSymbols = symbols.filter((symbol) => {
       const isExchangeValid = exchange === '' || symbol.exchange === exchange;
@@ -87,17 +84,10 @@ const config = {
       }))
     );
   },
-  resolveSymbol: async (
-    symbolName,
-    onSymbolResolvedCallback,
-    onResolveErrorCallback
-  ) => {
-    console.log('[resolveSymbol]: Method call', symbolName);
+  resolveSymbol: async (symbolName, onSymbolResolvedCallback) => {
     const symbols = await getAllSymbols();
     const symbolItem = symbols.find(({ ticker }) => ticker === symbolName);
     if (!symbolItem) {
-      console.log('[resolveSymbol]: Cannot resolve symbol', symbolName);
-      onResolveErrorCallback('Cannot resolve symbol');
       return;
     }
     // Symbol information object
@@ -118,7 +108,6 @@ const config = {
 
       variable_tick_size: '0.000000001'
     };
-    console.log('[resolveSymbol]: Symbol resolved', symbolName);
     onSymbolResolvedCallback(symbolInfo);
   },
   getBars: async (
@@ -129,11 +118,6 @@ const config = {
     onErrorCallback
   ) => {
     const { from, to } = periodParams;
-    console.log({
-      from,
-      to
-    });
-    console.log('[getBars]: Method call', symbolInfo, resolution, from, to);
 
     const urlParameters = {
       e: 'JEETDEX',
@@ -145,13 +129,10 @@ const config = {
     const query = Object.keys(urlParameters)
       .map((name) => `${name}=${encodeURIComponent(urlParameters[name])}`)
       .join('&');
-    console.log({ query });
     try {
       const bars = await cachedEventsApi(`/datafeed?${query}`);
-      console.log(bars);
 
       let currentBars = [];
-      console.log(bars);
 
       bars.forEach((bar) => {
         if (bar.time >= from && bar.time < to) {
@@ -167,11 +148,9 @@ const config = {
           ];
         }
       });
-      console.log(`[getcurrentBars]: returned ${currentBars.length} bar(s)`);
       console.log({ currentBars });
       onHistoryCallback(currentBars, { noData: false });
     } catch (error) {
-      console.log('[getBars]: Get error', error);
       onErrorCallback(error);
     }
   },

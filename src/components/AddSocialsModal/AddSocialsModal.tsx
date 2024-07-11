@@ -48,8 +48,6 @@ const AddSocialsModal = ({
   const coinData = useMemo(() => coinRes?.data, [coinRes?.data]);
   const { twitter, telegram, website, title, description } = coinData || {};
 
-  console.log(coinData);
-
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -64,9 +62,6 @@ const AddSocialsModal = ({
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-
-    console.log(values);
     try {
       await addSocialsCoin({
         identifier: tokenIdentifier,
@@ -82,7 +77,7 @@ const AddSocialsModal = ({
       successToast('Socials updated successfully');
       onToggle();
     } catch (error) {
-      console.log(error);
+      console.error(error);
 
       errorToast('Error updating socials');
     }

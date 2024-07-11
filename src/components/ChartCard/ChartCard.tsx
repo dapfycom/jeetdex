@@ -22,7 +22,6 @@ export default memo(function ChartCard({ poolPair }: IProps) {
     script.async = true;
 
     script.onload = () => {
-      console.log('Is ready');
       setIsScriptReady(true);
     };
 

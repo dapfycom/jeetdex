@@ -67,8 +67,6 @@ export function CommandDialogDemo() {
           value={searchVal}
           onValueChange={setSearchVal}
           onFocus={() => {
-            console.log('focus');
-
             setOpenTokensList(true);
           }}
         />

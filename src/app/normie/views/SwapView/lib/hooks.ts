@@ -114,8 +114,6 @@ export const useGetTokenRatio = (
       ]
     );
 
-    console.log(returnMessage);
-
     return { data, returnMessage };
   });
 

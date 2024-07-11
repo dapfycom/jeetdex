@@ -48,7 +48,6 @@ export const useGetSingleUserInfo = (userAddress: string) => {
       };
     };
   }>(`/user?userAddress=${userAddress}`, fetchAxiosJeetdex);
-  console.log(data);
 
   return {
     userInfo: data,
