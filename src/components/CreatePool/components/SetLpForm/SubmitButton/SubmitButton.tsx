@@ -13,7 +13,6 @@ const SubmitButton = ({ onNextStep }) => {
   const { lpIdentifier, isLoading, mutate } = useGetLpIdentifier(pair);
 
   const onSuccess = () => {
-    console.log('success');
     mutate();
     onNextStep();
   };

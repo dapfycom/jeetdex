@@ -1,7 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { useAppSelector } from '@/hooks/useRedux';
 
+import { useTrackTransactionStatus } from '@/hooks';
+import useGetUserTokens from '@/hooks/useGetUserTokens';
 import BigNumber from 'bignumber.js';
+import { useState } from 'react';
 import { selectConvertInfo, selectToTokenDust } from '../../../lib/dust-slice';
 import { useGetAmountOut } from '../../../lib/hooks';
 import { convertTokens } from '../../../lib/services';
@@ -10,6 +13,16 @@ const ConvertButton = () => {
   const selectedTokens = useAppSelector(selectConvertInfo);
   const toToken = useAppSelector(selectToTokenDust);
   const { data } = useGetAmountOut(selectedTokens);
+  const [sessionId, setSessionId] = useState<string>();
+  const { mutate } = useGetUserTokens();
+  const onSuccess = () => {
+    mutate();
+  };
+
+  useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess
+  });
 
   const handleSubmit = async () => {
     const slippage = 1;
@@ -30,6 +43,7 @@ const ConvertButton = () => {
       })
     );
     if (res) {
+      setSessionId(res.sessionId);
     }
   };
 
