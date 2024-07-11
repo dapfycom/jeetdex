@@ -53,7 +53,6 @@ const InputBox = ({
   const { elrondToken, isLoading } = useGetElrondToken(selectedTokenI);
 
   const { accountToken } = useGetAccountToken(selectedTokenI);
-  console.log(accountToken);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
