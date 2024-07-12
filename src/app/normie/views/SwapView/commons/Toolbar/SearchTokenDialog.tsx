@@ -26,7 +26,8 @@ export function CommandDialogDemo() {
   const [openTokensList, setOpenTokensList] = React.useState<boolean>(false);
   const { updateParams, currentParams } = useUpdateUrlParams(['swap', 'tab']);
 
-  const isInInfo = currentParams[1] === 'info';
+  const listedOnly =
+    currentParams[1] === 'info' || currentParams[1] === 'chart';
   const listOfTokens: (IElrondToken & { address?: string })[] = allPools.map(
     (p) => {
       return {
@@ -40,7 +41,7 @@ export function CommandDialogDemo() {
   const tokensToSwap = [tokensID.egld, ...ashTokens.map((t) => t.id)];
   const { tokens } = useGetMultipleElrondTokens(tokensToSwap);
 
-  const finalTokens = isInInfo
+  const finalTokens = listedOnly
     ? [...listOfTokens]
     : [...listOfTokens, ...tokens];
 
