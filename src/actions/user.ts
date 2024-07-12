@@ -39,7 +39,7 @@ export const createProfile = async ({
 
     createAlreadyProfiledCookie(address);
   } catch (error) {
-    console.log('Error creating profile', error);
+    console.error('Error creating profile', error);
   }
 };
 
@@ -57,17 +57,13 @@ export const updateUserProfile = async ({
   img?: string;
 }) => {
   const session = await getSession();
-  console.log('Get here', session);
 
   if (!session) {
-    console.log('no session');
-
     return {
       error: 'No session found'
     };
   }
   try {
-    console.log('updating user profile');
     const user = await prisma.users.update({
       where: {
         address: session.address
@@ -78,11 +74,10 @@ export const updateUserProfile = async ({
         img: img
       }
     });
-    console.log(user);
 
     return user;
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     throw new Error('User failed to update');
   }

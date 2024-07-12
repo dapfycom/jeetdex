@@ -42,8 +42,6 @@ const CoinsCreated = () => {
       </TableHeader>
       <TableBody>
         {tokensHeld.map((token) => {
-          console.log(token);
-
           return (
             <TableRow key={token.identifier}>
               <TableCell className='font-medium'>

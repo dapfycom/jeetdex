@@ -33,7 +33,6 @@ const PositionModal = ({
   pool: IPoolPair;
   liquidity: IElrondAccountToken;
 }) => {
-  console.log(pool, liquidity);
   const { mutate } = useGetUserTokens();
   const [percentage, setPercentage] = useState(100);
   const onSuccess = () => {

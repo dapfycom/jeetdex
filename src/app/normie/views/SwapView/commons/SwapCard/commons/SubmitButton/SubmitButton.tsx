@@ -50,17 +50,11 @@ const SubmitButton = ({ poolAddres }: IProps) => {
   //   setSessionId,
   //   waitTx: true
   // });
-  console.log(aggregatorData);
-  console.log(poolAddres);
 
   const handleSwap = async () => {
-    console.log(fromField);
-    console.log(toField);
     if (!poolAddres) {
       // swap with ashswap aggregator
       if (aggregatorData && aggregatorData?.returnAmountWithDecimal) {
-        console.log('swap with ashswap aggregator');
-
         const res = await submitSwapWithAshAggregator(aggregatorData, slippage);
 
         setSessionId(res?.sessionId);
@@ -68,8 +62,6 @@ const SubmitButton = ({ poolAddres }: IProps) => {
         throw new Error('No return amount with decimals');
       }
     } else {
-      console.log('swap with sc');
-
       const res = await submitSwap(
         poolAddres,
         fromField.selectedToken,

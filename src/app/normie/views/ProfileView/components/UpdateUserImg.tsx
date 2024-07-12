@@ -26,7 +26,6 @@ const UserAvatar = () => {
         onClientUploadComplete={(res) => {
           setIsEditing(false);
           // Do something with the response
-          console.log('Files: ', res);
           setCurrentImgUrl(res[0].url);
 
           toast({

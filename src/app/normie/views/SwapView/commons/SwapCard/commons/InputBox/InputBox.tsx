@@ -8,20 +8,15 @@ import {
   CommandItem,
   CommandList
 } from '@/components/ui/command';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover';
 import useDisclosure from '@/hooks/useDisclosure';
 import useGetAccountToken from '@/hooks/useGetAccountToken';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance, formatNumber, formatTokenI } from '@/utils/mx-utils';
-import { ChevronDownIcon, Loader, Loader2Icon } from 'lucide-react';
-// const SelectTokenModal = lazy(() => import("../SelectTokenModal"));
+import { Loader, Loader2Icon } from 'lucide-react';
 
 interface IProps {
   selectedTokenI: string;
@@ -53,7 +48,6 @@ const InputBox = ({
   const { elrondToken, isLoading } = useGetElrondToken(selectedTokenI);
 
   const { accountToken } = useGetAccountToken(selectedTokenI);
-  console.log(accountToken);
 
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -120,12 +114,12 @@ const InputBox = ({
             )}
           </div>
           <div className='w-full  rounded-2xl py-3 px-2 lg:px-4'>
-            <div className=' flex justify-between w-full '>
-              <Popover
+            <div className=' flex justify-between w-full  '>
+              <Dialog
                 open={isOpen}
                 onOpenChange={(open) => (open ? onOpen() : onClose())}
               >
-                <PopoverTrigger asChild>
+                <DialogTrigger asChild>
                   <Button
                     variant='outline'
                     className={`ml-auto gap-2 w-fit !h-[35px] rounded-xl bg-[#1C243E] disabled:opacity-100`}
@@ -151,13 +145,10 @@ const InputBox = ({
                         </p>
                       </div>
                     )}
-                    {tokensIdentifiers.length !== 0 && (
-                      <ChevronDownIcon className='ml-2 h-4 w-4 text-muted-foreground' />
-                    )}
                   </Button>
-                </PopoverTrigger>
+                </DialogTrigger>
 
-                <PopoverContent className='p-0' align='end'>
+                <DialogContent className='p-0 max-w-[350px]'>
                   <Command>
                     <CommandInput placeholder='Select new role token' />
                     <CommandList>
@@ -200,8 +191,8 @@ const InputBox = ({
                       )}
                     </CommandList>
                   </Command>
-                </PopoverContent>
-              </Popover>
+                </DialogContent>
+              </Dialog>
               <div className='w-full relative'>
                 <Input
                   type='text'

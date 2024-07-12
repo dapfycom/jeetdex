@@ -20,7 +20,8 @@ import { changeField, clearInputs } from '../../lib/functions';
 import {
   useGetAggregate,
   useGetSwapbleTokens,
-  useGetTokenRatio
+  useGetTokenRatio,
+  useGetTokensSuggested
 } from '../../lib/hooks';
 import SwapCard from './SwapCard';
 
@@ -87,9 +88,8 @@ const SwapCardContainer = () => {
     new BigNumber(fromField.valueDecimals),
     normalDirection ? 'first' : 'second'
   );
-  console.log(toField);
-  console.log(fromField);
 
+  const tokensSuggested = useGetTokensSuggested();
   useGetAggregate(pairSelected);
   return (
     <SwapCard
@@ -105,6 +105,7 @@ const SwapCardContainer = () => {
       swapFields={swapFields}
       toField={toField}
       toFieldElrondToken={elrondToken}
+      tokensSuggested={tokensSuggested}
     />
   );
 };

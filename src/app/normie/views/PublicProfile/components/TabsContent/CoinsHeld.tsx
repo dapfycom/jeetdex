@@ -3,7 +3,6 @@ import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -41,8 +40,7 @@ const CoinsHeld = () => {
   });
 
   return (
-    <Table>
-      <TableCaption>A list of your tokens in wallet.</TableCaption>
+    <Table className='overflow-auto w-full'>
       <TableHeader>
         <TableRow>
           <TableHead className='w-[100px]'>Token</TableHead>

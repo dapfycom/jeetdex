@@ -21,7 +21,6 @@ const CreatePoolModal = ({
 }: PropsWithChildren<ButtonProps>) => {
   const { isOpen, onToggle, onClose } = useDisclosure(false);
   const [view, setView] = useState<'issue' | 'create-pool'>('create-pool');
-  console.log('render');
 
   return (
     <>

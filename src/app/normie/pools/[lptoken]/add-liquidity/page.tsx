@@ -8,7 +8,6 @@ export async function generateStaticParams() {
   const poolPageGenerator = pools.map((pool) => ({
     lptoken: pool.lpTokenIdentifier
   }));
-  console.log(poolPageGenerator);
 
   return poolPageGenerator;
 }

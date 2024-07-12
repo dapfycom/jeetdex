@@ -1,11 +1,4 @@
 'use client';
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table';
 import useDisclosure from '@/hooks/useDisclosure';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import { IElrondAccountToken } from '@/types/scTypes';
@@ -35,19 +28,10 @@ const PoolsList = ({ pools }: IProps) => {
   const [selectedLiquidity, setSelectedLiquidity] =
     useState<IElrondAccountToken>(null);
 
-  console.log(userTokens);
-
-  const lpTokens = userTokens.filter((token) =>
-    pools.map((p) => p.lpTokenIdentifier).includes(token.identifier)
-  );
-  console.log(lpTokens);
-
   const handlePositionModal = (
     pool: IPoolPair,
     liquidity: IElrondAccountToken
   ) => {
-    console.log(pool, liquidity);
-
     if (liquidity) {
       setSelectedPool(pool);
       setSelectedLiquidity(liquidity);
@@ -59,36 +43,22 @@ const PoolsList = ({ pools }: IProps) => {
 
   return (
     <>
-      <Table className='bg-[#1015299d] '>
-        <TableHeader className=''>
-          <TableRow className=' rounded-sm'>
-            <TableHead className='w-[70px] py-5 rounded-ss-sm'></TableHead>
+      <div className='flex flex-col gap-6'>
+        {filteredPools.map((pool) => {
+          const lpToken = userTokens.find(
+            (t) => t.identifier === pool.lpTokenIdentifier
+          );
 
-            <TableHead className='w-[100px]  ] py-5 '>Pool</TableHead>
-            <TableHead className='whitespace-nowrap py-5 '>Reserve 1</TableHead>
-            <TableHead className='whitespace-nowrap py-5 '>Reserve 2</TableHead>
-            <TableHead className='whitespace-nowrap py-5 '>My LP</TableHead>
-
-            <TableHead className='whitespace-nowrap py-5 rounded-se-sm'></TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredPools.map((pool) => {
-            const lpToken = userTokens.find(
-              (t) => t.identifier === pool.lpTokenIdentifier
-            );
-
-            return (
-              <PoolItem
-                key={pool.address}
-                pool={pool}
-                userLp={lpToken}
-                onClickLp={() => handlePositionModal(pool, lpToken)}
-              />
-            );
-          })}
-        </TableBody>
-      </Table>
+          return (
+            <PoolItem
+              key={pool.address}
+              pool={pool}
+              userLp={lpToken}
+              onClickLp={() => handlePositionModal(pool, lpToken)}
+            />
+          );
+        })}
+      </div>
       {isOpen && selectedLiquidity && (
         <PositionModal
           isOpen={isOpen}

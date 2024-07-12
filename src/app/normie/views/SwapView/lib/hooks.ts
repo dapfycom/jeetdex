@@ -1,6 +1,9 @@
+import { tokensID } from '@/config';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
+import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import { pairContractAbi } from '@/localConstants/globals';
+import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { fetchAggregatorData } from '@/services/rest/ash';
 import { fetchAggregate } from '@/services/rest/ash/aggregate';
 import {
@@ -88,11 +91,6 @@ export const useGetTokenRatio = (
     pair ? (type === 'first' ? pair.secondToken : pair.firstToken) : null
   );
 
-  console.log(tokenOutDetails);
-  console.log(tokenIdentifier);
-  console.log(bigUIntValue.toString());
-  console.log(pair);
-
   if (
     tokenIdentifier.length === 0 ||
     bigUIntValue.isNaN() ||
@@ -105,7 +103,6 @@ export const useGetTokenRatio = (
       pair.firstToken
     }`;
   }
-  console.log(swrKey);
 
   const { data } = useSWR(swrKey, async (key) => {
     const { data, returnMessage } = await fetchScSimpleDataWithContract(
@@ -117,12 +114,8 @@ export const useGetTokenRatio = (
       ]
     );
 
-    console.log(returnMessage);
-
     return { data, returnMessage };
   });
-
-  console.log(data);
 
   useEffect(() => {
     if (data?.data && tokenOutDetails.elrondToken) {
@@ -131,7 +124,6 @@ export const useGetTokenRatio = (
         tokenOutDetails?.elrondToken.decimals,
         true
       ).toString();
-      console.log(displayValue);
 
       dispatch(onChangeToField(displayValue));
       dispatch(onChangeToFieldValueDecimals(data?.data?.toString()));
@@ -164,17 +156,12 @@ export const useGetAggregate = (pair?: {
   const token2 = useAppSelector(selectToFieldSelectedToken);
   const token1Value = useAppSelector(selectFromFieldValueDecimals);
   const dispatch = useAppDispatch();
-  console.log(token1);
-  console.log(token2);
-  console.log(token1Value);
 
   let swrKey = null;
 
   if (!pair) {
     swrKey = ['aggregate', token1, token2, token1Value];
   }
-
-  console.log(swrKey);
 
   const { data, isLoading, error } = useSWR(
     token1 && token2 && token1Value && token1Value !== '0' ? swrKey : null,
@@ -187,7 +174,6 @@ export const useGetAggregate = (pair?: {
       return res;
     }
   );
-  console.log(data);
 
   useEffect(() => {
     if (data?.returnAmount) {
@@ -221,5 +207,29 @@ export const useGetSwapbleAggregatorTokens = () => {
     ashTokens: data || [],
     error,
     isLoading
+  };
+};
+
+export const useGetTokensSuggested = () => {
+  const allPools = useAppSelector(selectGlobalData).pools;
+  const listOfTokens: (IElrondToken & { address?: string })[] = allPools.map(
+    (p) => {
+      return {
+        address: p.address,
+        ...p.firstToken
+      };
+    }
+  );
+
+  const { ashTokens } = useGetSwapbleAggregatorTokens();
+  const tokensToSwap = [tokensID.egld, ...ashTokens.map((t) => t.id)];
+  const { tokens } = useGetMultipleElrondTokens(tokensToSwap);
+
+  const finalTokens = [...listOfTokens, ...tokens];
+
+  return {
+    allTokens: finalTokens,
+    jeedexTokens: listOfTokens,
+    ashTokens: ashTokens
   };
 };

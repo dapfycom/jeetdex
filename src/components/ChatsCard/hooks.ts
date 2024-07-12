@@ -44,7 +44,6 @@ export const useGetChat = (pool: string) => {
       }>('/chats/' + pool);
     }
   );
-  console.log(data);
 
   return {
     chat: data?.data,

@@ -19,7 +19,6 @@ export const useGetUserSettings = () => {
       }[];
     };
   }>(isLoggedIn ? '/user/settings' : null, fetchAxiosJeetdex);
-  console.log(data);
 
   return {
     settings: data?.data,

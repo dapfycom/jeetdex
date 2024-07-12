@@ -1,12 +1,8 @@
 import Container from '@/components/Container/Container';
 import CreatePool from '@/components/CreatePoolModal/CreatePoolModal';
-import dynamic from 'next/dynamic';
-const SwapContent = dynamic(() => import('./SwapContent'), {
-  ssr: false
-});
-const Swap = async () => {
-  console.log('Render Swap');
+import SwapContent from './SwapContent';
 
+const Swap = async () => {
   return (
     <Container className='mt-12'>
       <div className=' flex-col items-center text-center mb-5 lg:mb-6 hidden sm:flex'>

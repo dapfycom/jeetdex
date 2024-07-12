@@ -41,12 +41,6 @@ export const fetchAggregate = async ({
     throw new Error('Invalid amount');
   }
 
-  console.log({
-    fromToken: from,
-    toToken: to,
-    amount: amount
-  });
-
   const sorswap = await agService.getPaths(from, to, amount);
 
   return sorswap as (SorSwapResponse & { warning: string }) | undefined;

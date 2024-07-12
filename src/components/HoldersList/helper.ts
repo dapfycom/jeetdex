@@ -23,11 +23,8 @@ export function getBalancePercentage(
   address: string,
   totalBalance: string
 ): BigNumber {
-  console.log(totalBalance);
-
   const holderBalance = holders.find((holder) => holder.address === address)
     ?.balance;
-  console.log(holderBalance);
 
   if (!holderBalance) {
     return new BigNumber(0);
@@ -36,7 +33,6 @@ export function getBalancePercentage(
   const balancePercentage = new BigNumber(holderBalance)
     .multipliedBy(100)
     .div(totalBalance);
-  console.log(balancePercentage.toString());
 
   return balancePercentage;
 }

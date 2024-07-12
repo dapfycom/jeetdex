@@ -15,7 +15,7 @@ const Following = () => {
     );
   }
   return (
-    <div className='grid grid-cols-2 gap-4'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
       {profileInfo.following.map((follow) => {
         return (
           <div key={follow.id}>

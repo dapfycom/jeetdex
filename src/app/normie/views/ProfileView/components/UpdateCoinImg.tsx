@@ -1,13 +1,14 @@
 'use client';
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { toast } from '@/components/ui/use-toast';
+import { IElrondToken } from '@/types/scTypes';
 import { UploadButton } from '@/utils/uploadthing';
 import { faCheckCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader } from 'lucide-react';
 import { useState } from 'react';
 
-const UpdateCoinImg = ({ token }) => {
+const UpdateCoinImg = ({ token }: { token: IElrondToken }) => {
   const [isEditing, setIsEditing] = useState(false);
   return (
     <UploadButton
@@ -16,10 +17,9 @@ const UpdateCoinImg = ({ token }) => {
       appearance={{
         button: 'bg-transparent w-fit'
       }}
-      onClientUploadComplete={(res) => {
+      onClientUploadComplete={() => {
         setIsEditing(false);
         // Do something with the response
-        console.log(res);
 
         toast({
           description: (
@@ -68,9 +68,6 @@ const UpdateCoinImg = ({ token }) => {
         allowedContent: <div></div>
       }}
       onBeforeUploadBegin={(files) => {
-        // Preprocess files before uploading (e.g. rename them)
-        console.log(files);
-
         return files.map(
           (f) =>
             new File([f], token.identifier + '.' + f.name.split('.').pop(), {

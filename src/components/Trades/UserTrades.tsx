@@ -40,10 +40,7 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
     }
   );
 
-  console.log(data);
-
   const finalData = data || [];
-  console.log(finalData);
 
   return (
     <Table className='bg-card'>

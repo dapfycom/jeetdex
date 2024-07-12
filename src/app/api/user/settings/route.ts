@@ -12,7 +12,6 @@ export async function GET() {
       address: session.address
     }
   });
-  console.log(user);
   try {
     const data = await prisma.userSettings.findUnique({
       where: {
@@ -26,10 +25,9 @@ export async function GET() {
         }
       }
     });
-    console.log(data);
 
     return Response.json({ data });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }

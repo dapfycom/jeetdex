@@ -15,8 +15,6 @@ export const ourFileRouter = {
   userAvatar: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
     // Set permissions and file types for this FileRoute
     .middleware(async ({}) => {
-      console.log('Image upload route hit');
-
       // This code runs on your server before upload
       const user = await getSession();
 
@@ -29,10 +27,7 @@ export const ourFileRouter = {
 
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      console.log('Upload complete for userId:', metadata.userAddress);
 
-      console.log('file url', file.url);
-      console.log(file);
       const currentUser = await prisma.users.findFirstOrThrow({
         where: {
           address: metadata.userAddress
@@ -52,7 +47,6 @@ export const ourFileRouter = {
 
       if (currentUser.img.startsWith('https://')) {
         const fileKey = currentUser.img.split('/').pop();
-        console.log(fileKey);
 
         await utapi.deleteFiles(fileKey);
       }
@@ -62,21 +56,15 @@ export const ourFileRouter = {
     }),
 
   coinImage: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
-    .middleware(async ({ files, req }) => {
-      console.log('Image upload route hit');
-      console.log(req.body);
-
+    .middleware(async ({ files }) => {
       // Only allow png or svg
       if (files[0].type !== 'image/png' && files[0].type !== 'image/svg+xml') {
         throw new UploadThingError('Only png or svg files are allowed');
       }
-
-      console.log('after check 1');
+      console.log('session');
 
       // This code runs on your server before upload
       const user = await getSession();
-
-      console.log('after check 2');
 
       // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError('Unauthorized');
@@ -89,8 +77,6 @@ export const ourFileRouter = {
         throw new UploadThingError('You are not the owner of this token');
       }
 
-      console.log('pass');
-
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userAddress: user.address };
     })
@@ -98,15 +84,12 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
 
-      console.log(metadata);
-      console.log(file);
       const tokenI = file.name.split('.')[0];
       const currentCoin = await prisma.coins.findUnique({
         where: {
           identifier: tokenI
         }
       });
-      console.log('before create coin');
       try {
         await prisma.coins.upsert({
           create: {
@@ -125,26 +108,20 @@ export const ourFileRouter = {
             identifier: tokenI
           }
         });
-        console.log('after create coin');
-        console.log(currentCoin);
 
         if (currentCoin) {
           const fileKey = currentCoin.img.split('/').pop();
-          console.log(fileKey);
           try {
             await utapi.deleteFiles(fileKey);
           } catch (error) {
-            console.log(error);
+            console.error(error);
           }
         }
-        console.log('get here');
 
         revalidateTag('CoinsPairs');
         // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
         return { uploadedBy: metadata.userAddress };
       } catch (error) {
-        console.log(error);
-
         throw new UploadThingError('Error updating database');
       }
     }),
@@ -157,11 +134,8 @@ export const ourFileRouter = {
       })
     )
     .middleware(async ({ input }) => {
-      console.log(input);
-
       // This code runs on your server before upload
       const user = await getSession();
-      console.log(user);
 
       // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError('Unauthorized');

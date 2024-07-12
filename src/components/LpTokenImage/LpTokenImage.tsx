@@ -22,10 +22,6 @@ const LpTokenImage = ({ lpToken, token1lp, token2lp }: IProps) => {
     lpData ? [lpData.token1lp, lpData.token2lp] : []
   );
 
-  if (!lpToken) {
-    console.log({ tokens, lpData });
-  }
-
   if (!tokens || tokens.length === 0) return null;
 
   return (

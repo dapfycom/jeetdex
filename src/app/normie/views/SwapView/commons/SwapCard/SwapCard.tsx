@@ -1,4 +1,3 @@
-'use client';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 import { Button } from '@/components/ui/button';
@@ -29,6 +28,12 @@ interface IProps {
   pairSelected: { firstToken: string; secondToken: string; address: string };
   swapFields: () => void;
   toFieldElrondToken: IElrondToken;
+
+  tokensSuggested: {
+    allTokens: IElrondToken[];
+    jeedexTokens: IElrondToken[];
+    ashTokens: { id: string; decimals: number }[];
+  };
 }
 
 const SwapCard = ({
@@ -45,7 +50,8 @@ const SwapCard = ({
   handleChangeToToken,
   pairSelected,
   swapFields: swapFileds,
-  toFieldElrondToken
+  toFieldElrondToken,
+  tokensSuggested
 }: IProps) => {
   return (
     <div className='w-full  max-w-[500px] mx-auto'>
@@ -60,7 +66,9 @@ const SwapCard = ({
             isLoadingInput={isLoading}
             handlePercentAmount={handleMax}
             clear={handleClear}
-            tokensIdentifiers={[]}
+            tokensIdentifiers={tokensSuggested.allTokens.map(
+              (t) => t.identifier
+            )}
             label='From'
             dollarValue={
               toFieldElrondToken
@@ -93,7 +101,9 @@ const SwapCard = ({
             onChange={handleChangeToField}
             onChangeToken={handleChangeToToken}
             isLoadingInput={isLoading}
-            tokensIdentifiers={[]}
+            tokensIdentifiers={tokensSuggested.allTokens.map(
+              (t) => t.identifier
+            )}
             label='To'
             hideAmountButtons
           />

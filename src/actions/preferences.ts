@@ -53,7 +53,6 @@ export const likePool = async (
       address: address
     }
   });
-  console.log(poolIdentifier);
 
   const poolLike = await prisma.poolsLikes.findFirst({
     where: {
@@ -65,8 +64,6 @@ export const likePool = async (
       }
     }
   });
-
-  console.log(poolLike);
 
   if (!poolLike) {
     await prisma.poolsLikes.create({

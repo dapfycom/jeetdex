@@ -16,7 +16,6 @@ export const useTrackTransactionStatus = ({
   const transactions = signtx.signedTransactions[transactionId]?.transactions;
 
   const transactionHash = transactions?.map((tx) => tx.hash).join(',');
-  console.log(transactionHash);
 
   useEffect(() => {
     let intervalId;
@@ -43,11 +42,8 @@ export const useTrackTransactionStatus = ({
             setIsPending(isAnyPending);
 
             if (isAllSuccessful) {
-              console.log('success');
-
               setIsSuccessful(true);
               onSuccess();
-              console.log(intervalId);
 
               clearInterval(intervalId);
             } else if (isAnyFailed) {

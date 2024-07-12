@@ -48,7 +48,6 @@ export const submitSwapWithAshAggregator = async (
 ) => {
   if (!sorswap) throw new Error(`Could not find any paths for EGLD to ASH`);
   const transactions = [];
-  console.log(sorswap);
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -75,7 +74,6 @@ export const submitSwapWithAshAggregator = async (
     .check()
     .buildTransaction();
   transactions.push(tx1);
-  console.log(tx1);
 
   return await SmartContractInteraction.sendMultipleTransactions({
     txs: transactions as any

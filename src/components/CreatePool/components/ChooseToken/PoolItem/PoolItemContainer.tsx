@@ -11,7 +11,7 @@ export interface ITokenPool {
 interface TokenItemProps {
   tokensList: ITokenPool[];
   isLoading: boolean;
-  tokenType: 'firstToken';
+  tokenType: 'firstToken' | 'secondToken';
 }
 
 const PoolItemContainer = ({

@@ -16,7 +16,7 @@ import { formSchema } from '../ChooseToken';
 import { ITokenPool } from './PoolItemContainer';
 interface TokenItemProps {
   tokensList: ITokenPool[];
-  tokenType: 'firstToken';
+  tokenType: 'firstToken' | 'secondToken';
 }
 
 const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
@@ -26,8 +26,6 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
   );
 
   useEffect(() => {
-    console.log(tokensList);
-
     if (tokensList.length > 0) {
       setCurrentPoolItem(tokensList[0]);
 
@@ -61,7 +59,6 @@ const PoolItem = ({ tokensList, tokenType }: TokenItemProps) => {
               className='bg-zinc-800 rounded-md w-full flex justify-between items-center cursor-pointer '
               onClick={() => {
                 setCurrentPoolItem(token);
-                console.log(token);
 
                 setValue(tokenType, token.identifier);
               }}

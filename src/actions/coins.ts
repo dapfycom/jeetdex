@@ -13,8 +13,6 @@ export const addSocialsCoin = async ({
   telegram,
   website
 }) => {
-  console.log(identifier);
-
   const session = await getSession();
 
   if (!session) {

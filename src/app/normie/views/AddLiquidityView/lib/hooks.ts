@@ -13,11 +13,6 @@ export const useGetEquivalent = (
   tokenAmount: number,
   decimals: number
 ) => {
-  console.log(contractAddress);
-  console.log(tokenI);
-  console.log(tokenAmount);
-  console.log(decimals);
-
   const {
     data: res,
     error,
@@ -44,7 +39,6 @@ export const useGetEquivalent = (
     }
   );
   const data = res?.firstValue?.valueOf();
-  console.log(data);
 
   return {
     data: data?.toString(),

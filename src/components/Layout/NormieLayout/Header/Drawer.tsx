@@ -1,5 +1,4 @@
 'use client';
-import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -8,31 +7,13 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger
+  DrawerTitle
 } from '@/components/ui/drawer';
 import { Sidebar } from './Sidebar';
-import dynamic from 'next/dynamic';
-const FloatingButton = dynamic(
-  () => import('@/components/DraggableButton/DraggableButton'),
-  {
-    ssr: false
-  }
-);
-function DrawerDialogDemo() {
-  const [open, setOpen] = React.useState(false);
 
+function DrawerDialogDemo({ open, setOpen }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger>
-        <FloatingButton initialPosition={{ x: window.innerWidth - 10, y: 30 }}>
-          <div className='w-full mb-4  lg:hidden absolute  bottom-[-60px]   sm:translate-x-0 right-[0px] flex justify-end'>
-            <Button variant='outline' className='rounded-full'>
-              ⌘
-            </Button>
-          </div>
-        </FloatingButton>
-      </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='text-left'>
           <DrawerTitle>Menu</DrawerTitle>
