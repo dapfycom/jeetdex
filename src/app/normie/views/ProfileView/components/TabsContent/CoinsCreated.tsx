@@ -116,7 +116,7 @@ const CoinRow = ({
       <TableCell className='font-medium'>
         <div className='flex items-center gap-3'>
           <div className='w-[35px] h-[35px]'>
-            <UpdateCoinImg token={pair.firstTokenId} />
+            <UpdateCoinImg token={pair.firstToken} />
           </div>
           <div className='flex flex-col gap-1'>
             <span className=''>{formatTokenI(pair.lpTokenIdentifier)}</span>

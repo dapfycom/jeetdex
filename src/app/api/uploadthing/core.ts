@@ -61,6 +61,7 @@ export const ourFileRouter = {
       if (files[0].type !== 'image/png' && files[0].type !== 'image/svg+xml') {
         throw new UploadThingError('Only png or svg files are allowed');
       }
+      console.log('session');
 
       // This code runs on your server before upload
       const user = await getSession();

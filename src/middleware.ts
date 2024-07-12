@@ -15,7 +15,8 @@ export function middleware(request: NextRequest) {
       '/robots.txt',
       '/favicon.ico',
       '/assets',
-      '/static'
+      '/static',
+      '/monitoring'
 
       // Your other files in `public`
     ])

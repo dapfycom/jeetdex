@@ -1,13 +1,14 @@
 'use client';
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { toast } from '@/components/ui/use-toast';
+import { IElrondToken } from '@/types/scTypes';
 import { UploadButton } from '@/utils/uploadthing';
 import { faCheckCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader } from 'lucide-react';
 import { useState } from 'react';
 
-const UpdateCoinImg = ({ token }) => {
+const UpdateCoinImg = ({ token }: { token: IElrondToken }) => {
   const [isEditing, setIsEditing] = useState(false);
   return (
     <UploadButton
