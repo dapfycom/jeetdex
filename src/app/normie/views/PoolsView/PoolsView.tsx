@@ -13,7 +13,7 @@ const PoolsView = async () => {
       </div>
       <div className='flex flex-col items-center  mt-5 text-left'>
         <Tabs defaultValue='table' className='w-full'>
-          <Options pools={pools} />
+          <Options />
           <PoolsContent pools={pools} />
         </Tabs>
       </div>

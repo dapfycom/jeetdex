@@ -269,10 +269,16 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
                 alt={`${pool.secondToken.name} logo`}
                 identifier={pool.secondTokenId}
                 size={30}
-                src={pool.secondToken.assets.svgUrl}
+                src={pool.secondToken.assets?.svgUrl}
                 className='w-8 h-8 rounded-full'
               />
-              <h4>Total {pool.secondToken.ticker}</h4>
+              <h4>
+                Total{' '}
+                <span className='text-gray-400'>
+                  {' '}
+                  {formatTokenI(pool.secondToken.ticker)}
+                </span>
+              </h4>
             </div>
 
             <p>
@@ -289,10 +295,15 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
                 alt={`${pool.firstToken.name} logo`}
                 identifier={pool.firstTokenId}
                 size={30}
-                src={pool.firstToken.assets.svgUrl}
+                src={pool.firstToken.assets?.svgUrl}
                 className='w-8 h-8 rounded-full'
               />
-              <h4>Total {pool.firstToken.ticker}</h4>
+              <h4>
+                Total
+                <span className='text-gray-400 ml-2'>
+                  {formatTokenI(pool.firstToken.ticker)}
+                </span>
+              </h4>
             </div>
 
             <p>
