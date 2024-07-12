@@ -56,7 +56,7 @@ export const ourFileRouter = {
     }),
 
   coinImage: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
-    .middleware(async ({ files, req }) => {
+    .middleware(async ({ files }) => {
       // Only allow png or svg
       if (files[0].type !== 'image/png' && files[0].type !== 'image/svg+xml') {
         throw new UploadThingError('Only png or svg files are allowed');
