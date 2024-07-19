@@ -56,12 +56,12 @@
                 "type": "Address"
             },
             {
-                "name": "jeet_token_id",
-                "type": "TokenIdentifier"
-            },
-            {
                 "name": "reach_jeetdex_fee",
                 "type": "BigUint"
+            },
+            {
+                "name": "db_id",
+                "type": "bytes"
             }
         ],
         "outputs": []
@@ -106,10 +106,6 @@
                 {
                     "name": "wegld_unwrap_sc",
                     "type": "Address"
-                },
-                {
-                    "name": "jeet_token_id",
-                    "type": "TokenIdentifier"
                 },
                 {
                     "name": "reach_jeetdex_fee",
@@ -423,6 +419,10 @@
                 {
                     "name": "market_cap",
                     "type": "BigUint"
+                },
+                {
+                    "name": "db_id",
+                    "type": "bytes"
                 }
             ]
         },

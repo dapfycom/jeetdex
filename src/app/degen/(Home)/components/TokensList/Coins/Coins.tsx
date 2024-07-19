@@ -1,3 +1,6 @@
+'use client';
+import { formatTokenI } from '@/utils/mx-utils';
+import { useFetchCoinsData } from '../../../../hooks';
 import CoinItem from './CoinItem';
 
 export const coinsData = [
@@ -142,17 +145,22 @@ export const coinsData = [
 ];
 
 const Coins = () => {
+  const { coinsData } = useFetchCoinsData();
+  console.log(coinsData);
+
   return (
     <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>
       {coinsData.map((coin, index) => (
         <CoinItem
           key={index}
-          imageUrl={coin.imageUrl}
-          name={coin.name}
-          ticker={coin.ticker}
+          imageUrl={coin.img}
+          name={coin.title}
+          ticker={formatTokenI(coin.firstTokenId)}
           marketCap={coin.marketCap}
-          replies={coin.replies}
+          replies={236}
           description={coin.description}
+          username={coin.owner.username}
+          address={coin.address}
         />
       ))}
     </div>

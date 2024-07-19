@@ -57,3 +57,39 @@ export const addSocialsCoin = async ({
 
   return coin;
 };
+
+export const degenNewCoin = async ({
+  name,
+
+  description,
+  image,
+  telegram,
+  twitter,
+  website,
+  address,
+  degenId
+}) => {
+  try {
+    const coin = await prisma.coins.create({
+      data: {
+        identifier: degenId,
+        title: name,
+        description,
+        img: image,
+        twitter,
+        telegram,
+        website,
+        degenId,
+        owner: {
+          connect: {
+            address: address
+          }
+        }
+      }
+    });
+    return coin;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};

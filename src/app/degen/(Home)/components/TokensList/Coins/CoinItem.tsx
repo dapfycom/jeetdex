@@ -1,3 +1,4 @@
+import { formatBalance } from '@/utils/mx-utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,6 +9,8 @@ interface IProps {
   marketCap: string;
   replies: number;
   description: string;
+  username: string;
+  address: string;
 }
 
 const CoinItem = ({
@@ -16,11 +19,13 @@ const CoinItem = ({
   ticker,
   marketCap,
   replies,
-  description
+  description,
+  username,
+  address
 }: IProps) => {
   return (
     <Link
-      href={'/pair'}
+      href={'/pair/' + address}
       className='grid  grid-cols-[100px_auto] sm:grid-cols-[128px_auto] p-3 gap-3 hover:border-white hover:border rounded-md'
     >
       <div className='relative w-[100px] sm:w-[128px] h-[auto]'>
@@ -30,9 +35,15 @@ const CoinItem = ({
       <div>
         <div className='flex flex-col gap-1'>
           <div className='text-xs text-muted-foreground'>
-            Created by biticoino
+            Created by {username}
           </div>
-          <div className='text-xs text-primary'>market cap:{marketCap}</div>
+          <div className='text-xs text-primary'>
+            market cap: ${' '}
+            {formatBalance({
+              balance: marketCap,
+              decimals: 6
+            })}
+          </div>
           <div className='text-xs text-gray-500'>replies: {replies}</div>
 
           <p className='text-sm'>

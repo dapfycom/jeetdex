@@ -1,9 +1,14 @@
+'use client';
 import trandingImg from '@/assets/images/trending.png';
+import { formatTokenI } from '@/utils/mx-utils';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useFetchCoinsData } from '../../../hooks';
 import CoinItem from '../TokensList/Coins/CoinItem';
-import { coinsData } from '../TokensList/Coins/Coins';
+
 const Heading = () => {
+  const { coinsData } = useFetchCoinsData();
+
   return (
     <div>
       <h1 className='w-full flex justify-center'>
@@ -24,9 +29,20 @@ const Heading = () => {
         alt='trending now'
         className='mx-auto mt-5 max-w-[200px]'
       />
-      <div className='w-full max-w-[400px] mx-auto mt-4'>
-        <CoinItem {...coinsData[0]} />
-      </div>
+      {coinsData[0] && (
+        <div className='w-full max-w-[400px] mx-auto mt-4'>
+          <CoinItem
+            imageUrl={coinsData[0].img}
+            name={coinsData[0].title}
+            ticker={formatTokenI(coinsData[0].firstTokenId)}
+            marketCap={coinsData[0].marketCap}
+            replies={236}
+            description={coinsData[0].description}
+            username={coinsData[0].owner.username}
+            address={coinsData[0].address}
+          />
+        </div>
+      )}
     </div>
   );
 };

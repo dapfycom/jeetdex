@@ -84,6 +84,7 @@ model Coins {
   website     String?
   title       String?
   description String?
+  degenId     String?
   owner       Users   @relation("coins", fields: [ownerId], references: [id])
 }
 
@@ -122,7 +123,7 @@ model EnablePairTransaction {
 }
 
 model SwapInTransaction {
-  id              Int    @id @default(autoincrement())
+  id              Int     @id @default(autoincrement())
   caller          String
   tokenIn         String
   tokenAmountIn   String
@@ -134,7 +135,18 @@ model SwapInTransaction {
   block           Int
   epoch           Int
   timestamp       Int
+  hash            String?
+  price           Float?
+  token           String?
 
   @@index([caller])
   @@index([timestamp])
+}
+
+model DailyStatistics {
+  id         Int      @id @default(autoincrement())
+  date       DateTime @unique
+  topGainers Json
+  topLosers  Json
+  volume     String
 }

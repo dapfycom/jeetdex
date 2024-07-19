@@ -68,10 +68,6 @@
                 "type": "Address"
             },
             {
-                "name": "jeet_token_id",
-                "type": "TokenIdentifier"
-            },
-            {
                 "name": "reach_jeetdex_fee",
                 "type": "BigUint"
             }
@@ -138,6 +134,10 @@
                 },
                 {
                     "name": "token_ticker",
+                    "type": "bytes"
+                },
+                {
+                    "name": "db_id",
                     "type": "bytes"
                 }
             ],
@@ -328,6 +328,10 @@
                 {
                     "name": "market_cap",
                     "type": "BigUint"
+                },
+                {
+                    "name": "db_id",
+                    "type": "bytes"
                 }
             ]
         },

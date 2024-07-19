@@ -1,19 +1,21 @@
 'use client';
-import React from 'react';
 
-import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl } from '@/components/ui/form';
+import { z } from 'zod';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import CustomFormField, {
   FormFieldType
 } from '@/components/CustomFormField/CustomFormField';
-import { fetchNewTokenFee, newToken } from '@/services/sc/degen_master';
-import useSWR from 'swr';
-import { errorToast } from '@/utils/toast';
+import { useUploadThing } from '@/hooks/useUploadThing';
+import { newToken } from '@/services/sc/degen_master/calls';
+import { fetchNewTokenFee } from '@/services/sc/degen_master/queries';
 import { formatBalance } from '@/utils/mx-utils';
+import { generateRandomString } from '@/utils/strings';
+import { errorToast } from '@/utils/toast';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import useSWR from 'swr';
 
 const formSchema = z.object({
   name: z
@@ -50,14 +52,30 @@ const CreateTokenForm = () => {
     }
   });
 
+  const { startUpload } = useUploadThing('newDegenCoin');
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+    const { name, ticker, description, image, telegram, twitter, website } =
+      values;
 
     if (fee) {
-      newToken(values.name, values.ticker, fee);
+      const degenId = generateRandomString(10);
+
+      newToken(values.name, values.ticker.toUpperCase(), fee, degenId);
+
+      startUpload([image], {
+        name: name,
+        ticker: ticker.toUpperCase(),
+        description: description,
+        telegram: telegram,
+        twitter: twitter,
+        website: website,
+        degenId: degenId
+      } as any);
     } else {
       errorToast('Error fetching the fee');
     }
@@ -98,6 +116,7 @@ const CreateTokenForm = () => {
               <div className='border border-gray-200 py-2 px-3 rounded-md'>
                 <input
                   type='file'
+                  accept='image/png, image/svg'
                   onChange={(e) => field.onChange(e.target.files[0])}
                 />
               </div>

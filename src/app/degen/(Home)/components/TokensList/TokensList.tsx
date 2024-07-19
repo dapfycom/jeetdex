@@ -2,7 +2,7 @@ import Coins from './Coins/Coins';
 import SearchBar from './Searchbar/Searchbar';
 import Settings from './Settigns/Settigns';
 
-const TokensList = () => {
+const TokensList = async () => {
   return (
     <div>
       <SearchBar />
