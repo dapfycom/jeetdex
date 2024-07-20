@@ -88,7 +88,7 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
   return (
     <div>
       <div
-        className='hover:bg-[#09091bb6] bg-card rounded-sm grid md:grid-cols-3 grid-cols-1 gap-2  sm:gap-4 p-2 sm:p-4 cursor-pointer'
+        className=' bg-card rounded-sm grid md:grid-cols-3 grid-cols-1 gap-2  sm:gap-4 p-2 sm:p-4 cursor-pointer'
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();

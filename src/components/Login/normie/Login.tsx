@@ -5,6 +5,7 @@ import DisconnectComponent from './DisconnectComponent';
 import { createAuthTokenCookie } from '@/actions/cookies';
 import { createProfile } from '@/actions/user';
 import { useAppDispatch } from '@/hooks';
+import useIsMobile from '@/hooks/useIsMobile';
 import { setShard, setUserAddress } from '@/redux/dapp/dapp-slice';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import dynamic from 'next/dynamic';
@@ -18,6 +19,7 @@ const ConnectComponent = dynamic(() => import('./ConnectComponent'), {
 const Login = () => {
   const { isLoggedIn, tokenLogin } = useGetLoginInfo();
   const dispatch = useAppDispatch();
+  const isMobile = useIsMobile(768);
 
   const { address, shard, account } = useGetAccountInfo();
   useEffect(() => {
@@ -39,6 +41,9 @@ const Login = () => {
     }
   }, [tokenLogin?.nativeAuthToken]);
 
+  if (isMobile) {
+    return null;
+  }
   return (
     <>
       {isLoggedIn ? (

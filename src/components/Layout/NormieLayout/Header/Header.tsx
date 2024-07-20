@@ -15,7 +15,7 @@ export const Header = () => {
   return (
     <div>
       <header className='relative flex items-start  justify-between  gap-3 p-1 flex-wrap'>
-        <div className='flex gap-2 sm:gap-4 items-center'>
+        <div className='flex gap-2 sm:gap-4 items-center flex-1'>
           <MxLink
             to={'/'}
             className=' items-center justify-between gap-3 lg:flex hidden'
@@ -25,7 +25,7 @@ export const Header = () => {
           <div className=' gap-2 items-center lg:flex hidden'>
             <Navbar />
           </div>
-          <div className='flex lg:hidden'>
+          <div className='flex lg:hidden flex-1 justify-center'>
             <PoolAndBuySellShakingBox />
           </div>
           <div className=' gap-2 items-center lg:flex hidden'>
