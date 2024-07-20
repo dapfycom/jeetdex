@@ -6,6 +6,7 @@ import PoolAndBuySellShakingBox from '@/components/ShakingBoxes/PoolAndBuySellSh
 import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
 import { nav } from '@/localConstants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import DrawerClient from './DrawerClient';
 import Navbar from './Navbar';
@@ -52,11 +53,13 @@ export const Header = () => {
           {nav.map((item) => {
             return (
               <Link
-                href={`/?tab=${item}`}
-                key={item}
+                href={`/?tab=${item.href}`}
+                key={item.href}
                 className='bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400'
               >
-                {item}
+                <span className='flex items-center justify-center'>
+                  <FontAwesomeIcon icon={item.label} />
+                </span>
               </Link>
             );
           })}

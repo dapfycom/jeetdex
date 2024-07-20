@@ -1,6 +1,9 @@
 import Container from '@/components/Container/Container';
 import CreatePool from '@/components/CreatePoolModal/CreatePoolModal';
-import SwapContent from './SwapContent';
+import dynamic from 'next/dynamic';
+const SwapContent = dynamic(() => import('./SwapContent'), {
+  ssr: false
+});
 
 const Swap = async () => {
   return (

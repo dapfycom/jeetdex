@@ -1,3 +1,11 @@
+import {
+  IconDefinition,
+  faChartLine,
+  faClipboardList,
+  faExchange,
+  faSearch
+} from '@fortawesome/free-solid-svg-icons';
+
 export enum RouteNamesEnum {
   home = '/',
   nfts = '/nfts',
@@ -6,6 +14,14 @@ export enum RouteNamesEnum {
   dust = '/dust'
 }
 
-type NavItem = 'info' | 'chart' | 'buy/sell' | 'txs';
+type NavItem = {
+  label: IconDefinition;
+  href: 'info' | 'chart' | 'buy/sell' | 'txs';
+};
 
-export const nav: NavItem[] = ['info', 'chart', 'buy/sell', 'txs'];
+export const nav: NavItem[] = [
+  { label: faSearch, href: 'info' },
+  { label: faChartLine, href: 'chart' },
+  { label: faExchange, href: 'buy/sell' },
+  { label: faClipboardList, href: 'txs' }
+];

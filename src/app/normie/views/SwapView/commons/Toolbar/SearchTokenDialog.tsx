@@ -24,7 +24,11 @@ export function CommandDialogDemo() {
   const [searchVal, setSearchVal] = React.useState('');
   const allPools = useAppSelector(selectGlobalData).pools;
   const [openTokensList, setOpenTokensList] = React.useState<boolean>(false);
-  const { updateParams, currentParams } = useUpdateUrlParams(['swap', 'tab']);
+  const { updateParams, currentParams } = useUpdateUrlParams([
+    'swap',
+    'tab',
+    'txs'
+  ]);
 
   const listedOnly =
     currentParams[1] === 'info' || currentParams[1] === 'chart';
