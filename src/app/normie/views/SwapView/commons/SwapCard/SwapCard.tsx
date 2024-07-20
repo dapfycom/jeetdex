@@ -3,6 +3,8 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalanceDollar } from '@/utils/mx-utils';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Toolbar from '../Toolbar/Toolbar';
 import InputBox from './commons/InputBox';
 import SubmitButton from './commons/SubmitButton';
@@ -90,7 +92,7 @@ const SwapCard = ({
                 onClick={swapFileds}
                 className='group  flex justify-center items-center '
               >
-                exchange position
+                <FontAwesomeIcon icon={faSync} />
               </Button>
             </div>
           </div>

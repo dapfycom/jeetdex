@@ -38,7 +38,7 @@ const initialState: SwapState = {
   rate: 0,
   poolPair: '',
   isOpenCharts: true,
-  isOPenChats: true,
+  isOPenChats: false,
   isOpenTokenSocials: true,
   isOpenTokenHolders: true
 };
