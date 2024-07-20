@@ -24,14 +24,11 @@ export function CommandDialogDemo() {
   const [searchVal, setSearchVal] = React.useState('');
   const allPools = useAppSelector(selectGlobalData).pools;
   const [openTokensList, setOpenTokensList] = React.useState<boolean>(false);
-  const { updateParams, currentParams } = useUpdateUrlParams([
-    'swap',
-    'tab',
-    'txs'
-  ]);
-
+  const { updateParams, currentParams } = useUpdateUrlParams(['swap', 'tab']);
   const listedOnly =
-    currentParams[1] === 'info' || currentParams[1] === 'chart';
+    currentParams[1] === 'info' ||
+    currentParams[1] === 'chart' ||
+    currentParams[1] === 'txs';
   const listOfTokens: (IElrondToken & { address?: string })[] = allPools.map(
     (p) => {
       return {
