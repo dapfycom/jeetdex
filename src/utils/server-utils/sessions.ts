@@ -6,15 +6,44 @@ import {
 import { cookies } from 'next/headers';
 import { authConfig } from './constants';
 
+const cache: Map<string, { result: NativeAuthResult | null; expiry: number }> =
+  new Map();
+
 export const verifyToken = async (
   authToken: string
 ): Promise<null | NativeAuthResult> => {
-  try {
-    const server = new NativeAuthServer(authConfig);
-    const valid = await server.validate(authToken);
-    return valid;
-  } catch (error) {
-    return null;
+  const cacheEntry = cache.get(authToken);
+
+  if (cacheEntry && cacheEntry.expiry > Date.now()) {
+    return cacheEntry.result;
+  }
+
+  const server = new NativeAuthServer(authConfig);
+  let attempts = 0;
+  const maxAttempts = 4;
+
+  while (attempts < maxAttempts) {
+    try {
+      const valid = await server.validate(authToken);
+      cache.set(authToken, {
+        result: valid,
+        expiry: Date.now() + 5 * 60 * 1000
+      }); // Cache for 5 minutes
+      return valid;
+    } catch (error) {
+      console.log(error);
+      if (error.isAxiosError && error.code === 'ETIMEDOUT') {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          console.log('Max retry attempts reached');
+          return null;
+        }
+        console.log(`Retrying verification attempt ${attempts}`);
+      } else {
+        console.log(error);
+        return null;
+      }
+    }
   }
 };
 export const decodeToken = async (
