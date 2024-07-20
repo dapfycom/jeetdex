@@ -88,7 +88,7 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
   return (
     <div>
       <div
-        className='hover:bg-[#09091bb6] bg-card rounded-sm grid md:grid-cols-4 grid-cols-1 gap-2 sm:gap-4 p-4 cursor-pointer'
+        className='hover:bg-[#09091bb6] bg-card rounded-sm grid md:grid-cols-3 grid-cols-1 gap-2  sm:gap-4 p-2 sm:p-4 cursor-pointer'
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
@@ -173,30 +173,32 @@ const PoolItem = ({ pool, userLp, onClickLp }: IProps) => {
           )}
         </div>
       </div>{' '} */}
-        <div className=' py-2 sm:py-4  flex flex-col w-fit'>
-          <span>Fee Rewards</span>
-          <div className='text-sm text-gray-400 '>
-            <span className='border-b border-dashed border-gray-400 pb-1'>
-              0.07 %
-            </span>
-          </div>
-        </div>
-        <div className='w-full'>
-          <div
-            className='hover:bg-teal-400/10 py-2 sm:px-4 sm:py-4 rounded-sm cursor-pointer flex flex-col items-center w-fit'
-            onClick={(e) => {
-              e.stopPropagation();
-              onClickLp();
-            }}
-          >
-            <span>My LP</span>
+        <div className='flex  flex-row gap-6 sm:gap-0 sm:justify-around  -mt-4 sm:mt-0'>
+          <div className=' py-2 sm:py-4  flex flex-col w-fit'>
+            <span className='whitespace-nowrap'>Fee Rewards</span>
             <div className='text-sm text-gray-400 '>
-              <span>{userLp ? formatBalance(userLp) : '0'}</span>= $
-              {lpDollarAmount}
+              <span className='border-b border-dashed border-gray-400 pb-1'>
+                0.07 %
+              </span>
+            </div>
+          </div>
+          <div className='w-fit'>
+            <div
+              className='hover:bg-teal-400/10 py-2 sm:px-4 sm:py-4 rounded-sm cursor-pointer flex flex-col items-center w-fit'
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickLp();
+              }}
+            >
+              <span>My LP</span>
+              <div className='text-sm text-gray-400 '>
+                <span>{userLp ? formatBalance(userLp) : '0'}</span>= $
+                {lpDollarAmount}
+              </div>
             </div>
           </div>
         </div>
-        <div className='py-2 sm:py-4 flex flex-col sm:flex-row items-center w-full justify-end gap-3 '>
+        <div className='sm:py-4 flex flex-col sm:flex-row items-center w-full justify-end gap-3  '>
           <Button
             className='border-primary py-2 sm:py-4 hover:bg-[#3ff2ff13] rounded-sm px-2 w-full hover:text-white'
             size='sm'
