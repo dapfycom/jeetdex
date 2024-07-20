@@ -14,6 +14,7 @@ export const verifyToken = async (
     const valid = await server.validate(authToken);
     return valid;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
