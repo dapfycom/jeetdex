@@ -1,8 +1,8 @@
 import {
   IconDefinition,
   faChartLine,
+  faClipboardList,
   faExchange,
-  faHome,
   faSearch
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,5 +23,5 @@ export const nav: NavItem[] = [
   { label: faSearch, href: 'info' },
   { label: faChartLine, href: 'chart' },
   { label: faExchange, href: 'buy/sell' },
-  { label: faHome, href: 'txs' }
+  { label: faClipboardList, href: 'txs' }
 ];

@@ -1,5 +1,5 @@
 'use client';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import DrawerDialogDemo from './Drawer';
@@ -12,7 +12,7 @@ const DrawerClient = () => {
         className='bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400 '
         onClick={() => setOpen(true)}
       >
-        <FontAwesomeIcon icon={faBars} />
+        <FontAwesomeIcon icon={faHome} />
       </div>
       <DrawerDialogDemo open={open} setOpen={setOpen} />
     </>
