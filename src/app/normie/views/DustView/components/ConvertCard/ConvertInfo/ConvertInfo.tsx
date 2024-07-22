@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppSelector } from '@/hooks/useRedux';
 import {
@@ -26,8 +25,8 @@ const ConvertInfo = () => {
     data?.amountOut || 0
   ).toString();
   return (
-    <Card className='bg-[#0b102280]'>
-      <CardContent className='mt-4 pb-4'>
+    <div className='bg-[#0b102280] rounded-sm'>
+      <div className='mt-4 pb-4'>
         {isLoading ? (
           <div>Loading...</div>
         ) : (
@@ -70,8 +69,8 @@ const ConvertInfo = () => {
             </div> */}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

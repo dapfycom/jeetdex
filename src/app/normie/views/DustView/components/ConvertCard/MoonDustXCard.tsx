@@ -4,13 +4,7 @@ import {
   selectToTokenDust
 } from '@/app/normie/views/DustView/lib/dust-slice';
 import { useGetAllowedOutputTokens } from '@/app/normie/views/DustView/lib/hooks';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
+import { CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -37,8 +31,8 @@ const MoonDustXCard = () => {
   const { tokens } = useGetMultipleElrondTokens(toTokensToConvert);
 
   return (
-    <Card className='text-left w-full max-w-[650px] bg-[#1C243E] mx-auto'>
-      <CardHeader>
+    <div className='text-left w-full max-w-[650px] bg-[#1C243E] mx-auto rounded-sm'>
+      <div className='px-4 py-3'>
         <div className='flex justify-between  items-center flex-col md:flex-row'>
           <CardTitle className='mb-3'>Convert dust into:</CardTitle>
           <div className='flex justify-center md:justify-end flex-wrap gap-4'>
@@ -77,7 +71,7 @@ const MoonDustXCard = () => {
             </Select>
           </div>
         </div>
-      </CardHeader>
+      </div>
       <CardContent className='space-y-2 px-3'>
         <div className='flex flex-col  md:px-3'>
           <SelectTokens />
@@ -91,7 +85,7 @@ const MoonDustXCard = () => {
       <CardFooter>
         <ConvertButton />
       </CardFooter>
-    </Card>
+    </div>
   );
 };
 

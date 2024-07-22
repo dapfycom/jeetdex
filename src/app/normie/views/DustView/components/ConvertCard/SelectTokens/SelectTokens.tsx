@@ -1,4 +1,3 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 import { useAppSelector } from '@/hooks/useRedux';
 import { Loader2 } from 'lucide-react';
@@ -28,8 +27,8 @@ const SelectTokens = () => {
   const elements = elementsByRow(width);
 
   return (
-    <Card className='text-left bg-[#0b102280]'>
-      <CardContent className='space-y-2 pt-7 px-4 md:px-6'>
+    <div className='text-left bg-[#0b102280] rounded-sm'>
+      <div className='space-y-2 pt-7 px-4 md:px-6'>
         {isLoading ? (
           <div className='flex items-center justify-center w-full min-h-[400px]'>
             <Loader2 className='animate-ping' />
@@ -83,8 +82,8 @@ const SelectTokens = () => {
             )}
           </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
 
     // <Card
     //   as={Flex}
