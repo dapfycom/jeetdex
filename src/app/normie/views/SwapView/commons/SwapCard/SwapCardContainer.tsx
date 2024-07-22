@@ -11,15 +11,14 @@ import {
   selectNormalDirection,
   selectToField
 } from '@/app/normie/views/SwapView/lib/swap-slice';
-import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
+import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { changeField, clearInputs } from '../../lib/functions';
 import {
   useGetAggregate,
-  useGetSwapbleTokens,
   useGetTokenRatio,
   useGetTokensSuggested
 } from '../../lib/hooks';
@@ -29,7 +28,6 @@ const SwapCardContainer = () => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
   const normalDirection = useAppSelector(selectNormalDirection);
-  const { elrondToken } = useGetElrondToken(toField.selectedToken);
 
   const dispatch = useAppDispatch();
 
@@ -72,14 +70,14 @@ const SwapCardContainer = () => {
     clearInputs();
   };
 
-  const { tokensPairs } = useGetSwapbleTokens();
+  const tokensPairs = useAppSelector(selectGlobalData).pools;
 
   const pairSelected = tokensPairs.find((t) =>
     normalDirection
-      ? t.firstToken === fromField.selectedToken &&
-        t.secondToken === toField.selectedToken
-      : t.secondToken === fromField.selectedToken &&
-        t.firstToken === toField.selectedToken
+      ? t.firstTokenId === fromField.selectedToken &&
+        t.secondTokenId === toField.selectedToken
+      : t.secondTokenId === fromField.selectedToken &&
+        t.firstTokenId === toField.selectedToken
   );
 
   useGetTokenRatio(
@@ -91,6 +89,14 @@ const SwapCardContainer = () => {
 
   const tokensSuggested = useGetTokensSuggested();
   useGetAggregate(pairSelected);
+
+  const fromFieldElrondToken =
+    fromField.selectedToken === pairSelected?.firstTokenId
+      ? {
+          ...pairSelected?.firstToken,
+          price: pairSelected?.firstTokenJeetdexPrice
+        }
+      : pairSelected?.secondToken;
   return (
     <SwapCard
       fromField={fromField}
@@ -101,10 +107,18 @@ const SwapCardContainer = () => {
       handleClear={handleClear}
       handlePercentAmount={handlePercentAmount}
       isLoading={false}
-      pairSelected={pairSelected}
+      pairSelected={
+        pairSelected
+          ? {
+              address: pairSelected.address,
+              firstToken: pairSelected.firstTokenId,
+              secondToken: pairSelected.secondTokenId
+            }
+          : null
+      }
       swapFields={swapFields}
       toField={toField}
-      toFieldElrondToken={elrondToken}
+      fromFieldElrondToken={fromFieldElrondToken}
       tokensSuggested={tokensSuggested}
     />
   );

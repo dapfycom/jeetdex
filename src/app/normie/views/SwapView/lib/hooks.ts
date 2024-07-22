@@ -21,6 +21,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { useEffect } from 'react';
 import useSWR from 'swr';
+import { IPoolPair } from '../../PoolsView/utils/types';
 import { clearToInputs } from './functions';
 import {
   onChangeToField,
@@ -76,11 +77,7 @@ export const useGetSwapbleTokens = () => {
 };
 
 export const useGetTokenRatio = (
-  pair: {
-    firstToken: string;
-    secondToken: string;
-    address: string;
-  },
+  pair: IPoolPair,
   tokenIdentifier: string,
   bigUIntValue: BigNumber,
   type: 'first' | 'second'
@@ -88,7 +85,7 @@ export const useGetTokenRatio = (
   const dispatch = useAppDispatch();
   let swrKey = null;
   const tokenOutDetails = useGetElrondToken(
-    pair ? (type === 'first' ? pair.secondToken : pair.firstToken) : null
+    pair ? (type === 'first' ? pair.secondTokenId : pair.firstTokenId) : null
   );
 
   if (
@@ -147,11 +144,7 @@ export const useGetTokenRatio = (
   };
 };
 
-export const useGetAggregate = (pair?: {
-  firstToken: string;
-  secondToken: string;
-  address: string;
-}) => {
+export const useGetAggregate = (pair?: IPoolPair) => {
   const token1 = useAppSelector(selectFromFieldSelectedToken);
   const token2 = useAppSelector(selectToFieldSelectedToken);
   const token1Value = useAppSelector(selectFromFieldValueDecimals);
