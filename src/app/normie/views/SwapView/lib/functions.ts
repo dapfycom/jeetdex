@@ -1,6 +1,8 @@
+import { tokensID } from '@/config';
 import store from '@/redux/store';
 import { IElrondToken } from '@/types/scTypes';
 import { setElrondBalance } from '@/utils/mx-utils';
+import { IPoolPair } from '../../PoolsView/utils/types';
 import {
   onChageFromFieldValue,
   onChageFromFieldValueDecimals,
@@ -49,4 +51,14 @@ export const clearToInputs = () => {
 
   dispatch(onChangeToFieldValueDecimals(''));
   dispatch(onChangeToField(''));
+};
+
+export const findTokenPair = (tokensPairs: IPoolPair[], token: string) => {
+  return tokensPairs.find(
+    (t) =>
+      t.firstTokenId === token ||
+      (token === tokensID.egld
+        ? t.secondTokenId === tokensID.wegld
+        : t.secondTokenId === token)
+  );
 };

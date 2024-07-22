@@ -11,11 +11,13 @@ import {
   selectNormalDirection,
   selectToField
 } from '@/app/normie/views/SwapView/lib/swap-slice';
+import { tokensID } from '@/config';
+import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
-import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
+import { IPoolPair } from '../../../PoolsView/utils/types';
 import { changeField, clearInputs } from '../../lib/functions';
 import {
   useGetAggregate,
@@ -24,7 +26,11 @@ import {
 } from '../../lib/hooks';
 import SwapCard from './SwapCard';
 
-const SwapCardContainer = () => {
+const SwapCardContainer = ({
+  poolPair: pairSelected
+}: {
+  poolPair: IPoolPair;
+}) => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
   const normalDirection = useAppSelector(selectNormalDirection);
@@ -70,16 +76,6 @@ const SwapCardContainer = () => {
     clearInputs();
   };
 
-  const tokensPairs = useAppSelector(selectGlobalData).pools;
-
-  const pairSelected = tokensPairs.find((t) =>
-    normalDirection
-      ? t.firstTokenId === fromField.selectedToken &&
-        t.secondTokenId === toField.selectedToken
-      : t.secondTokenId === fromField.selectedToken &&
-        t.firstTokenId === toField.selectedToken
-  );
-
   useGetTokenRatio(
     pairSelected,
     fromField.selectedToken,
@@ -90,13 +86,19 @@ const SwapCardContainer = () => {
   const tokensSuggested = useGetTokensSuggested();
   useGetAggregate(pairSelected);
 
+  const { elrondToken: fromFieldToken } = useGetElrondToken(
+    fromField.selectedToken === tokensID.egld
+      ? tokensID.wegld
+      : fromField.selectedToken
+  );
+
   const fromFieldElrondToken =
     fromField.selectedToken === pairSelected?.firstTokenId
       ? {
           ...pairSelected?.firstToken,
           price: pairSelected?.firstTokenJeetdexPrice
         }
-      : pairSelected?.secondToken;
+      : fromFieldToken;
   return (
     <SwapCard
       fromField={fromField}

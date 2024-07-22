@@ -151,6 +151,7 @@ export const useGetAggregate = (pair?: IPoolPair) => {
   const dispatch = useAppDispatch();
 
   let swrKey = null;
+  console.log(pair);
 
   if (!pair) {
     swrKey = ['aggregate', token1, token2, token1Value];

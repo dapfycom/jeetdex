@@ -47,7 +47,7 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
         </div>
       </TabsContent>
       <TabsContent value={nav[2].href} className='w-full'>
-        <SwapCardContainer />
+        <SwapCardContainer poolPair={poolPair} />
 
         {isOpenChats && (
           <div className='mt-6'>

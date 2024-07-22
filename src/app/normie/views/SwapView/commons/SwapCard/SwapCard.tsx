@@ -55,6 +55,8 @@ const SwapCard = ({
   fromFieldElrondToken,
   tokensSuggested
 }: IProps) => {
+  console.log(fromFieldElrondToken);
+
   return (
     <div className='w-full  max-w-[500px] mx-auto'>
       <Toolbar pairSelected={pairSelected} />
