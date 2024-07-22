@@ -13,7 +13,7 @@ import Navbar from './Navbar';
 
 export const Header = () => {
   return (
-    <div>
+    <div className='my-4'>
       <header className='relative flex items-start  justify-between  gap-3 p-1 flex-wrap'>
         <div className='flex gap-2 sm:gap-4 items-center flex-1'>
           <MxLink
