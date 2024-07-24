@@ -5,12 +5,7 @@ import Link from 'next/link';
 
 import { ReactNode } from 'react';
 
-const Layout = ({
-  children
-}: {
-  children: ReactNode;
-  searchParams: { [key: string]: string | string[] | undefined };
-}) => {
+const Layout = ({ children }: { children: ReactNode }) => {
   const headersList = headers();
   const deviceType = headersList.get('x-device-type');
   const isMobile = deviceType === 'mobile';
