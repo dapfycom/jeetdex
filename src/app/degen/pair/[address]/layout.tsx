@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { ReactNode } from 'react';
 
-const layout = ({
+const Layout = ({
   children
 }: {
   children: ReactNode;
@@ -43,4 +43,4 @@ const layout = ({
   );
 };
 
-export default layout;
+export default Layout;
