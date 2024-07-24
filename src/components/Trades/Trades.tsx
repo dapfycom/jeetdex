@@ -1,5 +1,4 @@
 'use client';
-import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import {
   Table,
   TableBody,
@@ -9,7 +8,6 @@ import {
   TableRow
 } from '@/components/ui/table';
 import { network } from '@/config';
-import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import { cn } from '@/lib/utils';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
 import { timeAgo } from '@/utils/date';
@@ -23,13 +21,28 @@ export const colorByType = {
   sell: 'text-red-400'
 };
 
-const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
-  const pool = useGetDefaultPool(poolPair);
+const Trades = ({
+  poolAddress,
+  poolFirstToken,
+  poolSecondToken
+}: {
+  poolAddress: string;
+  poolFirstToken: {
+    ticker: string;
+    decimals: number;
+    identifier: string;
+  };
+  poolSecondToken: {
+    ticker: string;
+    decimals: number;
+    identifier: string;
+  };
+}) => {
   const { data } = useSWR(
-    pool ? `/transactions/${pool.address}/swapIn` : null,
+    poolAddress ? `/transactions/${poolAddress}/swapIn` : null,
     async () => {
       return fetchTransactions({
-        receiver: pool.address,
+        receiver: poolAddress,
         withScResults: true,
         function: 'swapIn',
         status: 'success'
@@ -49,10 +62,10 @@ const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
           <TableHead className='text-left'>account</TableHead>
           <TableHead className='text-center'>type</TableHead>
           <TableHead className='text-center'>
-            {formatTokenI(pool.secondToken.ticker)}
+            {formatTokenI(poolSecondToken.ticker)}
           </TableHead>
           <TableHead className='text-center'>
-            {formatTokenI(pool.firstToken.ticker)}
+            {formatTokenI(poolFirstToken.ticker)}
           </TableHead>
 
           <TableHead className='text-center'>date</TableHead>
@@ -63,7 +76,7 @@ const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
       <TableBody>
         {finalData.map((d) => {
           const type =
-            d.action.arguments.transfers[0].token === pool.firstTokenId
+            d.action.arguments.transfers[0].token === poolFirstToken.identifier
               ? 'sell'
               : 'buy';
 
@@ -81,7 +94,7 @@ const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
             formatBalance(
               {
                 balance: secondTokenTxValue,
-                decimals: pool.secondToken.decimals
+                decimals: poolFirstToken.decimals
               },
               true
             )
@@ -93,7 +106,7 @@ const Trades = ({ poolPair }: { poolPair: IPoolPair }) => {
             formatBalance(
               {
                 balance: firstTokenTxValue,
-                decimals: pool.firstToken.decimals
+                decimals: poolFirstToken.decimals
               },
               true
             )

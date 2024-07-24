@@ -6,6 +6,7 @@ import Trades from '@/components/Trades/Trades';
 import UserTrades from '@/components/Trades/UserTrades';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAppSelector } from '@/hooks';
+import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import { cn } from '@/lib/utils';
 import SwapCardContainer from './commons/SwapCard/SwapCardContainer';
 import TokenSocials from './commons/SwapCard/commons/Socials/TokenSocials';
@@ -13,6 +14,7 @@ import { selectIsOpenCharts, selectIsOpenChats } from './lib/swap-slice';
 const Desktop = ({ poolPair }) => {
   const isOpenCharts = useAppSelector(selectIsOpenCharts);
   const isOpenChats = useAppSelector(selectIsOpenChats);
+  const withDefaultPool = useGetDefaultPool(poolPair);
 
   return (
     <div className='flex flex-col items-center text-center '>
@@ -24,7 +26,7 @@ const Desktop = ({ poolPair }) => {
       >
         <div className='h-full'>
           <div className='h-[450px] hidden sm:block'>
-            <ChartCard poolPair={poolPair} />
+            <ChartCard poolPair={withDefaultPool} />
           </div>
 
           <div
@@ -50,10 +52,14 @@ const Desktop = ({ poolPair }) => {
                   <Chats poolPair={poolPair?.lpTokenIdentifier} />
                 </TabsContent>
                 <TabsContent value='trades'>
-                  <Trades poolPair={poolPair} />
+                  <Trades
+                    poolAddress={withDefaultPool?.address}
+                    poolFirstToken={withDefaultPool?.firstToken}
+                    poolSecondToken={withDefaultPool?.secondToken}
+                  />
                 </TabsContent>
                 <TabsContent value='my-trades'>
-                  <UserTrades poolPair={poolPair} />
+                  <UserTrades poolPair={withDefaultPool} />
                 </TabsContent>
               </Tabs>
             )}
@@ -89,10 +95,14 @@ const Desktop = ({ poolPair }) => {
             </TabsList>
             <TabsContent value='chats'>
               {' '}
-              <Chats poolPair={poolPair?.lpTokenIdentifier} />
+              <Chats poolPair={withDefaultPool?.lpTokenIdentifier} />
             </TabsContent>
             <TabsContent value='trades'>
-              <Trades poolPair={poolPair} />
+              <Trades
+                poolAddress={withDefaultPool?.address}
+                poolFirstToken={withDefaultPool?.firstToken}
+                poolSecondToken={withDefaultPool?.secondToken}
+              />
             </TabsContent>
           </Tabs>
         )}

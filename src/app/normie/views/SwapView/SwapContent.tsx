@@ -25,9 +25,6 @@ const SwapContent = () => {
   const [swap] = currentParams;
 
   const poolsInfo = global.pools;
-  console.log(fromToken);
-  console.log(toToken);
-  console.log(poolsInfo);
 
   const poolPair = useMemo(() => {
     return poolsInfo.find((p) => {
@@ -61,7 +58,6 @@ const SwapContent = () => {
   }, [dispatch, swap, tokensPairs]);
 
   const isMobile = useIsMobile();
-  console.log(poolPair);
 
   return (
     <>
