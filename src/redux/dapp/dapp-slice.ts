@@ -34,7 +34,10 @@ export const dapp = createSlice({
       state,
       action: PayloadAction<{ coins: any[]; pools: IPoolPair[] }>
     ) => {
-      state.globalData = action.payload;
+      state.globalData = {
+        coins: action.payload?.coins || [],
+        pools: action.payload?.pools || []
+      };
     }
   }
 });

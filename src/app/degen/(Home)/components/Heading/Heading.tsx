@@ -14,7 +14,7 @@ const Heading = () => {
       <h1 className='w-full flex justify-center'>
         <Link
           href={'/create'}
-          className='text-center text-3xl hover:font-bold mx-auto'
+          className='text-center text-2xl sm:text-3xl hover:font-bold mx-auto'
         >
           <span>[ Start a new coin today ? ]</span>
         </Link>

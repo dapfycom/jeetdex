@@ -21,14 +21,6 @@ export const swap = async ({
     bondingContractAbi
   );
 
-  console.log({
-    contract,
-    tokenIn,
-    tokenOut,
-    amountOut,
-    amountIn
-  });
-
   const args = [BytesValue.fromUTF8(tokenOut), new BigUIntValue(amountOut)];
 
   if (tokenIn === tokensID.egld) {
@@ -36,7 +28,7 @@ export const swap = async ({
       functionName: 'swap',
       arg: args,
       value: amountIn,
-      gasL: 200000000
+      gasL: 400000000
     });
   } else {
     return interaction.ESDTTransfer({
@@ -47,7 +39,7 @@ export const swap = async ({
         decimals: 18
       },
       value: amountIn,
-      gasL: 200000000
+      gasL: 400000000
     });
   }
 };

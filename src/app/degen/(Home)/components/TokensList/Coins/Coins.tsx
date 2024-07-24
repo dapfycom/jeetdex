@@ -1,4 +1,5 @@
 'use client';
+import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { formatTokenI } from '@/utils/mx-utils';
 import { useFetchCoinsData } from '../../../../hooks';
 import CoinItem from './CoinItem';
@@ -145,8 +146,10 @@ export const coinsData = [
 ];
 
 const Coins = () => {
-  const { coinsData } = useFetchCoinsData();
-  console.log(coinsData);
+  const { currentParams } = useUpdateUrlParams(['search']);
+  console.log(currentParams);
+
+  const { coinsData } = useFetchCoinsData({ search: currentParams[0] });
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>

@@ -56,7 +56,7 @@ export const useFetchAllBondingData = () => {
   };
 };
 export type BondingData = IBoundingData & Bonding;
-export const useFetchCoinsData = () => {
+export const useFetchCoinsData = (filter?: { search?: string }) => {
   const {
     boundingData,
     isLoading: isLoadingBoundingData,
@@ -71,7 +71,7 @@ export const useFetchCoinsData = () => {
     mutate: mutateCoinsInfo
   } = useFetchExtraCoinInfo(boundingData.length);
 
-  const coinsData: BondingData[] = boundingData
+  let coinsData: BondingData[] = boundingData
     .map((item) => {
       const coin = coinsInfo.find((coin) => coin.degenId === item.dbId);
       return {
@@ -80,6 +80,23 @@ export const useFetchCoinsData = () => {
       };
     })
     .filter((item) => !!item.degenId);
+  console.log(filter?.search);
+
+  if (filter?.search) {
+    console.log(coinsData);
+
+    coinsData = coinsData.filter((item) => {
+      const shouldFilter = item.title
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
+      if (shouldFilter) {
+        console.log(item.title.toLowerCase());
+        console.log(filter.search.toLowerCase());
+        console.log(item);
+      }
+      return shouldFilter;
+    });
+  }
 
   return {
     coinsData,

@@ -7,6 +7,10 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const search = request.nextUrl.search;
 
+  // Device detection
+  const userAgent = request.headers.get('user-agent') || '';
+  const isMobile = /mobile/i.test(userAgent);
+
   if (
     isPathOrSubpath(pathname, [
       '/manifest.json',
@@ -17,11 +21,12 @@ export function middleware(request: NextRequest) {
       '/assets',
       '/static',
       '/monitoring'
-
       // Your other files in `public`
     ])
   ) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop');
+    return response;
   }
 
   if (process.env.DEGEN_MODE !== 'true') {
@@ -29,14 +34,14 @@ export function middleware(request: NextRequest) {
       !pathname.startsWith(`/normie/`) && pathname !== `/normie`;
     // Redirect if there is no locale
     if (pathnameIsMissingSiteMode) {
-      // e.g. incoming request is /products
-      // The new URL is now /en-US/products
-      return NextResponse.redirect(
+      const response = NextResponse.redirect(
         new URL(
           `/normie${pathname.startsWith('/') ? '' : '/'}${pathname}${search}`,
           request.url
         )
       );
+      response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop');
+      return response;
     }
   } else {
     // Check if there is any supported locale in the pathname
@@ -49,16 +54,20 @@ export function middleware(request: NextRequest) {
       const cookie = request.cookies.get('site-mode');
       const mode = cookie?.value || 'degen';
 
-      // e.g. incoming request is /products
-      // The new URL is now /en-US/products
-      return NextResponse.redirect(
+      const response = NextResponse.redirect(
         new URL(
           `/${mode}${pathname.startsWith('/') ? '' : '/'}${pathname}${search}`,
           request.url
         )
       );
+      response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop');
+      return response;
     }
   }
+
+  const response = NextResponse.next();
+  response.headers.set('x-device-type', isMobile ? 'mobile' : 'desktop');
+  return response;
 }
 
 export const config = {
