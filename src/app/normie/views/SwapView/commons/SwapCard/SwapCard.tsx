@@ -3,6 +3,8 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalanceDollar } from '@/utils/mx-utils';
+import { faSync } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Toolbar from '../Toolbar/Toolbar';
 import InputBox from './commons/InputBox';
 import SubmitButton from './commons/SubmitButton';
@@ -27,8 +29,8 @@ interface IProps {
   handleChangeToToken: (value: IElrondToken) => void;
   pairSelected: { firstToken: string; secondToken: string; address: string };
   swapFields: () => void;
-  toFieldElrondToken: IElrondToken;
 
+  fromFieldElrondToken: IElrondToken;
   tokensSuggested: {
     allTokens: IElrondToken[];
     jeedexTokens: IElrondToken[];
@@ -50,7 +52,7 @@ const SwapCard = ({
   handleChangeToToken,
   pairSelected,
   swapFields: swapFileds,
-  toFieldElrondToken,
+  fromFieldElrondToken,
   tokensSuggested
 }: IProps) => {
   return (
@@ -71,13 +73,13 @@ const SwapCard = ({
             )}
             label='From'
             dollarValue={
-              toFieldElrondToken
+              fromFieldElrondToken
                 ? (formatBalanceDollar(
                     {
-                      balance: toField.valueDecimals,
-                      decimals: toFieldElrondToken.decimals
+                      balance: fromField.valueDecimals,
+                      decimals: fromFieldElrondToken.decimals
                     },
-                    toFieldElrondToken.price
+                    fromFieldElrondToken.price
                   ) as string)
                 : '0'
             }
@@ -90,7 +92,7 @@ const SwapCard = ({
                 onClick={swapFileds}
                 className='group  flex justify-center items-center '
               >
-                exchange position
+                <FontAwesomeIcon icon={faSync} />
               </Button>
             </div>
           </div>
@@ -105,6 +107,17 @@ const SwapCard = ({
               (t) => t.identifier
             )}
             label='To'
+            dollarValue={
+              fromFieldElrondToken
+                ? (formatBalanceDollar(
+                    {
+                      balance: fromField.valueDecimals,
+                      decimals: fromFieldElrondToken.decimals
+                    },
+                    fromFieldElrondToken.price
+                  ) as string)
+                : '0'
+            }
             hideAmountButtons
           />
         </CardContent>

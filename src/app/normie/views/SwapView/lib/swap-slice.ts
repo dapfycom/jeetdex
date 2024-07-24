@@ -27,18 +27,18 @@ const initialState: SwapState = {
   fromField: {
     value: '',
     valueDecimals: '',
-    selectedToken: tokensID.jeet
+    selectedToken: tokensID.egld
   },
   toField: {
     value: '',
-    selectedToken: tokensID.bsk,
+    selectedToken: tokensID.jeet,
     valueDecimals: ''
   },
   normalDirection: false,
   rate: 0,
   poolPair: '',
   isOpenCharts: true,
-  isOPenChats: true,
+  isOPenChats: false,
   isOpenTokenSocials: true,
   isOpenTokenHolders: true
 };

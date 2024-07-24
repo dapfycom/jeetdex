@@ -8,8 +8,6 @@ import { memo, useEffect, useRef } from 'react';
 import config from './datafeed';
 
 const TVChartContainer = ({ tokenIdentifier }: { tokenIdentifier: string }) => {
-  console.log('render');
-
   const chartContainerRef =
     useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
   const charWidgettRef = useRef<IChartingLibraryWidget>();

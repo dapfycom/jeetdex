@@ -25,15 +25,23 @@ const SwapContent = () => {
   const [swap] = currentParams;
 
   const poolsInfo = global.pools;
+  console.log(fromToken);
+  console.log(toToken);
+  console.log(poolsInfo);
 
   const poolPair = useMemo(() => {
-    return poolsInfo.find(
-      (p) =>
-        (p.firstToken.identifier === fromToken &&
-          p.secondToken.identifier === toToken) ||
-        (p.secondToken.identifier === fromToken &&
-          p.firstToken.identifier === toToken)
-    );
+    return poolsInfo.find((p) => {
+      const isFirstFrom =
+        p.firstToken.identifier === fromToken &&
+        p.secondToken.identifier === toToken;
+      const isSecondFrom =
+        (fromToken === tokensID.egld
+          ? p.secondToken.identifier === tokensID.wegld
+          : p.secondToken.identifier === fromToken) &&
+        p.firstToken.identifier === toToken;
+
+      return isFirstFrom || isSecondFrom;
+    });
   }, [fromToken, poolsInfo, toToken]);
   const { tokensPairs } = useGetSwapbleTokens();
 
@@ -46,13 +54,15 @@ const SwapContent = () => {
         dispatch(changeToFieldToken(tokenPair.firstToken));
         dispatch(changeFromFieldToken(tokenPair.secondToken));
       } else {
-        dispatch(changeToFieldToken(swap || tokensID.bsk));
-        dispatch(changeFromFieldToken(tokensID.jeet));
+        dispatch(changeToFieldToken(swap || tokensID.jeet));
+        dispatch(changeFromFieldToken(tokensID.egld));
       }
     }
   }, [dispatch, swap, tokensPairs]);
 
   const isMobile = useIsMobile();
+  console.log(poolPair);
+
   return (
     <>
       {!isMobile ? (

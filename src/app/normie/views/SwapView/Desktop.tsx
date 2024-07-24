@@ -61,7 +61,7 @@ const Desktop = ({ poolPair }) => {
         </div>
 
         <div className={cn('flex flex-col gap-4', !isOpenCharts && 'flex-row')}>
-          <SwapCardContainer />
+          <SwapCardContainer poolPair={poolPair} />
           {poolPair?.firstTokenId && (
             <div className='flex flex-col gap-4'>
               <>

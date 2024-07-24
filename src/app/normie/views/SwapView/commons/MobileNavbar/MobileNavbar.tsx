@@ -18,13 +18,12 @@ import SwapCardContainer from '../SwapCard/SwapCardContainer';
 import TokenSocials from '../SwapCard/commons/Socials/TokenSocials';
 
 const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
-  const navItemStyle = `bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400`;
   const { currentParams, updateParams } = useUpdateUrlParams(['tab']);
   const isOpenChats = useAppSelector(selectIsOpenChats);
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (!currentParams[0]) {
-      updateParams('tab', nav[2]);
+      updateParams('tab', nav[2].href);
     }
   }, [currentParams[0]]);
   return (
@@ -32,30 +31,12 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
       value={currentParams[0]}
       onValueChange={(val) => updateParams('tab', val)}
     >
-      <TabsList className='bg-[#08111b] px-6 py-5 flex justify-between fixed bottom-0 left-0 right-0 w-full h-[80px] z-10'>
-        {nav.map((item) => {
-          return (
-            <TabsTrigger value={item} className={navItemStyle} key={item}>
-              [{item}]
-            </TabsTrigger>
-          );
-        })}
-
-        <TabsTrigger
-          value=''
-          className={navItemStyle}
-          onClick={() => setOpen(true)}
-        >
-          [menu]
-        </TabsTrigger>
-      </TabsList>
-
       <DrawerDialogDemo open={open} setOpen={setOpen} />
-      <TabsContent value={nav[0]} className='w-full'>
+      <TabsContent value={nav[0].href} className='w-full'>
         <TokenSocials tokenIdentifier={poolPair?.firstTokenId} />
         <HoldersList tokenIdentifier={poolPair?.firstTokenId} />
       </TabsContent>
-      <TabsContent value={nav[1]} className='w-full'>
+      <TabsContent value={nav[1].href} className='w-full'>
         <div
           className='h-full'
           style={{
@@ -65,8 +46,8 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
           <ChartCard poolPair={poolPair} />
         </div>
       </TabsContent>
-      <TabsContent value={nav[2]} className='w-full'>
-        <SwapCardContainer />
+      <TabsContent value={nav[2].href} className='w-full'>
+        <SwapCardContainer poolPair={poolPair} />
 
         {isOpenChats && (
           <div className='mt-6'>
@@ -89,7 +70,7 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
           </div>
         )}
       </TabsContent>
-      <TabsContent value={nav[3]} className='w-full'>
+      <TabsContent value={nav[3].href} className='w-full'>
         <Tabs
           defaultValue='trades'
           className={cn('w-full rounded-sm bg-[#1C243E] border-none  p-4')}

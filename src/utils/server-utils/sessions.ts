@@ -18,13 +18,32 @@ export const verifyToken = async (
     return cacheEntry.result;
   }
 
-  try {
-    const server = new NativeAuthServer(authConfig);
-    const valid = await server.validate(authToken);
-    cache.set(authToken, { result: valid, expiry: Date.now() + 5 * 60 * 1000 }); // Cache for 5 minutes
-    return valid;
-  } catch (error) {
-    return null;
+  const server = new NativeAuthServer(authConfig);
+  let attempts = 0;
+  const maxAttempts = 4;
+
+  while (attempts < maxAttempts) {
+    try {
+      const valid = await server.validate(authToken);
+      cache.set(authToken, {
+        result: valid,
+        expiry: Date.now() + 5 * 60 * 1000
+      }); // Cache for 5 minutes
+      return valid;
+    } catch (error) {
+      console.log(error);
+      if (error.isAxiosError && error.code === 'ETIMEDOUT') {
+        attempts++;
+        if (attempts >= maxAttempts) {
+          console.log('Max retry attempts reached');
+          return null;
+        }
+        console.log(`Retrying verification attempt ${attempts}`);
+      } else {
+        console.log(error);
+        return null;
+      }
+    }
   }
 };
 

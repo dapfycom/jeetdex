@@ -11,25 +11,29 @@ import {
   selectNormalDirection,
   selectToField
 } from '@/app/normie/views/SwapView/lib/swap-slice';
+import { tokensID } from '@/config';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { IElrondAccountToken, IElrondToken } from '@/types/scTypes';
 import { formatBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
+import { IPoolPair } from '../../../PoolsView/utils/types';
 import { changeField, clearInputs } from '../../lib/functions';
 import {
   useGetAggregate,
-  useGetSwapbleTokens,
   useGetTokenRatio,
   useGetTokensSuggested
 } from '../../lib/hooks';
 import SwapCard from './SwapCard';
 
-const SwapCardContainer = () => {
+const SwapCardContainer = ({
+  poolPair: pairSelected
+}: {
+  poolPair: IPoolPair;
+}) => {
   const fromField = useAppSelector(selectFromField);
   const toField = useAppSelector(selectToField);
   const normalDirection = useAppSelector(selectNormalDirection);
-  const { elrondToken } = useGetElrondToken(toField.selectedToken);
 
   const dispatch = useAppDispatch();
 
@@ -72,16 +76,6 @@ const SwapCardContainer = () => {
     clearInputs();
   };
 
-  const { tokensPairs } = useGetSwapbleTokens();
-
-  const pairSelected = tokensPairs.find((t) =>
-    normalDirection
-      ? t.firstToken === fromField.selectedToken &&
-        t.secondToken === toField.selectedToken
-      : t.secondToken === fromField.selectedToken &&
-        t.firstToken === toField.selectedToken
-  );
-
   useGetTokenRatio(
     pairSelected,
     fromField.selectedToken,
@@ -91,6 +85,20 @@ const SwapCardContainer = () => {
 
   const tokensSuggested = useGetTokensSuggested();
   useGetAggregate(pairSelected);
+
+  const { elrondToken: fromFieldToken } = useGetElrondToken(
+    fromField.selectedToken === tokensID.egld
+      ? tokensID.wegld
+      : fromField.selectedToken
+  );
+
+  const fromFieldElrondToken =
+    fromField.selectedToken === pairSelected?.firstTokenId
+      ? {
+          ...pairSelected?.firstToken,
+          price: pairSelected?.firstTokenJeetdexPrice
+        }
+      : fromFieldToken;
   return (
     <SwapCard
       fromField={fromField}
@@ -101,10 +109,18 @@ const SwapCardContainer = () => {
       handleClear={handleClear}
       handlePercentAmount={handlePercentAmount}
       isLoading={false}
-      pairSelected={pairSelected}
+      pairSelected={
+        pairSelected
+          ? {
+              address: pairSelected.address,
+              firstToken: pairSelected.firstTokenId,
+              secondToken: pairSelected.secondTokenId
+            }
+          : null
+      }
       swapFields={swapFields}
       toField={toField}
-      toFieldElrondToken={elrondToken}
+      fromFieldElrondToken={fromFieldElrondToken}
       tokensSuggested={tokensSuggested}
     />
   );

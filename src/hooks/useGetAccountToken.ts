@@ -20,7 +20,7 @@ const useGetAccountToken = (identifier: string) => {
         console.log(error);
 
         // Never retry on 404.
-        if (error.response.status === 404) return;
+        if (error.response?.status === 404) return;
 
         // Only retry up to 10 times.
         if (retryCount >= 10) return;

@@ -6,15 +6,16 @@ import PoolAndBuySellShakingBox from '@/components/ShakingBoxes/PoolAndBuySellSh
 import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
 import { nav } from '@/localConstants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import DrawerClient from './DrawerClient';
 import Navbar from './Navbar';
 
 export const Header = () => {
   return (
-    <div>
+    <div className='my-4'>
       <header className='relative flex items-start  justify-between  gap-3 p-1 flex-wrap'>
-        <div className='flex gap-2 sm:gap-4 items-center'>
+        <div className='flex gap-2 sm:gap-4 items-center flex-1'>
           <MxLink
             to={'/'}
             className=' items-center justify-between gap-3 lg:flex hidden'
@@ -24,7 +25,7 @@ export const Header = () => {
           <div className=' gap-2 items-center lg:flex hidden'>
             <Navbar />
           </div>
-          <div className='flex lg:hidden'>
+          <div className='flex lg:hidden flex-1 justify-center'>
             <PoolAndBuySellShakingBox />
           </div>
           <div className=' gap-2 items-center lg:flex hidden'>
@@ -52,11 +53,13 @@ export const Header = () => {
           {nav.map((item) => {
             return (
               <Link
-                href={`/?tab=${item}`}
-                key={item}
+                href={`/?tab=${item.href}`}
+                key={item.href}
                 className='bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400'
               >
-                {item}
+                <span className='flex items-center justify-center'>
+                  <FontAwesomeIcon icon={item.label} />
+                </span>
               </Link>
             );
           })}

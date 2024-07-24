@@ -13,6 +13,7 @@ import { useGetLoginInfo } from '@multiversx/sdk-dapp/hooks/account/useGetLoginI
 import BigNumber from 'bignumber.js';
 import { useState } from 'react';
 import { submitSwap, submitSwapWithAshAggregator } from '../../../../lib/calls';
+import { clearInputs } from '../../../../lib/functions';
 
 interface IProps {
   poolAddres?: string;
@@ -28,6 +29,7 @@ const SubmitButton = ({ poolAddres }: IProps) => {
 
   const onSuccess = () => {
     mutate();
+    clearInputs();
   };
   useTrackTransactionStatus({
     transactionId: sessionId,

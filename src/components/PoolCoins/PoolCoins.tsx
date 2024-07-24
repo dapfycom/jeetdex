@@ -22,7 +22,7 @@ const PoolCoins = ({
     <div className='flex'>
       <div
         className={cn(
-          'w-[26px] h-[26px] rounded-full flex justify-center items-center relative',
+          'w-[26px] h-[26px] rounded-full flex justify-center items-center relative -z-1',
           className
         )}
       >
@@ -36,7 +36,7 @@ const PoolCoins = ({
       </div>
       <div
         className={cn(
-          'w-[26px] h-[26px] rounded-full flex justify-center items-center -translate-x-2 relative z-10',
+          'w-[26px] h-[26px] rounded-full flex justify-center items-center -translate-x-2 relative ',
           className
         )}
       >
