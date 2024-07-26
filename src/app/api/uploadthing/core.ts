@@ -1,4 +1,4 @@
-import { degenNewCoin } from '@/actions/coins';
+import { addImageToDegenCoin } from '@/actions/coins';
 import prisma from '@/db';
 import { fetchTokenById } from '@/services/rest/elrond/tokens';
 import { getSession } from '@/utils/server-utils/sessions';
@@ -215,17 +215,12 @@ export const ourFileRouter = {
   newDegenCoin: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
     .input(
       z.object({
-        name: z.string(),
-        ticker: z.string(),
-        description: z.string(),
-        telegram: z.string().optional(),
-        twitter: z.string().optional(),
-        website: z.string().optional(),
         degenId: z.string()
       })
     )
     .middleware(async ({ input }) => {
       console.log(input);
+      console.log('middleware');
 
       // This code runs on your server before upload
       const user = await getSession();
@@ -235,13 +230,6 @@ export const ourFileRouter = {
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return {
-        userAddress: user.address,
-        name: input.name,
-        ticker: input.ticker,
-        description: input.description,
-        telegram: input.telegram,
-        twitter: input.twitter,
-        website: input.website,
         degenId: input.degenId
       };
     })
@@ -249,16 +237,9 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       console.log('upload complete');
       try {
-        const newCoin = await degenNewCoin({
-          name: metadata.name,
-          description: metadata.description,
-
-          telegram: metadata.telegram,
-          twitter: metadata.twitter,
-          image: file.url,
-          website: metadata.website,
-          degenId: metadata.degenId,
-          address: metadata.userAddress
+        const newCoin = await addImageToDegenCoin({
+          identifier: metadata.degenId,
+          image: file.url
         });
         console.log(newCoin);
 

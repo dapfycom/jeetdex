@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl } from '@/components/ui/form';
 import { z } from 'zod';
 
+import { degenNewCoin } from '@/actions/coins';
 import CustomFormField, {
   FormFieldType
 } from '@/components/CustomFormField/CustomFormField';
@@ -37,7 +38,6 @@ const formSchema = z.object({
 
 const CreateTokenForm = () => {
   const { data: fee } = useSWR('degenMaster:getNewTokenFee', fetchNewTokenFee);
-
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,7 +55,7 @@ const CreateTokenForm = () => {
   const { startUpload } = useUploadThing('newDegenCoin');
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
@@ -65,15 +65,18 @@ const CreateTokenForm = () => {
     if (fee) {
       const degenId = generateRandomString(10);
 
-      newToken(values.name, values.ticker.toUpperCase(), fee, degenId);
-
-      startUpload([image], {
+      const data = {
         name: name,
-        ticker: ticker.toUpperCase(),
         description: description,
         telegram: telegram,
         twitter: twitter,
         website: website,
+        degenId: degenId
+      };
+      await degenNewCoin(data);
+      newToken(name, ticker.toUpperCase(), fee, degenId);
+
+      startUpload([image], {
         degenId: degenId
       } as any);
     } else {

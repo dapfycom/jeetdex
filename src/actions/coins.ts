@@ -60,31 +60,50 @@ export const addSocialsCoin = async ({
 
 export const degenNewCoin = async ({
   name,
-
   description,
-  image,
   telegram,
   twitter,
   website,
-  address,
   degenId
 }) => {
+  const session = await getSession();
+
+  if (!session) {
+    throw new Error('User not authenticated');
+  }
+
   try {
     const coin = await prisma.coins.create({
       data: {
         identifier: degenId,
         title: name,
         description,
-        img: image,
         twitter,
         telegram,
         website,
         degenId,
         owner: {
           connect: {
-            address: address
+            address: session.address
           }
         }
+      }
+    });
+    return coin;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+export const addImageToDegenCoin = async ({ identifier, image }) => {
+  try {
+    const coin = await prisma.coins.update({
+      where: {
+        identifier
+      },
+      data: {
+        img: image
       }
     });
     return coin;
