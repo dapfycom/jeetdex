@@ -40,6 +40,7 @@ const Heading = () => {
             description={coinsData[0].description}
             username={coinsData[0].owner.username}
             address={coinsData[0].address}
+            degenId={coinsData[0].degenId}
           />
         </div>
       )}
