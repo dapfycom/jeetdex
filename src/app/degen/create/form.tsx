@@ -73,12 +73,17 @@ const CreateTokenForm = () => {
         website: website,
         degenId: degenId
       };
-      await degenNewCoin(data);
-      newToken(name, ticker.toUpperCase(), fee, degenId);
 
-      startUpload([image], {
-        degenId: degenId
-      } as any);
+      try {
+        await degenNewCoin(data);
+        newToken(name, ticker.toUpperCase(), fee, degenId);
+
+        startUpload([image], {
+          degenId: degenId
+        } as any);
+      } catch (error) {
+        errorToast('Error creating the coin');
+      }
     } else {
       errorToast('Error fetching the fee');
     }
