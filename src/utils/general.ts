@@ -1,5 +1,7 @@
 // orderBy function should be able to order data of an array, should handle if the data indicated to order by is a number or string, also receive if order is asc or desc
 
+import { ZodTypeAny, z } from 'zod';
+
 export const orderBy = (
   data: any[],
   order: 'asc' | 'desc',
@@ -63,3 +65,14 @@ export function textToLightColor(text: string): string {
 
   return lightColor;
 }
+
+export const numericString = (schema: ZodTypeAny) =>
+  z.preprocess((a) => {
+    if (typeof a === 'string') {
+      return parseFloat(a);
+    } else if (typeof a === 'number') {
+      return a;
+    } else {
+      return undefined;
+    }
+  }, schema);

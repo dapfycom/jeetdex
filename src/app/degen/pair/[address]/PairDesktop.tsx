@@ -1,6 +1,8 @@
 import { cn } from '@/lib/utils';
+import BondingProgress from './components/BondingProgress/BondingProgress';
 import Chart from './components/Chart/Chart';
 import DegenChats from './components/DegenChats/DegenChats';
+import DegenHolderList from './components/DegenHolderList/DegenHolderList';
 import DegenTokenSocials from './components/DegenTokenSocials/DegenTokenSocials';
 import Swap from './components/Swap/Swap';
 
@@ -23,7 +25,8 @@ const PairDesktop = () => {
         <div className='flex flex-col gap-4'>
           <>
             <DegenTokenSocials />
-            {/* <HoldersList tokenIdentifier={poolPair?.firstTokenId} /> */}
+            <BondingProgress />
+            <DegenHolderList />
           </>
         </div>
       </div>

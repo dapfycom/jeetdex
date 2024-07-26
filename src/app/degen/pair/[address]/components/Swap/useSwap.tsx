@@ -1,20 +1,23 @@
 import { tokensID } from '@/config';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
+import { useGetSlippage } from '@/hooks/useGetUserSettings';
 import { swap } from '@/services/sc/bonding/call';
+import { numericString } from '@/utils/general';
 import { calculateSlippageAmount, setElrondBalance } from '@/utils/mx-utils';
 import { errorToast } from '@/utils/toast';
+import { zodResolver } from '@hookform/resolvers/zod';
 import BigNumber from 'bignumber.js';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useGetAmountOut, useGetBoundingPair } from '../../hooks';
 
 const formSchema = z.object({
-  amount: z.string().min(1)
+  amount: numericString(z.number())
 });
 
 const useSwap = (type: 'buy' | 'sell') => {
   const { coin } = useGetBoundingPair();
-
+  const { slippage } = useGetSlippage();
   const { elrondToken: token } = useGetElrondToken(
     type === 'buy'
       ? coin?.secondTokenId === tokensID.wegld
@@ -25,7 +28,8 @@ const useSwap = (type: 'buy' | 'sell') => {
   const form = useForm<z.infer<typeof formSchema>>({
     defaultValues: {
       amount: ''
-    }
+    },
+    resolver: zodResolver(formSchema)
   });
   const { amountOut } = useGetAmountOut(
     coin?.address,
@@ -35,26 +39,34 @@ const useSwap = (type: 'buy' | 'sell') => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { amount } = values;
-    console.log(amount);
-    console.log(parseFloat(amountOut));
+
+    if (!slippage) {
+      errorToast('Slippage is not set');
+      return;
+    }
 
     if (amount && new BigNumber(amount).isGreaterThan(0)) {
       swap({
         amountIn: amount,
-        amountOut: calculateSlippageAmount(5, amountOut).toFixed(0),
+        amountOut: calculateSlippageAmount(slippage, amountOut).toFixed(0),
         tokenIn: token?.identifier,
         contract: coin.address,
         tokenOut: type === 'buy' ? coin.firstTokenId : coin.secondTokenId
       });
     } else {
-      errorToast('Invalid amount out: ' + amount);
+      errorToast('Invalid amount: ' + amount);
     }
+  }
+
+  function reset() {
+    form.reset();
   }
 
   return {
     onSubmit,
     token,
-    form
+    form,
+    reset
   };
 };
 

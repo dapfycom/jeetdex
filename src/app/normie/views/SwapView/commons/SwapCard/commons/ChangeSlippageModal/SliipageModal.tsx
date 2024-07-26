@@ -14,9 +14,9 @@ import { errorToast, successToast } from '@/utils/toast';
 import { faSliders } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
-export default function SlippageModal() {
+export default function SlippageModal({ children }: { children?: ReactNode }) {
   const [newSlippage, setNewSlippage] = useState<string>('5');
   const { onToggle, isOpen } = useDisclosure();
   const [isSaving, setIsSaving] = useState(false);
@@ -37,26 +37,29 @@ export default function SlippageModal() {
       onToggle();
     } catch (error) {
       errorToast(error.message);
+      setIsSaving(false);
     }
   };
   return (
     <Dialog open={isOpen} onOpenChange={onToggle}>
-      <DialogTrigger asChild>
-        <Button
-          className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'
-          disabled={isLoading}
-        >
-          <FontAwesomeIcon
-            icon={faSliders}
-            className='w-[12px] h-[12px] mr-3'
-          />
-          {isLoading ? (
-            <Loader2 className='animate-spin w-3 h-3' />
-          ) : (
-            <>{slippage} %</>
-          )}
-        </Button>
-      </DialogTrigger>
+      {children || (
+        <DialogTrigger asChild>
+          <Button
+            className='px-[8px] h-[26.8px] text-gray-700 text-[12px] rounded-full'
+            disabled={isLoading}
+          >
+            <FontAwesomeIcon
+              icon={faSliders}
+              className='w-[12px] h-[12px] mr-3'
+            />
+            {isLoading ? (
+              <Loader2 className='animate-spin w-3 h-3' />
+            ) : (
+              <>{slippage} %</>
+            )}
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent className='sm:max-w-[425px] rounded-2xl '>
         <DialogHeader className='text-left mb-8'>
           <DialogTitle className='text-2xl font-normal'>

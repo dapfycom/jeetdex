@@ -4,7 +4,6 @@ import { useGetBoundingPair } from '../../hooks';
 
 const DegenChats = () => {
   const { coin } = useGetBoundingPair();
-  console.log(coin);
   if (!coin) return null;
   return (
     <div className='w-full rounded-sm bg-[#1C243E] border-none  p-4'>
