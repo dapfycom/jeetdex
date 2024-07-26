@@ -75,16 +75,18 @@ const CreateTokenForm = () => {
       };
 
       try {
-        const res = await startUpload([image], {
+        await degenNewCoin(data);
+        startUpload([image], {
           degenId: degenId
         } as any);
+        console.log('say something');
 
-        if (!res) {
-          errorToast('Error uploading the image');
-          return;
-        }
+        // console.log(res);
 
-        await degenNewCoin(data);
+        // if (!res) {
+        //   errorToast('Error uploading the image');
+        //   return;
+        // }
 
         return newToken(name, ticker.toUpperCase(), fee, degenId);
       } catch (error) {
