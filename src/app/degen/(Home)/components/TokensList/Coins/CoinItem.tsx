@@ -1,5 +1,5 @@
+import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { formatBalance } from '@/utils/mx-utils';
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface IProps {
@@ -11,6 +11,7 @@ interface IProps {
   description: string;
   username: string;
   address: string;
+  degenId: string;
 }
 
 const CoinItem = ({
@@ -21,7 +22,8 @@ const CoinItem = ({
   replies,
   description,
   username,
-  address
+  address,
+  degenId
 }: IProps) => {
   return (
     <Link
@@ -29,7 +31,12 @@ const CoinItem = ({
       className='grid  grid-cols-[100px_auto] sm:grid-cols-[128px_auto] p-3 gap-3 hover:border-white hover:border rounded-md'
     >
       <div className='relative w-[100px] sm:w-[128px] h-[auto]'>
-        <Image src={imageUrl} alt={ticker} width={128} height={128} />
+        <TokenImageSRC
+          src={imageUrl}
+          alt={ticker}
+          size={128}
+          identifier={degenId}
+        />
       </div>
 
       <div>

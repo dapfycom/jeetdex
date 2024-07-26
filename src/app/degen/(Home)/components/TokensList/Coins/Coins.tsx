@@ -150,6 +150,7 @@ const Coins = () => {
   console.log(currentParams);
 
   const { coinsData } = useFetchCoinsData({ search: currentParams[0] });
+  console.log(coinsData);
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>
@@ -164,6 +165,7 @@ const Coins = () => {
           description={coin.description}
           username={coin.owner.username}
           address={coin.address}
+          degenId={coin.degenId}
         />
       ))}
     </div>
