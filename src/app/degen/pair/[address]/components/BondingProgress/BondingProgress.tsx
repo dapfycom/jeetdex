@@ -27,8 +27,8 @@ const BondingProgress = () => {
       <Progress value={progress} className='h-4' />
 
       <p>
-        when the market cap reaches $73,297 all the liquidity from the bonding
-        curve will be deposited into Raydium and burned. progression increases
+        when the market cap reaches $23,000 all the liquidity from the bonding
+        curve will be deposited into Jeetdex and burned. progression increases
         as the price goes up.
       </p>
 
