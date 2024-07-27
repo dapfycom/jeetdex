@@ -7,7 +7,6 @@ import { useGetBoundingPair } from '../../hooks';
 
 const BondingProgress = () => {
   const { coin } = useGetBoundingPair();
-  console.log(coin);
 
   if (!coin) {
     return <div className='text-left'>Loading...</div>;
@@ -33,8 +32,17 @@ const BondingProgress = () => {
       </p>
 
       <p>
-        there are 750,302,471 tokens still available for sale in the bonding
-        curve and there is 1.246 SOL in the bonding curve.
+        there are{' '}
+        {formatBalance({
+          balance: coin.firstTokenReserve,
+          decimals: 18
+        })}{' '}
+        tokens still available for sale in the bonding curve and there is{' '}
+        {formatBalance({
+          balance: coin.secondTokenReserve,
+          decimals: 18
+        })}{' '}
+        SOL in the bonding curve.
       </p>
 
       <p>king of the hill progress: 6%</p>
