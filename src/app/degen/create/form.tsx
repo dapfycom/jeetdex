@@ -39,9 +39,9 @@ const formSchema = z.object({
     ),
   description: z.string().max(500).nullable(),
   image: z.instanceof(File),
-  twitter: z.union([z.string().url(), z.string().length(0)]).optional(),
-  telegram: z.union([z.string().url(), z.string().length(0)]).optional(),
-  website: z.union([z.string().url(), z.string().length(0)]).optional()
+  twitter: z.union([z.string(), z.string().length(0)]).optional(),
+  telegram: z.union([z.string(), z.string().length(0)]).optional(),
+  website: z.union([z.string(), z.string().length(0)]).optional()
 });
 
 const CreateTokenForm = () => {

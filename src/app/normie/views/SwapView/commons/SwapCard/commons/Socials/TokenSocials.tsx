@@ -14,12 +14,27 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
     return null;
   }
 
+  // check every url have https if not add it
+  const data = coinRes?.data;
+  const dataWithHttps = {
+    ...data,
+    telegram: data.telegram.startsWith('https')
+      ? data.telegram
+      : `https://${data.telegram}`,
+    twitter: data.twitter.startsWith('https')
+      ? data.twitter
+      : `https://${data.twitter}`,
+    website: data.website.startsWith('https')
+      ? data.website
+      : `https://${data.website}`
+  };
+
   return (
     <div>
       <div className='flex gap-3 mb-3'>
-        {coinRes?.data?.telegram && (
+        {dataWithHttps?.telegram && (
           <a
-            href={coinRes?.data?.telegram}
+            href={dataWithHttps?.telegram}
             target='_blank'
             rel='noreferrer'
             className='hover:font-bold'
@@ -28,9 +43,9 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
           </a>
         )}
 
-        {coinRes?.data?.twitter && (
+        {dataWithHttps?.twitter && (
           <a
-            href={coinRes?.data?.twitter}
+            href={dataWithHttps?.twitter}
             target='_blank'
             rel='noreferrer'
             className='hover:font-bold'
@@ -38,9 +53,9 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
             [twitter]
           </a>
         )}
-        {coinRes?.data?.website && (
+        {dataWithHttps?.website && (
           <a
-            href={coinRes?.data?.website}
+            href={dataWithHttps?.website}
             target='_blank'
             rel='noreferrer'
             className='hover:font-bold'
@@ -51,10 +66,10 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
       </div>
 
       <div className='flex gap-3'>
-        {coinRes?.data?.img && (
+        {dataWithHttps?.img && (
           <Image
             alt={tokenIdentifier}
-            src={coinRes?.data?.img}
+            src={dataWithHttps?.img}
             width={100}
             height={100}
             className='w-[100px] h-[100px]'
@@ -62,9 +77,9 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
         )}
 
         <div className='text-left'>
-          <div>{coinRes?.data?.title}</div>
+          <div>{dataWithHttps?.title}</div>
           <div className='text-sm text-muted-foreground'>
-            {coinRes?.data?.description}
+            {dataWithHttps?.description}
           </div>
         </div>
       </div>
