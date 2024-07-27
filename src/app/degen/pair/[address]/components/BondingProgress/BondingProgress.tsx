@@ -42,15 +42,8 @@ const BondingProgress = () => {
           balance: coin.secondTokenReserve,
           decimals: 18
         })}{' '}
-        SOL in the bonding curve.
+        EGLD in the bonding curve.
       </p>
-
-      <p>king of the hill progress: 6%</p>
-      <Progress
-        value={progress}
-        className='h-4'
-        indicatorClassName='bg-yellow-500'
-      />
     </div>
   );
 };
