@@ -41,39 +41,36 @@ const HowItWorksModal = () => {
         {' '}
         <span className='hover:font-bold'>[how it works]</span>
       </DialogTrigger>
-      <DialogContent className='w-full max-w-md'>
+      <DialogContent className='w-full max-w-md p-8'>
         <DialogHeader>
           <DialogTitle className='text-center text-sm'>
-            launch a coin that is instantly tradable in one click
+            We prevent rugs by making sure that all created tokens are safe.
+            Each coin is a fair-launch with no presale and no team allocation.
           </DialogTitle>
           <DialogDescription>
-            <div className='flex flex-col mt-3'>
+            <div className='flex flex-col mt-3 text-left gap-2'>
               <div>
-                🙅‍♀️ <span className='ml-2'> no code required</span>
-              </div>
-              <div>
-                🙅 <span className='ml-2'> no gatekeeping</span>
+                <span className='font-bold'>step 1:</span> create new coin
               </div>
               <div>
-                🙅‍♂️ <span className='ml-2'>no waiting for permission</span>{' '}
+                <span className='font-bold'>step 2:</span> users buy your coin
+                on the bonding curve
               </div>
-              <div className='my-2'>you only have to: </div>
-
-              <div className='flex flex-col mb-3'>
-                <div>✅ connect your wallet</div>
-
-                <div>✅ start new coin</div>
-
-                <div>✅ share it with the world</div>
-
-                <div>✅ have fun</div>
-
-                <div className='my-2'>
-                  simple, fast, secure – and inexpensive
-                </div>
+              <div>
+                <span className='font-bold'>step 3:</span> users can sell at any
+                time to lock in profits or losses
               </div>
+              <div>
+                <span className='font-bold'>step 4:</span> when enough people
+                buy on the bonding curve and it reaches a market cap of $23,000
+              </div>
+              <div>
+                <span className='font-bold'>step 5:</span> $4,000 of liquidity
+                is then deposited in jeetdex and burned
+              </div>
+
               <DialogClose asChild>
-                <Button>i’m ready to play</Button>
+                <Button className='mt-8'>i’m ready to jeet</Button>
               </DialogClose>
             </div>
           </DialogDescription>

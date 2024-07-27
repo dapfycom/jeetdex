@@ -7,8 +7,12 @@ const RequiredLoginButton = ({
 }: PropsWithChildren<ButtonProps>) => {
   const { isLoggedIn, handleConnect } = useAuthentication();
   const handleClick = (e: any) => {
-    if (isLoggedIn && props.onClick) {
-      props.onClick(e);
+    console.log(isLoggedIn);
+
+    if (isLoggedIn) {
+      if (props.onClick) {
+        props.onClick(e);
+      }
     } else {
       e.stopPropagation();
       e.preventDefault();

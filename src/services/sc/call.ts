@@ -420,7 +420,7 @@ export class SmartContractInteraction {
         }
       );
 
-      SmartContractInteraction.sendMultipleTransactions({
+      return SmartContractInteraction.sendMultipleTransactions({
         txs: [tx1, tx2]
       });
     }

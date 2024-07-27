@@ -9,7 +9,7 @@ const SwrProvider = ({ children }: PropsWithChildren) => {
       <SWRConfig
         value={{
           revalidateIfStale: false,
-          revalidateOnFocus: false,
+
           onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
             if (error.status === 404) return;
             if (retryCount >= 3) return;

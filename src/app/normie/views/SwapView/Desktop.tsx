@@ -8,10 +8,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAppSelector } from '@/hooks';
 import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import { cn } from '@/lib/utils';
+import { IPoolPair } from '../PoolsView/utils/types';
 import SwapCardContainer from './commons/SwapCard/SwapCardContainer';
 import TokenSocials from './commons/SwapCard/commons/Socials/TokenSocials';
 import { selectIsOpenCharts, selectIsOpenChats } from './lib/swap-slice';
-const Desktop = ({ poolPair }) => {
+const Desktop = ({ poolPair }: { poolPair: IPoolPair }) => {
   const isOpenCharts = useAppSelector(selectIsOpenCharts);
   const isOpenChats = useAppSelector(selectIsOpenChats);
   const withDefaultPool = useGetDefaultPool(poolPair);

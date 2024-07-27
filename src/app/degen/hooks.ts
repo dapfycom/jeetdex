@@ -63,6 +63,7 @@ export const useFetchCoinsData = (filter?: { search?: string }) => {
     error: errorBoundingData,
     mutate: BoundingData
   } = useFetchAllBondingData();
+  console.log(boundingData);
 
   const {
     coinsInfo,
@@ -70,6 +71,7 @@ export const useFetchCoinsData = (filter?: { search?: string }) => {
     isLoading: isLoadingCoinsInfo,
     mutate: mutateCoinsInfo
   } = useFetchExtraCoinInfo(boundingData.length);
+  console.log(coinsInfo);
 
   let coinsData: BondingData[] = boundingData
     .map((item) => {
@@ -80,7 +82,7 @@ export const useFetchCoinsData = (filter?: { search?: string }) => {
       };
     })
     .filter((item) => !!item.degenId);
-  console.log(filter?.search);
+  console.log(coinsData);
 
   if (filter?.search) {
     console.log(coinsData);

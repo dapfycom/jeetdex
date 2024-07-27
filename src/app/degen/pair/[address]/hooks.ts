@@ -8,8 +8,10 @@ const swrMainKey = 'bonding_sc';
 
 export const useGetBoundingPair = () => {
   const { address } = useParams();
+  console.log(address);
 
   const { coinsData, error, isLoading } = useFetchCoinsData();
+  console.log(coinsData);
 
   const coin = coinsData.find((coin) => coin.address === address);
 

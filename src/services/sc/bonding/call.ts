@@ -1,6 +1,7 @@
 import { tokensID } from '@/config';
 import { bondingContractAbi } from '@/localConstants/globals';
 import { BigUIntValue, BytesValue } from '@multiversx/sdk-core/out';
+import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { SmartContractInteraction } from '../call';
 
 export const swap = async ({
@@ -15,7 +16,7 @@ export const swap = async ({
   tokenOut: string;
   amountOut: string;
   amountIn: string;
-}) => {
+}): Promise<SendTransactionReturnType> => {
   const interaction = new SmartContractInteraction(
     contract,
     bondingContractAbi

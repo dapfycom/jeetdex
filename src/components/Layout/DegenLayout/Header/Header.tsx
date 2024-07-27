@@ -1,3 +1,4 @@
+import HowItWorksModal from '@/components/HowItWorksModal/HowItWorksModal';
 import Login from '@/components/Login/normie/Login';
 
 import Logo from '@/components/Logo/Logo';
@@ -34,14 +35,7 @@ export const Header = () => {
           </div>
 
           <div className='flex gap-2 items-center'>
-            <a
-              href='https://twitter.com/jeet_dex'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:font-bold'
-            >
-              [how it works]
-            </a>
+            <HowItWorksModal />
           </div>
         </div>
       </div>

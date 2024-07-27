@@ -4,8 +4,6 @@ import PairDesktop from './PairDesktop';
 import PairMobile from './PairMobile';
 
 const PairPage = ({ searchParams }: { searchParams: { tab: string } }) => {
-  // const withDefaultPool = useGetDefaultPool(poolPair);
-  console.log(searchParams);
   const headersList = headers();
   const deviceType = headersList.get('x-device-type');
   const isMobile = deviceType === 'mobile';

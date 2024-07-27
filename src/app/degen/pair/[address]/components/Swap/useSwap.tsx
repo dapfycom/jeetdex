@@ -6,7 +6,9 @@ import { numericString } from '@/utils/general';
 import { calculateSlippageAmount, setElrondBalance } from '@/utils/mx-utils';
 import { errorToast } from '@/utils/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useGetAmountOut, useGetBoundingPair } from '../../hooks';
@@ -16,6 +18,8 @@ const formSchema = z.object({
 });
 
 const useSwap = (type: 'buy' | 'sell') => {
+  const [transactionId, setTransactionId] = useState<string>('');
+
   const { coin } = useGetBoundingPair();
   const { slippage } = useGetSlippage();
   const { elrondToken: token } = useGetElrondToken(
@@ -31,13 +35,24 @@ const useSwap = (type: 'buy' | 'sell') => {
     },
     resolver: zodResolver(formSchema)
   });
+
   const { amountOut } = useGetAmountOut(
     coin?.address,
     setElrondBalance(form.watch('amount')),
     type === 'buy' ? coin?.secondTokenId : coin.firstTokenId
   );
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSuccess = () => {
+    form.reset();
+    setTransactionId('');
+  };
+
+  useTrackTransactionStatus({
+    transactionId: transactionId,
+    onSuccess: onSuccess
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     const { amount } = values;
 
     if (!slippage) {
@@ -46,13 +61,14 @@ const useSwap = (type: 'buy' | 'sell') => {
     }
 
     if (amount && new BigNumber(amount).isGreaterThan(0)) {
-      swap({
+      const res = await swap({
         amountIn: amount,
         amountOut: calculateSlippageAmount(slippage, amountOut).toFixed(0),
         tokenIn: token?.identifier,
         contract: coin.address,
         tokenOut: type === 'buy' ? coin.firstTokenId : coin.secondTokenId
       });
+      setTransactionId(res.sessionId);
     } else {
       errorToast('Invalid amount: ' + amount);
     }

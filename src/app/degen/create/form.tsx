@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { Form, FormControl } from '@/components/ui/form';
 import { z } from 'zod';
 
@@ -9,14 +8,21 @@ import Collapse from '@/components/Collapse/Collapse';
 import CustomFormField, {
   FormFieldType
 } from '@/components/CustomFormField/CustomFormField';
+import RequiredLoginButton from '@/components/RequiredLoginButton/RequiredLoginButton';
 import useDisclosure from '@/hooks/useDisclosure';
 import { useUploadThing } from '@/hooks/useUploadThing';
+import { fetchTransactionByHash } from '@/services/rest/elrond/transactions';
 import { newToken } from '@/services/sc/degen_master/calls';
 import { fetchNewTokenFee } from '@/services/sc/degen_master/queries';
 import { formatBalance } from '@/utils/mx-utils';
 import { generateRandomString } from '@/utils/strings';
 import { errorToast } from '@/utils/toast';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSWR from 'swr';
 
@@ -62,7 +68,45 @@ const CreateTokenForm = () => {
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // Define the upload thing handler
   const { startUpload } = useUploadThing('newDegenCoin');
+
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  const router = useRouter();
+
+  const onSuccessTx = async () => {
+    console.log('success');
+    console.log(transactions);
+    const tx = await fetchTransactionByHash(transactions[0].hash);
+    console.log(tx);
+    form.reset();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const operation = tx.operations.find(
+      (op) => Boolean(op.identifier) && Boolean(op.ticker)
+    );
+
+    const result = tx.results.find(
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      (res) => res.function === 'setTokenIdentifier'
+    );
+
+    const identifier = operation?.identifier;
+    console.log(identifier);
+
+    const address = result.receiver;
+
+    router.push(`/pair/${address}`);
+  };
+
+  // useTxNotification({ sessionId, setSessionId, waitTx: true });
+  const { transactions } = useTrackTransactionStatus({
+    transactionId: sessionId,
+    onSuccess: onSuccessTx
+  });
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -84,7 +128,12 @@ const CreateTokenForm = () => {
       };
 
       try {
-        await degenNewCoin(data);
+        const resDb = await degenNewCoin(data);
+        if (!resDb) {
+          errorToast('Error creating the coin');
+          return;
+        }
+        console.log(resDb);
         startUpload([image], {
           degenId: degenId
         } as any);
@@ -97,7 +146,9 @@ const CreateTokenForm = () => {
         //   return;
         // }
 
-        return newToken(name, ticker.toUpperCase(), fee, degenId);
+        const res = await newToken(name, ticker.toUpperCase(), fee, degenId);
+        setSessionId(res.sessionId);
+        console.log(res);
       } catch (error) {
         errorToast('Error creating the coin');
       }
@@ -153,7 +204,16 @@ const CreateTokenForm = () => {
           className='text-sm text-gray-200 cursor-pointer'
           onClick={isOpen ? onClose : onOpen}
         >
-          {isOpen ? 'Show less' : 'Show more options'}
+          {isOpen ? (
+            <span>
+              Show less <FontAwesomeIcon icon={faChevronUp} className='ml-2' />
+            </span>
+          ) : (
+            <span>
+              Show more options{' '}
+              <FontAwesomeIcon icon={faChevronDown} className='ml-2' />
+            </span>
+          )}
         </div>
         <Collapse isOpen={isOpen}>
           <div className='space-y-6 w-full max-w-sm'>
@@ -180,9 +240,9 @@ const CreateTokenForm = () => {
             />
           </div>
         </Collapse>
-        <Button type='submit' className='w-full'>
+        <RequiredLoginButton type='submit' className='w-full'>
           Create coin
-        </Button>
+        </RequiredLoginButton>
 
         <p>
           Cost to deploy:{' '}
