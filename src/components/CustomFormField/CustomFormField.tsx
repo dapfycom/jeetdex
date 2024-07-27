@@ -168,7 +168,7 @@ const CustomFormField = (props: CustomProps) => {
           )}
           <RenderInput field={field} props={props} />
 
-          <FormMessage />
+          <FormMessage className='text-gray-400' />
         </FormItem>
       )}
     />

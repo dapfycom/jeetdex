@@ -1,4 +1,5 @@
 import { fetchAmountOut } from '@/services/sc/bonding/queries';
+import BigNumber from 'bignumber.js';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useFetchCoinsData } from '../../hooks';
@@ -25,7 +26,7 @@ export const useGetAmountOut = (
   tokenIn: string
 ) => {
   const swrKey =
-    address && amountIn && tokenIn
+    address && amountIn && tokenIn && new BigNumber(amountIn).gt(0)
       ? `${swrMainKey}:getAmountOut:${address}:${amountIn}:${tokenIn}`
       : null;
 

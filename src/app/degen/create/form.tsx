@@ -5,9 +5,11 @@ import { Form, FormControl } from '@/components/ui/form';
 import { z } from 'zod';
 
 import { degenNewCoin } from '@/actions/coins';
+import Collapse from '@/components/Collapse/Collapse';
 import CustomFormField, {
   FormFieldType
 } from '@/components/CustomFormField/CustomFormField';
+import useDisclosure from '@/hooks/useDisclosure';
 import { useUploadThing } from '@/hooks/useUploadThing';
 import { newToken } from '@/services/sc/degen_master/calls';
 import { fetchNewTokenFee } from '@/services/sc/degen_master/queries';
@@ -23,12 +25,18 @@ const formSchema = z.object({
     .string()
     .min(3)
     .max(50)
-    .regex(/^\S*$/, 'name must not contain whitespace'),
+    .regex(
+      /^[a-zA-Z0-9]*$/,
+      'name must be alphanumeric and must not contain whitespace or special characters'
+    ),
   ticker: z
     .string()
     .min(3)
     .max(10)
-    .regex(/^\S*$/, 'ticker must not contain whitespace'),
+    .regex(
+      /^[a-zA-Z0-9]*$/,
+      'ticker must be alphanumeric and must not contain whitespace or special characters'
+    ),
   description: z.string().max(500).nullable(),
   image: z.instanceof(File),
   twitter: z.union([z.string().url(), z.string().length(0)]).optional(),
@@ -40,6 +48,7 @@ const CreateTokenForm = () => {
   const { data: fee } = useSWR('degenMaster:getNewTokenFee', fetchNewTokenFee);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
+    mode: 'all',
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
@@ -51,6 +60,7 @@ const CreateTokenForm = () => {
       website: ''
     }
   });
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { startUpload } = useUploadThing('newDegenCoin');
 
@@ -58,7 +68,6 @@ const CreateTokenForm = () => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
     const { name, ticker, description, image, telegram, twitter, website } =
       values;
 
@@ -140,28 +149,37 @@ const CreateTokenForm = () => {
             </FormControl>
           )}
         />
-        <CustomFormField
-          control={form.control}
-          label='telegram'
-          name='telegram'
-          placeholder='(optional)'
-          fieldType={FormFieldType.INPUT}
-        />
-        <CustomFormField
-          control={form.control}
-          label='twitter'
-          name='twitter'
-          placeholder='(optional)'
-          fieldType={FormFieldType.INPUT}
-        />
-        <CustomFormField
-          control={form.control}
-          label='website'
-          name='website'
-          placeholder='(optional)'
-          fieldType={FormFieldType.INPUT}
-        />
-
+        <div
+          className='text-sm text-gray-200 cursor-pointer'
+          onClick={isOpen ? onClose : onOpen}
+        >
+          {isOpen ? 'Show less' : 'Show more options'}
+        </div>
+        <Collapse isOpen={isOpen}>
+          <div className='space-y-6 w-full max-w-sm'>
+            <CustomFormField
+              control={form.control}
+              label='telegram'
+              name='telegram'
+              placeholder='(optional)'
+              fieldType={FormFieldType.INPUT}
+            />
+            <CustomFormField
+              control={form.control}
+              label='twitter'
+              name='twitter'
+              placeholder='(optional)'
+              fieldType={FormFieldType.INPUT}
+            />
+            <CustomFormField
+              control={form.control}
+              label='website'
+              name='website'
+              placeholder='(optional)'
+              fieldType={FormFieldType.INPUT}
+            />
+          </div>
+        </Collapse>
         <Button type='submit' className='w-full'>
           Create coin
         </Button>
