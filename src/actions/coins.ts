@@ -64,6 +64,7 @@ export const degenNewCoin = async ({
   telegram,
   twitter,
   website,
+  image,
   degenId
 }) => {
   const session = await getSession();
@@ -81,6 +82,7 @@ export const degenNewCoin = async ({
         twitter,
         telegram,
         website,
+        img: image,
         degenId,
         owner: {
           connect: {

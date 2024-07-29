@@ -1,6 +1,6 @@
 'use client';
 
-import { Form, FormControl } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import { z } from 'zod';
 
 import { degenNewCoin } from '@/actions/coins';
@@ -10,13 +10,13 @@ import CustomFormField, {
 } from '@/components/CustomFormField/CustomFormField';
 import RequiredLoginButton from '@/components/RequiredLoginButton/RequiredLoginButton';
 import useDisclosure from '@/hooks/useDisclosure';
-import { useUploadThing } from '@/hooks/useUploadThing';
 import { fetchTransactionByHash } from '@/services/rest/elrond/transactions';
 import { newToken } from '@/services/sc/degen_master/calls';
 import { fetchNewTokenFee } from '@/services/sc/degen_master/queries';
 import { formatBalance } from '@/utils/mx-utils';
 import { generateRandomString } from '@/utils/strings';
 import { errorToast } from '@/utils/toast';
+import { UploadButton } from '@/utils/uploadthing';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -44,7 +44,11 @@ const formSchema = z.object({
       'ticker must be alphanumeric and must not contain whitespace or special characters'
     ),
   description: z.string().max(500).nullable(),
-  image: z.instanceof(File),
+  image: z.object({
+    url: z.string().url(),
+    name: z.string(),
+    owner: z.string()
+  }),
   twitter: z.union([z.string(), z.string().length(0)]).optional(),
   telegram: z.union([z.string(), z.string().length(0)]).optional(),
   website: z.union([z.string(), z.string().length(0)]).optional()
@@ -68,9 +72,7 @@ const CreateTokenForm = () => {
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  // Define the upload thing handler
-  const { startUpload } = useUploadThing('newDegenCoin');
-
+  const [isUploading, setIsUploading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
 
   const router = useRouter();
@@ -121,6 +123,7 @@ const CreateTokenForm = () => {
       const data = {
         name: name,
         description: description,
+        image: image.url,
         telegram: telegram,
         twitter: twitter,
         website: website,
@@ -133,11 +136,6 @@ const CreateTokenForm = () => {
           errorToast('Error creating the coin');
           return;
         }
-        console.log(resDb);
-        startUpload([image], {
-          degenId: degenId
-        } as any);
-        console.log('say something');
 
         // console.log(res);
 
@@ -188,18 +186,59 @@ const CreateTokenForm = () => {
           name='image'
           label='image'
           renderSkeleton={(field) => (
-            <FormControl>
-              <div className='border border-gray-200 py-2 px-3 rounded-md'>
-                <input
-                  type='file'
-                  accept='image/png, image/svg'
-                  onChange={(e) => field.onChange(e.target.files[0])}
-                />
-              </div>
-              {/* <FileUploader files={field.value} onChange={field.onChange} /> */}
-            </FormControl>
+            <UploadButton
+              className='bg-transparent  ut-button:bg-transparent ut-label:w-full'
+              appearance={{
+                button:
+                  'bg-transparent border border-gray-200 w-full py-2 px-3 h-fit'
+              }}
+              endpoint='newDegenCoin'
+              onClientUploadComplete={(res) => {
+                // Do something with the response
+                console.log(res);
+                field.onChange({
+                  url: res[0].url,
+                  name: res[0].name,
+                  owner: res[0].serverData.address
+                });
+
+                setIsUploading(false);
+              }}
+              onUploadError={(error: Error) => {
+                // Do something with the error.
+                errorToast(error.message);
+                setIsUploading(false);
+              }}
+              onUploadBegin={() => {
+                setIsUploading(true);
+              }}
+              content={{
+                button: (
+                  <div className=' w-full  rounded-md h-fit flex gap-2'>
+                    <div className='bg-gray-200 text-gray-900 px-2 rounded-sm'>
+                      Choose file
+                    </div>
+
+                    <div>
+                      {isUploading
+                        ? 'Uploading...'
+                        : // only return last 10 charts of image
+                        form.watch('image')?.name
+                        ? form
+                            .watch('image')
+                            .name.substring(
+                              form.watch('image').name.length - 10
+                            )
+                        : 'No file chosen'}
+                    </div>
+                  </div>
+                ),
+                allowedContent: <div></div>
+              }}
+            />
           )}
         />
+
         <div
           className='text-sm text-gray-200 cursor-pointer'
           onClick={isOpen ? onClose : onOpen}
@@ -240,8 +279,12 @@ const CreateTokenForm = () => {
             />
           </div>
         </Collapse>
-        <RequiredLoginButton type='submit' className='w-full'>
-          Create coin
+        <RequiredLoginButton
+          type='submit'
+          className='w-full'
+          disabled={isUploading}
+        >
+          {isUploading ? 'Uploading...' : 'Create coin'}
         </RequiredLoginButton>
 
         <p>
