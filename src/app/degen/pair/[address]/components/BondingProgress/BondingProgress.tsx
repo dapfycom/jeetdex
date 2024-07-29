@@ -37,12 +37,12 @@ const BondingProgress = () => {
           balance: coin.firstTokenReserve,
           decimals: 18
         })}{' '}
-        tokens still available for sale in the bonding curve and there is{' '}
+        tokens still available for sale in the bonding curve and{' '}
         {formatBalance({
           balance: coin.secondTokenReserve,
           decimals: 18
         })}{' '}
-        EGLD in the bonding curve.
+        EGLD .
       </p>
     </div>
   );
