@@ -400,7 +400,8 @@ export class SmartContractInteraction {
       const tx1 = SmartContractInteraction.createTransactionFromInteraction(
         wrapInteraction,
         {
-          egldVal: value
+          egldVal: value,
+          gasL: 10_000_000
         }
       );
 
