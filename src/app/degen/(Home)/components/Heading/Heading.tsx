@@ -21,10 +21,6 @@ const Heading = () => {
         </Link>
       </h1>
 
-      <h2 className='text-center text-gray-400 text-md sm:text-xl my-2'>
-        Jeetdex makes it super easy to launch a coin in one click
-      </h2>
-
       <Image
         src={trandingImg}
         alt='trending now'
