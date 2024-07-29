@@ -20,7 +20,8 @@ export function middleware(request: NextRequest) {
       '/favicon.ico',
       '/assets',
       '/static',
-      '/monitoring'
+      '/monitoring',
+      '/api'
       // Your other files in `public`
     ])
   ) {

@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     });
     return Response.json({ data: degenCoins }, { status: 200 });
   } catch (error) {
-    console.error('Error fetching coins:', error);
+    console.log('Error fetching coins:', error);
     return Response.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
