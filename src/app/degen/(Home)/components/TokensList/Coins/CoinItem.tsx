@@ -1,4 +1,5 @@
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
+import { cn } from '@/lib/utils';
 import { formatBalance } from '@/utils/mx-utils';
 import Link from 'next/link';
 
@@ -8,7 +9,7 @@ interface IProps {
   ticker: string;
   marketCap: string;
   replies: number;
-  description: string;
+  description?: string;
   username: string;
   address: string;
   degenId: string;
@@ -28,13 +29,13 @@ const CoinItem = ({
   return (
     <Link
       href={'/pair/' + address}
-      className='grid  grid-cols-[100px_auto] sm:grid-cols-[128px_auto] p-3 gap-3 hover:border-white hover:border rounded-md'
+      className='grid  grid-cols-[100px_auto] sm:grid-cols-[128px_auto] gap-3 hover:border-white hover:border rounded-md h-fit p-3'
     >
       <div className='relative w-[100px] sm:w-[128px] h-[auto]'>
         <TokenImageSRC
           src={imageUrl}
           alt={ticker}
-          size={128}
+          size={100}
           identifier={degenId}
         />
       </div>
@@ -51,13 +52,13 @@ const CoinItem = ({
               decimals: 6
             })}
           </div>
-          <div className='text-xs text-gray-500'>replies: {replies}</div>
+          <div className='text-xs text-gray-400'>replies: {replies}</div>
 
-          <p className='text-sm'>
+          <p className={cn('text-sm ', description && 'text-gray-400')}>
             <span className='font-bold'>
               {name} (ticker: {ticker})
             </span>
-            : {description}
+            {description && <span>: {description}</span>}
           </p>
         </div>
       </div>

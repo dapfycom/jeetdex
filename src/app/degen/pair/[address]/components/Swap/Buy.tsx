@@ -61,16 +61,6 @@ const Buy = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              form.setValue('amount', '0.5');
-            }}
-          >
-            0.5 {formatTokenI(token.ticker)}
-          </button>
-          <button
-            className='text-xs py-1 px-2 ml-1 rounded bg-[#151e29] text-gray-200 hover:bg-gray-800 hover:text-gray-300'
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
               form.setValue('amount', '1');
             }}
           >
@@ -81,10 +71,20 @@ const Buy = () => {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              form.setValue('amount', '2');
+              form.setValue('amount', '5');
             }}
           >
-            2 {formatTokenI(token.ticker)}
+            5 {formatTokenI(token.ticker)}
+          </button>
+          <button
+            className='text-xs py-1 px-2 ml-1 rounded bg-[#151e29] text-gray-200 hover:bg-gray-800 hover:text-gray-300'
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              form.setValue('amount', '10');
+            }}
+          >
+            10 {formatTokenI(token.ticker)}
           </button>
         </div>
         <PlaceTradeButton />

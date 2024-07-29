@@ -43,12 +43,17 @@ const HowItWorksModal = () => {
       </DialogTrigger>
       <DialogContent className='w-full max-w-md p-8'>
         <DialogHeader>
-          <DialogTitle className='text-center text-sm'>
-            We prevent rugs by making sure that all created tokens are safe.
-            Each coin is a fair-launch with no presale and no team allocation.
+          <DialogTitle className='text-center text-md'>
+            How it works
           </DialogTitle>
-          <DialogDescription>
-            <div className='flex flex-col mt-3 text-left gap-2'>
+          <DialogDescription className='text-center'>
+            <p className='text-white'>
+              We prevent rugs by making sure that all created tokens are safe.
+              Each coin is a <span className='text-green-400'>fair-launch</span>{' '}
+              with <span className='text-blue-400'>no presale</span> and{' '}
+              <span className='text-yellow-400'>no team allocation</span>.
+            </p>
+            <div className='flex flex-col mt-3 text-gray-300 gap-2'>
               <div>
                 <span className='font-bold'>step 1:</span> create new coin
               </div>
@@ -57,7 +62,7 @@ const HowItWorksModal = () => {
                 on the bonding curve
               </div>
               <div>
-                <span className='font-bold'>step 3:</span> users can sell at any
+                <span className='font-bold'>step 3:</span> they can sell at any
                 time to lock in profits or losses
               </div>
               <div>

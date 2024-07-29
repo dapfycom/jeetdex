@@ -5,22 +5,23 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useFetchCoinsData } from '../../../hooks';
 import CoinItem from '../TokensList/Coins/CoinItem';
+import CoinSkeleton from '../TokensList/Coins/CoinSkeleton';
 
 const Heading = () => {
-  const { coinsData } = useFetchCoinsData();
+  const { coinsData, isLoading } = useFetchCoinsData();
 
   return (
     <div>
       <h1 className='w-full flex justify-center'>
         <Link
           href={'/create'}
-          className='text-center text-2xl sm:text-3xl hover:font-bold mx-auto'
+          className='text-center text-2xl sm:text-3xl hover:font-bold mx-auto font-semibold'
         >
-          <span>[ Start a new coin today ? ]</span>
+          <span>[start a new coin]</span>
         </Link>
       </h1>
 
-      <h2 className='text-center text-gray-400 text-xl my-2'>
+      <h2 className='text-center text-gray-400 text-md sm:text-xl my-2'>
         Jeetdex makes it super easy to launch a coin in one click
       </h2>
 
@@ -29,6 +30,11 @@ const Heading = () => {
         alt='trending now'
         className='mx-auto mt-5 max-w-[200px]'
       />
+      {isLoading && (
+        <div className='w-full max-w-[400px] mx-auto mt-4'>
+          <CoinSkeleton />
+        </div>
+      )}
       {coinsData[0] && (
         <div className='w-full max-w-[400px] mx-auto mt-4'>
           <CoinItem
@@ -37,7 +43,6 @@ const Heading = () => {
             ticker={formatTokenI(coinsData[0].firstTokenId)}
             marketCap={coinsData[0].marketCap}
             replies={236}
-            description={coinsData[0].description}
             username={coinsData[0].owner.username}
             address={coinsData[0].address}
             degenId={coinsData[0].degenId}

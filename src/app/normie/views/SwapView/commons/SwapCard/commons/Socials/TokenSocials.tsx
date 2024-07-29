@@ -32,7 +32,7 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
   return (
     <div>
       <div className='flex gap-3 mb-3'>
-        {dataWithHttps?.telegram && (
+        {data?.telegram && (
           <a
             href={dataWithHttps?.telegram}
             target='_blank'
@@ -43,7 +43,7 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
           </a>
         )}
 
-        {dataWithHttps?.twitter && (
+        {data?.twitter && (
           <a
             href={dataWithHttps?.twitter}
             target='_blank'
@@ -53,7 +53,7 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
             [twitter]
           </a>
         )}
-        {dataWithHttps?.website && (
+        {data?.website && (
           <a
             href={dataWithHttps?.website}
             target='_blank'
@@ -66,7 +66,7 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
       </div>
 
       <div className='flex gap-3'>
-        {dataWithHttps?.img && (
+        {data?.img && (
           <Image
             alt={tokenIdentifier}
             src={dataWithHttps?.img}
@@ -79,7 +79,7 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
         <div className='text-left'>
           <div>{dataWithHttps?.title}</div>
           <div className='text-sm text-muted-foreground'>
-            {dataWithHttps?.description}
+            {data?.description}
           </div>
         </div>
       </div>

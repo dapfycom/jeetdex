@@ -13,7 +13,7 @@ export const DegenLayout = async ({ children }: PropsWithChildren) => {
       <GlobalDataProvider data={data}>
         <div className='flex min-h-screen flex-col bg-[#18212d]'>
           <Header />
-          <main className='flex flex-grow items-stretch justify-center p-6'>
+          <main className='flex flex-grow items-stretch justify-center p-4 sm:p-6'>
             {children}
           </main>
         </div>
