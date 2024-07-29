@@ -1,7 +1,8 @@
 import { useAppSelector } from '@/hooks';
 import { useGetCoins } from '@/hooks/useGetCoins';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { selectIsOpenCharts } from '../../../../lib/swap-slice';
 interface IProps {
   tokenIdentifier: string;
@@ -9,7 +10,7 @@ interface IProps {
 const TokenSocials = ({ tokenIdentifier }: IProps) => {
   const isOpenTokenSocials = useAppSelector(selectIsOpenCharts);
   const { coinRes } = useGetCoins(isOpenTokenSocials ? tokenIdentifier : null);
-
+  const [bigImage, setBigImage] = useState(false);
   if (!coinRes?.data || !isOpenTokenSocials) {
     return null;
   }
@@ -65,14 +66,18 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
         )}
       </div>
 
-      <div className='flex gap-3'>
+      <div className={cn('flex gap-3', bigImage ? 'flex-col' : '')}>
         {data?.img && (
           <Image
             alt={tokenIdentifier}
             src={dataWithHttps?.img}
             width={100}
             height={100}
-            className='w-[100px] h-[100px]'
+            className={`w-[100px] h-[100px] ${bigImage ? 'w-full h-full' : ''}`}
+            // onClick take image full width
+            onClick={() => {
+              setBigImage((prev) => !prev);
+            }}
           />
         )}
 

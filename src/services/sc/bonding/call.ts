@@ -1,6 +1,6 @@
 import { tokensID } from '@/config';
 import { bondingContractAbi } from '@/localConstants/globals';
-import { BigUIntValue, BytesValue } from '@multiversx/sdk-core/out';
+import { BigUIntValue, TokenIdentifierValue } from '@multiversx/sdk-core/out';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { SmartContractInteraction } from '../call';
 
@@ -21,15 +21,25 @@ export const swap = async ({
     contract,
     bondingContractAbi
   );
+  console.log(contract);
+  console.log(tokenIn);
+  console.log(tokenOut);
+  console.log(amountOut);
+  console.log(amountIn);
 
-  const args = [BytesValue.fromUTF8(tokenOut), new BigUIntValue(amountOut)];
+  const args = [
+    new TokenIdentifierValue(tokenOut),
+    new BigUIntValue(amountOut)
+  ];
 
   if (tokenIn === tokensID.egld) {
+    console.log('egld');
+
     return interaction.wrapEgldAndEsdtTranfer({
       functionName: 'swap',
       arg: args,
       value: amountIn,
-      gasL: 400000000
+      gasL: 1000000000
     });
   } else {
     return interaction.ESDTTransfer({
