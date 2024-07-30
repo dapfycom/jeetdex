@@ -376,6 +376,15 @@ export class SmartContractInteraction {
 
   /**
    * wrapEgldAndEsdtTranfer
+   *
+   * This function wraps EGLD into wEGLD and then performs an ESDT transfer.
+   *
+   * @param {string} functionName - The name of the smart contract function to call for the ESDT transfer.
+   * @param {BigNumber.Value} value - The amount of EGLD to wrap and transfer (example 1, 2, 3).
+   * @param {any[]} [arg=[]] - Optional arguments for the smart contract function.
+   * @param {number} gasL - The gas limit for the transaction.
+   *
+   * @returns {Promise<SendTransactionReturnType>} - The result of sending the transactions.
    */
   public wrapEgldAndEsdtTranfer({
     functionName,

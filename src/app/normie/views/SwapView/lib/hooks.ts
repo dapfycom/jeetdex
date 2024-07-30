@@ -77,7 +77,11 @@ export const useGetSwapbleTokens = () => {
 };
 
 export const useGetTokenRatio = (
-  pair: IPoolPair,
+  pair: {
+    address: Address;
+    firstTokenId: string;
+    secondTokenId: string;
+  },
   tokenIdentifier: string,
   bigUIntValue: BigNumber,
   type: 'first' | 'second'
@@ -97,7 +101,7 @@ export const useGetTokenRatio = (
     swrKey = null;
   } else {
     swrKey = `${pair.address}:getAmountOut:${bigUIntValue.toString()}:${
-      pair.firstToken
+      pair.firstTokenId
     }`;
   }
 

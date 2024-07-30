@@ -1,10 +1,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import TradeOnDexBox from '../TradeOnDexBox/TradeOnDexBox';
 import Buy from './Buy';
 import Sell from './Sell';
 
 const Swap = () => {
   return (
     <div className='grid gap-4 h-auto'>
+      <TradeOnDexBox />
       <div className='bg-[#2e303a] p-4 rounded-lg border border-none text-gray-400 grid gap-4'>
         <div className='grid gap-2 '>
           <Tabs defaultValue='buy' className='w-full '>

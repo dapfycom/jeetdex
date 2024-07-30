@@ -21,6 +21,7 @@ export const swap = async ({
     contract,
     bondingContractAbi
   );
+  console.log(amountIn);
 
   const args = [
     new TokenIdentifierValue(tokenOut),

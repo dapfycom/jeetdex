@@ -1,17 +1,17 @@
 import { fetchAmountOut } from '@/services/sc/bonding/queries';
+import { getRealBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useFetchCoinsData } from '../../hooks';
+import { maxCap } from './constants';
 
 const swrMainKey = 'bonding_sc';
 
 export const useGetBoundingPair = () => {
   const { address } = useParams();
-  console.log(address);
 
   const { coinsData, error, isLoading } = useFetchCoinsData();
-  console.log(coinsData);
 
   const coin = coinsData.find((coin) => coin.address === address);
 
@@ -32,8 +32,6 @@ export const useGetAmountOut = (
       ? `${swrMainKey}:getAmountOut:${address}:${amountIn}:${tokenIn}`
       : null;
 
-  console.log(swrKey);
-
   const { data, error, isLoading, mutate } = useSWR(swrKey, async () => {
     return fetchAmountOut({
       address,
@@ -41,13 +39,23 @@ export const useGetAmountOut = (
       tokenIn
     });
   });
-  console.log(data);
-  console.log(error);
 
   return {
     amountOut: data || '',
     error,
     isLoading,
     mutate
+  };
+};
+
+export const useIsMaxCap = () => {
+  const { coin, error, isLoading } = useGetBoundingPair();
+
+  return {
+    isMaxCap: (
+      getRealBalance(coin?.marketCap, 6, true) as BigNumber
+    ).isGreaterThanOrEqualTo(maxCap),
+    error,
+    isLoading
   };
 };
