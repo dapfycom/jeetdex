@@ -39,7 +39,9 @@ const HowItWorksModal = () => {
     >
       <DialogTrigger>
         {' '}
-        <span className='hover:font-bold'>[how it works]</span>
+        <span className='hover:font-bold text-sm sm:text-base'>
+          [how it works]
+        </span>
       </DialogTrigger>
       <DialogContent className='w-full max-w-md p-8'>
         <DialogHeader>

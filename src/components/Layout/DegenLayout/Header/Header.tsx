@@ -19,7 +19,7 @@ export const Header = () => {
               href='https://twitter.com/jeet_dex'
               target='_blank'
               rel='noopener noreferrer'
-              className='hover:font-bold'
+              className='hover:font-bold text-sm sm:text-base'
             >
               [twitter]
             </a>
@@ -28,7 +28,7 @@ export const Header = () => {
               href='https://t.me/jeetdex'
               target='_blank'
               rel='noopener noreferrer'
-              className='hover:font-bold'
+              className='hover:font-bold text-sm sm:text-base'
             >
               [telegram]
             </a>
