@@ -58,7 +58,7 @@ export const useFetchAllBondingData = () => {
 export type BondingData = IBoundingData & Bonding;
 export const useFetchCoinsData = (filter?: {
   search?: string;
-  state?: CoinBondingState;
+  states?: CoinBondingState[];
 }) => {
   const {
     boundingData,
@@ -83,6 +83,7 @@ export const useFetchCoinsData = (filter?: {
       };
     })
     .filter((item) => !!item.degenId);
+  console.log(coinsData);
 
   if (filter?.search) {
     coinsData = coinsData.filter((item) => {
@@ -92,9 +93,9 @@ export const useFetchCoinsData = (filter?: {
       return shouldFilter;
     });
   }
-  if (filter?.state) {
+  if (filter?.states) {
     coinsData = coinsData.filter((item) => {
-      const shouldFilter = item.state === 'Active';
+      const shouldFilter = filter.states.includes(item.state);
       return shouldFilter;
     });
   }
