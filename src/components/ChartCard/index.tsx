@@ -37,6 +37,7 @@ const TVChartContainer = ({ tokenIdentifier }: { tokenIdentifier: string }) => {
     return () => {
       tvWidget.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

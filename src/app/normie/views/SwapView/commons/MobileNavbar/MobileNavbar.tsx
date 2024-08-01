@@ -28,6 +28,7 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
     if (!currentParams[0]) {
       updateParams('tab', nav[2].href);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentParams[0]]);
   return (
     <Tabs
