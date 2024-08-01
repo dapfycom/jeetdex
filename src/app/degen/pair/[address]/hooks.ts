@@ -1,3 +1,5 @@
+import { useAppSelector } from '@/hooks';
+import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchAmountOut } from '@/services/sc/bonding/queries';
 import { getRealBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
@@ -17,6 +19,22 @@ export const useGetBoundingPair = () => {
 
   return {
     coin,
+    error,
+    isLoading
+  };
+};
+
+export const useGetBoundingPairByUser = (customAddress?: string) => {
+  const address = useAppSelector(selectUserAddress);
+
+  const { coinsData, error, isLoading } = useFetchCoinsData();
+
+  const coins = coinsData.filter(
+    (coin) => coin.owner.address === (customAddress || address)
+  );
+
+  return {
+    coins,
     error,
     isLoading
   };

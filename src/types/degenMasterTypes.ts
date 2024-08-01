@@ -1,6 +1,13 @@
 import { Address } from '@/utils';
 import BigNumber from 'bignumber.js';
 
+export type CoinBondingState =
+  | 'Inactive'
+  | 'Active'
+  | 'PartialActive'
+  | 'PendingAddLiquidity'
+  | 'Finished';
+
 export interface ISCBoundingData {
   sc_address: Address;
   first_token_id: string;
@@ -10,6 +17,7 @@ export interface ISCBoundingData {
   owner_fee_percent: BigNumber;
   market_cap: BigNumber;
   db_id: Buffer;
+  state: { name: CoinBondingState; fields: any[] };
 }
 
 export interface IBoundingData {
@@ -21,4 +29,5 @@ export interface IBoundingData {
   ownerFeePercentage: number;
   marketCap: string;
   dbId: string;
+  state: CoinBondingState;
 }

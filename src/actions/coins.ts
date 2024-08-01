@@ -11,8 +11,20 @@ export const addSocialsCoin = async ({
   description,
   twitter,
   telegram,
-  website
+  website,
+  tokenIdentifier
+}: {
+  identifier: string;
+  title: string;
+  description: string;
+  twitter: string;
+  telegram: string;
+  website: string;
+  tokenIdentifier?: string;
 }) => {
+  const tokenId = tokenIdentifier ?? identifier;
+  console.log(tokenId);
+
   const session = await getSession();
 
   if (!session) {
@@ -21,41 +33,63 @@ export const addSocialsCoin = async ({
 
   const { address } = session;
 
-  const tokenDetails = await fetchTokenById(identifier);
+  // If there is no token identifier means is on normie mode because token identifier is only used on degen mode
+  if (!tokenIdentifier) {
+    const tokenDetails = await fetchTokenById(tokenId);
 
-  if (tokenDetails.owner !== address) {
-    throw new Error('You are not the owner of this token');
+    if (tokenDetails.owner !== address) {
+      throw new Error('You are not the owner of this token');
+    }
+  } else {
+    const coin = await prisma.coins.findUnique({
+      where: {
+        identifier
+      },
+      select: {
+        owner: true
+      }
+    });
+
+    if (coin.owner.address !== address) {
+      throw new Error('You are not the owner of this token');
+    }
   }
 
-  const coin = await prisma.coins.upsert({
-    create: {
-      identifier,
-      title,
-      description,
-      twitter,
-      telegram,
-      website,
-      owner: {
-        connect: {
-          address: address
+  try {
+    const coin = await prisma.coins.upsert({
+      create: {
+        identifier,
+        title,
+        description,
+        twitter,
+        telegram,
+        website,
+        owner: {
+          connect: {
+            address: address
+          }
         }
+      },
+      update: {
+        identifier: tokenIdentifier,
+        title,
+        description,
+        twitter,
+        telegram,
+        website
+      },
+      where: {
+        identifier
       }
-    },
-    update: {
-      title,
-      description,
-      twitter,
-      telegram,
-      website
-    },
-    where: {
-      identifier
-    }
-  });
+    });
 
-  revalidateTag('CoinsPairs');
+    revalidateTag('CoinsPairs');
 
-  return coin;
+    return coin;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
 };
 
 export const degenNewCoin = async ({
@@ -110,7 +144,20 @@ export const addImageToDegenCoin = async ({ identifier, image }) => {
     });
     return coin;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
+};
+
+export const updateCoinIdentifier = async (
+  tokenIdentifier: string,
+  id: string
+) => {
+  return await prisma.coins.update({
+    data: {
+      identifier: tokenIdentifier
+    },
+    where: {
+      id: id
+    }
+  });
 };

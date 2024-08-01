@@ -20,7 +20,7 @@ export const verifyToken = async (
 
   const server = new NativeAuthServer(authConfig);
   let attempts = 0;
-  const maxAttempts = 4;
+  const maxAttempts = 10;
 
   while (attempts < maxAttempts) {
     try {

@@ -82,17 +82,10 @@ export const useFetchCoinsData = (filter?: { search?: string }) => {
     .filter((item) => !!item.degenId);
 
   if (filter?.search) {
-    console.log(coinsData);
-
     coinsData = coinsData.filter((item) => {
       const shouldFilter = item.title
         .toLowerCase()
         .includes(filter.search.toLowerCase());
-      if (shouldFilter) {
-        console.log(item.title.toLowerCase());
-        console.log(filter.search.toLowerCase());
-        console.log(item);
-      }
       return shouldFilter;
     });
   }

@@ -1,10 +1,10 @@
 'use client';
+import { ProfileCtx } from '@/app/normie/views/ProfileView/ProfileContext';
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { timeAgo } from '@/utils/date';
 import Link from 'next/link';
 import { useContext } from 'react';
-import { ProfileCtx } from '../../ProfileContext';
 
 interface INotificationData {
   img: string;

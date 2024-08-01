@@ -1,7 +1,7 @@
 'use client';
+import { ProfileCtx } from '@/app/normie/views/ProfileView/ProfileContext';
 import Message from '@/components/ChatsCard/Message';
 import { useContext } from 'react';
-import { ProfileCtx } from '../../ProfileContext';
 
 const Replies = () => {
   const profileInfo = useContext(ProfileCtx);

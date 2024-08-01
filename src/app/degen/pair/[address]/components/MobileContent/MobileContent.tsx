@@ -7,9 +7,6 @@ import DegenHolderList from '../DegenHolderList/DegenHolderList';
 import DegenTokenSocials from '../DegenTokenSocials/DegenTokenSocials';
 import Swap from '../Swap/Swap';
 const MobileNav = ({ tab }: { tab: string }) => {
-  console.log(tab);
-  console.log(nav);
-
   return (
     <Tabs value={tab} defaultValue={nav[2].href}>
       <TabsContent value={nav[0].href} className='w-full'>

@@ -1,3 +1,4 @@
+import { updateCoinIdentifier } from '@/actions/coins';
 import { submitSwap } from '@/app/normie/views/SwapView/lib/calls';
 import { useGetSwapbleTokens } from '@/app/normie/views/SwapView/lib/hooks';
 import { tokensID } from '@/config';
@@ -13,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { BigUIntValue, TokenIdentifierValue } from '@multiversx/sdk-core/out';
 import { useTrackTransactionStatus } from '@multiversx/sdk-dapp/hooks';
 import BigNumber from 'bignumber.js';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useGetAmountOut, useGetBoundingPair, useIsMaxCap } from '../../hooks';
@@ -24,7 +25,7 @@ const formSchema = z.object({
 
 const useSwap = (type: 'buy' | 'sell') => {
   const [transactionId, setTransactionId] = useState<string>('');
-
+  const lastIdentifier = useRef('');
   const { coin } = useGetBoundingPair();
   const { slippage } = useGetSlippage();
   const { elrondToken: token } = useGetElrondToken(
@@ -135,6 +136,21 @@ const useSwap = (type: 'buy' | 'sell') => {
   function reset() {
     form.reset();
   }
+
+  useEffect(() => {
+    if (coin?.identifier) {
+      const isNorme = coin?.identifier.includes('-');
+
+      if (!isNorme) {
+        if (lastIdentifier.current !== coin.identifier) {
+          console.log('update');
+
+          lastIdentifier.current = coin.identifier;
+          updateCoinIdentifier(coin.firstTokenId, coin.id);
+        }
+      }
+    }
+  }, [coin?.firstTokenId, coin?.id, coin?.identifier]);
 
   return {
     onSubmit,

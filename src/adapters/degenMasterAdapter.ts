@@ -12,6 +12,7 @@ export const adaptAllBondingData = (
     const ownerFeePercentage = item.owner_fee_percent.toNumber();
     const marketCap = item.market_cap.toString();
     const dbId = item.db_id.toString();
+    const state = item.state.name;
 
     return {
       address,
@@ -21,7 +22,8 @@ export const adaptAllBondingData = (
       secondTokenReserve,
       ownerFeePercentage,
       marketCap,
-      dbId
+      dbId,
+      state
     };
   });
 };

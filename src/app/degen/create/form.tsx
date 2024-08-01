@@ -3,7 +3,7 @@
 import { Form } from '@/components/ui/form';
 import { z } from 'zod';
 
-import { degenNewCoin } from '@/actions/coins';
+import { degenNewCoin, updateCoinIdentifier } from '@/actions/coins';
 import Collapse from '@/components/Collapse/Collapse';
 import CustomFormField, {
   FormFieldType
@@ -93,10 +93,21 @@ const CreateTokenForm = () => {
 
   const txHandle = useRef(0);
 
+  const coinFromDb = useRef<{
+    id: string;
+    identifier: string;
+    img: string | null;
+    ownerId: string;
+    twitter: string | null;
+    telegram: string | null;
+    website: string | null;
+    title: string | null;
+    description: string | null;
+    degenId: string | null;
+  }>();
+
   const onSuccessTx = async () => {
     if (txHandle.current === 0) {
-      console.log('txHandle is 0');
-
       const tx = await fetchTransactionByHash(transactions[0].hash);
       form.reset();
 
@@ -113,17 +124,17 @@ const CreateTokenForm = () => {
       );
 
       const identifier = operation?.identifier;
-      console.log(identifier);
 
       const address = result.receiver;
       setTxResultAddress(address);
 
       if (amountToBuyFirstTime === '' || amountToBuyFirstTime === '0') {
         txHandle.current = 0;
+        if (coinFromDb.current) {
+          updateCoinIdentifier(identifier, coinFromDb.current.id);
+        }
         router.push(`/pair/${address}`);
       } else {
-        console.log(amountToBuyFirstTime);
-
         const amountIn = amountToBuyFirstTime;
         const amountScOut = await fetchAmountOut({
           address,
@@ -132,11 +143,6 @@ const CreateTokenForm = () => {
         });
 
         const amountOut = calculateSlippageAmount(5, amountScOut).toFixed(0);
-
-        console.log(address);
-        console.log(amountIn);
-        console.log(amountOut);
-        console.log(identifier);
 
         const swapRes = await swap({
           contract: address,
@@ -151,8 +157,6 @@ const CreateTokenForm = () => {
         setSessionId(swapRes.sessionId);
       }
     } else {
-      console.log('txHandle.current', txHandle.current);
-
       txHandle.current = 0;
       router.push(`/pair/${txResultAddress}`);
     }
@@ -170,8 +174,6 @@ const CreateTokenForm = () => {
   }
 
   const handleCreateCoin = async (amountToBuy: string) => {
-    console.log(amountToBuy);
-
     const { name, ticker, description, image, telegram, twitter, website } =
       form.getValues();
 
@@ -194,6 +196,8 @@ const CreateTokenForm = () => {
           errorToast('Error creating the coin');
           return;
         }
+
+        coinFromDb.current = resDb;
         const res = await newToken(
           name,
           ticker.toUpperCase(),
