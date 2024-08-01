@@ -13,6 +13,7 @@ import {
 import useDisclosure from '@/hooks/useDisclosure';
 import { formatTokenI } from '@/utils/mx-utils';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { BondingData } from '../../hooks';
 import { useGetBoundingPairByUser } from '../../pair/[address]/hooks';
 
@@ -80,8 +81,9 @@ const CoinRow = ({ pair }: { pair: BondingData }) => {
                 variant='ghost'
                 className='p-0 h-fit font-normal hover:bg-transparent hover:font-bold hover:text-white'
                 onClick={handleEnableSwap}
+                asChild
               >
-                [enable swap]
+                <Link href={`/pair/${pair.address}`}>[enable swap]</Link>
               </Button>
             )}
             <Button

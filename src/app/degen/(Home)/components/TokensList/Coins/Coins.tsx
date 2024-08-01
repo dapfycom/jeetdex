@@ -150,7 +150,8 @@ const Coins = () => {
   const { currentParams } = useUpdateUrlParams(['search']);
 
   const { coinsData, isLoading } = useFetchCoinsData({
-    search: currentParams[0]
+    search: currentParams[0],
+    state: 'Active'
   });
 
   return (

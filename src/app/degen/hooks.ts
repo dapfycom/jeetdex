@@ -1,6 +1,6 @@
 import { fetchAxiosJeetdex } from '@/services/rest/api';
 import { fetchAllBondingData } from '@/services/sc/degen_master/queries';
-import { IBoundingData } from '@/types/degenMasterTypes';
+import { CoinBondingState, IBoundingData } from '@/types/degenMasterTypes';
 import useSWR from 'swr';
 
 type Coin = {
@@ -56,7 +56,10 @@ export const useFetchAllBondingData = () => {
   };
 };
 export type BondingData = IBoundingData & Bonding;
-export const useFetchCoinsData = (filter?: { search?: string }) => {
+export const useFetchCoinsData = (filter?: {
+  search?: string;
+  state?: CoinBondingState;
+}) => {
   const {
     boundingData,
     isLoading: isLoadingBoundingData,
@@ -86,6 +89,12 @@ export const useFetchCoinsData = (filter?: { search?: string }) => {
       const shouldFilter = item.title
         .toLowerCase()
         .includes(filter.search.toLowerCase());
+      return shouldFilter;
+    });
+  }
+  if (filter?.state) {
+    coinsData = coinsData.filter((item) => {
+      const shouldFilter = item.state === 'Active';
       return shouldFilter;
     });
   }

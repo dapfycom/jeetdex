@@ -76,15 +76,14 @@ const useSwap = (type: 'buy' | 'sell') => {
       type === 'buy' ? coin.firstTokenId : coin.secondTokenId;
 
     if (!isMaxCap) {
-      console.log('degen');
-
       if (amount && new BigNumber(amount).isGreaterThan(0)) {
         const res = await swap({
           amountIn: amount,
           amountOut: calculateSlippageAmount(slippage, amountOut).toFixed(0),
           tokenIn: token?.identifier,
           contract: coin.address,
-          tokenOut: type === 'buy' ? coin.firstTokenId : coin.secondTokenId
+          tokenOut: type === 'buy' ? coin.firstTokenId : coin.secondTokenId,
+          initialSwap: coin.state === 'Inactive'
         });
         setTransactionId(res.sessionId);
       } else {
