@@ -56,10 +56,6 @@
                 "type": "Address"
             },
             {
-                "name": "jeet_wegld_sc_address",
-                "type": "Address"
-            },
-            {
                 "name": "issue_token_cost",
                 "type": "BigUint"
             },
@@ -139,6 +135,10 @@
                 {
                     "name": "db_id",
                     "type": "bytes"
+                },
+                {
+                    "name": "token_creator_buy",
+                    "type": "bool"
                 }
             ],
             "outputs": []
@@ -332,6 +332,10 @@
                 {
                     "name": "db_id",
                     "type": "bytes"
+                },
+                {
+                    "name": "state",
+                    "type": "State"
                 }
             ]
         },
@@ -349,6 +353,31 @@
                 {
                     "name": "address",
                     "type": "Address"
+                }
+            ]
+        },
+        "State": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Inactive",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Active",
+                    "discriminant": 1
+                },
+                {
+                    "name": "PartialActive",
+                    "discriminant": 2
+                },
+                {
+                    "name": "PendingAddLiquidity",
+                    "discriminant": 3
+                },
+                {
+                    "name": "Finished",
+                    "discriminant": 4
                 }
             ]
         }

@@ -9,19 +9,26 @@ export const swap = async ({
   tokenIn,
   tokenOut,
   amountOut,
-  amountIn
+  amountIn /* Amount in is a normal number like 0.5 1 or 2 */,
+  initialSwap
 }: {
   contract: string;
   tokenIn: string;
   tokenOut: string;
   amountOut: string;
   amountIn: string;
+  initialSwap?: boolean;
 }): Promise<SendTransactionReturnType> => {
+  console.log(contract);
+  console.log(tokenIn);
+  console.log(tokenOut);
+  console.log(amountOut);
+  console.log(amountIn);
+
   const interaction = new SmartContractInteraction(
     contract,
     bondingContractAbi
   );
-  console.log(amountIn);
 
   const args = [
     new TokenIdentifierValue(tokenOut),
@@ -32,14 +39,14 @@ export const swap = async ({
     console.log('egld');
 
     return interaction.wrapEgldAndEsdtTranfer({
-      functionName: 'swap',
+      functionName: initialSwap ? 'initialSwap' : 'swap',
       arg: args,
       value: amountIn,
       gasL: 400000000
     });
   } else {
     return interaction.ESDTTransfer({
-      functionName: 'swap',
+      functionName: initialSwap ? 'initialSwap' : 'swap',
       arg: args,
       token: {
         collection: tokenIn,

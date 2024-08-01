@@ -44,10 +44,6 @@
                 "type": "Address"
             },
             {
-                "name": "jeet_wegld_sc_address",
-                "type": "Address"
-            },
-            {
                 "name": "issue_token_cost",
                 "type": "BigUint"
             },
@@ -120,7 +116,16 @@
             "payableInTokens": [
                 "*"
             ],
-            "inputs": [],
+            "inputs": [
+                {
+                    "name": "token_creator_buy",
+                    "type": "bool"
+                },
+                {
+                    "name": "token_creator",
+                    "type": "Address"
+                }
+            ],
             "outputs": []
         },
         {
@@ -301,6 +306,28 @@
             "outputs": []
         },
         {
+            "name": "initialSwap",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "token_out",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "amount_out_min",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "EsdtTokenPayment"
+                }
+            ]
+        },
+        {
             "name": "swap",
             "mutability": "mutable",
             "payableInTokens": [
@@ -423,6 +450,10 @@
                 {
                     "name": "db_id",
                     "type": "bytes"
+                },
+                {
+                    "name": "state",
+                    "type": "State"
                 }
             ]
         },
