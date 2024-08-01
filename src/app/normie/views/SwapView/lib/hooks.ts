@@ -78,7 +78,7 @@ export const useGetSwapbleTokens = () => {
 
 export const useGetTokenRatio = (
   pair: {
-    address: Address;
+    address: string;
     firstTokenId: string;
     secondTokenId: string;
   },
