@@ -1,12 +1,10 @@
 import { useAppSelector } from '@/hooks';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchAmountOut } from '@/services/sc/bonding/queries';
-import { getRealBalance } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { useParams } from 'next/navigation';
 import useSWR from 'swr';
 import { useFetchCoinsData } from '../../hooks';
-import { maxCap } from './constants';
 
 const swrMainKey = 'bonding_sc';
 
@@ -70,9 +68,7 @@ export const useIsMaxCap = () => {
   const { coin, error, isLoading } = useGetBoundingPair();
 
   return {
-    isMaxCap: (
-      getRealBalance(coin?.marketCap, 6, true) as BigNumber
-    ).isGreaterThanOrEqualTo(maxCap),
+    isMaxCap: coin?.state === 'Finished',
     error,
     isLoading
   };

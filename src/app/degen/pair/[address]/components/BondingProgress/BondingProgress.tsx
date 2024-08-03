@@ -3,11 +3,11 @@ import { Progress } from '@/components/ui/progress';
 import { formatBalance, formatNumber } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { maxCap } from '../../constants';
-import { useGetBoundingPair } from '../../hooks';
+import { useGetBoundingPair, useIsMaxCap } from '../../hooks';
 
 const BondingProgress = () => {
   const { coin } = useGetBoundingPair();
-
+  const { isMaxCap } = useIsMaxCap();
   if (!coin) {
     return <div className='text-left'>Loading...</div>;
   }
@@ -21,9 +21,13 @@ const BondingProgress = () => {
 
   return (
     <div className='text-left flex flex-col gap-3 text-sm text-gray-400'>
-      <p className=''>bonding curve progress: {formatNumber(progress)}%</p>
+      {!isMaxCap && (
+        <>
+          <p className=''>bonding curve progress: {formatNumber(progress)}%</p>
 
-      <Progress value={progress} className='h-4' />
+          <Progress value={progress} className='h-4' />
+        </>
+      )}
 
       <p>
         when the market cap reaches $23,000 all the liquidity from the bonding
