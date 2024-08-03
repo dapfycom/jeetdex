@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const pageParam = searchParams.get('page');
   try {
     const page = parseInt(pageParam) || 1;
-    const pageSize = 100;
+    const pageSize = 100000;
     const degenCoins = await prisma.coins.findMany({
       skip: (page - 1) * pageSize,
       take: pageSize,
