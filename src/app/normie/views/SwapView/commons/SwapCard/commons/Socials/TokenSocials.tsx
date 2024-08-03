@@ -19,13 +19,13 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
   const data = coinRes?.data;
   const dataWithHttps = {
     ...data,
-    telegram: data.telegram.startsWith('https')
+    telegram: data.telegram?.startsWith('https')
       ? data.telegram
       : `https://${data.telegram}`,
-    twitter: data.twitter.startsWith('https')
+    twitter: data.twitter?.startsWith('https')
       ? data.twitter
       : `https://${data.twitter}`,
-    website: data.website.startsWith('https')
+    website: data.website?.startsWith('https')
       ? data.website
       : `https://${data.website}`
   };
