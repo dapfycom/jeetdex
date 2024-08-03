@@ -25,6 +25,12 @@ const nextConfig = {
         hostname: 'gateway.irys.xyz',
         port: '',
         pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'gateway.pinata.cloud',
+        port: '',
+        pathname: '**'
       }
     ]
   },
