@@ -13,9 +13,16 @@ const nextConfig = {
         hostname: 'pump.mypinata.cloud',
         port: '',
         pathname: '**'
-      }, {
+      },
+      {
         protocol: 'https',
         hostname: 'cf-ipfs.com',
+        port: '',
+        pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'gateway.irys.xyz',
         port: '',
         pathname: '**'
       }
