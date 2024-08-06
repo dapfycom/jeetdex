@@ -31,146 +31,157 @@ const configurationData = {
 };
 // DatafeedConfiguration implementation
 // ...
+
+type SymbolRes = {
+  symbol: string;
+  ticker: string;
+  description: string;
+  exchange: 'Jeetdex';
+  type: 'crypto';
+  logo_urls: string[];
+};
 // Obtains all symbols for all exchanges supported by CryptoCompare API
-async function getAllSymbols(): Promise<
-  {
-    symbol: string;
-    ticker: string;
-    description: string;
-    exchange: 'Jeetdex';
-    type: 'crypto';
-  }[]
-> {
+async function getAllSymbols(): Promise<SymbolRes[]> {
   const coinsInfo = store.getState().dapp.globalData.coins;
+  console.log({ coinsInfo });
 
-  return store.getState().dapp.globalData.pools.map((pool) => {
-    const info = coinsInfo.find(
-      (coin) => coin.identifier === pool.firstToken.identifier
-    );
-
-    return {
-      symbol: formatTokenI(pool.firstToken.ticker),
-      ticker: pool.firstToken.identifier,
-      description:
-        pool.firstToken.assets?.description ||
-        info?.description ||
-        formatTokenI(pool.firstToken.ticker),
-      exchange: 'Jeetdex',
-      type: 'crypto',
-      logo_urls: [info?.img || '/assets/img/coin-placeholder.svg']
-    };
-  });
-}
-const config = {
-  onReady: (callback) => {
-    setTimeout(() => callback(configurationData));
-  },
-  searchSymbols: async (
-    userInput,
-    exchange,
-    symbolType,
-    onResultReadyCallback
-  ) => {
-    const symbols = await getAllSymbols();
-    const newSymbols = symbols.filter((symbol) => {
-      const isExchangeValid = exchange === '' || symbol.exchange === exchange;
-      const isFullSymbolContainsInput =
-        symbol.ticker.toLowerCase().indexOf(userInput.toLowerCase()) !== -1;
-      return isExchangeValid && isFullSymbolContainsInput;
+  const res: SymbolRes[] = coinsInfo
+    .filter((coin) => Boolean(coin.degenId))
+    .map((coin) => {
+      const sym: SymbolRes = {
+        symbol: formatTokenI(coin.identifier),
+        ticker: coin.identifier,
+        description: coin.description as string,
+        exchange: 'Jeetdex',
+        type: 'crypto',
+        logo_urls: [coin?.img || '/assets/img/coin-placeholder.svg']
+      };
+      return sym;
     });
-    onResultReadyCallback(
-      newSymbols.map((s) => ({
-        ...s
-      }))
-    );
-  },
-  resolveSymbol: async (symbolName, onSymbolResolvedCallback) => {
-    const symbols = await getAllSymbols();
-    const symbolItem = symbols.find(({ ticker }) => ticker === symbolName);
-    if (!symbolItem) {
-      return;
-    }
-    // Symbol information object
-    const symbolInfo = {
-      ...symbolItem,
-      name: symbolItem.symbol,
-      session: '24x7',
-      timezone: 'Etc/UTC',
-      minmov: 0.1,
-      pricescale: 100,
-      has_intraday: true,
-      intraday_multipliers: ['1'],
-      visible_plots_set: 'ohlc',
-      has_weekly_and_monthly: false,
-      supported_resolutions: configurationData.supported_resolutions,
-      volume_precision: 2,
-      data_status: 'streaming',
+  console.log({ symbols: res });
 
-      variable_tick_size: '0.000000001'
-    };
-    onSymbolResolvedCallback(symbolInfo);
-  },
-  getBars: async (
-    symbolInfo,
-    resolution,
-    periodParams,
-    onHistoryCallback,
-    onErrorCallback
-  ) => {
-    const { from, to } = periodParams;
+  return res;
+}
 
-    const urlParameters = {
-      e: 'JEETDEX',
-      fsym: 'JEET-2346a',
-      tsym: symbolInfo.ticker,
-      // toTs: to,
-      limit: 2000
-    };
-    const query = Object.keys(urlParameters)
-      .map((name) => `${name}=${encodeURIComponent(urlParameters[name])}`)
-      .join('&');
-    try {
-      const bars = await cachedEventsApi(`/datafeed?${query}`);
+const config = (mode: 'normie' | 'degen' = 'normie') => {
+  return {
+    onReady: (callback) => {
+      setTimeout(() => callback(configurationData));
+    },
+    searchSymbols: async (
+      userInput,
+      exchange,
+      symbolType,
+      onResultReadyCallback
+    ) => {
+      const symbols = await getAllSymbols();
+      console.log(symbols);
 
-      let currentBars = [];
-
-      bars.forEach((bar) => {
-        if (bar.time >= from && bar.time < to) {
-          currentBars = [
-            ...currentBars,
-            {
-              time: bar.time * 1000,
-              low: bar.low,
-              high: bar.high,
-              open: bar.open,
-              close: bar.close
-            }
-          ];
-        }
+      const newSymbols = symbols.filter((symbol) => {
+        const isExchangeValid = exchange === '' || symbol.exchange === exchange;
+        const isFullSymbolContainsInput =
+          symbol.ticker.toLowerCase().indexOf(userInput.toLowerCase()) !== -1;
+        return isExchangeValid && isFullSymbolContainsInput;
       });
-      console.log({ currentBars });
-      onHistoryCallback(currentBars, { noData: false });
-    } catch (error) {
-      onErrorCallback(error);
+      onResultReadyCallback(
+        newSymbols.map((s) => ({
+          ...s
+        }))
+      );
+    },
+    resolveSymbol: async (symbolName, onSymbolResolvedCallback) => {
+      const symbols = await getAllSymbols();
+      const symbolItem = symbols.find(({ ticker }) => ticker === symbolName);
+      if (!symbolItem) {
+        return;
+      }
+      // Symbol information object
+      const symbolInfo = {
+        ...symbolItem,
+        name: symbolItem.symbol,
+        session: '24x7',
+        timezone: 'Etc/UTC',
+        minmov: 0.1,
+        pricescale: 100,
+        has_intraday: true,
+        intraday_multipliers: ['1'],
+        visible_plots_set: 'ohlc',
+        has_weekly_and_monthly: false,
+        supported_resolutions: configurationData.supported_resolutions,
+        volume_precision: 2,
+        data_status: 'streaming',
+
+        variable_tick_size: '0.000000001'
+      };
+      onSymbolResolvedCallback(symbolInfo);
+    },
+    getBars: async (
+      symbolInfo,
+      resolution,
+      periodParams,
+      onHistoryCallback,
+      onErrorCallback
+    ) => {
+      console.log('getBars');
+
+      const { from, to } = periodParams;
+
+      const urlParameters = {
+        e: 'JEETDEX',
+        fsym: 'JEET-2346a',
+        tsym: symbolInfo.ticker,
+        // toTs: to,
+        limit: 2000
+      };
+      const query = Object.keys(urlParameters)
+        .map((name) => `${name}=${encodeURIComponent(urlParameters[name])}`)
+        .join('&');
+      console.log({ query });
+
+      try {
+        const bars = await cachedEventsApi(`/datafeed/${mode}?${query}`);
+        console.log(bars);
+
+        let currentBars = [];
+
+        bars.forEach((bar) => {
+          if (bar.time >= from && bar.time < to) {
+            currentBars = [
+              ...currentBars,
+              {
+                time: bar.time * 1000,
+                low: bar.low,
+                high: bar.high,
+                open: bar.open,
+                close: bar.close
+              }
+            ];
+          }
+        });
+        console.log({ currentBars });
+        onHistoryCallback(currentBars, { noData: false });
+      } catch (error) {
+        onErrorCallback(error);
+      }
+    },
+    subscribeBars: (
+      symbolInfo,
+      resolution,
+      onRealtimeCallback,
+      subscriberUID
+    ) => {
+      console.log(
+        '[subscribeBars]: Method call with subscriberUID:',
+        subscriberUID
+      );
+    },
+    unsubscribeBars: (subscriberUID) => {
+      console.log(
+        '[unsubscribeBars]: Method call with subscriberUID:',
+        subscriberUID
+      );
     }
-  },
-  subscribeBars: (
-    symbolInfo,
-    resolution,
-    onRealtimeCallback,
-    subscriberUID
-  ) => {
-    console.log(
-      '[subscribeBars]: Method call with subscriberUID:',
-      subscriberUID
-    );
-  },
-  unsubscribeBars: (subscriberUID) => {
-    console.log(
-      '[unsubscribeBars]: Method call with subscriberUID:',
-      subscriberUID
-    );
-  }
+  };
 };
 
 export default config;

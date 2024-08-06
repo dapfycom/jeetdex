@@ -215,6 +215,8 @@ const CreateTokenForm = () => {
     }
   };
 
+  console.log(fee);
+
   return (
     <>
       <Form {...form}>

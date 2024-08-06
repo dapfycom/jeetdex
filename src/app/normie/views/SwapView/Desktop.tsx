@@ -1,5 +1,5 @@
 'use client';
-import ChartCard from '@/components/ChartCard/ChartCard';
+import NormieChart from '@/components/ChartCard/NormieChart';
 import Chats from '@/components/ChatsCard/Chats';
 import HoldersList from '@/components/HoldersList/HoldersList';
 import Trades from '@/components/Trades/Trades';
@@ -27,7 +27,7 @@ const Desktop = ({ poolPair }: { poolPair: IPoolPair }) => {
       >
         <div className='h-full'>
           <div className='h-[450px] hidden sm:block'>
-            <ChartCard poolPair={withDefaultPool} />
+            <NormieChart poolPair={withDefaultPool} />
           </div>
 
           <div

@@ -83,7 +83,6 @@ export const useFetchCoinsData = (filter?: {
       };
     })
     .filter((item) => !!item.degenId);
-  console.log(coinsData);
 
   if (filter?.search) {
     coinsData = coinsData.filter((item) => {

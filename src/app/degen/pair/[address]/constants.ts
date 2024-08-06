@@ -1,1 +1,1 @@
-export const maxCap = 4000;
+export const maxCap = 23000;

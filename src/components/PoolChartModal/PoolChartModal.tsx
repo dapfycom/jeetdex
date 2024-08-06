@@ -30,7 +30,12 @@ const PoolChartModal = ({ isOpen, toggleOpen, poolPair }: IProps) => {
       </DialogTrigger>
       <DialogContent className='sm:max-w-[1200px] px-4 pt-10 '>
         <div className='h-full sm:min-h-[600px]'>
-          <ChartCard poolPair={poolPair} />
+          <ChartCard
+            firstToken={poolPair?.firstToken}
+            firstTokenJeetdexPrice={poolPair?.firstTokenJeetdexPrice}
+            firstTokenReserve={poolPair?.firstTokenReserve}
+            mode='normie'
+          />
         </div>
       </DialogContent>
     </Dialog>

@@ -6,6 +6,7 @@ import { scQuery } from '../query';
 export const fetchNewTokenFee = async () => {
   const res = await scQuery('degenMaster', 'getNewTokenFee');
 
+  console.log(res);
   return res.firstValue?.valueOf().toString();
 };
 

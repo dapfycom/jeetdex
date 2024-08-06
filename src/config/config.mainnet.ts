@@ -34,7 +34,8 @@ export const scAddress = {
 
   mainRouter: 'erd1qqqqqqqqqqqqqpgqjyycuqgf3hpwccew0257te9cgsh7l0fxtaes73r7w0',
   dust: 'erd1qqqqqqqqqqqqqpgq4lux8f506mkp6zn9kmy8fy2c0xyg375cy26sddccwm',
-  metachain: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
+  metachain: 'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u',
+  degenMaster: 'erd1qqqqqqqqqqqqqpgq5y7vhpvwk0zzj7cg69cudfzd60dc6588taesau8q5m'
 };
 
 export const tokensID = {

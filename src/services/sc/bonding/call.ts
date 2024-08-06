@@ -30,6 +30,8 @@ export const swap = async ({
   ];
 
   if (tokenIn === tokensID.egld) {
+    console.log('wrapEgldAndEsdtTranfer');
+
     return interaction.wrapEgldAndEsdtTranfer({
       functionName: initialSwap ? 'initialSwap' : 'swap',
       arg: args,

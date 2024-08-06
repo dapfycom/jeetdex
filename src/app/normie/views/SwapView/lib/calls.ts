@@ -21,14 +21,6 @@ export const submitSwap = async (
   receiveValue: string,
   slippage: number
 ) => {
-  console.log(poolAddress);
-
-  console.log(sendToken);
-  console.log(receiveToken);
-  console.log(sendValue);
-  console.log(receiveValue);
-  console.log(slippage);
-
   const interactions = new SmartContractInteraction(
     poolAddress,
     pairContractAbi
@@ -41,6 +33,8 @@ export const submitSwap = async (
   ];
 
   if (sendToken === tokensID.egld) {
+    console.log('wrapEgldAndEsdtTranfer');
+
     return interactions.wrapEgldAndEsdtTranfer({
       functionName: 'swapIn',
       arg: args,

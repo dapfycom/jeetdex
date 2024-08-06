@@ -62,6 +62,8 @@ const useSwap = (type: 'buy' | 'sell') => {
 
   const { isMaxCap } = useIsMaxCap();
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log('onSubmit');
+
     const { amount } = values;
 
     if (!slippage) {
@@ -112,7 +114,6 @@ const useSwap = (type: 'buy' | 'sell') => {
 
         const receiveAmount = data?.toString();
 
-        console.log(receiveAmount);
         if (receiveAmount) {
           const res = await submitSwap(
             normieToken.address,

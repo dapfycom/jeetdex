@@ -394,8 +394,19 @@ export class SmartContractInteraction {
   }: IwrapEgldAndEsdtTranferProps) {
     //wrap egld
     const wrapEgldFunctionName = 'wrapEgld';
+
+    const currentShard = store.getState().dapp.shard;
+
+    const shardMappers = {
+      0: 'wrapEGLDShard0',
+      1: 'wrapEGLDShard1',
+      2: 'wrapEGLDShard2'
+    };
+
     const { address }: { address?: IAddress | null } =
-      smartContractsConfig.wrapEGLDShard0;
+      smartContractsConfig?.[shardMappers[currentShard] || 'wrapEGLDShard0'];
+
+    console.log(address);
 
     if (address) {
       const wrapeEgldContract = new SmartContract({ address: address });

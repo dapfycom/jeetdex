@@ -1,6 +1,6 @@
 'use client';
 
-import ChartCard from '@/components/ChartCard/ChartCard';
+import NormieChart from '@/components/ChartCard/NormieChart';
 import Chats from '@/components/ChatsCard/Chats';
 import HoldersList from '@/components/HoldersList/HoldersList';
 import DrawerDialogDemo from '@/components/Layout/NormieLayout/Header/Drawer';
@@ -47,7 +47,7 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
             height: 'calc(100vh - 300px)'
           }}
         >
-          <ChartCard poolPair={poolPair} />
+          <NormieChart poolPair={poolPair} />
         </div>
       </TabsContent>
       <TabsContent value={nav[2].href} className='w-full'>

@@ -1,7 +1,7 @@
+import DegenChart from '@/components/ChartCard/DegenChart';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { nav } from '@/localConstants';
-import Chart from '../Chart/Chart';
 import DegenChats from '../DegenChats/DegenChats';
 import DegenHolderList from '../DegenHolderList/DegenHolderList';
 import DegenTokenSocials from '../DegenTokenSocials/DegenTokenSocials';
@@ -20,7 +20,7 @@ const MobileNav = ({ tab }: { tab: string }) => {
             height: 'calc(100vh - 300px)'
           }}
         >
-          <Chart />
+          <DegenChart />
         </div>
       </TabsContent>
       <TabsContent value={nav[2].href} className='w-full'>
