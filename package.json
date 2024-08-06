@@ -112,5 +112,6 @@
     "ts-jest": "29.1.1",
     "utf-8-validate": "6.0.3",
     "webpack-node-externals": "3.0.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22"
 }
