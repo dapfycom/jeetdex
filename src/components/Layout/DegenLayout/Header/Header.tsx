@@ -16,7 +16,7 @@ export const Header = () => {
         <div>
           <div className='flex gap-2 items-center'>
             <a
-              href='https://twitter.com/jeet_dex'
+              href='https://x.com/jeetdexcom'
               target='_blank'
               rel='noopener noreferrer'
               className='hover:font-bold text-sm sm:text-base'
