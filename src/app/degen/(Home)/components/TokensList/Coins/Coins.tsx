@@ -30,7 +30,7 @@ const Coins = () => {
             name={coin.title}
             ticker={formatTokenI(coin.firstTokenId)}
             marketCap={coin.marketCap}
-            replies={236}
+            replies={coin.replies}
             description={coin.description}
             username={coin.owner.username}
             address={coin.address}

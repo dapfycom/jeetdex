@@ -14,6 +14,7 @@ type Coin = {
   title: string | null;
   description: string | null;
   degenId: string | null;
+  replies: number;
 };
 
 type Bonding = Coin & {
