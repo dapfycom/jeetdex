@@ -1,6 +1,6 @@
 import { logoutFromSession } from '@/actions/user';
 import { admins } from '@/localConstants/admin';
-import { selectUserAddress } from '@/redux/dapp/dapp-slice';
+import { selectIsLoginModal, selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchAxiosJeetdex } from '@/services/rest/api';
 import { useExtensionLogin, useGetLoginInfo } from '@multiversx/sdk-dapp/hooks';
 import { OnProviderLoginType } from '@multiversx/sdk-dapp/types';
@@ -12,6 +12,7 @@ import { useAppSelector } from './useRedux';
 
 export const useAuthentication = () => {
   const pathname = usePathname();
+  const isOpenLoginModal = useAppSelector(selectIsLoginModal);
 
   const commonProps: OnProviderLoginType = {
     callbackRoute: pathname,
@@ -36,6 +37,7 @@ export const useAuthentication = () => {
   }, [tokenLogin?.loginToken, tokenLogin?.signature]);
 
   return {
+    isLoginModal: isOpenLoginModal,
     isLoggedIn,
     tokenLogin,
     address: currentAddress,
