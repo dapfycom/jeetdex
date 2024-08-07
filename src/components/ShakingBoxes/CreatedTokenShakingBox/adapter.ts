@@ -10,7 +10,7 @@ export const adaptPairCreatedData = (
 } => {
   if (!data) return null;
   return {
-    address: data.caller,
+    address: data.address,
     user: data?.caller
       ? data?.caller.startsWith('erd')
         ? data.caller.slice(data.caller.length - 4)
