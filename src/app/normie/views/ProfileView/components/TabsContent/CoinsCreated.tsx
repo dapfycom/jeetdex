@@ -145,7 +145,7 @@ const CoinRow = ({
             </Button>
             {isOpen && (
               <AddSocialsModal
-                tokenIdentifier={pair.firstTokenId}
+                identifier={pair.firstTokenId}
                 onToggle={onToggle}
                 isOpen={isOpen}
               />

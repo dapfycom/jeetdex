@@ -15,7 +15,7 @@ const useUpdateUrlParams = (params?: string[]) => {
 
   return {
     updateParams,
-    currentParams: params.map((p) => searchParams.get(p))
+    currentParams: params ? params.map((p) => searchParams.get(p)) : null
   };
 };
 

@@ -56,3 +56,5 @@ export function getContrastColor(hexColor: string): string {
   // If luminance is lower than threshold, it's a dark color, so return white; otherwise, return black
   return luminance < threshold ? 'white' : 'black';
 }
+
+export const convertFileToUrl = (file: File) => URL.createObjectURL(file);

@@ -5,12 +5,13 @@ import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import useGetUserTokens from '@/hooks/useGetUserTokens';
 import { cn } from '@/lib/utils';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
+import { numericString } from '@/utils/general';
 import { formatBalance, formatTokenI } from '@/utils/mx-utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SendTransactionReturnType } from '@multiversx/sdk-dapp/types';
 import { ForwardedRef, forwardRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ZodTypeAny, z } from 'zod';
+import { z } from 'zod';
 import { addInitialLiquidity } from '../../../utils/sc.calls';
 import {
   useGetAllowedPoolTokens,
@@ -20,17 +21,6 @@ import {
 } from '../../../utils/swr.hooks';
 import SubmitButton from './SubmitButton';
 import TokenAmount from './TokenAmount';
-
-export const numericString = (schema: ZodTypeAny) =>
-  z.preprocess((a) => {
-    if (typeof a === 'string') {
-      return parseFloat(a);
-    } else if (typeof a === 'number') {
-      return a;
-    } else {
-      return undefined;
-    }
-  }, schema);
 
 const AddInitialLiquidityForm = forwardRef(
   (props, ref: ForwardedRef<HTMLDivElement>) => {

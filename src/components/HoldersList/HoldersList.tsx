@@ -2,7 +2,7 @@ import { selectIsOpenCharts } from '@/app/normie/views/SwapView/lib/swap-slice';
 import { network } from '@/config';
 import { useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
-import { devs } from '@/localConstants/devs';
+import { fetchAxiosJeetdex } from '@/services/rest/api';
 import { fetchElrondData } from '@/services/rest/elrond';
 import { formatAddress, formatNumber } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
@@ -10,7 +10,13 @@ import { memo } from 'react';
 import useSWR from 'swr';
 import { getBalancePercentage } from './helper';
 
-const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
+const HoldersList = ({
+  tokenIdentifier,
+  degenId
+}: {
+  tokenIdentifier?: string;
+  degenId?: string;
+}) => {
   const isOpenHolders = useAppSelector(selectIsOpenCharts);
 
   const { data: holders } = useSWR<
@@ -24,6 +30,34 @@ const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
       : null,
     fetchElrondData
   );
+
+  const { data: coinData } = useSWR<{
+    data: {
+      id: string;
+      identifier: string;
+      img: string;
+      ownerId: string;
+      twitter: string;
+      telegram: string;
+      website: string;
+      title: string;
+      description: string;
+      degenId: string;
+      owner: {
+        id: string;
+        username: string;
+        address: string;
+        img: string;
+        bio: string;
+        createdAt: Date;
+        updatedAt: Date;
+      };
+    };
+  }>(`/coins/${degenId || tokenIdentifier}`, fetchAxiosJeetdex);
+  console.log(degenId || tokenIdentifier);
+
+  console.log(coinData);
+
   const { elrondToken } = useGetElrondToken(
     isOpenHolders ? tokenIdentifier : null
   );
@@ -44,7 +78,10 @@ const HoldersList = ({ tokenIdentifier }: { tokenIdentifier?: string }) => {
             totalBalance.toString()
           );
 
-          const isDev = devs.includes(h.address);
+          const isDev = h.address === coinData?.data?.owner?.address;
+
+          console.log(coinData?.data?.owner?.address);
+          console.log(h.address);
           return (
             <div key={h.address} className='text-gray-400 text-sm'>
               <div className='flex w-full justify-between'>

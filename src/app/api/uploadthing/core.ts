@@ -19,7 +19,10 @@ export const ourFileRouter = {
       const user = await getSession();
 
       // If you throw, the user will not be able to upload
-      if (!user) throw new UploadThingError('Unauthorized');
+      if (!user)
+        throw new UploadThingError(
+          'Unauthorized: Please connect your wallet first.'
+        );
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userAddress: user.address };
@@ -67,7 +70,10 @@ export const ourFileRouter = {
       const user = await getSession();
 
       // If you throw, the user will not be able to upload
-      if (!user) throw new UploadThingError('Unauthorized');
+      if (!user)
+        throw new UploadThingError(
+          'Unauthorized: Please connect your wallet first.'
+        );
 
       const tokenI = files[0].name.split('.')[0];
 
@@ -138,7 +144,10 @@ export const ourFileRouter = {
       const user = await getSession();
 
       // If you throw, the user will not be able to upload
-      if (!user) throw new UploadThingError('Unauthorized');
+      if (!user)
+        throw new UploadThingError(
+          'Unauthorized: Please connect your wallet first.'
+        );
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return {
@@ -209,6 +218,30 @@ export const ourFileRouter = {
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userAddress };
+    }),
+
+  newDegenCoin: f({ image: { maxFileSize: '2MB', maxFileCount: 1 } })
+    .middleware(async () => {
+      // This code runs on your server before upload
+      const user = await getSession();
+
+      // If you throw, the user will not be able to upload
+      if (!user)
+        throw new UploadThingError(
+          'Unauthorized: Please connect your wallet first.'
+        );
+
+      // Whatever is returned here is accessible in onUploadComplete as `metadata`
+      return {
+        address: user.address
+      };
+    })
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      return {
+        address: metadata.address,
+        image: file.url
+      };
     })
 } satisfies FileRouter;
 

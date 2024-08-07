@@ -4,7 +4,7 @@ import store from '@/redux/store';
 import { agService } from '@/services/rest/ash';
 import { SmartContractInteraction } from '@/services/sc/call';
 import { interactions } from '@/services/sc/interactions';
-import { getWspOfWrapedEgld } from '@/utils/mx-utils';
+import { getRealBalance, getWspOfWrapedEgld } from '@/utils/mx-utils';
 import { SorSwapResponse } from '@ashswap/ash-sdk-js/out';
 import {
   Address,
@@ -25,21 +25,32 @@ export const submitSwap = async (
     poolAddress,
     pairContractAbi
   );
+  const args = [
+    new TokenIdentifierValue(receiveToken),
+    new BigUIntValue(
+      new BigNumber(receiveValue).multipliedBy(1 - slippage / 100).toFixed(0)
+    )
+  ];
 
-  return interactions.ESDTTransfer({
-    functionName: 'swapIn',
-    token: {
-      collection: sendToken
-    },
-    realValue: sendValue,
+  if (sendToken === tokensID.egld) {
+    console.log('wrapEgldAndEsdtTranfer');
 
-    arg: [
-      new TokenIdentifierValue(receiveToken),
-      new BigUIntValue(
-        new BigNumber(receiveValue).multipliedBy(1 - slippage / 100).toFixed(0)
-      )
-    ]
-  });
+    return interactions.wrapEgldAndEsdtTranfer({
+      functionName: 'swapIn',
+      arg: args,
+      value: getRealBalance(sendValue, 18, true).toFixed(0)
+    });
+  } else {
+    return interactions.ESDTTransfer({
+      functionName: 'swapIn',
+      token: {
+        collection: sendToken
+      },
+      realValue: sendValue,
+
+      arg: args
+    });
+  }
 };
 
 export const submitSwapWithAshAggregator = async (

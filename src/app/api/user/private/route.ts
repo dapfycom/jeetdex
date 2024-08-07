@@ -3,6 +3,7 @@ import { getSession } from '@/utils/server-utils/sessions';
 
 export async function GET() {
   const session = await getSession();
+  console.log(session);
 
   if (!session) {
     return Response.json({ error: 'User not authenticated' }, { status: 401 });

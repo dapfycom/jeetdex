@@ -1,6 +1,12 @@
 'use client';
 import Address from '@/components/Address';
 import GoBackButton from '@/components/GoBackButton';
+import ProfileTabs from '@/components/ProfileLayout/Tabs';
+import CoinsHeld from '@/components/ProfileLayout/TabsContent/CoinsHeld';
+import Followers from '@/components/ProfileLayout/TabsContent/Followers';
+import Following from '@/components/ProfileLayout/TabsContent/Following';
+import Notifications from '@/components/ProfileLayout/TabsContent/Notifications';
+import Replies from '@/components/ProfileLayout/TabsContent/Replies';
 import { network } from '@/config';
 import { useGetUserInfo } from '@/hooks';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -9,11 +15,44 @@ import { Loader2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import ProfileContext from './ProfileContext';
-import ProfileTabs from './components/Tabs';
+import CoinsCreated from './components/TabsContent/CoinsCreated';
 import UserAvatar from './components/UpdateUserImg';
 const EditProfile = dynamic(() => import('./components/EditProfile'), {
   ssr: false
 });
+
+const tabs = [
+  {
+    text: 'coins created',
+    value: 'created',
+    component: CoinsCreated
+  },
+  {
+    text: 'coins held',
+    value: 'held',
+    component: CoinsHeld
+  },
+  {
+    text: 'replies',
+    value: 'replies',
+    component: Replies
+  },
+  {
+    text: 'notifications',
+    value: 'notifications',
+    component: Notifications
+  },
+  {
+    text: 'followers',
+    value: 'followers',
+    component: Followers
+  },
+  {
+    text: 'following',
+    value: 'following',
+    component: Following
+  }
+];
 
 const ProfileView = () => {
   const { userInfo, isLoading } = useGetUserInfo();
@@ -60,7 +99,7 @@ const ProfileView = () => {
           </Link>
 
           <div className='flex space-x-4 border-b overflow-auto w-full'>
-            <ProfileTabs />
+            <ProfileTabs tabs={tabs} />
           </div>
         </div>
       </ProfileContext>

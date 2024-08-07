@@ -38,7 +38,7 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex items-center'>
+        <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex '>
           {process.env.DEGEN_MODE === 'true' && <SiteMode />}
           <div className='w-full '>
             <div className='relative'>

@@ -1,6 +1,6 @@
 'use client';
 
-import ChartCard from '@/components/ChartCard/ChartCard';
+import NormieChart from '@/components/ChartCard/NormieChart';
 import Chats from '@/components/ChatsCard/Chats';
 import HoldersList from '@/components/HoldersList/HoldersList';
 import DrawerDialogDemo from '@/components/Layout/NormieLayout/Header/Drawer';
@@ -8,6 +8,7 @@ import Trades from '@/components/Trades/Trades';
 import UserTrades from '@/components/Trades/UserTrades';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAppSelector } from '@/hooks';
+import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import useUpdateUrlParams from '@/hooks/useUpdateUrlParams';
 import { cn } from '@/lib/utils';
 import { nav } from '@/localConstants';
@@ -21,10 +22,13 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
   const { currentParams, updateParams } = useUpdateUrlParams(['tab']);
   const isOpenChats = useAppSelector(selectIsOpenChats);
   const [open, setOpen] = useState(false);
+  const withDefaultPool = useGetDefaultPool(poolPair);
+
   useEffect(() => {
     if (!currentParams[0]) {
       updateParams('tab', nav[2].href);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentParams[0]]);
   return (
     <Tabs
@@ -33,8 +37,8 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
     >
       <DrawerDialogDemo open={open} setOpen={setOpen} />
       <TabsContent value={nav[0].href} className='w-full'>
-        <TokenSocials tokenIdentifier={poolPair?.firstTokenId} />
-        <HoldersList tokenIdentifier={poolPair?.firstTokenId} />
+        <TokenSocials tokenIdentifier={withDefaultPool?.firstTokenId} />
+        <HoldersList tokenIdentifier={withDefaultPool?.firstTokenId} />
       </TabsContent>
       <TabsContent value={nav[1].href} className='w-full'>
         <div
@@ -43,7 +47,7 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
             height: 'calc(100vh - 300px)'
           }}
         >
-          <ChartCard poolPair={poolPair} />
+          <NormieChart poolPair={poolPair} />
         </div>
       </TabsContent>
       <TabsContent value={nav[2].href} className='w-full'>
@@ -61,10 +65,14 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
               </TabsList>
               <TabsContent value='chats'>
                 {' '}
-                <Chats poolPair={poolPair?.lpTokenIdentifier} />
+                <Chats poolPair={withDefaultPool?.lpTokenIdentifier} />
               </TabsContent>
               <TabsContent value='trades'>
-                <Trades poolPair={poolPair} />
+                <Trades
+                  poolAddress={withDefaultPool?.address}
+                  poolFirstToken={withDefaultPool?.firstToken}
+                  poolSecondToken={withDefaultPool?.secondToken}
+                />
               </TabsContent>
             </Tabs>
           </div>
@@ -81,10 +89,14 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
           </TabsList>
 
           <TabsContent value='trades'>
-            <Trades poolPair={poolPair} />
+            <Trades
+              poolAddress={withDefaultPool?.address}
+              poolFirstToken={withDefaultPool?.firstToken}
+              poolSecondToken={withDefaultPool?.secondToken}
+            />
           </TabsContent>
           <TabsContent value='my-trades'>
-            <UserTrades poolPair={poolPair} />
+            <UserTrades poolPair={withDefaultPool} />
           </TabsContent>
         </Tabs>
       </TabsContent>

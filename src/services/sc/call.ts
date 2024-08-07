@@ -376,6 +376,15 @@ export class SmartContractInteraction {
 
   /**
    * wrapEgldAndEsdtTranfer
+   *
+   * This function wraps EGLD into wEGLD and then performs an ESDT transfer.
+   *
+   * @param {string} functionName - The name of the smart contract function to call for the ESDT transfer.
+   * @param {BigNumber.Value} value - The amount of EGLD to wrap and transfer (example 1, 2, 3).
+   * @param {any[]} [arg=[]] - Optional arguments for the smart contract function.
+   * @param {number} gasL - The gas limit for the transaction.
+   *
+   * @returns {Promise<SendTransactionReturnType>} - The result of sending the transactions.
    */
   public wrapEgldAndEsdtTranfer({
     functionName,
@@ -385,8 +394,19 @@ export class SmartContractInteraction {
   }: IwrapEgldAndEsdtTranferProps) {
     //wrap egld
     const wrapEgldFunctionName = 'wrapEgld';
+
+    const currentShard = store.getState().dapp.shard;
+
+    const shardMappers = {
+      0: 'wrapEGLDShard0',
+      1: 'wrapEGLDShard1',
+      2: 'wrapEGLDShard2'
+    };
+
     const { address }: { address?: IAddress | null } =
-      smartContractsConfig.wrapEGLDShard0;
+      smartContractsConfig?.[shardMappers[currentShard] || 'wrapEGLDShard0'];
+
+    console.log(address);
 
     if (address) {
       const wrapeEgldContract = new SmartContract({ address: address });
@@ -400,7 +420,8 @@ export class SmartContractInteraction {
       const tx1 = SmartContractInteraction.createTransactionFromInteraction(
         wrapInteraction,
         {
-          egldVal: value
+          egldVal: value,
+          gasL: 10_000_000
         }
       );
 
@@ -420,7 +441,7 @@ export class SmartContractInteraction {
         }
       );
 
-      SmartContractInteraction.sendMultipleTransactions({
+      return SmartContractInteraction.sendMultipleTransactions({
         txs: [tx1, tx2]
       });
     }

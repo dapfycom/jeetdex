@@ -32,18 +32,21 @@ const formSchema = z.object({
   description: z.string().optional()
 });
 interface IProps {
-  tokenIdentifier: string;
+  identifier: string;
+  tokenIdentifier?: string;
   isOpen?: boolean;
   onToggle?: () => void;
 }
 
 const AddSocialsModal = ({
   children,
+  identifier,
   tokenIdentifier,
   isOpen,
   onToggle
 }: PropsWithChildren<IProps>) => {
-  const { coinRes, mutate } = useGetCoins(tokenIdentifier);
+  const { coinRes, mutate } = useGetCoins(identifier);
+  console.log(coinRes);
 
   const coinData = useMemo(() => coinRes?.data, [coinRes?.data]);
   const { twitter, telegram, website, title, description } = coinData || {};
@@ -64,12 +67,13 @@ const AddSocialsModal = ({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await addSocialsCoin({
-        identifier: tokenIdentifier,
+        identifier: identifier,
         title: values.title,
         description: values.description,
         twitter: values.twitter,
         telegram: values.telegram,
-        website: values.website
+        website: values.website,
+        tokenIdentifier: tokenIdentifier
       });
 
       mutate();

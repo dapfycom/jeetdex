@@ -1,14 +1,22 @@
 'use client';
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { toast } from '@/components/ui/use-toast';
-import { IElrondToken } from '@/types/scTypes';
 import { UploadButton } from '@/utils/uploadthing';
 import { faCheckCircle, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Loader } from 'lucide-react';
 import { useState } from 'react';
 
-const UpdateCoinImg = ({ token }: { token: IElrondToken }) => {
+const UpdateCoinImg = ({
+  token
+}: {
+  token: {
+    identifier: string;
+    assets?: {
+      svgUrl?: string;
+    };
+  };
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   return (
     <UploadButton
@@ -53,7 +61,7 @@ const UpdateCoinImg = ({ token }: { token: IElrondToken }) => {
           <div className='relative'>
             <TokenImageSRC
               size={35}
-              alt={token.name}
+              alt={token.identifier}
               identifier={token.identifier}
               src={token?.assets?.svgUrl}
               className='w-[35px] h-[35px] rounded-full'

@@ -23,5 +23,8 @@ export const interactions: {
   ),
   metachain: new SmartContractInteraction(
     smartContractsConfig.metachain.simpleAddress
+  ),
+  degenMaster: new SmartContractInteraction(
+    smartContractsConfig.degenMaster.simpleAddress
   )
 };

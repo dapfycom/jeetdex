@@ -66,7 +66,7 @@
 
   /* dapp-sdk */
 
-.dapp-core-component__dappModalStyles__dappModalContent, .dapp-core-component__progressStyles__progress{
+.dapp-core-component__dappModalStyles__dappModalContent, .dapp-core-component__progressStyles__progress,.dapp-core-component__transactionStatusToastStyles__transactions-status-toast-icon, .dapp-core-component__main__warning{
   color: black;
 }
 
@@ -82,4 +82,14 @@
 }
 .dapp-core-component__dappModalStyles__dappModalContent{
   color: black;
+}
+
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+    color: white !important;
 }
