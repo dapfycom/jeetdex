@@ -41,12 +41,15 @@ type SymbolRes = {
   logo_urls: string[];
 };
 // Obtains all symbols for all exchanges supported by CryptoCompare API
-async function getAllSymbols(): Promise<SymbolRes[]> {
+async function getAllSymbols(
+  mode: 'normie' | 'degen' = 'normie'
+): Promise<SymbolRes[]> {
   const coinsInfo = store.getState().dapp.globalData.coins;
-  console.log({ coinsInfo });
 
   const res: SymbolRes[] = coinsInfo
-    .filter((coin) => Boolean(coin.degenId))
+    .filter((coin) =>
+      mode === 'normie' ? !Boolean(coin.degenId) : Boolean(coin.degenId)
+    )
     .map((coin) => {
       const sym: SymbolRes = {
         symbol: formatTokenI(coin.identifier),
@@ -74,7 +77,7 @@ const config = (mode: 'normie' | 'degen' = 'normie') => {
       symbolType,
       onResultReadyCallback
     ) => {
-      const symbols = await getAllSymbols();
+      const symbols = await getAllSymbols(mode);
       console.log(symbols);
 
       const newSymbols = symbols.filter((symbol) => {
@@ -90,7 +93,7 @@ const config = (mode: 'normie' | 'degen' = 'normie') => {
       );
     },
     resolveSymbol: async (symbolName, onSymbolResolvedCallback) => {
-      const symbols = await getAllSymbols();
+      const symbols = await getAllSymbols(mode);
       const symbolItem = symbols.find(({ ticker }) => ticker === symbolName);
       if (!symbolItem) {
         return;
