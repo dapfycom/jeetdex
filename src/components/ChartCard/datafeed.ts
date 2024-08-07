@@ -48,7 +48,9 @@ async function getAllSymbols(
 
   const res: SymbolRes[] = coinsInfo
     .filter((coin) =>
-      mode === 'normie' ? !Boolean(coin.degenId) : Boolean(coin.degenId)
+      mode === 'normie'
+        ? !Boolean(coin.degenId)
+        : Boolean(coin.degenId) && coin.identifier.includes('-')
     )
     .map((coin) => {
       const sym: SymbolRes = {
@@ -61,7 +63,6 @@ async function getAllSymbols(
       };
       return sym;
     });
-  console.log({ symbols: res });
 
   return res;
 }
