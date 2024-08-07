@@ -48,6 +48,7 @@ export default memo(function ChartCard({
     };
   }, []); // Empty dependency array means this effect runs once on mount and clean up on unmount
 
+  const isReady = Boolean(firstToken?.identifier) && isScriptReady;
   return (
     <div
       className={cn(
@@ -60,9 +61,12 @@ export default memo(function ChartCard({
         firstTokenJeetdexPrice={firstTokenJeetdexPrice}
         firstTokenReserve={firstTokenReserve}
       />
-      {!isScriptReady && <Skeleton className='h-[450px] w-full bg-[#1C243E]' />}
-      {isScriptReady && (
-        <TVChartContainer tokenIdentifier={firstToken.identifier} mode={mode} />
+      {!isReady && <Skeleton className='h-[450px] w-full bg-[#1C243E]' />}
+      {isReady && (
+        <TVChartContainer
+          tokenIdentifier={firstToken?.identifier}
+          mode={mode}
+        />
       )}
     </div>
   );
