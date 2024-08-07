@@ -41,7 +41,7 @@ const Sell = () => {
             <TokenImageSRC
               src={token.assets?.svgUrl}
               alt={token.ticker}
-              identifier={coin.degenId}
+              identifier={coin.identifier}
               size={28}
               className='w-6 h-6 rounded-full'
             />

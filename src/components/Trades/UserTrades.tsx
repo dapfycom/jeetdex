@@ -1,5 +1,4 @@
 'use client';
-import { IPoolPair } from '@/app/normie/views/PoolsView/utils/types';
 import {
   Table,
   TableBody,
@@ -10,7 +9,6 @@ import {
 } from '@/components/ui/table';
 import { network } from '@/config';
 import { useAppSelector } from '@/hooks';
-import useGetDefaultPool from '@/hooks/useGetDefaultPool';
 import { cn } from '@/lib/utils';
 import { selectUserAddress } from '@/redux/dapp/dapp-slice';
 import { fetchTransactions } from '@/services/rest/elrond/transactions';
@@ -21,17 +19,37 @@ import { formatBigNumber, hexToBigNumber } from '@/utils/numbers';
 import useSWR from 'swr';
 import { colorByType } from './Trades';
 
-const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
-  const pool = useGetDefaultPool(poolPair);
+const UserTrades = ({
+  poolAddress,
+  poolFirstToken,
+  poolSecondToken,
+  mode = 'normie'
+}: {
+  poolAddress: string;
+  poolFirstToken: {
+    ticker: string;
+    decimals: number;
+    identifier: string;
+  };
+  poolSecondToken: {
+    ticker: string;
+    decimals: number;
+    identifier: string;
+  };
+  mode?: 'normie' | 'degen';
+}) => {
   const address = useAppSelector(selectUserAddress);
+
   const { data } = useSWR(
-    address && pool ? `/transactions/${pool.address}/swapIn/${address}` : null,
+    address && poolAddress
+      ? `/transactions/${poolAddress}/swapIn/${address}`
+      : null,
     async () => {
       return fetchTransactions({
-        receiver: pool.address,
+        receiver: poolAddress,
         sender: address,
         withScResults: true,
-        function: 'swapIn',
+        function: mode === 'normie' ? 'swapIn' : 'swap',
         status: 'success'
       });
     },
@@ -49,21 +67,21 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
           <TableHead className='text-left'>account</TableHead>
           <TableHead className='text-center'>type</TableHead>
           <TableHead className='text-center'>
-            {formatTokenI(pool.secondToken.ticker)}
+            {formatTokenI(poolSecondToken.ticker)}
           </TableHead>
           <TableHead className='text-center'>
-            {formatTokenI(pool.firstToken.ticker)}
+            {formatTokenI(poolFirstToken.ticker)}
           </TableHead>
 
           <TableHead className='text-center'>date</TableHead>
 
-          <TableHead className='text-right'>transaction</TableHead>
+          <TableHead className='text-right'>hash</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {finalData.map((d) => {
           const type =
-            d.action.arguments.transfers[0].token === pool.firstTokenId
+            d.action.arguments.transfers[0].token === poolFirstToken.identifier
               ? 'sell'
               : 'buy';
 
@@ -81,7 +99,7 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
             formatBalance(
               {
                 balance: secondTokenTxValue,
-                decimals: pool.secondToken.decimals
+                decimals: poolFirstToken.decimals
               },
               true
             )
@@ -93,14 +111,13 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
             formatBalance(
               {
                 balance: firstTokenTxValue,
-                decimals: pool.firstToken.decimals
+                decimals: poolFirstToken.decimals
               },
               true
             )
           );
 
           const firstTokenAmountParts = firstTokenAmount.split(' ');
-
           return (
             <TableRow key={d.txHash}>
               <TableCell className='text-left w-fit'>
@@ -140,7 +157,7 @@ const UserTrades = ({ poolPair }: { poolPair: IPoolPair }) => {
                   rel='noopener noreferrer'
                   className='whitespace-nowrap'
                 >
-                  {formatAddress(d.txHash, 4, 4)}
+                  {formatAddress(d.txHash, 2, 2)}
                 </a>
               </TableCell>
             </TableRow>

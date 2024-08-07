@@ -10,41 +10,43 @@ import SiteMode from '@/components/SiteMode/SiteMode';
 
 export const Header = () => {
   return (
-    <header className='flex flex-row   justify-between pl-1 pr-1 pt-1'>
-      <div className='flex gap-4'>
-        <MxLink to={'/'} className='flex items-center justify-between gap-3'>
-          <Logo className='rounded-full w-12 h-12' />
-        </MxLink>
-
-        <div>
-          <div className='flex gap-2 items-center'>
-            <a
-              href='https://x.com/jeetdexcom'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:font-bold text-sm sm:text-base'
+    <header className='flex sm:flex-row   justify-between pl-1 pr-1 pt-1 flex-col items-center gap-4'>
+      <div className='flex gap-4 w-full items-center'>
+        <div className=' gap-2 items-center flex justify-between s w-full'>
+          <div className='flex gap-4'>
+            <MxLink
+              to={'/'}
+              className='flex items-center justify-between gap-3 '
             >
-              [twitter]
-            </a>
+              <Logo className='rounded-full w-12 h-12' />
+            </MxLink>
+            <div>
+              <div className='flex gap-2 items-center'>
+                <a
+                  href='https://x.com/jeetdexcom'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='hover:font-bold text-sm sm:text-base'
+                >
+                  [twitter]
+                </a>
 
-            <a
-              href='https://t.me/jeetdex'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='hover:font-bold text-sm sm:text-base'
-            >
-              [telegram]
-            </a>
-          </div>
-
-          <div className='flex gap-2 items-center'>
-            <HowItWorksModal />
+                <a
+                  href='https://t.me/jeetdex'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='hover:font-bold text-sm sm:text-base'
+                >
+                  [telegram]
+                </a>
+              </div>
+              <div className='flex gap-2 items-center'>
+                <HowItWorksModal />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className='flex lg:hidden flex-1 justify-center'>
-          <DegenPoolAndBuySellShakingBox />
-        </div>
         <div className=' gap-2 items-center lg:flex hidden'>
           <div>
             <SellBuyTokenShakingBox mode='degen' />
@@ -53,15 +55,18 @@ export const Header = () => {
             <DegenCreatedTokenShakingBox />
           </div>
         </div>
-      </div>
-
-      <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex '>
-        {process.env.DEGEN_MODE === 'true' && <SiteMode />}
-        <div className='w-full '>
-          <div className='relative'>
-            <Login />
+        <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex '>
+          {process.env.DEGEN_MODE === 'true' && <SiteMode />}
+          <div className='w-full '>
+            <div className='relative'>
+              <Login />
+            </div>
           </div>
         </div>
+      </div>
+
+      <div className='flex lg:hidden flex-1 justify-center'>
+        <DegenPoolAndBuySellShakingBox />
       </div>
     </header>
   );

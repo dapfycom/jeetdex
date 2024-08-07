@@ -96,7 +96,11 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
             />
           </TabsContent>
           <TabsContent value='my-trades'>
-            <UserTrades poolPair={withDefaultPool} />
+            <UserTrades
+              poolAddress={withDefaultPool?.address}
+              poolFirstToken={withDefaultPool?.firstToken}
+              poolSecondToken={withDefaultPool?.secondToken}
+            />
           </TabsContent>
         </Tabs>
       </TabsContent>

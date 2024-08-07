@@ -24,7 +24,8 @@ export const colorByType = {
 const Trades = ({
   poolAddress,
   poolFirstToken,
-  poolSecondToken
+  poolSecondToken,
+  mode = 'normie'
 }: {
   poolAddress: string;
   poolFirstToken: {
@@ -37,14 +38,15 @@ const Trades = ({
     decimals: number;
     identifier: string;
   };
+  mode?: 'normie' | 'degen';
 }) => {
   const { data } = useSWR(
-    poolAddress ? `/transactions/${poolAddress}/swapIn` : null,
+    poolAddress ? `/transactions/${poolAddress}/swap` : null,
     async () => {
       return fetchTransactions({
         receiver: poolAddress,
         withScResults: true,
-        function: 'swapIn',
+        function: mode === 'normie' ? 'swapIn' : 'swap',
         status: 'success'
       });
     },
