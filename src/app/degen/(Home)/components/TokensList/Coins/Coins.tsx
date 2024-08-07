@@ -16,7 +16,7 @@ const Coins = () => {
 
   return (
     <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>
-      {isLoading ? (
+      {isLoading && coinsData.length === 0 ? (
         <>
           {[...Array(10)].map((_, index) => (
             <CoinSkeleton key={index} />

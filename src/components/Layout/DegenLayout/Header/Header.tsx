@@ -3,6 +3,9 @@ import Login from '@/components/Login/normie/Login';
 
 import Logo from '@/components/Logo/Logo';
 import { MxLink } from '@/components/MxLink';
+import DegenCreatedTokenShakingBox from '@/components/ShakingBoxes/CreatedTokenShakingBox/DegenCreatedTokenShakingBox';
+import DegenPoolAndBuySellShakingBox from '@/components/ShakingBoxes/DegenPoolAndBuySellShakingBox/DegenPoolAndBuySellShakingBox';
+import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
 
 export const Header = () => {
@@ -36,6 +39,18 @@ export const Header = () => {
 
           <div className='flex gap-2 items-center'>
             <HowItWorksModal />
+          </div>
+        </div>
+
+        <div className='flex lg:hidden flex-1 justify-center'>
+          <DegenPoolAndBuySellShakingBox />
+        </div>
+        <div className=' gap-2 items-center lg:flex hidden'>
+          <div>
+            <SellBuyTokenShakingBox mode='degen' />
+          </div>
+          <div className=''>
+            <DegenCreatedTokenShakingBox />
           </div>
         </div>
       </div>

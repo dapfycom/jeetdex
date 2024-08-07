@@ -75,9 +75,9 @@ model MessagesReplies {
 }
 
 model Coins {
-  id          String  @id @default(cuid())
-  identifier  String  @unique
-  img         String? @unique
+  id          String   @id @default(cuid())
+  identifier  String   @unique
+  img         String?  @unique
   ownerId     String
   twitter     String?
   telegram    String?
@@ -85,7 +85,8 @@ model Coins {
   title       String?
   description String?
   degenId     String?
-  owner       Users   @relation("coins", fields: [ownerId], references: [id])
+  createdAt   DateTime @default(now())
+  owner       Users    @relation("coins", fields: [ownerId], references: [id])
 }
 
 model UserSettings {
@@ -149,4 +150,25 @@ model DailyStatistics {
   topGainers Json
   topLosers  Json
   volume     String
+}
+
+model DegenSwapTransaction {
+  id              Int     @id @default(autoincrement())
+  caller          String
+  tokenIn         String
+  tokenAmountIn   String
+  tokenOut        String
+  tokenAmountOut  String
+  fee             String
+  tokenInReserve  String
+  tokenOutReserve String
+  block           Int
+  epoch           Int
+  timestamp       Int
+  hash            String?
+  token           String?
+  price           Float?
+
+  @@index([caller])
+  @@index([timestamp])
 }

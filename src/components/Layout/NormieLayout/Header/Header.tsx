@@ -30,7 +30,7 @@ export const Header = () => {
           </div>
           <div className=' gap-2 items-center lg:flex hidden'>
             <div>
-              <SellBuyTokenShakingBox />
+              <SellBuyTokenShakingBox mode='normie' />
             </div>
             <div className=''>
               <CreatedTokenShakingBox />

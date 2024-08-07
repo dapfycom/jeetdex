@@ -11,7 +11,14 @@ import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { adaptSwapInEventData } from './adapter';
 
-const SellBuyTokenShakingBox = () => {
+interface IProps {
+  mode: 'degen' | 'normie';
+}
+const SellBuyTokenShakingBox = ({ mode }: IProps) => {
+  const socketEvet =
+    mode === 'normie' ? 'swapInTransaction' : 'degenSwapTransaction';
+  const lastestSwapEnpoint =
+    mode === 'normie' ? 'lastSwapTx' : 'lastDegenSwapTx';
   const [shake, setShake] = useState(false);
   const [bgColor, setBgColor] = useState(generateLightColor());
   const [swapInTxEvent, setSwapInTxEvent] = useState<ISwapInEventData | null>(
@@ -20,7 +27,7 @@ const SellBuyTokenShakingBox = () => {
 
   useEffect(() => {
     socket.on(
-      'swapInTransaction',
+      socketEvet,
       ({
         message: data
       }: {
@@ -46,20 +53,18 @@ const SellBuyTokenShakingBox = () => {
     );
 
     return () => {
-      socket.off('swapInTransaction');
+      socket.off(socketEvet);
     };
   }, []);
 
-  const { data } = useSWR<ISwapInEventData>('/lastSwapTx', fetchEventsApiData);
+  const { data } = useSWR<ISwapInEventData>(
+    `/${lastestSwapEnpoint}`,
+    fetchEventsApiData
+  );
 
-  const currentValue: {
-    user: string;
-    amount: string;
-    token: string;
-    type: string;
-    address: string;
-    username: string;
-  } = adaptSwapInEventData(swapInTxEvent || data);
+  console.log(data);
+
+  const currentValue = adaptSwapInEventData(swapInTxEvent || data);
 
   if (!currentValue) return null;
 
@@ -87,7 +92,9 @@ const SellBuyTokenShakingBox = () => {
           >
             {currentValue.username || currentValue.user}
           </Link>{' '}
-          {`${currentValue.type} ${formatNumber(currentValue.amount)} JEET to`}{' '}
+          {`${currentValue.type} ${formatNumber(
+            currentValue.amount
+          )} ${formatTokenI(currentValue.secondToken)} to`}{' '}
           <Link
             href={`/?swap=${currentValue.token}`}
             className='hover:text-blue-700 hover:font-bold'

@@ -7,6 +7,7 @@ export const adaptSwapInEventData = (
   user: string;
   amount: string;
   token: string;
+  secondToken: string;
   type: string;
   address: string;
   username: string;
@@ -15,10 +16,22 @@ export const adaptSwapInEventData = (
   return {
     user: data.caller.slice(data.caller.length - 4),
     amount:
-      data.tokenIn === tokensID.jeet ? data.tokenAmountIn : data.tokenAmountOut,
+      data.tokenIn === tokensID.jeet || data.tokenIn === tokensID.wegld
+        ? data.tokenAmountIn
+        : data.tokenAmountOut,
 
-    token: data.tokenIn === tokensID.jeet ? data.tokenOut : data.tokenIn,
-    type: data.tokenIn === tokensID.jeet ? 'sold' : 'bought',
+    token:
+      data.tokenIn === tokensID.jeet || data.tokenIn === tokensID.wegld
+        ? data.tokenOut
+        : data.tokenIn,
+    secondToken:
+      data.tokenIn === tokensID.jeet || data.tokenIn === tokensID.wegld
+        ? data.tokenIn
+        : data.tokenOut,
+    type:
+      data.tokenIn === tokensID.jeet || data.tokenIn === tokensID.wegld
+        ? 'sold'
+        : 'bought',
     address: data.caller,
     username: data.username
   };

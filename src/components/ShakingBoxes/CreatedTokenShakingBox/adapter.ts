@@ -11,7 +11,11 @@ export const adaptPairCreatedData = (
   if (!data) return null;
   return {
     address: data.caller,
-    user: data?.caller ? data.caller.slice(data.caller.length - 4) : null,
+    user: data?.caller
+      ? data?.caller.startsWith('erd')
+        ? data.caller.slice(data.caller.length - 4)
+        : data.caller
+      : null,
     date: data.date,
     token: data.firstToken
   };

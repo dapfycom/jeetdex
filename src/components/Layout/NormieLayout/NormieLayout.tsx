@@ -7,7 +7,6 @@ import { Header } from './Header';
 export const NormieLayout = async ({ children }: PropsWithChildren) => {
   const coins = await fetchCoinsData();
   const pools = await fetchPoolsData();
-  console.log(pools);
 
   const data = { coins, pools };
 
