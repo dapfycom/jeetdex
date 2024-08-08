@@ -47,7 +47,10 @@ export const useFetchExtraCoinInfo = (boundingLength) => {
 export const useFetchAllBondingData = () => {
   const { data, error, isLoading, mutate } = useSWR(
     'degenMaster:getAllBondingData',
-    fetchAllBondingData
+    fetchAllBondingData,
+    {
+      refreshInterval: 5000
+    }
   );
 
   return {

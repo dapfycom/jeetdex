@@ -26,6 +26,7 @@ const Coins = () => {
         coinsData.map((coin, index) => (
           <CoinItem
             key={index}
+            shake={index === 0}
             imageUrl={coin.img}
             name={coin.title}
             ticker={formatTokenI(coin.firstTokenId)}

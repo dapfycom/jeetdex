@@ -34,11 +34,12 @@ const Heading = () => {
       {coinsData[0] && (
         <div className='w-full max-w-[400px] mx-auto mt-4'>
           <CoinItem
+            shake={false}
             imageUrl={coinsData[0].img}
             name={coinsData[0].title}
             ticker={formatTokenI(coinsData[0].firstTokenId)}
             marketCap={coinsData[0].marketCap}
-            replies={236}
+            replies={coinsData[0].replies}
             username={coinsData[0].owner.username}
             address={coinsData[0].address}
             degenId={coinsData[0].degenId}

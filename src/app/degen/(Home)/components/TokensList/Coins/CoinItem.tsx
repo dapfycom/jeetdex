@@ -2,6 +2,7 @@ import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { cn } from '@/lib/utils';
 import { formatBalance } from '@/utils/mx-utils';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 interface IProps {
   imageUrl: string;
@@ -13,6 +14,7 @@ interface IProps {
   username: string;
   address: string;
   degenId: string;
+  shake: boolean;
 }
 
 const CoinItem = ({
@@ -24,12 +26,22 @@ const CoinItem = ({
   description,
   username,
   address,
-  degenId
+  degenId,
+  shake
 }: IProps) => {
+  const [shakeCoin, setShakeCoin] = useState(false);
+  useEffect(() => {
+    if (shake) {
+      setShakeCoin(true);
+      setTimeout(() => setShakeCoin(false), 500);
+    }
+  }, [shake]);
   return (
     <Link
       href={'/pair/' + address}
-      className='grid  grid-cols-[100px_auto] sm:grid-cols-[128px_auto] gap-3 hover:border-white hover:border rounded-md h-fit p-3'
+      className={`grid  grid-cols-[100px_auto] sm:grid-cols-[128px_auto] gap-3 hover:border-white hover:border rounded-md h-fit p-3 ${
+        shakeCoin ? 'animate-shake  bg-yellow-400' : ''
+      }`}
     >
       <div className='relative w-[100px] sm:w-[128px] h-[auto]'>
         <TokenImageSRC

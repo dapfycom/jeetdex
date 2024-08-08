@@ -56,6 +56,7 @@ const SellBuyTokenShakingBox = ({ mode }: IProps) => {
       socket.off(socketEvet);
     };
   }, []);
+  console.log(lastestSwapEnpoint);
 
   const { data } = useSWR<ISwapInEventData>(
     `/${lastestSwapEnpoint}`,
