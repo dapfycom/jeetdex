@@ -1,4 +1,8 @@
-import { MaiarAppIcon, MaiarDefiWalletIcon } from '@/components/icons/ui-icons';
+import {
+  MaiarAppIcon,
+  MaiarDefiWalletIcon,
+  WebWalletIcon
+} from '@/components/icons/ui-icons';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -16,6 +20,7 @@ import { useAppDispatch } from '@/hooks/useRedux';
 import { openLogin } from '@/redux/dapp/dapp-slice';
 import { ExtensionLoginButton } from '@multiversx/sdk-dapp/UI/extension/ExtensionLoginButton';
 import { WalletConnectLoginButton } from '@multiversx/sdk-dapp/UI/walletConnect/WalletConnectLoginButton';
+import { WebWalletLoginButton } from '@multiversx/sdk-dapp/UI/webWallet/WebWalletLoginButton';
 import { OnProviderLoginType } from '@multiversx/sdk-dapp/types';
 import { usePathname } from 'next/navigation';
 
@@ -29,6 +34,12 @@ const desktopLoginComponent = (
   <div className='flex items-center gap-2 h-full'>
     {' '}
     <MaiarDefiWalletIcon /> MultiversX DeFi Wallet{' '}
+  </div>
+);
+const webWalletLoginComponent = (
+  <div className='flex items-center gap-2 h-full'>
+    {' '}
+    <WebWalletIcon /> MultiversX Web Wallet{' '}
   </div>
 );
 
@@ -71,6 +82,10 @@ const ConnectComponent = () => {
                 : {})}
             >
               {mobileLoginComponent}
+            </LoginMethod>
+
+            <LoginMethod as={WebWalletLoginButton} {...commonProps}>
+              {webWalletLoginComponent}
             </LoginMethod>
           </div>
         </div>
