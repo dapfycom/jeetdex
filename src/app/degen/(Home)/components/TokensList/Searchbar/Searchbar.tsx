@@ -15,7 +15,7 @@ const SearchBar = () => {
   return (
     <div className='flex gap-3 justify-center mx-auto items-center'>
       <Input
-        className='w-full max-w-[400px] bg-primary text-primary-foreground placeholder:text-primary-foreground/60'
+        className='w-full max-w-[400px] bg-primary text-primary-foreground placeholder:text-primary-foreground/60 focus:bg-primary'
         placeholder='search for token'
         onChange={onSearch}
         value={currentParams[0] || ''}
