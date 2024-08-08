@@ -66,6 +66,7 @@ const formSchema = z.object({
 });
 
 const CreateTokenForm = () => {
+  const degenId = useRef(generateRandomString(10));
   const [amountToBuyFirstTime, setAmountToBuyFirstTime] = useState('');
   const firstBuyDialogState = useDisclosure();
   const { data: fee } = useSWR('degenMaster:getNewTokenFee', fetchNewTokenFee);
@@ -107,6 +108,7 @@ const CreateTokenForm = () => {
   }>();
 
   const onSuccessTx = async () => {
+    degenId.current = generateRandomString(10);
     if (txHandle.current === 0) {
       const tx = await fetchTransactionByHash(transactions[0].hash);
       form.reset();
@@ -178,8 +180,6 @@ const CreateTokenForm = () => {
       form.getValues();
 
     if (fee) {
-      const degenId = generateRandomString(10);
-
       const data = {
         name: name,
         description: description,
@@ -187,7 +187,7 @@ const CreateTokenForm = () => {
         telegram: telegram,
         twitter: twitter,
         website: website,
-        degenId: degenId
+        degenId: degenId.current
       };
 
       try {
@@ -202,7 +202,7 @@ const CreateTokenForm = () => {
           name,
           ticker.toUpperCase(),
           fee,
-          degenId,
+          degenId.current,
           amountToBuy
         );
         setSessionId(res.sessionId);

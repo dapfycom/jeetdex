@@ -79,15 +79,15 @@ export const useFetchCoinsData = (filter?: {
     mutate: mutateCoinsInfo
   } = useFetchExtraCoinInfo(boundingData.length);
 
-  let coinsData: BondingData[] = boundingData
-    .map((item) => {
-      const coin = coinsInfo.find((coin) => coin.degenId === item.dbId);
-      return {
-        ...item,
-        ...coin
-      };
-    })
-    .filter((item) => !!item.degenId);
+  let coinsData: BondingData[] = boundingData.map((item) => {
+    const coin = coinsInfo.find((coin) => coin.degenId === item.dbId);
+    return {
+      ...item,
+      ...coin
+    };
+  });
+
+  coinsData = coinsData.filter((item) => !!item.degenId);
 
   if (filter?.search) {
     coinsData = coinsData.filter((item) => {

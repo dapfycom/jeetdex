@@ -108,6 +108,21 @@ export const degenNewCoin = async ({
   }
 
   try {
+    const coin = await prisma.coins.findFirst({
+      where: {
+        img: image
+      }
+    });
+
+    if (coin) {
+      return coin;
+    }
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+
+  try {
     const coin = await prisma.coins.create({
       data: {
         identifier: degenId,
