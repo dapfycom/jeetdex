@@ -12,7 +12,7 @@ export const Header = () => {
   return (
     <header className='flex sm:flex-row   justify-between pl-1 pr-1 pt-1 flex-col items-center gap-4'>
       <div className='flex gap-4 w-full items-center'>
-        <div className=' gap-2 items-center flex justify-between s w-full'>
+        <div className=' gap-2 items-center flex justify-between '>
           <div className='flex gap-4'>
             <MxLink
               to={'/'}
@@ -47,7 +47,7 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className=' gap-2 items-center lg:flex hidden'>
+        <div className=' gap-2 items-center lg:flex hidden flex-1'>
           <div>
             <SellBuyTokenShakingBox mode='degen' />
           </div>
