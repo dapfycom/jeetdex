@@ -27,23 +27,26 @@ const Chats = ({ poolPair }: IProps) => {
   const onHoverChatReply = (replyedId: number) => {
     setHighlight(replyedId);
   };
+  console.log(chat);
 
   const handleLike = async (message: any, liked?: boolean) => {
     if (poolPair) {
       const data = {
         data: {
           ...chat,
-          messages: chat.messages.map((m) => {
-            if (message.id === m.id) {
-              return {
-                ...m,
-                likes: liked
-                  ? [...m.likes.filter((l) => l.likedById !== m.senderId)]
-                  : [...m.likes, { likedById: m.senderId }]
-              };
-            }
-            return m;
-          })
+          messages: chat.messages
+            .sort((a, b) => a.id - b.id)
+            .map((m) => {
+              if (message.id === m.id) {
+                return {
+                  ...m,
+                  likes: liked
+                    ? [...m.likes.filter((l) => l.likedById !== m.senderId)]
+                    : [...m.likes, { likedById: m.senderId }]
+                };
+              }
+              return m;
+            })
         }
       };
       try {
@@ -153,38 +156,40 @@ const Chats = ({ poolPair }: IProps) => {
                     Send the first message for {poolPair}
                   </p>
                 ) : (
-                  chat.messages.map((message) => {
-                    const isLiked = message.likes
-                      .map((l) => l.likedById)
-                      .includes(message.senderId);
-                    return (
-                      <Fragment key={message.id}>
-                        <Message
-                          likes={message.likes.length}
-                          message={message.content}
-                          image={message.image}
-                          user={{
-                            id: message.sender.id,
-                            img: message.sender.img,
-                            username: message.sender.username,
-                            address: message.sender.address
-                          }}
-                          messageId={message.id}
-                          poolPair={poolPair}
-                          messageReplyingId={
-                            message?.messageReplying?.messageRepleidId
-                          }
-                          highlight={highlight === message.id}
-                          onHoverChatReply={onHoverChatReply}
-                          time={message.createdAt}
-                          onLike={() => handleLike(message, isLiked)}
-                          isLiked={isLiked}
-                        />
+                  chat.messages
+                    .sort((a, b) => a.id - b.id)
+                    .map((message) => {
+                      const isLiked = message.likes
+                        .map((l) => l.likedById)
+                        .includes(message.senderId);
+                      return (
+                        <Fragment key={message.id}>
+                          <Message
+                            likes={message.likes.length}
+                            message={message.content}
+                            image={message.image}
+                            user={{
+                              id: message.sender.id,
+                              img: message.sender.img,
+                              username: message.sender.username,
+                              address: message.sender.address
+                            }}
+                            messageId={message.id}
+                            poolPair={poolPair}
+                            messageReplyingId={
+                              message?.messageReplying?.messageRepleidId
+                            }
+                            highlight={highlight === message.id}
+                            onHoverChatReply={onHoverChatReply}
+                            time={message.createdAt}
+                            onLike={() => handleLike(message, isLiked)}
+                            isLiked={isLiked}
+                          />
 
-                        <Divider />
-                      </Fragment>
-                    );
-                  })
+                          <Divider />
+                        </Fragment>
+                      );
+                    })
                 )}
               </>
             )}
