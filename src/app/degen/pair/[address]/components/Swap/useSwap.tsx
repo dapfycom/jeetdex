@@ -155,7 +155,9 @@ const useSwap = (type: 'buy' | 'sell') => {
   return {
     onSubmit,
     token,
+    mxTokenIn: token,
     form,
+    amountOut,
     reset
   };
 };

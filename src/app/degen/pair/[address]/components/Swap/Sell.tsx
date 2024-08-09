@@ -2,7 +2,12 @@
 import { TokenImageSRC } from '@/components/TokenImage/TokenImage';
 import { Input } from '@/components/ui/input';
 import useGetAccountToken from '@/hooks/useGetAccountToken';
-import { formatBalance, formatTokenI } from '@/utils/mx-utils';
+import useGetElrondToken from '@/hooks/useGetElrondToken';
+import {
+  formatBalance,
+  formatBalanceDollar,
+  formatTokenI
+} from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { useGetBoundingPair } from '../../hooks';
 import PlaceTradeButton from './components/PlaceTradeButton';
@@ -10,9 +15,10 @@ import SetSlippageButton from './components/SetSlippageButton';
 import useSwap from './useSwap';
 
 const Sell = () => {
-  const { onSubmit, token, form, reset } = useSwap('sell');
+  const { onSubmit, token, amountOut, form, reset } = useSwap('sell');
   const { coin } = useGetBoundingPair();
   const { accountToken, isLoading } = useGetAccountToken(coin.firstTokenId);
+  const { elrondToken: secondToken } = useGetElrondToken(coin.secondTokenId);
   if (!token) {
     return <div>Loading...</div>;
   }
@@ -26,25 +32,49 @@ const Sell = () => {
         <SetSlippageButton />
       </div>
       <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col'>
-        <div className='flex items-center rounded-md relative bg-[#2e303a]'>
-          <Input
-            className='flex h-10 rounded-md border border-slate-200  w-full pl-3'
-            id='amount'
-            placeholder='0.0'
-            {...form.register('amount')}
-          />
+        <div className='flex items-center relative gap-2'>
+          <div className='border border-slate-200 flex items-start justify-between  rounded-md flex-1 pr-2'>
+            <div className='relative h-[50px] flex-1'>
+              <Input
+                className='h-10 w-[150px] border-none flex-1 pl-3 focus:border-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent'
+                id='amount'
+                placeholder='0.0'
+                {...form.register('amount')}
+              />
+              <span className='absolute bottom-[3px] left-[15px] text-xs'>
+                <span>
+                  {formatBalance({
+                    balance: amountOut,
+                    decimals: 18
+                  })}{' '}
+                  {formatTokenI(coin?.secondTokenId)}
+                </span>
 
-          <div className='flex items-center ml-2 absolute right-2'>
-            <span className='text-white mr-2 text-sm'>
-              {formatTokenI(token.ticker)}
-            </span>
-            <TokenImageSRC
-              src={token.assets?.svgUrl}
-              alt={token.ticker}
-              identifier={coin.identifier}
-              size={28}
-              className='w-6 h-6 rounded-full'
-            />
+                <span className='ml-2'>
+                  ~ ${' '}
+                  {formatBalanceDollar(
+                    {
+                      balance: amountOut,
+                      decimals: 18
+                    },
+                    secondToken?.price
+                  )}
+                </span>
+              </span>
+            </div>
+
+            <div className='flex items-center  right-2 pt-2'>
+              <span className='text-white mr-2 text-sm'>
+                {formatTokenI(token.ticker)}
+              </span>
+              <TokenImageSRC
+                src={token.assets?.svgUrl}
+                alt={token.ticker}
+                identifier={coin.identifier}
+                size={28}
+                className='w-6 h-6 rounded-full'
+              />
+            </div>
           </div>
         </div>
 
