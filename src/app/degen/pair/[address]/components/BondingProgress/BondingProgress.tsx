@@ -42,10 +42,15 @@ const BondingProgress = () => {
           decimals: 18
         })}{' '}
         tokens still available for sale in the bonding curve and{' '}
-        {formatBalance({
-          balance: coin.secondTokenReserve,
-          decimals: 18
-        })}{' '}
+        {formatNumber(
+          (formatBalance(
+            {
+              balance: coin.secondTokenReserve,
+              decimals: 18
+            },
+            true
+          ) as number) - 150
+        )}{' '}
         EGLD .
       </p>
     </div>
