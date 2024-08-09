@@ -2,6 +2,7 @@ import DegenChart from '@/components/ChartCard/DegenChart';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { nav } from '@/localConstants';
+import BondingProgress from '../BondingProgress/BondingProgress';
 import DegenChats from '../DegenChats/DegenChats';
 import DegenHolderList from '../DegenHolderList/DegenHolderList';
 import DegenTokenSocials from '../DegenTokenSocials/DegenTokenSocials';
@@ -13,6 +14,7 @@ const MobileNav = ({ tab }: { tab: string }) => {
     <Tabs value={tab} defaultValue={nav[2].href}>
       <TabsContent value={nav[0].href} className='w-full flex flex-col gap-4'>
         <DegenTokenSocials />
+        <BondingProgress />
         <DegenHolderList />
       </TabsContent>
       <TabsContent value={nav[1].href} className='w-full flex flex-col gap-4'>
