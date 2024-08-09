@@ -13,10 +13,10 @@ export const Header = () => {
     <header className='flex sm:flex-row   justify-between pl-1 pr-1 pt-1 flex-col items-center gap-4'>
       <div className='flex gap-2 sm:gap-4 w-full items-center'>
         <div className=' gap-2 items-center flex justify-between '>
-          <div className=' gap-4 flex'>
+          <div className=' gap-4 flex '>
             <MxLink
               to={'/'}
-              className=' items-center justify-between gap-3 hidden sm:flex'
+              className=' items-center justify-between gap-3 hidden sm:flex w-12 h-12'
             >
               <Logo className='rounded-full w-12 h-12' />
             </MxLink>
