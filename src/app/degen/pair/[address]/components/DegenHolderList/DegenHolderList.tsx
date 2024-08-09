@@ -9,7 +9,7 @@ const DegenHolderList = () => {
     <HoldersList
       tokenIdentifier={coin?.firstTokenId}
       degenId={coin?.degenId}
-      contractAddress={coin.address}
+      contractAddress={coin?.address}
     />
   );
 };
