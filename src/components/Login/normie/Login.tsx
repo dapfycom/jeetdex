@@ -27,7 +27,8 @@ const Login = () => {
     dispatch(
       setUserAddress(process.env.NEXT_PUBLIC_CONNECTED_ADDRESS ?? address)
     );
-    dispatch(setShard(shard || 1));
+
+    dispatch(setShard(shard ?? 1));
   }, [address, dispatch, shard]);
 
   useEffect(() => {
