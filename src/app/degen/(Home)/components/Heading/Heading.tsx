@@ -1,4 +1,5 @@
 'use client';
+import { trendingAddress } from '@/app/degen/constants';
 import trandingImg from '@/assets/images/trending.png';
 import { formatTokenI } from '@/utils/mx-utils';
 import Image from 'next/image';
@@ -9,7 +10,9 @@ import CoinSkeleton from '../TokensList/Coins/CoinSkeleton';
 
 const Heading = () => {
   const { coinsData, isLoading } = useFetchCoinsData();
-
+  const trendingCoin = coinsData.find(
+    (coin) => coin.address === trendingAddress
+  );
   return (
     <div>
       <h1 className='w-full flex justify-center'>
@@ -31,18 +34,18 @@ const Heading = () => {
           <CoinSkeleton />
         </div>
       )}
-      {coinsData[0] && (
+      {trendingCoin && (
         <div className='w-full max-w-[400px] mx-auto mt-4'>
           <CoinItem
             shake={false}
-            imageUrl={coinsData[0].img}
-            name={coinsData[0].title}
-            ticker={formatTokenI(coinsData[0].firstTokenId)}
-            marketCap={coinsData[0].marketCap}
-            replies={coinsData[0].replies}
-            username={coinsData[0].owner.username}
-            address={coinsData[0].address}
-            degenId={coinsData[0].degenId}
+            imageUrl={trendingCoin.img}
+            name={trendingCoin.title}
+            ticker={formatTokenI(trendingCoin.firstTokenId)}
+            marketCap={trendingCoin.marketCap}
+            replies={trendingCoin.replies}
+            username={trendingCoin.owner.username}
+            address={trendingCoin.address}
+            degenId={trendingCoin.degenId}
           />
         </div>
       )}
