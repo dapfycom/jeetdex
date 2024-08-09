@@ -406,8 +406,6 @@ export class SmartContractInteraction {
     const { address }: { address?: IAddress | null } =
       smartContractsConfig?.[shardMappers[currentShard] || 'wrapEGLDShard0'];
 
-    console.log(address);
-
     if (address) {
       const wrapeEgldContract = new SmartContract({ address: address });
 

@@ -22,9 +22,10 @@ const Login = () => {
   const hasTimeoutStarted = useRef(false);
 
   const { address, shard, account } = useGetAccountInfo();
+
   useEffect(() => {
     dispatch(
-      setUserAddress(process.env.NEXT_PUBLIC_CONNECTED_ADDRESS || address)
+      setUserAddress(process.env.NEXT_PUBLIC_CONNECTED_ADDRESS ?? address)
     );
     dispatch(setShard(shard || 1));
   }, [address, dispatch, shard]);
