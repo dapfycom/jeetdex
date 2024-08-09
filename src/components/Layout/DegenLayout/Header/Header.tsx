@@ -11,12 +11,12 @@ import SiteMode from '@/components/SiteMode/SiteMode';
 export const Header = () => {
   return (
     <header className='flex sm:flex-row   justify-between pl-1 pr-1 pt-1 flex-col items-center gap-4'>
-      <div className='flex gap-4 w-full items-center'>
+      <div className='flex gap-2 sm:gap-4 w-full items-center'>
         <div className=' gap-2 items-center flex justify-between '>
-          <div className='flex gap-4'>
+          <div className=' gap-4 flex'>
             <MxLink
               to={'/'}
-              className='flex items-center justify-between gap-3 '
+              className=' items-center justify-between gap-3 hidden sm:flex'
             >
               <Logo className='rounded-full w-12 h-12' />
             </MxLink>
@@ -26,7 +26,7 @@ export const Header = () => {
                   href='https://x.com/jeetdexcom'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='hover:font-bold text-sm sm:text-base'
+                  className='hover:font-bold text-xs sm:text-base'
                 >
                   [twitter]
                 </a>
@@ -35,7 +35,7 @@ export const Header = () => {
                   href='https://t.me/jeetdex'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='hover:font-bold text-sm sm:text-base'
+                  className='hover:font-bold text-xs sm:text-base'
                 >
                   [telegram]
                 </a>
@@ -47,7 +47,7 @@ export const Header = () => {
           </div>
         </div>
 
-        <div className=' gap-2 items-center lg:flex hidden flex-1'>
+        <div className=' gap-2  lg:flex hidden flex-1'>
           <div>
             <SellBuyTokenShakingBox mode='degen' />
           </div>
@@ -55,9 +55,9 @@ export const Header = () => {
             <DegenCreatedTokenShakingBox />
           </div>
         </div>
-        <div className='h-full text-sm sm:relative  justify-end sm:bg-transparent flex '>
+        <div className='h-full w-full text-sm sm:relative  justify-end sm:bg-transparent flex '>
           {process.env.DEGEN_MODE === 'true' && <SiteMode />}
-          <div className='w-full '>
+          <div className=''>
             <div className='relative'>
               <Login />
             </div>
