@@ -3,6 +3,7 @@ import {
   faChartLine,
   faClipboardList,
   faExchange,
+  faHome,
   faSearch
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,12 +17,13 @@ export enum RouteNamesEnum {
 
 type NavItem = {
   label: IconDefinition;
-  href: 'info' | 'chart' | 'buy/sell' | 'txs';
+  href: string;
 };
 
 export const nav: NavItem[] = [
   { label: faSearch, href: 'info' },
   { label: faChartLine, href: 'chart' },
   { label: faExchange, href: 'buy/sell' },
-  { label: faClipboardList, href: 'txs' }
+  { label: faClipboardList, href: 'txs' },
+  { label: faHome, href: '/' }
 ];

@@ -19,7 +19,9 @@ const Layout = ({ children }: { children: ReactNode }) => {
           {nav.map((item) => {
             return (
               <Link
-                href={`?tab=${item.href}`}
+                href={
+                  item.href.startsWith('/') ? item.href : `?tab=${item.href}`
+                }
                 key={item.href}
                 className='bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400'
               >
