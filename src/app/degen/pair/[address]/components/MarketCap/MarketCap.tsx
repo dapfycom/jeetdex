@@ -14,7 +14,7 @@ const MarketCap = () => {
     .multipliedBy(secondToken?.price)
     .toNumber();
 
-  if (!firstToken || !firstTokenJeetdexPrice) return null;
+  if (!firstToken || !firstTokenJeetdexPrice || !coin) return null;
   return (
     <span className='text-primary text-left'>
       Market cap: $

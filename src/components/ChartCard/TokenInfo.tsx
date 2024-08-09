@@ -23,7 +23,7 @@ const TokenInfo = ({
   const coin = globalData.coins.find(
     (t) => t.identifier === firstToken?.identifier
   );
-  if (!firstToken || !firstTokenJeetdexPrice) return null;
+  if (!firstToken || !firstTokenJeetdexPrice || !coin) return null;
   const isDegen = Boolean(coin?.degenId);
   return (
     <div className='mb-3'>
