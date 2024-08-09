@@ -66,49 +66,23 @@ export const decodeToken = async (
   }
 };
 
-interface CacheEntry {
-  value: NativeAuthDecoded;
-  timestamp: number;
-}
-
-let getSessionCache: CacheEntry | null = null;
-const CACHE_DURATION = 20 * 1000; // 1 minute in milliseconds
-
 export const getSession = async (): Promise<NativeAuthDecoded> => {
-  const currentTime = Date.now();
-
-  // Check if cache is valid
-  if (
-    getSessionCache &&
-    currentTime - getSessionCache.timestamp < CACHE_DURATION
-  ) {
-    return getSessionCache.value;
-  }
-
   const authTokenCookie = cookies().get('auth-token');
 
   if (!authTokenCookie?.value) {
-    getSessionCache = { value: null, timestamp: currentTime };
     return null;
   }
 
   // verify the token
-  console.log('verify token');
-
   const valid = await verifyToken(authTokenCookie.value);
-  console.log(valid);
-
   // if invalid, return null
   if (!valid) {
-    getSessionCache = { value: null, timestamp: currentTime };
     return null;
   }
-
-  // else, decode the token and cache the result
-  const decodedToken = await decodeToken(authTokenCookie.value);
-  getSessionCache = { value: decodedToken, timestamp: currentTime };
-  return decodedToken;
+  // else, return the session
+  return decodeToken(authTokenCookie.value);
 };
+
 export const removeSession = () => {
   cookies().delete('auth-token');
 };
