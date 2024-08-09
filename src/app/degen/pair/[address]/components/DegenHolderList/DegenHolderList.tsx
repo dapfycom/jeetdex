@@ -6,7 +6,11 @@ const DegenHolderList = () => {
   const { coin } = useGetBoundingPair();
 
   return (
-    <HoldersList tokenIdentifier={coin?.firstTokenId} degenId={coin?.degenId} />
+    <HoldersList
+      tokenIdentifier={coin?.firstTokenId}
+      degenId={coin?.degenId}
+      contractAddress={coin.address}
+    />
   );
 };
 

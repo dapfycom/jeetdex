@@ -12,10 +12,12 @@ import { getBalancePercentage } from './helper';
 
 const HoldersList = ({
   tokenIdentifier,
-  degenId
+  degenId,
+  contractAddress
 }: {
   tokenIdentifier?: string;
   degenId?: string;
+  contractAddress?: string;
 }) => {
   const isOpenHolders = useAppSelector(selectIsOpenCharts);
 
@@ -54,9 +56,6 @@ const HoldersList = ({
       };
     };
   }>(`/coins/${degenId || tokenIdentifier}`, fetchAxiosJeetdex);
-  console.log(degenId || tokenIdentifier);
-
-  console.log(coinData);
 
   const { elrondToken } = useGetElrondToken(
     isOpenHolders ? tokenIdentifier : null
@@ -94,6 +93,11 @@ const HoldersList = ({
                   {i + 1}. {formatAddress(h.address)}
                   {isDev && (
                     <div className='text-xs text-gray-400'>( 👑 dev ) </div>
+                  )}
+                  {contractAddress === h.address && (
+                    <div className='text-xs text-gray-400'>
+                      ( 🏦 bonding curve ){' '}
+                    </div>
                   )}
                 </a>
                 {elrondToken && <div>{formatNumber(percent.toNumber())}%</div>}
