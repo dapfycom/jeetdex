@@ -7,19 +7,14 @@ import {
   TransactionsToastList,
   TransactionsTracker
 } from '@/components';
-import {
-  apiTimeout,
-  environment,
-  sampleAuthenticatedDomains,
-  walletConnectV2ProjectId
-} from '@/config';
+import { apiTimeout, environment, walletConnectV2ProjectId } from '@/config';
 import { AxiosInterceptorContext } from '@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext';
 import type { PropsWithChildren } from 'react';
 const MxDappProvider = ({ children }: PropsWithChildren) => {
   return (
     <AxiosInterceptorContext.Provider>
       <AxiosInterceptorContext.Interceptor
-        authenticatedDomains={sampleAuthenticatedDomains}
+        authenticatedDomains={['https://tools.elrond.com']}
       >
         <DappProvider
           environment={environment}
