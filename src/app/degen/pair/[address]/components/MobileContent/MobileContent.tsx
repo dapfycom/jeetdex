@@ -8,6 +8,7 @@ import DegenHolderList from '../DegenHolderList/DegenHolderList';
 import DegenTokenSocials from '../DegenTokenSocials/DegenTokenSocials';
 import DegenTrades from '../DegenTrades/DegenTrades';
 import DegeUserTrades from '../DegenTrades/DegeUserTrades';
+import MarketCap from '../MarketCap/MarketCap';
 import Swap from '../Swap/Swap';
 const MobileNav = ({ tab }: { tab: string }) => {
   return (
@@ -28,6 +29,7 @@ const MobileNav = ({ tab }: { tab: string }) => {
         </div>
       </TabsContent>
       <TabsContent value={nav[2].href} className='w-full flex flex-col gap-4'>
+        <MarketCap />
         <Swap />
         <DegenChats />
       </TabsContent>

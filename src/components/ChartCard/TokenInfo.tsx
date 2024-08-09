@@ -24,8 +24,6 @@ const TokenInfo = ({
     (t) => t.identifier === firstToken?.identifier
   );
   if (!firstToken || !firstTokenJeetdexPrice) return null;
-  console.log(firstToken);
-  console.log(coin);
   const isDegen = Boolean(coin?.degenId);
   return (
     <div className='mb-3'>
