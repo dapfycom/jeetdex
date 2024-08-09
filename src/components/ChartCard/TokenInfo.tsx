@@ -7,7 +7,6 @@ import Link from 'next/link';
 
 const TokenInfo = ({
   firstToken,
-  firstTokenReserve,
   firstTokenJeetdexPrice
 }: {
   firstToken: {
@@ -16,7 +15,7 @@ const TokenInfo = ({
     decimals: number;
     supply: number | string;
   };
-  firstTokenReserve: string;
+
   firstTokenJeetdexPrice: number;
 }) => {
   const globalData = useAppSelector(selectGlobalData);
@@ -24,7 +23,7 @@ const TokenInfo = ({
   const coin = globalData.coins.find(
     (t) => t.identifier === firstToken?.identifier
   );
-  if (!firstToken) return null;
+  if (!firstToken || !firstTokenJeetdexPrice) return null;
   console.log(firstToken);
   console.log(coin);
   const isDegen = Boolean(coin?.degenId);
@@ -38,17 +37,6 @@ const TokenInfo = ({
             </span>
             <span className='text-muted-foreground hidden sm:inline'>
               Ticker: ${formatTokenI(firstToken.identifier)}
-            </span>
-            <span className='text-primary'>
-              Liquidity: $
-              {formatBalanceDollar(
-                {
-                  balance: firstTokenReserve,
-                  decimals: firstToken.decimals
-                },
-                firstTokenJeetdexPrice,
-                true
-              )}
             </span>
 
             <span className='text-primary'>

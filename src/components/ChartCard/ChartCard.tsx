@@ -12,7 +12,6 @@ const TVChartContainer = dynamic(() => import('./index'), { ssr: false });
 export default memo(function ChartCard({
   firstToken,
   firstTokenJeetdexPrice,
-  firstTokenReserve,
   mode
 }: {
   firstToken: {
@@ -59,7 +58,6 @@ export default memo(function ChartCard({
       <TokenInfo
         firstToken={firstToken}
         firstTokenJeetdexPrice={firstTokenJeetdexPrice}
-        firstTokenReserve={firstTokenReserve}
       />
       {!isReady && <Skeleton className='h-[450px] w-full bg-[#1C243E]' />}
       {isReady && (
