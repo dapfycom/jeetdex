@@ -3,13 +3,13 @@
 import useGetStatics from '@/components/Statics/useGetStatics';
 import { Skeleton } from '@/components/ui/skeleton';
 import { tokensID } from '@/config';
-import { useAppSelector } from '@/hooks';
 import useGetElrondToken from '@/hooks/useGetElrondToken';
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import { selectGlobalData } from '@/redux/dapp/dapp-slice';
 import { formatBalanceDollar, formatNumber } from '@/utils/mx-utils';
 import BigNumber from 'bignumber.js';
 import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Analitics() {
   const { data, isLoading: isLoadingStatics } = useGetStatics();
@@ -26,7 +26,7 @@ export default function Analitics() {
       : []
   );
 
-  const globalData = useAppSelector(selectGlobalData);
+  const globalData = useSelector(selectGlobalData);
   const pools = globalData.pools;
 
   const tvl = useMemo(() => {
