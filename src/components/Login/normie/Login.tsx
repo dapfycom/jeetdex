@@ -4,11 +4,11 @@ import DisconnectComponent from './DisconnectComponent';
 
 import { createAuthTokenCookie } from '@/actions/cookies';
 import { createProfile } from '@/actions/user';
-import { useAppDispatch, useAuthentication } from '@/hooks';
+import { useAppDispatch } from '@/hooks';
 import { setShard, setUserAddress } from '@/redux/dapp/dapp-slice';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
 import dynamic from 'next/dynamic';
-import { Suspense, useEffect, useRef } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Skeleton } from '../../ui/skeleton';
 
 const ConnectComponent = dynamic(() => import('./ConnectComponent'), {
@@ -18,8 +18,8 @@ const ConnectComponent = dynamic(() => import('./ConnectComponent'), {
 const Login = () => {
   const { isLoggedIn, tokenLogin } = useGetLoginInfo();
   const dispatch = useAppDispatch();
-  const { handleConnect } = useAuthentication();
-  const hasTimeoutStarted = useRef(false);
+  // const { handleConnect } = useAuthentication();
+  // const hasTimeoutStarted = useRef(false);
 
   const { address, shard, account } = useGetAccountInfo();
 
@@ -38,25 +38,25 @@ const Login = () => {
   }, [address]);
 
   // After 3 seconds, if the user is not logged in, connect to the dapp
-  useEffect(() => {
-    if (!hasTimeoutStarted.current) {
-      hasTimeoutStarted.current = true;
-      localStorage.setItem('isLoggedIn2', 'false');
-      setTimeout(() => {
-        const isLoggedInLocalStorage = localStorage.getItem('isLoggedIn');
-        const isLoggedIn2LocalStorage = localStorage.getItem('isLoggedIn2');
-        if (
-          isLoggedInLocalStorage === 'false' &&
-          isLoggedIn2LocalStorage === 'false'
-        ) {
-          localStorage.setItem('isLoggedIn2', 'true');
-          handleConnect();
-        }
-      }, 3000);
-    }
+  // useEffect(() => {
+  //   if (!hasTimeoutStarted.current) {
+  //     hasTimeoutStarted.current = true;
+  //     localStorage.setItem('isLoggedIn2', 'false');
+  //     setTimeout(() => {
+  //       const isLoggedInLocalStorage = localStorage.getItem('isLoggedIn');
+  //       const isLoggedIn2LocalStorage = localStorage.getItem('isLoggedIn2');
+  //       if (
+  //         isLoggedInLocalStorage === 'false' &&
+  //         isLoggedIn2LocalStorage === 'false'
+  //       ) {
+  //         localStorage.setItem('isLoggedIn2', 'true');
+  //         handleConnect();
+  //       }
+  //     }, 3000);
+  //   }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem('isLoggedIn', isLoggedIn.toString());
