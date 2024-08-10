@@ -18,6 +18,7 @@ export enum RouteNamesEnum {
 type NavItem = {
   label: IconDefinition;
   href: string;
+  for?: 'degen' | 'normie';
 };
 
 export const nav: NavItem[] = [
@@ -25,5 +26,5 @@ export const nav: NavItem[] = [
   { label: faChartLine, href: 'chart' },
   { label: faExchange, href: 'buy/sell' },
   { label: faClipboardList, href: 'txs' },
-  { label: faHome, href: '/' }
+  { label: faHome, href: '/', for: 'degen' }
 ];

@@ -50,19 +50,21 @@ export const Header = () => {
         </div>
 
         <div className='bg-[#08111b] px-6 py-5 flex justify-between fixed bottom-0 left-0 right-0 w-full h-[80px] z-[100] sm:hidden '>
-          {nav.map((item) => {
-            return (
-              <Link
-                href={`/?tab=${item.href}`}
-                key={item.href}
-                className='bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400'
-              >
-                <span className='flex items-center justify-center'>
-                  <FontAwesomeIcon icon={item.label} />
-                </span>
-              </Link>
-            );
-          })}
+          {nav
+            .filter((item) => item.for !== 'degen')
+            .map((item) => {
+              return (
+                <Link
+                  href={`/?tab=${item.href}`}
+                  key={item.href}
+                  className='bg-none data-[state=active]:bg-transparent px-2 py-2 data-[state=active]:text-white data-[state=active]:font-bold  text-gray-400'
+                >
+                  <span className='flex items-center justify-center'>
+                    <FontAwesomeIcon icon={item.label} />
+                  </span>
+                </Link>
+              );
+            })}
 
           <DrawerClient />
         </div>
