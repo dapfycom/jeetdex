@@ -6,11 +6,11 @@ import SwrProvider from './SwrProvider';
 
 const MainProvider = ({ children }: PropsWithChildren) => {
   return (
-    <MxDappProvider>
-      <ReduxProvider>
-        <SwrProvider>{children}</SwrProvider>
-      </ReduxProvider>
-    </MxDappProvider>
+    <ReduxProvider>
+      <SwrProvider>
+        <MxDappProvider>{children}</MxDappProvider>
+      </SwrProvider>
+    </ReduxProvider>
   );
 };
 

@@ -49,6 +49,7 @@ export function middleware(request: NextRequest) {
     const pathnameIsMissingSiteMode = siteModes.every(
       (mode) => !pathname.startsWith(`/${mode}/`) && pathname !== `/${mode}`
     );
+    console.log(pathnameIsMissingSiteMode);
 
     // Redirect if there is no locale
     if (pathnameIsMissingSiteMode) {

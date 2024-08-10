@@ -26,6 +26,8 @@ export const verifyToken = async (
 
   while (attempts < maxAttempts) {
     try {
+      console.log('attempting to verify token');
+
       const valid = await server.validate(authToken);
       cache.set(authToken, {
         result: valid,

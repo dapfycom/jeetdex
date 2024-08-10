@@ -1,5 +1,5 @@
 import { Toaster } from '@/components/ui/toaster';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { Toaster as Toaster2 } from 'react-hot-toast';
@@ -9,6 +9,11 @@ const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans'
 });
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_FRONTED_URL),
@@ -31,11 +36,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: ['/assets/img/social.png']
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1
-  },
+
   icons: {
     icon: '/favicon.ico'
   },

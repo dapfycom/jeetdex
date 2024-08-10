@@ -1,20 +1,27 @@
-import {
-  DappProvider,
-  // uncomment this to use the custom transaction tracker
-  // TransactionsTracker
-  NotificationModal,
-  SignTransactionsModals,
-  TransactionsToastList,
-  TransactionsTracker
-} from '@/components';
+'use client';
+
 import { apiTimeout, environment, walletConnectV2ProjectId } from '@/config';
 import { AxiosInterceptorContext } from '@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext';
-import type { PropsWithChildren } from 'react';
-const MxDappProvider = ({ children }: PropsWithChildren) => {
+import dynamic from 'next/dynamic';
+import {
+  NotificationModal,
+  SignTransactionsModals,
+  TransactionsToastList
+} from './sdk-components';
+
+export const DappProvider = dynamic(
+  async () => {
+    return (await import('@multiversx/sdk-dapp/wrappers/DappProvider'))
+      .DappProvider;
+  },
+  { ssr: false }
+);
+
+const MxDappProvider = ({ children }) => {
   return (
     <AxiosInterceptorContext.Provider>
       <AxiosInterceptorContext.Interceptor
-        authenticatedDomains={['https://tools.elrond.com']}
+        authenticatedDomanis={['https://tools.elrond.com']}
       >
         <DappProvider
           environment={environment}
@@ -24,13 +31,10 @@ const MxDappProvider = ({ children }: PropsWithChildren) => {
             walletConnectV2ProjectId
           }}
           dappConfig={{
-            isSSR: true,
             shouldUseWebViewProvider: true
           }}
           customComponents={{
             transactionTracker: {
-              // uncomment this to use the custom transaction tracker
-              component: TransactionsTracker,
               props: {
                 onSuccess: () => {}
               }

@@ -35,14 +35,10 @@ const nextConfig = {
     ]
   },
   distDir: 'build',
-  transpilePackages: ['@multiversx/sdk-dapp'],
+  transpilePackages: ["@multiversx/sdk-dapp"],
   webpack: (config) => {
     config.resolve.fallback = { fs: false };
-    config.externals.push('pino-pretty', 'lokijs', 'encoding', {
-      bufferutil: 'bufferutil',
-      'utf-8-validate': 'utf-8-validate'
-    });
-
+    config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
   experimental: {

@@ -48,6 +48,7 @@ const AddLiquidityCard = ({ pool }: AddLiquidityCardProps) => {
     Number(amountForEquivalent),
     elrondTokenForEquivalent.decimals
   );
+  console.log(data);
 
   const handleOnChangeFirstAmount = (
     val: string,
