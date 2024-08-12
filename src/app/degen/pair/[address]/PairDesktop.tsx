@@ -30,12 +30,12 @@ const PairDesktop = () => {
 
           <Tabs
             defaultValue='chats'
-            className={cn('w-full rounded-sm bg-[#1C243E] border-none  p-4')}
+            className={cn('w-full rounded-sm  border-none ')}
           >
             <TabsList className='w-full justify-start flex bg-transparent'>
-              <TabsTrigger value='chats'>chats</TabsTrigger>
-              <TabsTrigger value='trades'>trades</TabsTrigger>
-              <TabsTrigger value='my-trades'>my trades</TabsTrigger>
+              <TabsTrigger value='chats'>Thread</TabsTrigger>
+              <TabsTrigger value='trades'>Trades</TabsTrigger>
+              <TabsTrigger value='my-trades'>My Trades</TabsTrigger>
             </TabsList>
             <TabsContent value='chats'>
               {' '}

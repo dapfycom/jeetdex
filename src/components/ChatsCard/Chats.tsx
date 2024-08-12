@@ -1,115 +1,79 @@
 'use client';
-import { likeMessage } from '@/actions/messages';
-import useDisclosure from '@/hooks/useDisclosure';
+import { useGetUserInfo } from '@/hooks';
 import { cn } from '@/lib/utils';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PlusIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import Divider from '../Divider/Divider';
 import { Button } from '../ui/button';
 import { Skeleton } from '../ui/skeleton';
-import { toast } from '../ui/use-toast';
+import CoinIInfo from './CoinIInfo';
 import Message from './Message';
-import { useGetChat } from './hooks';
+import { useChat } from './hooks';
 
 const SendMessagePopup = dynamic(() => import('./SendMessagePopup'));
 interface IProps {
-  poolPair?: string;
+  poolPair: string;
+  dev?: string;
+  coin?: {
+    name: string;
+    ticker: string;
+    img: string;
+    date: string;
+    description: string;
+    owner?: {
+      username: string;
+      address: string;
+      img: string;
+    };
+  };
 }
 
-const Chats = ({ poolPair }: IProps) => {
-  const { chat, isLoading, mutate } = useGetChat(poolPair);
-  const { isOpen, onToggle, onClose } = useDisclosure();
-  const [highlight, setHighlight] = useState<number>();
+const Chats = ({ poolPair, dev, coin }: IProps) => {
+  const {
+    chat,
+    isLoading,
+    handleLike,
+    onToggle,
+    isOpen,
+    onClose,
+    highlight,
+    onHoverChatReply
+  } = useChat(poolPair);
 
-  const onHoverChatReply = (replyedId: number) => {
-    setHighlight(replyedId);
-  };
+  const { userInfo } = useGetUserInfo();
+  console.log(coin?.owner?.address);
 
-  const handleLike = async (message: any, liked?: boolean) => {
-    if (poolPair) {
-      const data = {
-        data: {
-          ...chat,
-          messages: chat.messages
-            .sort((a, b) => a.id - b.id)
-            .map((m) => {
-              if (message.id === m.id) {
-                return {
-                  ...m,
-                  likes: liked
-                    ? [...m.likes.filter((l) => l.likedById !== m.senderId)]
-                    : [...m.likes, { likedById: m.senderId }]
-                };
-              }
-              return m;
-            })
-        }
-      };
-      try {
-        await mutate(
-          async () => {
-            const res = await likeMessage(message.id, message.sender.id);
-
-            toast({
-              description: (
-                <div>
-                  <FontAwesomeIcon
-                    icon={faCheckCircle}
-                    className='mr-2 text-green-500'
-                  />
-                  {res}
-                </div>
-              )
-            });
-
-            return data;
-          },
-          {
-            optimisticData: data,
-            rollbackOnError: true,
-            populateCache: true,
-            revalidate: false
-          }
-        );
-      } catch (error) {
-        toast({
-          description: (
-            <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle}
-                className='mr-2 text-red-500'
-              />
-              {error.message}
-            </div>
-          )
-        });
-      }
-    } else {
-      toast({
-        description: (
-          <div>
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              className='mr-2 text-red-500'
-            />
-            You can&apos;t like this message
-          </div>
-        )
-      });
-    }
-  };
   return (
     <div className={cn('relative w-full')}>
       <div className=' flex flex-col  w-full  p-0  text-left '>
+        <a
+          className='text-sm text-gray-300 cursor-pointer mb-1'
+          href={`#message-${chat.messages[chat.messages.length - 1].id}`}
+          id='scroll-to-bottom'
+        >
+          [scroll to bottom]
+        </a>
+
+        <div className='mb-1'>
+          {coin?.owner?.address && (
+            <CoinIInfo
+              coinDate={coin.date}
+              coinDescription={coin.description}
+              coinTitle={coin.name}
+              userImage={coin.owner.img}
+              userName={coin.owner.username}
+              userAddress={coin.owner?.address}
+              coinImg={coin.img}
+            />
+          )}
+        </div>
         {!poolPair ? (
           <div className='py-8 text-center'>
             We couldn&apos;t find a chat for this pool
           </div>
         ) : (
-          <div className='flex-1 w-full flex flex-col gap-2 py-8'>
+          <div className='flex-1 w-full flex flex-col gap-1'>
             {isLoading ? (
               <>
                 <div className='flex w-full gap-3'>
@@ -155,40 +119,49 @@ const Chats = ({ poolPair }: IProps) => {
                     Send the first message for {poolPair}
                   </p>
                 ) : (
-                  chat.messages
-                    .sort((a, b) => a.id - b.id)
-                    .map((message) => {
-                      const isLiked = message.likes
-                        .map((l) => l.likedById)
-                        .includes(message.senderId);
-                      return (
-                        <Fragment key={message.id}>
-                          <Message
-                            likes={message.likes.length}
-                            message={message.content}
-                            image={message.image}
-                            user={{
-                              id: message.sender.id,
-                              img: message.sender.img,
-                              username: message.sender.username,
-                              address: message.sender.address
-                            }}
-                            messageId={message.id}
-                            poolPair={poolPair}
-                            messageReplyingId={
-                              message?.messageReplying?.messageRepleidId
-                            }
-                            highlight={highlight === message.id}
-                            onHoverChatReply={onHoverChatReply}
-                            time={message.createdAt}
-                            onLike={() => handleLike(message, isLiked)}
-                            isLiked={isLiked}
-                          />
+                  <>
+                    {chat.messages
+                      .sort((a, b) => a.id - b.id)
+                      .map((message) => {
+                        const isLiked = message.likes
+                          .map((l) => l.likedById)
+                          .includes(userInfo?.data?.id);
 
-                          <Divider />
-                        </Fragment>
-                      );
-                    })
+                        return (
+                          <Fragment key={message.id}>
+                            <Message
+                              likes={message.likes.length}
+                              message={message.content}
+                              image={message.image}
+                              user={{
+                                id: message.sender.id,
+                                img: message.sender.img,
+                                username: message.sender.username,
+                                address: message.sender.address
+                              }}
+                              messageId={message.id}
+                              poolPair={poolPair}
+                              messageReplyingId={
+                                message?.messageReplying?.messageRepleidId
+                              }
+                              highlight={highlight === message.id}
+                              onHoverChatReply={onHoverChatReply}
+                              time={message.createdAt}
+                              onLike={() => handleLike(message, isLiked)}
+                              isLiked={isLiked}
+                              isDev={dev === message.sender.address}
+                            />
+                          </Fragment>
+                        );
+                      })}
+
+                    <a
+                      className='text-sm text-gray-300 cursor-pointer'
+                      href={`#scroll-to-bottom`}
+                    >
+                      [scroll to top]
+                    </a>
+                  </>
                 )}
               </>
             )}
@@ -198,7 +171,7 @@ const Chats = ({ poolPair }: IProps) => {
 
       {poolPair && (
         <Button
-          className='absolute  top-[-10px] sm:top-[-60px] sm:right-[-10px] right-3 w-8 h-8'
+          className='absolute  top-[-10px] sm:top-[-40px] sm:right-[10px] right-3 w-8 h-8'
           size='icon'
           type='button'
           onClick={onToggle}
