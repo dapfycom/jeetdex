@@ -60,7 +60,6 @@ const Chats = ({ poolPair, dev, coin }: IProps) => {
           {coin?.owner?.address && (
             <CoinIInfo
               coinDate={coin.date}
-              coinDescription={coin.description}
               coinTitle={coin.name}
               userImage={coin.owner.img}
               userName={coin.owner.username}

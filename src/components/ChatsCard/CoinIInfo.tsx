@@ -10,7 +10,6 @@ const CoinIInfo = ({
   userName,
   userAddress,
   coinDate,
-  coinDescription,
   coinTitle,
   coinImg
 }: {
@@ -18,7 +17,6 @@ const CoinIInfo = ({
   userName: string;
   userAddress: string;
   coinDate: string;
-  coinDescription: string;
   coinTitle: string;
   coinImg?: string;
 }) => {
@@ -69,7 +67,6 @@ const CoinIInfo = ({
           )}
 
           <h4>{coinTitle}</h4>
-          <p>{coinDescription}</p>
         </div>
       </div>
     </div>
