@@ -5,7 +5,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
@@ -26,14 +25,13 @@ export default function SiteMode() {
 
   return (
     <Select value={mode} onValueChange={handleModeChange}>
-      <SelectTrigger className='w-[80px] text-white border border-gray-300 h-[22px] mr-3'>
+      <SelectTrigger className='w-fit text-white border border-gray-300 h-[22px] mr-3'>
         <SelectValue placeholder='Site Modes' />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Modes</SelectLabel>
           {siteModes.map((mode) => (
-            <SelectItem key={mode} value={mode} className='capitalize'>
+            <SelectItem key={mode} value={mode}>
               {mode}
             </SelectItem>
           ))}
