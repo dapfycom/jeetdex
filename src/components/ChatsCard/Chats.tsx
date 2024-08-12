@@ -42,18 +42,19 @@ const Chats = ({ poolPair, dev, coin }: IProps) => {
   } = useChat(poolPair);
 
   const { userInfo } = useGetUserInfo();
-  console.log(coin?.owner?.address);
 
   return (
     <div className={cn('relative w-full')}>
       <div className=' flex flex-col  w-full  p-0  text-left '>
-        <a
-          className='text-sm text-gray-300 cursor-pointer mb-1'
-          href={`#message-${chat.messages[chat.messages.length - 1].id}`}
-          id='scroll-to-bottom'
-        >
-          [scroll to bottom]
-        </a>
+        {chat && (
+          <a
+            className='text-sm text-gray-300 cursor-pointer mb-1'
+            href={`#message-${chat.messages[chat.messages.length - 1].id}`}
+            id='scroll-to-bottom'
+          >
+            [scroll to bottom]
+          </a>
+        )}
 
         <div className='mb-1'>
           {coin?.owner?.address && (
