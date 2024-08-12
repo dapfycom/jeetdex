@@ -27,7 +27,6 @@ const Chats = ({ poolPair }: IProps) => {
   const onHoverChatReply = (replyedId: number) => {
     setHighlight(replyedId);
   };
-  console.log(chat);
 
   const handleLike = async (message: any, liked?: boolean) => {
     if (poolPair) {
@@ -199,7 +198,7 @@ const Chats = ({ poolPair }: IProps) => {
 
       {poolPair && (
         <Button
-          className='absolute top-[-10px] right-3 w-8 h-8'
+          className='absolute  top-[-10px] sm:top-[-60px] sm:right-[-10px] right-3 w-8 h-8'
           size='icon'
           type='button'
           onClick={onToggle}
