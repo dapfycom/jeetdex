@@ -54,9 +54,9 @@ const Desktop = ({ poolPair }: { poolPair: IPoolPair }) => {
                 </TabsContent>
                 <TabsContent value='trades'>
                   <Trades
-                    poolAddress={withDefaultPool?.address}
-                    poolFirstToken={withDefaultPool?.firstToken}
-                    poolSecondToken={withDefaultPool?.secondToken}
+                    poolFirstTokenIdentifier={withDefaultPool?.firstTokenId}
+                    poolSecondTokenIdentifier={withDefaultPool?.secondTokenId}
+                    mode='normie'
                   />
                 </TabsContent>
                 <TabsContent value='my-trades'>
@@ -104,9 +104,9 @@ const Desktop = ({ poolPair }: { poolPair: IPoolPair }) => {
             </TabsContent>
             <TabsContent value='trades'>
               <Trades
-                poolAddress={withDefaultPool?.address}
-                poolFirstToken={withDefaultPool?.firstToken}
-                poolSecondToken={withDefaultPool?.secondToken}
+                mode='normie'
+                poolFirstTokenIdentifier={withDefaultPool?.firstTokenId}
+                poolSecondTokenIdentifier={withDefaultPool?.secondTokenId}
               />
             </TabsContent>
           </Tabs>

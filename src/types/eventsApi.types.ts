@@ -23,3 +23,17 @@ export interface IPairCreatedEventData {
   date: string;
   txHash: string;
 }
+
+export interface IEventTransaction {
+  id: string;
+  token: string;
+  tokenIn: string;
+  tokenOut: string;
+  tokenAmountIn: string;
+  tokenAmountOut: string;
+  timestamp: number;
+  hash: null | string;
+  caller: string;
+  epoch: number;
+  block: number;
+}

@@ -69,9 +69,9 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
               </TabsContent>
               <TabsContent value='trades'>
                 <Trades
-                  poolAddress={withDefaultPool?.address}
-                  poolFirstToken={withDefaultPool?.firstToken}
-                  poolSecondToken={withDefaultPool?.secondToken}
+                  mode='normie'
+                  poolFirstTokenIdentifier={withDefaultPool?.firstTokenId}
+                  poolSecondTokenIdentifier={withDefaultPool?.secondTokenId}
                 />
               </TabsContent>
             </Tabs>
@@ -90,9 +90,9 @@ const MobileNavbar = ({ poolPair }: { poolPair: IPoolPair }) => {
 
           <TabsContent value='trades'>
             <Trades
-              poolAddress={withDefaultPool?.address}
-              poolFirstToken={withDefaultPool?.firstToken}
-              poolSecondToken={withDefaultPool?.secondToken}
+              mode='normie'
+              poolFirstTokenIdentifier={withDefaultPool?.firstTokenId}
+              poolSecondTokenIdentifier={withDefaultPool?.secondTokenId}
             />
           </TabsContent>
           <TabsContent value='my-trades'>
