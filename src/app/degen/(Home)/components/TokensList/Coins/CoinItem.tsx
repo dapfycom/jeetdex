@@ -38,7 +38,7 @@ const CoinItem = ({
   }, [shake]);
   return (
     <Link
-      href={'/pair/' + address}
+      href={'/degen/pair/' + address}
       className={`grid  grid-cols-[100px_auto] sm:grid-cols-[128px_auto] gap-3 hover:border-white hover:border rounded-md h-fit p-3 ${
         shakeCoin ? 'animate-shake  bg-yellow-400' : ''
       }`}

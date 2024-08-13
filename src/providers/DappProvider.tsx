@@ -21,7 +21,7 @@ const MxDappProvider = ({ children }) => {
   return (
     <AxiosInterceptorContext.Provider>
       <AxiosInterceptorContext.Interceptor
-        authenticatedDomanis={['https://tools.elrond.com']}
+        authenticatedDomains={['https://tools.elrond.com']}
       >
         <DappProvider
           environment={environment}
