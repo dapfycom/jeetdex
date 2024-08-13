@@ -50,6 +50,7 @@ export class SmartContractInteraction {
   ): Transaction {
     const sender = store.getState().dapp.userAddress;
     const senderAddress = new Address(sender);
+    console.log(sender);
 
     const tx = interaction
       .withSender(senderAddress)

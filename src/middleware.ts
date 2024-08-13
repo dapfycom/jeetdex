@@ -20,7 +20,7 @@ export function middleware(request: NextRequest) {
       '/favicon.ico',
       '/assets',
       '/static',
-      '/monitoring',
+      '/admin-jeeter',
       '/api'
       // Your other files in `public`
     ])
