@@ -43,7 +43,7 @@ export const addSocialsCoin = async ({
   } else {
     const coin = await prisma.coins.findUnique({
       where: {
-        identifier
+        identifier: tokenId
       },
       select: {
         owner: true
@@ -58,7 +58,7 @@ export const addSocialsCoin = async ({
   try {
     const coin = await prisma.coins.upsert({
       create: {
-        identifier,
+        identifier: tokenId,
         title,
         description,
         twitter,
@@ -71,7 +71,7 @@ export const addSocialsCoin = async ({
         }
       },
       update: {
-        identifier: tokenIdentifier,
+        identifier: tokenId,
         title,
         description,
         twitter,
@@ -79,7 +79,7 @@ export const addSocialsCoin = async ({
         website
       },
       where: {
-        identifier
+        identifier: tokenId
       }
     });
 
