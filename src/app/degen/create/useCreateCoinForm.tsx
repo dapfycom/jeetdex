@@ -37,7 +37,7 @@ const formSchema = z.object({
       /^[a-zA-Z0-9]*$/,
       'ticker must be alphanumeric and must not contain whitespace or special characters'
     ),
-  description: z.string().max(500).nullable(),
+  description: z.string().max(1500).nullable(),
   image: z.object({
     url: z.string().url(),
     name: z.string(),

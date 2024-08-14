@@ -57,3 +57,4 @@ dev.db-wal
 # Sentry Config File
 .env.sentry-build-plugin
 wallet.json
+wallet2.json
