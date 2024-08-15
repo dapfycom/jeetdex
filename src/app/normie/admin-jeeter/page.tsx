@@ -9,14 +9,6 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -24,92 +16,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { interactions } from '@/services/sc/interactions';
-import {
-  Address,
-  AddressType,
-  AddressValue,
-  BooleanType,
-  BooleanValue,
-  Field,
-  FieldDefinition,
-  Struct,
-  StructType,
-  TokenIdentifierType,
-  TokenIdentifierValue
-} from '@multiversx/sdk-core/out';
 import Link from 'next/link';
-import { useForm } from 'react-hook-form';
+import TokenIn from './Dust/TokenIn';
+import TokenOut from './Dust/TokenOut';
 
 export default function Component() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    defaultValues: {
-      tokenIdentifier: '',
-      poolAddress: '',
-      platform: '',
-      firstToken: '',
-      secondToken: ''
-    }
-  });
-
-  const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission logic here
-
-    interactions.dust.scCall({
-      functionName: 'addRoutes',
-
-      arg: [
-        new TokenIdentifierValue(data.tokenIdentifier),
-        new Struct(
-          new StructType('Route', [
-            new FieldDefinition('address', '', new AddressType()),
-            new FieldDefinition(
-              'pair_type',
-              'Maiar or OneDex',
-              new BooleanType()
-            ),
-            new FieldDefinition(
-              'first_token_id',
-              'First token of the pool',
-              new TokenIdentifierType()
-            ),
-            new FieldDefinition(
-              'second_token_id',
-              'Second token of the pool',
-              new TokenIdentifierType()
-            )
-          ]),
-          [
-            new Field(
-              new AddressValue(Address.fromBech32(data.poolAddress)),
-              'address'
-            ),
-            new Field(
-              new BooleanValue(data.platform === 'onedex'),
-              'pair_type'
-            ),
-            new Field(
-              new TokenIdentifierValue(data.firstToken),
-              'first_token_id'
-            ),
-            new Field(
-              new TokenIdentifierValue(data.secondToken),
-              'second_token_id'
-            )
-          ]
-        )
-      ],
-      gasL: 100_000_000
-    });
-  };
   return (
     <div className='flex min-h-screen w-full flex-col bg-muted/40'>
       <aside className='fixed inset-y-0 left-0 z-10 flex h-full w-14 flex-col border-r bg-background sm:w-60'>
@@ -221,115 +132,9 @@ export default function Component() {
           </div>
         </header>
         <main className='flex-1 p-4 sm:p-6'>
-          <div className='mx-auto max-w-4xl'>
-            <Card>
-              <CardHeader>
-                <CardTitle>Dust</CardTitle>
-                <CardDescription>
-                  Manage your token dust and optimize your portfolio.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit(onSubmit)} className='grid gap-4'>
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div className='space-y-2'>
-                      <Label htmlFor='tokenIdentifier'>Token Identifier</Label>
-                      <Input
-                        id='tokenIdentifier'
-                        {...register('tokenIdentifier', {
-                          required: 'This field is required'
-                        })}
-                        placeholder='Enter token identifier'
-                      />
-                      {errors.tokenIdentifier && (
-                        <span className='text-red-500'>
-                          {errors.tokenIdentifier.message}
-                        </span>
-                      )}
-                    </div>
-                    <div className='space-y-2'>
-                      <Label htmlFor='poolAddress'>Pool Address</Label>
-                      <Input
-                        id='poolAddress'
-                        {...register('poolAddress', {
-                          required: 'This field is required'
-                        })}
-                        placeholder='Enter pool address'
-                      />
-                      {errors.poolAddress && (
-                        <span className='text-red-500'>
-                          {errors.poolAddress.message}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className='space-y-2'>
-                    <Label>Platform</Label>
-                    <div className='flex items-center gap-4'>
-                      <RadioGroup>
-                        <RadioGroupItem
-                          id='maiar'
-                          value='maiar'
-                          {...register('platform')}
-                        />
-                        <Label htmlFor='maiar' className='text-sm font-medium'>
-                          Maiar
-                        </Label>
-                      </RadioGroup>
-                      <RadioGroup>
-                        <RadioGroupItem
-                          id='onedex'
-                          value='onedex'
-                          {...register('platform')}
-                        />
-                        <Label htmlFor='onedex' className='text-sm font-medium'>
-                          Onedex
-                        </Label>
-                      </RadioGroup>
-                    </div>
-                  </div>
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div className='space-y-2'>
-                      <Label htmlFor='firstToken'>First Token Identifier</Label>
-                      <Input
-                        id='firstToken'
-                        {...register('firstToken', {
-                          required: 'This field is required'
-                        })}
-                        placeholder='Enter first token identifier'
-                      />
-                      {errors.firstToken && (
-                        <span className='text-red-500'>
-                          {errors.firstToken.message}
-                        </span>
-                      )}
-                    </div>
-                    <div className='space-y-2'>
-                      <Label htmlFor='secondToken'>
-                        Second Token Identifier
-                      </Label>
-                      <Input
-                        id='secondToken'
-                        {...register('secondToken', {
-                          required: 'This field is required'
-                        })}
-                        placeholder='Enter second token identifier'
-                      />
-                      {errors.secondToken && (
-                        <span className='text-red-500'>
-                          {errors.secondToken.message}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </form>
-              </CardContent>
-              <CardFooter>
-                <Button type='submit' onClick={handleSubmit(onSubmit)}>
-                  Submit
-                </Button>
-              </CardFooter>
-            </Card>
+          <div className='mx-auto max-w-4xl space-y-4'>
+            <TokenOut />
+            <TokenIn />
           </div>
         </main>
       </div>
