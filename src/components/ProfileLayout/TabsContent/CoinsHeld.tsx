@@ -23,12 +23,10 @@ const CoinsHeld = () => {
   const globalData = useAppSelector(selectGlobalData);
   const { userTokens } = useGetUserTokens();
 
-  // order tokens, put first the ones in globalData
-  const mapTokens = globalData.pools.map((p) => p.firstTokenId);
-  userTokens.sort((a, b) => {
-    if (mapTokens.includes(a.identifier)) return -1;
-    if (mapTokens.includes(b.identifier)) return 1;
-    return 0;
+  const tokens = userTokens.filter((token) => {
+    return globalData.coins
+      .map((coin) => coin.identifier)
+      .includes(token.identifier);
   });
 
   return (
@@ -42,7 +40,7 @@ const CoinsHeld = () => {
         </TableRow>
       </TableHeader>
       <TableBody className='overflow-auto'>
-        {userTokens.map((token) => {
+        {tokens.map((token) => {
           return (
             <TableRow key={token.identifier}>
               <TableCell className='font-medium'>
