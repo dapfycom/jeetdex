@@ -79,8 +79,6 @@ const HoldersList = ({
 
           const isDev = h.address === coinData?.data?.owner?.address;
 
-          console.log(coinData?.data?.owner?.address);
-          console.log(h.address);
           return (
             <div key={h.address} className='text-gray-400 text-sm'>
               <div className='flex w-full justify-between'>

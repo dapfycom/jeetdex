@@ -171,7 +171,7 @@ const Chats = ({ poolPair, dev, coin }: IProps) => {
 
       {poolPair && (
         <Button
-          className='absolute  top-[-10px] sm:top-[-40px] sm:right-[10px] right-3 w-8 h-8'
+          className='absolute  top-[30px] sm:top-[-40px] sm:right-[10px] right-3 w-8 h-8'
           size='icon'
           type='button'
           onClick={onToggle}
