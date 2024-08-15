@@ -81,14 +81,22 @@ const HoldersList = ({
 
           return (
             <div key={h.address} className='text-gray-400 text-sm'>
-              <div className='flex w-full justify-between'>
+              <div className='flex w-full justify-between '>
                 <a
                   href={`${network.explorerAddress}/accounts/${h.address}`}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='flex gap-2'
+                  className='flex gap-2 '
                 >
-                  {i + 1}. {formatAddress(h.address)}
+                  {i + 1}.{' '}
+                  <span className='sm:inline hidden'>
+                    {' '}
+                    {formatAddress(h.address)}
+                  </span>{' '}
+                  <span className='sm:hidden inline'>
+                    {' '}
+                    {formatAddress(h.address, 6, 4)}
+                  </span>
                   {isDev && (
                     <div className='text-xs text-gray-400'>( 👑 dev ) </div>
                   )}

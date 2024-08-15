@@ -39,7 +39,7 @@ const HowItWorksModal = () => {
     >
       <DialogTrigger>
         {' '}
-        <span className='hover:font-bold text-xs sm:text-base'>
+        <span className='hover:font-bold text-sm sm:text-base'>
           [how it works]
         </span>
       </DialogTrigger>

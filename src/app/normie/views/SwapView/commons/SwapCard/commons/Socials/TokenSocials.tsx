@@ -32,7 +32,7 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
 
   return (
     <div>
-      <div className='flex gap-3 mb-3'>
+      <div className='flex gap-3 mb-3 flex-wrap text-sm sm:text-md'>
         {data?.telegram && (
           <a
             href={dataWithHttps?.telegram}
@@ -62,6 +62,17 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
             className='hover:font-bold'
           >
             [website]
+          </a>
+        )}
+
+        {data?.identifier.includes('-') && (
+          <a
+            href={`https://explorer.multiversx.com/tokens/${data?.identifier}`}
+            target='_blank'
+            rel='noreferrer'
+            className='hover:font-bold'
+          >
+            [explorer]
           </a>
         )}
       </div>
