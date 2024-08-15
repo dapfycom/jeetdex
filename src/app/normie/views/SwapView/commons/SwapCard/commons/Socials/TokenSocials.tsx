@@ -95,7 +95,12 @@ const TokenSocials = ({ tokenIdentifier }: IProps) => {
         <div className='text-left'>
           <div>{dataWithHttps?.title}</div>
           <div className='text-sm text-muted-foreground'>
-            {data?.description}
+            {data?.description.split('\n').map((item, index) => (
+              <span key={index}>
+                {item}
+                <br />
+              </span>
+            ))}
           </div>
         </div>
       </div>
