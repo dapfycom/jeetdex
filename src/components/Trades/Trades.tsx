@@ -44,7 +44,7 @@ const Trades = ({
   const finalData = data || [];
 
   return (
-    <Table className='bg-card'>
+    <Table className='bg-card mb-20'>
       <TableHeader>
         <TableRow>
           <TableHead className='text-left'>account</TableHead>
