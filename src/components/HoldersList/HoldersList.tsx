@@ -67,7 +67,7 @@ const HoldersList = ({
 
   if (!holders || !isOpenHolders) return null;
   return (
-    <div className='text-left'>
+    <div className='text-left mb-20'>
       <div className='text-lg mb-2'>Holder distribution</div>
       <div className='flex flex-col gap-1'>
         {holders.map((h, i) => {
