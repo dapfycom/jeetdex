@@ -63,8 +63,6 @@ const Trades = ({
       </TableHeader>
       <TableBody>
         {finalData.map((d) => {
-          console.log(d.tokenIn);
-
           const type = d.tokenIn === poolFirstTokenIdentifier ? 'sell' : 'buy';
 
           const firstTokenTxValue =

@@ -61,9 +61,9 @@ const Desktop = ({ poolPair }: { poolPair: IPoolPair }) => {
                 </TabsContent>
                 <TabsContent value='my-trades'>
                   <UserTrades
-                    poolAddress={withDefaultPool?.address}
-                    poolFirstToken={withDefaultPool?.firstToken}
-                    poolSecondToken={withDefaultPool?.secondToken}
+                    mode='normie'
+                    poolFirstTokenIdentifier={withDefaultPool?.firstTokenId}
+                    poolSecondTokenIdentifier={withDefaultPool?.secondTokenId}
                   />
                 </TabsContent>
               </Tabs>
