@@ -58,8 +58,6 @@ export const scQuery = async (
 
     const { address, abi } = smartContractsConfig[workspace];
 
-    console.log(address);
-
     if (!abi) {
       return;
     }

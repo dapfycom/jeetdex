@@ -1,8 +1,13 @@
+import aggregatorAbi from '@/assets/abis/ashswap-aggregator.abi.json';
+import bskFarmAbi from '@/assets/abis/beskar-dao.abi.json';
 import dustAbi from '@/assets/abis/dust_sc.abi.json';
+import onDexFarmAbi from '@/assets/abis/farm_onedex.abi.json';
+import ashSwapFarmAbi from '@/assets/abis/farmclick_ashswap.abi.json';
+import hatomParentAbi from '@/assets/abis/hatom_parent.abi.json';
+import degenMasterAbi from '@/assets/abis/master.abi.json';
 import routerAbi from '@/assets/abis/router.abi.json';
 import { scAddress } from '@/config';
 import { Address } from '@multiversx/sdk-core/out';
-import degenMasterAbi from "@/assets/abis/master.abi.json"
 export const smartContractsConfig = {
   wrapEGLDShard0: {
     simpleAddress: scAddress.wrapEGLDShard0,
@@ -41,7 +46,32 @@ export const smartContractsConfig = {
     abi: degenMasterAbi
   },
 
+  ashSwapAggregator: {
+    simpleAddress: scAddress.ashSwapAggregator,
+    address: new Address(scAddress.ashSwapAggregator),
+    abi: aggregatorAbi
+  },
 
+  bskFarm: {
+    simpleAddress: scAddress.bskFarm,
+    address: new Address(scAddress.bskFarm),
+    abi: bskFarmAbi
+  },
+  oneDexFarm: {
+    simpleAddress: scAddress.oneDexFarm,
+    address: new Address(scAddress.oneDexFarm),
+    abi: onDexFarmAbi
+  },
+  hatomParent: {
+    simpleAddress: scAddress.hatomParent,
+    address: new Address(scAddress.hatomParent),
+    abi: hatomParentAbi
+  },
+  ashSwapFarm: {
+    simpleAddress: scAddress.ashSwapFarm,
+    address: new Address(scAddress.ashSwapFarm),
+    abi: ashSwapFarmAbi
+  }
 };
 
 export type SmartContractConfigTypes = keyof typeof smartContractsConfig;

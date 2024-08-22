@@ -5,5 +5,6 @@
         "metachain"
     ],
     "cody.autocomplete.enabled": true,
-    "cody.commandCodeLenses": false
+    "cody.commandCodeLenses": false,
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

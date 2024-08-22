@@ -11,6 +11,7 @@ const SwrProvider = ({ children }: PropsWithChildren) => {
           revalidateIfStale: false,
 
           onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+            if (!error.request) return;
             if (error.request.status === 404) return;
             if (error.request.status === 401) return;
             if (retryCount >= 3) return;

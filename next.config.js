@@ -31,6 +31,12 @@ const nextConfig = {
         hostname: 'gateway.pinata.cloud',
         port: '',
         pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'app.ashswap.io',
+        port: '',
+        pathname: '**'
       }
     ]
   },

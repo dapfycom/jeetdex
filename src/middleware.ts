@@ -21,6 +21,7 @@ export function middleware(request: NextRequest) {
       '/assets',
       '/static',
       '/course',
+      '/admin',
       '/api'
       // Your other files in `public`
     ])

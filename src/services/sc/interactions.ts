@@ -26,5 +26,25 @@ export const interactions: {
   ),
   degenMaster: new SmartContractInteraction(
     smartContractsConfig.degenMaster.simpleAddress
+  ),
+  ashSwapAggregator: new SmartContractInteraction(
+    smartContractsConfig.ashSwapAggregator.simpleAddress,
+    smartContractsConfig.ashSwapAggregator.abi
+  ),
+  bskFarm: new SmartContractInteraction(
+    smartContractsConfig.bskFarm.simpleAddress,
+    smartContractsConfig.bskFarm.abi
+  ),
+  oneDexFarm: new SmartContractInteraction(
+    smartContractsConfig.oneDexFarm.simpleAddress,
+    smartContractsConfig.oneDexFarm.abi
+  ),
+  hatomParent: new SmartContractInteraction(
+    smartContractsConfig.hatomParent.simpleAddress,
+    smartContractsConfig.hatomParent.abi
+  ),
+  ashSwapFarm: new SmartContractInteraction(
+    smartContractsConfig.ashSwapFarm.simpleAddress,
+    smartContractsConfig.ashSwapFarm.abi
   )
 };

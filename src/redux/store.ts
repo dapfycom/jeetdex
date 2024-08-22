@@ -2,6 +2,7 @@ import dustReducer from '@/app/normie/views/DustView/lib/dust-slice';
 import poolsReducer from '@/app/normie/views/PoolsView/utils/pools-slice';
 import swapReducer from '@/app/normie/views/SwapView/lib/swap-slice';
 import createPoolsReducer from '@/components/CreatePool/utils/slice';
+import defiReducer from '@/views/DefiView/utils/defi-slice';
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import dappReducer from './dapp/dapp-slice';
 export function makeStore() {
@@ -11,7 +12,8 @@ export function makeStore() {
       swap: swapReducer,
       createPools: createPoolsReducer,
       dust: dustReducer,
-      pools: poolsReducer
+      pools: poolsReducer,
+      defi: defiReducer
     }
   });
 }

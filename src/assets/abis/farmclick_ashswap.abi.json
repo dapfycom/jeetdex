@@ -1,0 +1,464 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.76.0-nightly",
+            "commitHash": "d86d65bbc19b928387f68427fcc3a0da498d8a19",
+            "commitDate": "2023-12-10",
+            "channel": "Nightly",
+            "short": "rustc 1.76.0-nightly (d86d65bbc 2023-12-10)"
+        },
+        "contractCrate": {
+            "name": "farmclick_ashswap",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.45.2"
+        }
+    },
+    "docs": [
+        "An empty contract. To be used as a template when starting a new contract from scratch."
+    ],
+    "name": "FarmClickContract",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "wegld_token_id",
+                "type": "EgldOrEsdtTokenIdentifier"
+            },
+            {
+                "name": "wrap_egld_addr",
+                "type": "Address"
+            },
+            {
+                "name": "fees_address",
+                "type": "Address"
+            },
+            {
+                "name": "initial_compund_fees_percentage",
+                "type": "u64"
+            },
+            {
+                "name": "initial_unstake_fees_percentage",
+                "type": "u64"
+            },
+            {
+                "name": "minimum_deposit_amount",
+                "type": "BigUint"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "upgrade",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "wegld_token_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "wrap_egld_addr",
+                    "type": "Address"
+                },
+                {
+                    "name": "fees_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "initial_compund_fees_percentage",
+                    "type": "u64"
+                },
+                {
+                    "name": "initial_unstake_fees_percentage",
+                    "type": "u64"
+                },
+                {
+                    "name": "minimum_deposit_amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setFeePercentageCompound",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee_percentage",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "setFeePercentageUnstake",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee_percentage",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addFarm",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "pool_addr",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_addr",
+                    "type": "Address"
+                },
+                {
+                    "name": "is_pool_v2",
+                    "type": "bool"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "addRoutes",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "swap_operations",
+                    "type": "variadic<multi<Address,bytes,TokenIdentifier,TokenIdentifier,bool>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "deleteRoutes",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_id",
+                    "type": "TokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "deposit",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "exitFarm",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withdraw",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "compound",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "farm_ids",
+                    "type": "variadic<u64>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getDepositEntry",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "DepositEntry"
+                }
+            ]
+        },
+        {
+            "name": "getDepositAccountsByFarm",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getCompoundFeePercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getUnstakeFeePercentage",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getMinimumDepositAmount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "pause",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "unpause",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "isPaused",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "getFarms",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<FarmClick>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "getTotalRewardsPerFarm",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "caller",
+                    "type": "Address"
+                },
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "DepositEntryWithRewards"
+                }
+            ]
+        }
+    ],
+    "esdtAttributes": [],
+    "hasCallback": false,
+    "types": {
+        "DepositEntry": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "token_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "deposited_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "block_start_staking",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "lp_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "deposited_lp_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "deposited_farm_amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "DepositEntryWithRewards": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "token_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "deposited_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "block_start_staking",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "lp_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "deposited_lp_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "deposited_farm_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "rewards",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "FarmClick": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "farm_click_id",
+                    "type": "u64"
+                },
+                {
+                    "name": "is_pool_v2",
+                    "type": "bool"
+                },
+                {
+                    "name": "pool_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "first_token_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "second_token_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "lp_token_id",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "farm_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "farm_token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "farm_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "reward_token",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "total_deposited_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_deposited_lp_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_deposited_farm_amount",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_weighted_block",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "total_farm_rewards",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}

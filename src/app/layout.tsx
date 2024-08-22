@@ -1,3 +1,4 @@
+import { MainLayout } from '@/components/Layout/MainLayout';
 import { Toaster } from '@/components/ui/toaster';
 import { Metadata, Viewport } from 'next';
 import { Inter as FontSans } from 'next/font/google';
@@ -59,7 +60,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body className='dark scroll-smooth'>
         <Toaster />
         <Toaster2 position='bottom-right' />
-        {children}
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );
