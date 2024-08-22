@@ -21,3 +21,11 @@ export const BATCH_TRANSACTIONS_SC = {
     data: 'ESDTTransfer@4D45582D613635396430@0de0b6b3a7640000@6c6f636b546f6b656e73@05a0'
   }
 };
+
+export const routeNames = {
+  herotag: '/normie/tools/herotag',
+  xfees: '/normie/tools/x-fees',
+  xstkRewards: '/normie/tools/staking-providers-rewards',
+  xpayments: '/normie/tools/x-payments',
+  raffle: '/normie/tools/raffle'
+};

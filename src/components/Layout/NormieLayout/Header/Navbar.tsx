@@ -1,31 +1,24 @@
 'use client';
 import Link from 'next/link';
 
-const Navbar = () => {
-  // const pathname = usePathname();
+const normieRoutes = [
+  { label: 'Swap', href: '/normie/swap' },
+  { label: 'Pool', href: '/normie/pools' },
+  { label: 'Dust', href: '/normie/dust' },
+  { label: 'Analytics', href: '/normie/analytics' },
+  { label: 'Farms', href: '/normie/farms' },
+  { label: 'Tools', href: '/normie/tools' }
+];
 
+const Navbar = () => {
   return (
     <div className='text-sm sm:text-md text-center'>
-      <div>
-        <div className='flex gap-2 items-center justify-start '>
-          <Link href='/' className='hover:font-bold'>
-            [Swap]
+      <div className='flex gap-2 items-center justify-start flex-wrap max-w-[200px] '>
+        {normieRoutes.map((route) => (
+          <Link key={route.label} href={route.href} className='hover:font-bold'>
+            [{route.label}]
           </Link>
-          <Link href='/pools' className='hover:font-bold'>
-            [Pool]
-          </Link>
-          <div className='flex gap-2 items-center'>
-            <Link href='/dust' className='hover:font-bold'>
-              [Dust]
-            </Link>
-          </div>
-        </div>
-
-        <div className='flex gap-2 items-center justify-start '>
-          <Link href='/analytics' className='hover:font-bold'>
-            [Analytics]
-          </Link>
-        </div>
+        ))}
       </div>
     </div>
   );

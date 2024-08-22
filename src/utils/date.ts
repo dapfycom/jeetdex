@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js';
+
 export function timeAgo(date: Date): string {
   const now = new Date();
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
@@ -29,3 +31,7 @@ export function timeAgo(date: Date): string {
 
   return seconds === 1 ? '1 second ' : `${seconds} seconds `;
 }
+
+export const timeStampToSeconds = (timestamp: number): number => {
+  return Number(new BigNumber(timestamp).dividedBy(1000).toFixed(0));
+};

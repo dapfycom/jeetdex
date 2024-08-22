@@ -16,15 +16,15 @@ const AshFarms = () => {
 
   return (
     <div className='mt-10 grid'>
-      <div className='mb-5'>
+      <div className='mb-1'>
         <Image
-          src={'https://app.ashswap.io/logo.png'}
+          src={'/assets/img/logo-ashswap.png'}
           alt='ashswap'
-          width={70}
+          width={40}
           height={24}
         />
       </div>
-      <div className='mt-10'>
+      <div className='mt-2'>
         <div className='w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3   gap-8'>
           {farms
             .filter((f) =>
