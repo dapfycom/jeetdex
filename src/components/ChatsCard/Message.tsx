@@ -10,6 +10,7 @@ import { HeartIcon, MessageCircleIcon } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
 const SendMessagePopup = dynamic(() => import('./SendMessagePopup'));
 
@@ -160,7 +161,25 @@ const Message = ({
               </p>
             </Link>
           )}
-          <p>{message}</p>
+          <p>
+            {message.split(' ').map((word, index) => {
+              if (word.startsWith('https://')) {
+                return (
+                  <React.Fragment key={index}>
+                    <a
+                      href={word}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      className='text-blue-500 hover:underline'
+                    >
+                      {word}
+                    </a>{' '}
+                  </React.Fragment>
+                );
+              }
+              return word + ' ';
+            })}
+          </p>
         </div>
       </div>
     </div>
