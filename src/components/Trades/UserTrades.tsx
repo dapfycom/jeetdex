@@ -41,7 +41,14 @@ const UserTrades = ({
     }
   );
 
-  const finalData = data || [];
+  const removeduplicatesHash = data?.filter((d, index, self) => {
+    if (!d.hash) {
+      return true;
+    }
+    return self.findIndex((t) => t.hash === d.hash) === index;
+  });
+
+  const finalData = removeduplicatesHash || [];
 
   return (
     <Table className='bg-card mb-20'>
