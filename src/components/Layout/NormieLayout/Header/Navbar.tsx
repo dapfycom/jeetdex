@@ -2,7 +2,7 @@
 import Link from 'next/link';
 
 const normieRoutes = [
-  { label: 'Swap', href: '/normie/swap' },
+  { label: 'Swap', href: '/normie/' },
   { label: 'Pool', href: '/normie/pools' },
   { label: 'Dust', href: '/normie/dust' },
   { label: 'Analytics', href: '/normie/analytics' },

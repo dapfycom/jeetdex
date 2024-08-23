@@ -33,7 +33,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@libsql/client": "^0.6.0",
     "@multiversx/sdk-core": "12.8.0",
-    "@multiversx/sdk-dapp": "^2.38.3",
+    "@multiversx/sdk-dapp": "^2.38.5",
     "@multiversx/sdk-native-auth-server": "^1.0.17",
     "@multiversx/sdk-network-providers": "2.3.0",
     "@prisma/adapter-libsql": "^5.15.0",
