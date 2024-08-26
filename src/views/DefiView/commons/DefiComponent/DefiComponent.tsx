@@ -139,8 +139,8 @@ const FarmComponent = ({ hatomFarm, userInfo }: FarmComponentProps) => {
         deposits: userInfo.deposits
       }}
     >
-      <div className='w-full text-left'>
-        <div className='w-full rounded-lg border p-6'>
+      <div className='w-full text-left farm-border p-4'>
+        <div className='w-full rounded-lg border '>
           <div className='flex items-center gap-3'>
             {' '}
             <h3 className='text-lg font-semibold'>
@@ -201,6 +201,7 @@ const FarmComponent = ({ hatomFarm, userInfo }: FarmComponentProps) => {
             {isLoggedIn ? (
               <Button
                 type='submit'
+                variant={'dapfy'}
                 className='text-xs sm:text-md text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2 w-full'
               >
                 <PointerIcon className='h-6 w-6 hidden sm:inline-block' />

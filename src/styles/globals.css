@@ -25,6 +25,9 @@
       --ring: 14 82% 52%;
       --radius: 0.5rem;
 
+      --dapfy: 30 100% 50%;
+      --dapfy-foreground: 0 0% 100%;
+
       --custom:#22F7DD;
       --customBackground:#08111b;
       --customCard:#213040
@@ -61,6 +64,10 @@
     }
     body {
       @apply bg-background text-foreground;
+    }
+
+    .farm-border{
+      @apply border border-gray-700 rounded-sm
     }
   }
 

@@ -25,8 +25,14 @@ const config = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+
         background: 'var(--customBackground)',
         foreground: 'hsl(var(--foreground))',
+
+        dapfy: {
+          DEFAULT: 'hsl(var(--dapfy))',
+          foreground: 'hsl(var(--dapfy-foreground))'
+        },
         primary: {
           DEFAULT: 'var(--custom)',
           foreground: 'hsl(var(--primary-foreground))'

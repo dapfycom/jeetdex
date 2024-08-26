@@ -34,6 +34,7 @@ export const fetchOneDexFarms = async (
   scInfo: string
 ): Promise<IOnDexFarm[]> => {
   const data = await fetchScSimpleData<IOnDexScResponse[]>(scInfo);
+  console.log(data);
 
   const farms: IOnDexFarm[] = data.map((f) => {
     const farm: IOnDexFarm = {

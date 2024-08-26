@@ -108,7 +108,7 @@ const StakeBSK = () => {
 
   return (
     <>
-      <div className='w-full my-10 flex text-left'>
+      <div className='w-full my-10 flex text-left farm-border'>
         <div className='max-w-[24rem] w-full rounded-lg border p-6'>
           <div className='mb-4'>
             <div className='flex items-center gap-3'>
@@ -181,6 +181,7 @@ const StakeBSK = () => {
               {isLoggedIn ? (
                 <Button
                   type='submit'
+                  variant={'dapfy'}
                   className='text-xs sm:text-md text-white px-4 py-2 rounded-md flex items-center justify-center space-x-2 w-full'
                 >
                   <PointerIcon className='h-6 w-6 hidden sm:inline-block' />
@@ -214,7 +215,7 @@ const StakeBSK = () => {
             <Divider className='my-4' />
             <div className='grid gap-3'>
               <Button
-                variant={'secondary'}
+                variant={'dapfy'}
                 className='text-sm w-full lg:w-auto bg-green-600 hover:text-green-500 text-white'
                 onClick={handleReStake}
               >

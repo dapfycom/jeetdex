@@ -15,9 +15,12 @@ import { fetchOneDexDepositEntries, fetchOneDexFarms } from './services';
 
 export const useGetOneDexFarms = () => {
   const { data, isLoading, error } = useSwr(
-    'oneDexFarmWsp:getFarms',
+    'oneDexFarm:getFarms',
     fetchOneDexFarms
   );
+  console.log(isLoading);
+  console.log(error);
+  console.log(data);
 
   return {
     farms: data || [],
