@@ -1,2 +1,2 @@
 export const trendingAddress =
-  'erd1qqqqqqqqqqqqqpgqyykah7m6k3td9ufgtxa7hn4ctdr8yek0taeslf45yt';
+  'erd1qqqqqqqqqqqqqpgqs38ku6nwv9w9r59mdaq52rx9zzg5z0yltaesl9s4yh';
