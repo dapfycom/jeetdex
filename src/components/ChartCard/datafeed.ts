@@ -128,7 +128,7 @@ const config = (mode: 'normie' | 'degen' = 'normie') => {
     ) => {
       console.log('getBars');
 
-      const { from, to } = periodParams;
+      const { to } = periodParams;
 
       const urlParameters = {
         e: 'JEETDEX',
@@ -149,7 +149,7 @@ const config = (mode: 'normie' | 'degen' = 'normie') => {
         let currentBars = [];
 
         bars.forEach((bar) => {
-          if (bar.time >= from && bar.time < to) {
+          if (bar.time < to) {
             currentBars = [
               ...currentBars,
               {
