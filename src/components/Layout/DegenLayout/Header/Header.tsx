@@ -7,6 +7,7 @@ import DegenCreatedTokenShakingBox from '@/components/ShakingBoxes/CreatedTokenS
 import DegenPoolAndBuySellShakingBox from '@/components/ShakingBoxes/DegenPoolAndBuySellShakingBox/DegenPoolAndBuySellShakingBox';
 import SellBuyTokenShakingBox from '@/components/ShakingBoxes/SellBuyTokenShakingBox/SellBuyTokenShakingBox';
 import SiteMode from '@/components/SiteMode/SiteMode';
+import Link from 'next/link';
 
 export const Header = () => {
   return (
@@ -55,12 +56,19 @@ export const Header = () => {
             <DegenCreatedTokenShakingBox />
           </div>
         </div>
-        <div className='h-full w-full text-sm sm:relative  justify-end sm:bg-transparent flex '>
-          {process.env.DEGEN_MODE === 'true' && <SiteMode />}
-          <div className=''>
-            <div className='relative'>
-              <Login />
+        <div>
+          <div className='h-full w-full text-sm sm:relative  justify-end sm:bg-transparent flex'>
+            {process.env.DEGEN_MODE === 'true' && <SiteMode />}
+            <div className=''>
+              <div className='relative'>
+                <Login />
+              </div>
             </div>
+          </div>
+          <div className='flex gap-2 w-full justify-end mt-1 pr-3'>
+            <Link href={'/degen/dust'} className='hover:font-bold'>
+              [convert dust]
+            </Link>
           </div>
         </div>
       </div>

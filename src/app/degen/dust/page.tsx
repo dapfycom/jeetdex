@@ -1,4 +1,4 @@
-import DustView from '../views/DustView';
+import DustView from '@/views/DustView';
 
 const DustPage = () => {
   return <DustView />;

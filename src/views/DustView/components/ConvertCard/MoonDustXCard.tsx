@@ -1,9 +1,4 @@
 'use client';
-import {
-  selectToToken,
-  selectToTokenDust
-} from '@/app/normie/views/DustView/lib/dust-slice';
-import { useGetAllowedOutputTokens } from '@/app/normie/views/DustView/lib/hooks';
 import { CardContent, CardFooter, CardTitle } from '@/components/ui/card';
 import {
   Select,
@@ -16,6 +11,11 @@ import {
 import useGetMultipleElrondTokens from '@/hooks/useGetMultipleElrondTokens';
 import { useAppDispatch, useAppSelector } from '@/hooks/useRedux';
 import { formatTokenI } from '@/utils/mx-utils';
+import {
+  selectToToken,
+  selectToTokenDust
+} from '@/views/DustView/lib/dust-slice';
+import { useGetAllowedOutputTokens } from '@/views/DustView/lib/hooks';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import ConvertButton from './ConvertButton/ConvertButton';
